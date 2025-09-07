@@ -195,6 +195,27 @@ class KurikulumController extends Controller
         }
     }
 
+    public function view($id)
+    {
+        $user = Auth::user();
+        $data['spref'] = $user ? $user->prefix : '';
+        $data['menus'] = 'Akademik Kurikulum';
+        $data['pages'] = "Halaman Detail Kurikulum";
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+        $data['kurikulum'] = Kurikulum::with([
+            'programStudi.fakultas.profile', 
+            'tahunAkademikAwal', 
+            'tahunAkademikAkhir',
+            'kurikulumMataKuliah.mataKuliah',
+            'kurikulumMataKuliah.semester'
+        ])->findOrFail($id);
+        $data['programStudis'] = ProgramStudi::where('is_active', true)->orderBy('name')->get();
+        $data['tahunAkademiks'] = TahunAkademik::orderBy('created_at', 'desc')->get();
+
+        return view('master.akademik.kurikulum-view', $data, compact('user'));
+    }
+
     public function destroy($id)
     {
         try {

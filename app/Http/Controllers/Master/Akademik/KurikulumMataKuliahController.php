@@ -30,7 +30,7 @@ class KurikulumMataKuliahController extends Controller
         $data['semesters'] = Semester::orderBy('name')->get();
         $data['is_trash'] = false;
 
-        return view('master.akademik.kurikulum-mata-kuliah-index', $data, compact('user'));
+        return view('master.akademik.kurikulum-mata-kuliah', $data, compact('user'));
     }
 
     public function trash()

@@ -7,33 +7,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 // USE MODELS
 use App\Models\User;
-use App\Models\Akademik\ProgramStudi;
+use App\Models\Akademik\MataKuliah;
 
-class Fakultas extends Model
+class MataKuliahDetail extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'fakultas';
+    protected $table = 'mata_kuliah_detail';
     protected $guarded = [];
 
-    public function programStudi()
+    public function mataKuliah()
     {
-        return $this->hasMany(ProgramStudi::class, 'fakultas_id');
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(FakultasProfile::class, 'fakultas_id');
-    }
-
-    public function dekan()
-    {
-        return $this->belongsTo(User::class, 'dekan_id');
-    }
-
-    public function sekretaris()
-    {
-        return $this->belongsTo(User::class, 'sekretaris_id');
+        return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
 
     public function createdBy()

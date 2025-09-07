@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 // Use Models
 use App\Models\Akademik\ProgramStudi;
 use App\Models\Akademik\Fakultas;
+use App\Models\Akademik\ProgramStudiProfile;
 use App\Models\User;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
@@ -45,6 +46,21 @@ class ProgramStudiController extends Controller
         $data['is_trash'] = true;
 
         return view('master.akademik.program-studi-index', $data, compact('user'));
+    }
+
+    public function view($id)
+    {
+        $user = Auth::user();
+        $data['spref'] = $user ? $user->prefix : '';
+        $data['menus'] = 'Akademik Program Studi';
+        $data['pages'] = "Detail Program Studi";
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+        $data['programStudi'] = ProgramStudi::with(['fakultas', 'profile', 'kaprodi', 'sekretaris'])->findOrFail($id);
+        $data['fakultas'] = Fakultas::where('is_active', true)->orderBy('name')->get();
+        $data['users'] = User::all();
+
+        return view('master.akademik.program-studi-view', $data, compact('user'));
     }
 
     public function store(Request $request)
@@ -124,7 +140,14 @@ class ProgramStudiController extends Controller
             'gelar_belakang' => 'nullable|string|max:50',
             'kaprodi_id' => 'nullable|exists:users,id',
             'sekretaris_id' => 'nullable|exists:users,id',
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
+            // Profile fields
+            'slug' => 'nullable|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'objektif' => 'nullable|string',
+            'karir' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'fakultas_id.required' => 'Fakultas wajib dipilih',
             'fakultas_id.exists' => 'Fakultas tidak valid',
@@ -134,12 +157,19 @@ class ProgramStudiController extends Controller
             'jenjang.required' => 'Jenjang wajib dipilih',
             'jenjang.in' => 'Jenjang tidak valid',
             'kaprodi_id.exists' => 'Kaprodi tidak valid',
-            'sekretaris_id.exists' => 'Sekretaris tidak valid'
+            'sekretaris_id.exists' => 'Sekretaris tidak valid',
+            'logo.image' => 'Logo harus berupa gambar',
+            'logo.mimes' => 'Logo harus berformat jpeg, png, jpg, gif, atau svg',
+            'logo.max' => 'Ukuran logo maksimal 2MB',
+            'banner.image' => 'Banner harus berupa gambar',
+            'banner.mimes' => 'Banner harus berformat jpeg, png, jpg, gif, atau svg',
+            'banner.max' => 'Ukuran banner maksimal 2MB'
         ]);
 
         try {
             $user = Auth::user();
             
+            // Update program studi data
             $programStudi->update([
                 'fakultas_id' => $request->fakultas_id,
                 'name' => $request->name,
@@ -157,6 +187,36 @@ class ProgramStudiController extends Controller
                 'is_active' => $request->is_active,
                 'updated_by' => $user->id
             ]);
+
+            // Handle profile data
+            if ($request->filled(['slug', 'deskripsi', 'objektif', 'karir']) || $request->hasFile(['logo', 'banner'])) {
+                $profileData = [
+                    'program_studi_id' => $programStudi->id,
+                    'slug' => $request->slug,
+                    'deskripsi' => $request->deskripsi,
+                    'objektif' => $request->objektif,
+                    'karir' => $request->karir,
+                    'updated_by' => $user->id
+                ];
+
+                // Handle logo upload
+                if ($request->hasFile('logo')) {
+                    $logoPath = $request->file('logo')->store('program-studi/logos', 'public');
+                    $profileData['logo'] = $logoPath;
+                }
+
+                // Handle banner upload
+                if ($request->hasFile('banner')) {
+                    $bannerPath = $request->file('banner')->store('program-studi/banners', 'public');
+                    $profileData['banner'] = $bannerPath;
+                }
+
+                // Update or create profile
+                ProgramStudiProfile::updateOrCreate(
+                    ['program_studi_id' => $programStudi->id],
+                    $profileData
+                );
+            }
 
             Alert::success('Berhasil', 'Data program studi berhasil diperbarui');
             return redirect()->back();

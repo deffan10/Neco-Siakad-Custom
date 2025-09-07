@@ -1,11 +1,7 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -252,11 +248,11 @@
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">Total Mata Kuliah</h6>
-                            <h3 class="mt-2 mb-0">{{ count($mataKuliahs) }}</h3>
+                            <h6 class="text-muted mb-1">Total Mata Kuliah</h6>
+                            <h3 class="mb-0">{{ count($mataKuliahs) }}</h3>
                         </div>
-                        <div class="rounded-circle p-3 bg-primary text-white">
-                            <i class="fas fa-book fa-lg"></i>
+                        <div class="bg-primary bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-book text-primary fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -267,11 +263,11 @@
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">Mata Kuliah Aktif</h6>
-                            <h3 class="mt-2 mb-0">{{ $mataKuliahs->where('is_active', true)->count() }}</h3>
+                            <h6 class="text-muted mb-1">Mata Kuliah Aktif</h6>
+                            <h3 class="mb-0">{{ $mataKuliahs->where('is_active', true)->count() }}</h3>
                         </div>
-                        <div class="rounded-circle p-3 bg-success text-white">
-                            <i class="fas fa-check-circle fa-lg"></i>
+                        <div class="bg-success bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-check-circle text-success fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -282,11 +278,11 @@
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">Mata Kuliah Wajib</h6>
-                            <h3 class="mt-2 mb-0">{{ $mataKuliahs->where('jenis', 'Wajib')->count() }}</h3>
+                            <h6 class="text-muted mb-1">Mata Kuliah Wajib</h6>
+                            <h3 class="mb-0">{{ $mataKuliahs->where('jenis', 'Wajib')->count() }}</h3>
                         </div>
-                        <div class="rounded-circle p-3 bg-warning text-white">
-                            <i class="fas fa-exclamation-triangle fa-lg"></i>
+                        <div class="bg-warning bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-exclamation-triangle text-warning fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -297,11 +293,11 @@
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">Mata Kuliah Pilihan</h6>
-                            <h3 class="mt-2 mb-0">{{ $mataKuliahs->where('jenis', 'Pilihan')->count() }}</h3>
+                            <h6 class="text-muted mb-1">Mata Kuliah Pilihan</h6>
+                            <h3 class="mb-0">{{ $mataKuliahs->where('jenis', 'Pilihan')->count() }}</h3>
                         </div>
-                        <div class="rounded-circle p-3 bg-info text-white">
-                            <i class="fas fa-list fa-lg"></i>
+                        <div class="bg-info bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-list text-info fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -317,11 +313,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Mata Kuliah' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('akademik.mata-kuliah-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route('akademik.matakuliah-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('akademik.mata-kuliah-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route('akademik.matakuliah-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -336,7 +332,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Mata Kuliah Baru</h5>
-                                <form action="{{ route('akademik.mata-kuliah-store') }}" method="post">
+                                <form action="{{ route('akademik.matakuliah-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -522,17 +518,17 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('akademik.mata-kuliah-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('akademik.matakuliah-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Mata Kuliah">
                                                         <i class="fas fa-undo me-1"></i> Restore
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Mata Kuliah">
-                                                    <i class="fas fa-edit me-1"></i> Edit
+                                                <a href="{{ route('akademik.matakuliah-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="View Mata Kuliah">
+                                                    <i class="fas fa-edit me-1"></i> View
                                                 </a>
-                                                <form action="{{ route('akademik.mata-kuliah-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route('akademik.matakuliah-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Mata Kuliah" onclick="confirmDelete('{{ $item->id }}')">
@@ -549,266 +545,13 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Sidebar Content -->
-        <div class="col-lg-4 col-12 mb-2">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title">Informasi Mata Kuliah</h5>
-                </div>
-                <div class="card-body">
-                    <p>Bagian ini menampilkan informasi umum dan petunjuk terkait pengelolaan Mata Kuliah.</p>
-                    
-                    <div class="alert alert-light-primary">
-                        <h6 class="">Petunjuk Penggunaan:</h6>
-                        <ul class="mb-0">
-                            <li>Klik tombol "Tambah Mata Kuliah" untuk menambahkan mata kuliah baru</li>
-                            <li>Klik ikon <i class="fas fa-edit"></i> untuk mengedit mata kuliah</li>
-                            @if($is_trash)
-                                <li>Klik ikon <i class="fas fa-undo"></i> untuk restore mata kuliah</li>
-                            @else
-                                <li>Klik ikon <i class="fas fa-trash"></i> untuk menghapus mata kuliah</li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        
-        </div>
-        <div class="col-lg-4 col-12 mb-2">
 
-            
-            <!-- Jenis Mata Kuliah -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title">Jenis Mata Kuliah</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex flex-wrap gap-2 justify-content-between">
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-success text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <h6 class="mb-1">Wajib</h6>
-                            <span class="badge bg-success">{{ $mataKuliahs->where('jenis', 'Wajib')->count() }}</span>
-                        </div>
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-info text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-list"></i>
-                            </div>
-                            <h6 class="mb-1">Pilihan</h6>
-                            <span class="badge bg-info">{{ $mataKuliahs->where('jenis', 'Pilihan')->count() }}</span>
-                        </div>
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-warning text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <h6 class="mb-1">MKWU</h6>
-                            <span class="badge bg-warning">{{ $mataKuliahs->where('jenis', 'MKWU')->count() }}</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-wrap gap-2 justify-content-between mt-3">
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-primary text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h6 class="mb-1">MKU</h6>
-                            <span class="badge bg-primary">{{ $mataKuliahs->where('jenis', 'MKU')->count() }}</span>
-                        </div>
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-secondary text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h6 class="mb-1">Aktif</h6>
-                            <span class="badge bg-success">{{ $mataKuliahs->where('is_active', true)->count() }}</span>
-                        </div>
-                        <div class="text-center p-2 border rounded" style="flex: 1; min-width: 100px;">
-                            <div class="rounded-circle bg-dark text-white mx-auto mb-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-times-circle"></i>
-                            </div>
-                            <h6 class="mb-1">Nonaktif</h6>
-                            <span class="badge bg-secondary">{{ $mataKuliahs->where('is_active', false)->count() }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mata Kuliah Terbaru -->
-            @if(count($mataKuliahs) > 0)
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title">Mata Kuliah Terbaru</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        @foreach($mataKuliahs->sortByDesc('created_at')->take(5) as $item)
-                            <div class="list-group-item">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">{{ $item->name }}</h6>
-                                    <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <small class="text-muted">Kode: {{ $item->code }}</small>
-                                    <span class="badge {{ $item->is_active ? 'bg-success' : 'bg-secondary' }}">{{ $item->is_active ? 'Aktif' : 'Nonaktif' }}</span>
-                                </div>
-                                <small class="d-block mt-1">Jenis: {{ $item->jenis }} | SKS: {{ $item->beban_sks }}</small>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            @endif
-            
-
-        </div>
-        <div class="col-lg-4 col-12 mb-2">
-            <!-- Statistik Mata Kuliah -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Statistik Mata Kuliah</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="mataKuliahChart" width="100%" height="200"></canvas>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <!-- Edit Modals -->
-    @if(!$is_trash)
-        @foreach ($mataKuliahs as $item)
-            <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <form action="{{ route('akademik.mata-kuliah-update', $item->id) }}" method="POST">
-                            @method('PATCH')
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Mata Kuliah - {{ $item->name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_semester_id{{ $item->id }}" class="form-label">Semester</label>
-                                        <select class="form-select" name="semester_id" id="edit_semester_id{{ $item->id }}" required>
-                                            <option value="">Pilih Semester</option>
-                                            @foreach($semesters as $semester)
-                                                <option value="{{ $semester->id }}" {{ $item->semester_id == $semester->id ? 'selected' : '' }}>{{ $semester->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('semester_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_name{{ $item->id }}" class="form-label">Nama Mata Kuliah</label>
-                                        <input type="text" class="form-control" name="name" id="edit_name{{ $item->id }}" value="{{ $item->name }}" placeholder="Masukkan nama mata kuliah" required>
-                                        @error('name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_name_en{{ $item->id }}" class="form-label">Nama Mata Kuliah (English)</label>
-                                        <input type="text" class="form-control" name="name_en" id="edit_name_en{{ $item->id }}" value="{{ $item->name_en }}" placeholder="Masukkan nama mata kuliah dalam bahasa Inggris">
-                                        @error('name_en')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_code{{ $item->id }}" class="form-label">Kode Mata Kuliah</label>
-                                        <input type="text" class="form-control" name="code" id="edit_code{{ $item->id }}" value="{{ $item->code }}" placeholder="Masukkan kode mata kuliah" required>
-                                        @error('code')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_beban_sks{{ $item->id }}" class="form-label">Beban SKS</label>
-                                        <input type="number" class="form-control" name="beban_sks" id="edit_beban_sks{{ $item->id }}" value="{{ $item->beban_sks }}" placeholder="Masukkan beban SKS" min="1" max="10" required>
-                                        @error('beban_sks')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_jenis{{ $item->id }}" class="form-label">Jenis Mata Kuliah</label>
-                                        <select class="form-select" name="jenis" id="edit_jenis{{ $item->id }}" required>
-                                            <option value="">Pilih Jenis</option>
-                                            <option value="Wajib" {{ $item->jenis == 'Wajib' ? 'selected' : '' }}>Wajib</option>
-                                            <option value="Pilihan" {{ $item->jenis == 'Pilihan' ? 'selected' : '' }}>Pilihan</option>
-                                            <option value="MKWU" {{ $item->jenis == 'MKWU' ? 'selected' : '' }}>MKWU</option>
-                                            <option value="MKU" {{ $item->jenis == 'MKU' ? 'selected' : '' }}>MKU</option>
-                                        </select>
-                                        @error('jenis')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_sks_teori{{ $item->id }}" class="form-label">SKS Teori</label>
-                                        <input type="number" class="form-control" name="sks_teori" id="edit_sks_teori{{ $item->id }}" value="{{ $item->sks_teori }}" min="0" max="10" required>
-                                        @error('sks_teori')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_sks_praktik{{ $item->id }}" class="form-label">SKS Praktik</label>
-                                        <input type="number" class="form-control" name="sks_praktik" id="edit_sks_praktik{{ $item->id }}" value="{{ $item->sks_praktik }}" min="0" max="10" required>
-                                        @error('sks_praktik')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_sks_lapangan{{ $item->id }}" class="form-label">SKS Lapangan</label>
-                                        <input type="number" class="form-control" name="sks_lapangan" id="edit_sks_lapangan{{ $item->id }}" value="{{ $item->sks_lapangan }}" min="0" max="10" required>
-                                        @error('sks_lapangan')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_min_semester{{ $item->id }}" class="form-label">Minimal Semester</label>
-                                        <input type="number" class="form-control" name="min_semester" id="edit_min_semester{{ $item->id }}" value="{{ $item->min_semester }}" min="1" max="14" required>
-                                        @error('min_semester')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Status</label>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="is_active" id="edit_is_active{{ $item->id }}" value="1" {{ $item->is_active ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="edit_is_active{{ $item->id }}">Aktif</label>
-                                        </div>
-                                        @error('is_active')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> Simpan Perubahan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
 
     <script>
         // Initialize DataTable
@@ -821,7 +564,7 @@
                         text: '<i class="fas fa-copy"></i> Copy',
                         className: 'btn btn-secondary btn-sm',
                         exportOptions: {
-                            columns: ':not(:last-child)' // Exclude action column
+                            columns: ':not(:last-child)' 
                         }
                     },
                     {
@@ -832,7 +575,7 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
+                            return 'Data_MataKuliah_' + new Date().toISOString().slice(0,10);
                         }
                     },
                     {
@@ -843,9 +586,8 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Mata Kuliah'
+                            return 'Data_MataKuliah_' + new Date().toISOString().slice(0,10);
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -855,17 +597,10 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Program_Studi' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Mata Kuliah',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Mata Kuliah';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -873,67 +608,39 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Mata Kuliah',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Mata Kuliah</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#mataKuliahTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
-            
-            // Handle entries filter change
+
+            // Handle entries select change
             $('#entriesSelect').on('change', function() {
-                var value = $(this).val();
-                table.page.len(value).draw();
+                var selectedValue = $(this).val();
+                table.page.len(selectedValue).draw();
             });
-            
-            // Set initial value for entries select
-            $('#entriesSelect').val(table.page.len());
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
         // Image preview

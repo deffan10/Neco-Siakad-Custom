@@ -1,11 +1,6 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -376,11 +371,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Kurikulum Mata Kuliah' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('akademik.kurikulum-mata-kuliah-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route('akademik.kurikulum.matakuliah-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('akademik.kurikulum-mata-kuliah-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route('akademik.kurikulum.matakuliah-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -395,7 +390,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Kurikulum Mata Kuliah Baru</h5>
-                                <form action="{{ route('akademik.kurikulum-mata-kuliah-store') }}" method="post">
+                                <form action="{{ route('akademik.kurikulum.matakuliah-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -547,7 +542,7 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('akademik.kurikulum-mata-kuliah-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('akademik.kurikulum.matakuliah-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Kurikulum Mata Kuliah">
                                                         <i class="fas fa-undo me-1"></i> Restore
@@ -557,7 +552,7 @@
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Kurikulum Mata Kuliah">
                                                     <i class="fas fa-edit me-1"></i> Edit
                                                 </a>
-                                                <form action="{{ route('akademik.kurikulum-mata-kuliah-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route('akademik.kurikulum.matakuliah-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Kurikulum Mata Kuliah" onclick="confirmDelete('{{ $item->id }}')">
@@ -582,7 +577,7 @@
             <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form action="{{ route('akademik.kurikulum-mata-kuliah-update', $item->id) }}" method="POST">
+                        <form action="{{ route('akademik.kurikulum.matakuliah-update', $item->id) }}" method="POST">
                             @method('PATCH')
                             @csrf
                             <div class="modal-header">
@@ -675,18 +670,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
     <script>
         // Initialize DataTable
@@ -699,7 +682,7 @@
                         text: '<i class="fas fa-copy"></i> Copy',
                         className: 'btn btn-secondary btn-sm',
                         exportOptions: {
-                            columns: ':not(:last-child)' // Exclude action column
+                            columns: ':not(:last-child)' 
                         }
                     },
                     {
@@ -710,7 +693,7 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Kurikulum_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Kurikulum_MK_' + new Date().toISOString().slice(0,10);
                         }
                     },
                     {
@@ -721,9 +704,8 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Kurikulum_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Kurikulum Mata Kuliah'
+                            return 'Data_Kurikulum_MK_' + new Date().toISOString().slice(0,10);
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -733,17 +715,10 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Kurikulum_Mata_Kuliah_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Program_Studi' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Kurikulum Mata Kuliah',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Kurikulum Mata Kuliah';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -751,67 +726,39 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Kurikulum Mata Kuliah',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Kurikulum Mata Kuliah</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#kurikulumMataKuliahTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
-            
-            // Handle entries filter change
+
+            // Handle entries select change
             $('#entriesSelect').on('change', function() {
-                var value = $(this).val();
-                table.page.len(value).draw();
+                var selectedValue = $(this).val();
+                table.page.len(selectedValue).draw();
             });
-            
-            // Set initial value for entries select
-            $('#entriesSelect').val(table.page.len());
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
         // Konfirmasi delete dengan SweetAlert

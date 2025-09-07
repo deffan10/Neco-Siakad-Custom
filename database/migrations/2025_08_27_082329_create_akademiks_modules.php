@@ -68,8 +68,8 @@ return new class extends Migration
             $table->longText('karir')->nullable();
 
             // Banner / Logo
-            $table->string('logo')->nullable();
-            $table->string('banner')->nullable();
+            $table->string('logo')->default('default.png');
+            $table->string('banner')->default('default.png');
 
             // Audit
             $table->timestamps();
@@ -121,8 +121,8 @@ return new class extends Migration
             $table->longText('karir')->nullable();
 
             // Banner / Logo
-            $table->string('logo')->nullable();
-            $table->string('banner')->nullable();
+            $table->string('logo')->default('default.png');
+            $table->string('banner')->default('default.png');
 
             // Audit
             $table->timestamps();
@@ -258,10 +258,12 @@ return new class extends Migration
             $table->integer('sks_override')->nullable();
             $table->text('catatan')->nullable();
             
-            // Audit
+            // Audit fields
             $table->timestamps();
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             
             // Unique constraint
             $table->unique(['kurikulum_id', 'mata_kuliah_id']);
@@ -306,7 +308,6 @@ return new class extends Migration
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->enum('metode', ['Tatap Muka', 'Teleconference', 'Hybrid'])->default('Tatap Muka');
-            $table->enum('status', ['Terjadwal', 'Terlaksana', 'Ditunda', 'Dibatalkan'])->default('Terjadwal');
 
             $table->string('code')->unique();
             // Audit fields
@@ -341,8 +342,10 @@ return new class extends Migration
             $table->time('jam_mulai')->nullable();
             $table->time('jam_selesai')->nullable();
             $table->foreignId('ruang_id')->nullable()->constrained('ruangan');
-            $table->foreignId('dosen_id')->nullable()->constrained('users');  // Dosen yang mengajar
+            $table->foreignId('dosen_id')->nullable()->constrained('users'); 
             $table->enum('metode', ['Tatap Muka', 'Teleconference', 'Hybrid'])->nullable();
+            $table->enum('status', ['Terjadwal', 'Terlaksana', 'Ditunda', 'Dibatalkan'])->default('Terjadwal');
+
 
             // Konten meeting
             $table->string('link')->nullable(); // link zoom/teams/meet

@@ -9,32 +9,23 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Akademik\ProgramStudi;
 
-class Fakultas extends Model
+class ProgramStudiProfile extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'fakultas';
+    protected $table = 'program_studi_profile';
     protected $guarded = [];
 
     public function programStudi()
     {
-        return $this->hasMany(ProgramStudi::class, 'fakultas_id');
+        return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
     }
 
-    public function profile()
+    public function getLogoAttribute($value)
     {
-        return $this->hasOne(FakultasProfile::class, 'fakultas_id');
+        return $value == 'default.png' ? asset('storage/images/logo/logo-vertikal.png') : asset('storage/images/logo/prodi/' . $value);
     }
 
-    public function dekan()
-    {
-        return $this->belongsTo(User::class, 'dekan_id');
-    }
-
-    public function sekretaris()
-    {
-        return $this->belongsTo(User::class, 'sekretaris_id');
-    }
 
     public function createdBy()
     {

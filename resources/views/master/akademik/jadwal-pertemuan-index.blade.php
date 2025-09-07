@@ -1,11 +1,7 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+ 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -499,6 +495,20 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                            <select class="form-select" name="status" id="status" required>
+                                                <option value="">Pilih Status</option>
+                                                <option value="Terjadwal">Terjadwal</option>
+                                                <option value="Terlaksana">Terlaksana</option>
+                                                <option value="Ditunda">Ditunda</option>
+                                                <option value="Dibatalkan">Dibatalkan</option>
+                                            </select>
+                                            @error('status')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-save me-2"></i>Simpan
@@ -566,10 +576,16 @@
                                         <td data-label="Ruangan">{{ $item->ruangan ? $item->ruangan->name : '-' }}</td>
                                         <td data-label="Metode">{{ $item->metode ?? '-' }}</td>
                                         <td data-label="Status">
-                                            @if($item->is_realisasi == true)
+                                            @if($item->status == 'Terjadwal')
+                                                <span class="badge bg-primary">Terjadwal</span>
+                                            @elseif($item->status == 'Terlaksana')
                                                 <span class="badge bg-success">Terlaksana</span>
+                                            @elseif($item->status == 'Ditunda')
+                                                <span class="badge bg-warning">Ditunda</span>
+                                            @elseif($item->status == 'Dibatalkan')
+                                                <span class="badge bg-danger">Dibatalkan</span>
                                             @else
-                                                <span class="badge bg-warning">Belum Terlaksana</span>
+                                                <span class="badge bg-secondary">{{ $item->status }}</span>
                                             @endif
                                         </td>
                                         @if($is_trash)
@@ -753,18 +769,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
     <script>
         // Initialize DataTable

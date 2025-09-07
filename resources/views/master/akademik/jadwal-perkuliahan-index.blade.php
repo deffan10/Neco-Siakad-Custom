@@ -1,11 +1,6 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -495,19 +490,7 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                                            <select class="form-select" name="status" id="status" required>
-                                                <option value="">Pilih Status</option>
-                                                <option value="Terjadwal">Terjadwal</option>
-                                                <option value="Terlaksana">Terlaksana</option>
-                                                <option value="Ditunda">Ditunda</option>
-                                                <option value="Dibatalkan">Dibatalkan</option>
-                                            </select>
-                                            @error('status')
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-save me-2"></i>Simpan
@@ -550,7 +533,6 @@
                                     <th>Jam</th>
                                     <th>Ruangan</th>
                                     <th>Metode</th>
-                                    <th>Status</th>
                                     @if($is_trash)
                                         <th>Dihapus Oleh</th>
                                         <th>Dihapus Pada</th>
@@ -570,19 +552,7 @@
                                         <td data-label="Jam">{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($item->jam_selesai)->format('H:i') }}</td>
                                         <td data-label="Ruangan">{{ $item->ruangan ? $item->ruangan->name : '-' }}</td>
                                         <td data-label="Metode">{{ $item->metode }}</td>
-                                        <td data-label="Status">
-                                            @if($item->status == 'Terjadwal')
-                                                <span class="badge bg-primary">Terjadwal</span>
-                                            @elseif($item->status == 'Terlaksana')
-                                                <span class="badge bg-success">Terlaksana</span>
-                                            @elseif($item->status == 'Ditunda')
-                                                <span class="badge bg-warning">Ditunda</span>
-                                            @elseif($item->status == 'Dibatalkan')
-                                                <span class="badge bg-danger">Dibatalkan</span>
-                                            @else
-                                                <span class="badge bg-secondary">{{ $item->status }}</span>
-                                            @endif
-                                        </td>
+
                                         @if($is_trash)
                                             <td data-label="Dihapus Oleh">
                                                 <div class="d-flex align-items-center">
@@ -773,19 +743,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
-
     <script>
         // Initialize DataTable
         $(document).ready(function() {
@@ -808,7 +765,7 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Jadwal_Perkuliahan_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Jadwal_Perkuliahan' + new Date().toISOString().slice(0,10);
                         }
                     },
                     {
@@ -819,9 +776,8 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Jadwal_Perkuliahan_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Jadwal Perkuliahan'
+                            return 'Data_Jadwal_Perkuliahan' + new Date().toISOString().slice(0,10);
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -831,17 +787,10 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Jadwal_Perkuliahan_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Jadwal_Perkuliahan' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Jadwal Perkuliahan',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Jadwal Perkuliahan';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -849,74 +798,46 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Jadwal Perkuliahan',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Jadwal Perkuliahan</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#jadwalPerkuliahanTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
-            
-            // Handle entries filter change
+
+            // Handle entries select change
             $('#entriesSelect').on('change', function() {
-                var value = $(this).val();
-                table.page.len(value).draw();
+                var selectedValue = $(this).val();
+                table.page.len(selectedValue).draw();
             });
-            
-            // Set initial value for entries select
-            $('#entriesSelect').val(table.page.len());
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
-        // Konfirmasi delete dengan SweetAlert
+        // Confirm delete function
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: "Data jadwal perkuliahan yang dihapus tidak dapat dikembalikan!",
+                text: "Data yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

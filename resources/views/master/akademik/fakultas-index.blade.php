@@ -1,11 +1,6 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -299,6 +294,11 @@
             .entries-filter {
                 justify-content: center;
             }
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
         }
     </style>
 @endsection
@@ -607,6 +607,9 @@
                                                     </button>
                                                 </form>
                                             @else
+                                                <a href="{{ route('akademik.fakultas-view', $item->id ) }}" class="btn btn-sm btn-success me-1" data-bs-toggle="tooltip" title="View Fakultas">
+                                                    <i class="fas fa-eye me-1"></i> View
+                                                </a>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Fakultas">
                                                     <i class="fas fa-edit me-1"></i> Edit
                                                 </a>
@@ -765,18 +768,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
     <script>
         // Initialize DataTable
@@ -812,8 +803,7 @@
                         },
                         filename: function() {
                             return 'Data_Fakultas_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Fakultas'
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -825,15 +815,8 @@
                         filename: function() {
                             return 'Data_Fakultas_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Fakultas',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Fakultas';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -841,67 +824,39 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Fakultas',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Fakultas</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#fakultasTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
-            
-            // Handle entries filter change
+
+            // Handle entries select change
             $('#entriesSelect').on('change', function() {
-                var value = $(this).val();
-                table.page.len(value).draw();
+                var selectedValue = $(this).val();
+                table.page.len(selectedValue).draw();
             });
-            
-            // Set initial value for entries select
-            $('#entriesSelect').val(table.page.len());
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
         // Konfirmasi delete dengan SweetAlert

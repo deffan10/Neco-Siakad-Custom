@@ -1,11 +1,6 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Stats cards */
@@ -245,11 +240,11 @@
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-0">Total Tahun Akademik</h6>
-                            <h3 class="mt-2 mb-0">{{ count($tahunAkademiks) }}</h3>
+                            <h6 class="text-muted mb-1">Total Tahun Akademik</h6>
+                            <h3 class="mb-0">{{ count($tahunAkademiks) }}</h3>
                         </div>
-                        <div class="rounded-circle p-3 bg-primary text-white">
-                            <i class="fas fa-calendar-alt fa-lg"></i>
+                        <div class="rounded p-3 bg-primary bg-opacity-25">
+                            <i class="fas fa-calendar-alt text-primary fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -681,19 +676,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
-
     <script>
         // Initialize DataTable
         $(document).ready(function() {
@@ -728,8 +710,7 @@
                         },
                         filename: function() {
                             return 'Data_Tahun_Akademik_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Tahun Akademik'
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -741,15 +722,8 @@
                         filename: function() {
                             return 'Data_Tahun_Akademik_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Tahun Akademik',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Tahun Akademik';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -757,74 +731,46 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Tahun Akademik',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Tahun Akademik</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#tahunAkademikTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
-            
-            // Handle entries filter change
+
+            // Handle entries select change
             $('#entriesSelect').on('change', function() {
-                var value = $(this).val();
-                table.page.len(value).draw();
+                var selectedValue = $(this).val();
+                table.page.len(selectedValue).draw();
             });
-            
-            // Set initial value for entries select
-            $('#entriesSelect').val(table.page.len());
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
-        // SweetAlert for delete confirmation
+        // Confirm delete function
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: "Data yang dihapus akan masuk ke trash!",
+                text: "Data yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -835,7 +781,7 @@
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + id).submit();
                 }
-            })
+            });
         }
 
         // Chart initialization

@@ -11,6 +11,9 @@ use App\Models\Referensi\Semester;
 use App\Models\Akademik\KurikulumMataKuliah;
 use App\Models\Akademik\KelasPerkuliahan;
 use App\Models\Akademik\JadwalPerkuliahan;
+use App\Models\Akademik\MataKuliahDetail;
+use App\Models\Akademik\MataKuliahPrasyarat;
+use App\Models\Akademik\MataKuliahDosen;
 
 class MataKuliah extends Model
 {
@@ -52,5 +55,20 @@ class MataKuliah extends Model
     public function deletedBy()
     {
         return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    public function detail()
+    {
+        return $this->hasOne(MataKuliahDetail::class, 'mata_kuliah_id');
+    }
+
+    public function prasyarat()
+    {
+        return $this->hasMany(MataKuliahPrasyarat::class, 'mata_kuliah_id');
+    }
+
+    public function dosenPengampu()
+    {
+        return $this->hasMany(MataKuliahDosen::class, 'mata_kuliah_id');
     }
 }

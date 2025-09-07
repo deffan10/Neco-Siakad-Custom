@@ -8,39 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 // USE MODELS
 use App\Models\User;
 use App\Models\Akademik\Fakultas;
-use App\Models\Akademik\Kurikulum;
-use App\Models\Akademik\ProgramStudiProfile;
 
-class ProgramStudi extends Model
+class FakultasProfile extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'program_studi';
+    protected $table = 'fakultas_profile';
     protected $guarded = [];
 
     public function fakultas()
     {
         return $this->belongsTo(Fakultas::class, 'fakultas_id');
-    }
-
-    public function kurikulum()
-    {
-        return $this->hasMany(Kurikulum::class, 'program_studi_id');
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(ProgramStudiProfile::class, 'program_studi_id');
-    }
-
-    public function kaprodi()
-    {
-        return $this->belongsTo(User::class, 'kaprodi_id');
-    }
-
-    public function sekretaris()
-    {
-        return $this->belongsTo(User::class, 'sekretaris_id');
     }
 
     public function createdBy()
