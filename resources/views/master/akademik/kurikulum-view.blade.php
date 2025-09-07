@@ -93,16 +93,16 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#matakuliah" role="tab">
-                                <i class="fas fa-book-open me-2"></i> Matakuliah
+                                <i class="fas fa-book-open me-2"></i> Mata Kuliah
                             </a>
                         </li>
                     </ul>
 
-                    <div class="tab-content p-3">
+                    <div class="tab-content">
                         <!-- Tab Data Utama -->
-                        <div class="tab-pane active" id="data-utama" role="tabpanel">
+                        <div class="tab-pane fade show active" id="data-utama" role="tabpanel">
                             <div class="form-section">
-                                <h5>Informasi Utama</h5>
+                                <h5>Data Utama Kurikulum</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Program Studi <span class="text-danger">*</span></label>
@@ -134,7 +134,7 @@
                         </div>
                         
                         <!-- Tab Periode Berlaku -->
-                        <div class="tab-pane" id="periode-berlaku" role="tabpanel">
+                        <div class="tab-pane fade" id="periode-berlaku" role="tabpanel">
                             <div class="form-section">
                                 <h5>Periode Berlaku</h5>
                                 <div class="row">
@@ -175,7 +175,7 @@
                         </div>
                         
                         <!-- Tab Ketentuan Akademik -->
-                        <div class="tab-pane" id="ketentuan-akademik" role="tabpanel">
+                        <div class="tab-pane fade" id="ketentuan-akademik" role="tabpanel">
                             <div class="form-section">
                                 <h5>Ketentuan Akademik</h5>
                                 <div class="row">
@@ -206,7 +206,7 @@
                         </div>
                         
                         <!-- Tab Dokumen & Status -->
-                        <div class="tab-pane" id="dokumen-status" role="tabpanel">
+                        <div class="tab-pane fade" id="dokumen-status" role="tabpanel">
                             <div class="form-section">
                                 <h5>Dokumen & Status</h5>
                                 <div class="row">
@@ -231,119 +231,160 @@
                             </div>
                         </div>
                         
-                        <!-- Tab Matakuliah -->
-                        <div class="tab-pane" id="matakuliah" role="tabpanel">
+                        <!-- Tab Mata Kuliah -->
+                        <div class="tab-pane fade" id="matakuliah" role="tabpanel">
                             <div class="form-section">
-                                <h5>Daftar Matakuliah dalam Kurikulum</h5>
-                                
-                                @if($kurikulum->kurikulumMataKuliah->count() > 0)
-                                    @php
-                                        $matakuliahBySemester = $kurikulum->kurikulumMataKuliah->groupBy('semester.name')->sortKeys();
-                                    @endphp
-                                    
-                                    <div class="accordion" id="semesterAccordion">
-                                        @foreach($matakuliahBySemester as $semesterName => $matakuliahs)
-                                            @php
-                                                $semesterId = 'semester' . str_replace(' ', '', $semesterName);
-                                                $totalSks = $matakuliahs->sum(function($item) {
-                                                    return $item->sks_override ?? $item->mataKuliah->beban_sks ?? 0;
-                                                });
-                                                $wajibCount = $matakuliahs->where('is_wajib', true)->count();
-                                                $pilihanCount = $matakuliahs->where('is_wajib', false)->count();
-                                            @endphp
-                                            
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="heading{{ $semesterId }}">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $semesterId }}" aria-expanded="false" aria-controls="collapse{{ $semesterId }}">
-                                                        <div class="d-flex justify-content-between align-items-center w-100 me-3">
-                                                            <div>
-                                                                <strong>{{ $semesterName ?? 'Semester Tidak Diketahui' }}</strong>
-                                                                <small class="text-muted ms-2">({{ $matakuliahs->count() }} Matakuliah)</small>
-                                                            </div>
-                                                            <div class="d-flex gap-2">
-                                                                <span class="badge bg-primary">{{ $totalSks }} SKS</span>
-                                                                <span class="badge bg-success">{{ $wajibCount }} Wajib</span>
-                                                                @if($pilihanCount > 0)
-                                                                    <span class="badge bg-warning">{{ $pilihanCount }} Pilihan</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                </h2>
-                                                <div id="collapse{{ $semesterId }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $semesterId }}" data-bs-parent="#semesterAccordion">
-                                                    <div class="accordion-body">
-                                                        <div class="row">
-                                                            @foreach($matakuliahs->sortBy('urutan') as $item)
-                                                                <div class="col-md-6 col-lg-4 mb-3">
-                                                                    <div class="card h-100 border-start border-4 {{ $item->is_wajib ? 'border-success' : 'border-warning' }}">
-                                                                        <div class="card-body">
-                                                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                                                <span class="badge bg-primary">{{ $item->mataKuliah->code ?? '-' }}</span>
-                                                                                <span class="badge {{ $item->is_wajib ? 'bg-success' : 'bg-warning' }}">
-                                                                                    {{ $item->is_wajib ? 'Wajib' : 'Pilihan' }}
-                                                                                </span>
-                                                                            </div>
-                                                                            <h6 class="card-title">{{ $item->mataKuliah->name ?? '-' }}</h6>
-                                                                            <div class="row text-sm">
-                                                                                <div class="col-6">
-                                                                                    <small class="text-muted">SKS:</small><br>
-                                                                                    <strong>{{ $item->sks_override ?? $item->mataKuliah->beban_sks ?? 0 }}</strong>
-                                                                                </div>
-                                                                                <div class="col-6">
-                                                                                    <small class="text-muted">Urutan:</small><br>
-                                                                                    <strong>{{ $item->urutan }}</strong>
-                                                                                </div>
-                                                                            </div>
-                                                                            @if($item->mataKuliah->jenis)
-                                                                                <div class="mt-2">
-                                                                                    <span class="badge bg-secondary">{{ $item->mataKuliah->jenis }}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                            @if($item->mataKuliah->sks_teori || $item->mataKuliah->sks_praktik || $item->mataKuliah->sks_lapangan)
-                                                                                <div class="mt-2">
-                                                                                    <small class="text-muted">Detail SKS:</small><br>
-                                                                                    @if($item->mataKuliah->sks_teori > 0)
-                                                                                        <span class="badge bg-info me-1">T: {{ $item->mataKuliah->sks_teori }}</span>
-                                                                                    @endif
-                                                                                    @if($item->mataKuliah->sks_praktik > 0)
-                                                                                        <span class="badge bg-info me-1">P: {{ $item->mataKuliah->sks_praktik }}</span>
-                                                                                    @endif
-                                                                                    @if($item->mataKuliah->sks_lapangan > 0)
-                                                                                        <span class="badge bg-info me-1">L: {{ $item->mataKuliah->sks_lapangan }}</span>
-                                                                                    @endif
-                                                                                </div>
-                                                                            @endif
-                                                                            @if($item->catatan)
-                                                                                <div class="mt-2">
-                                                                                    <small class="text-muted">Catatan:</small><br>
-                                                                                    <small>{{ $item->catatan }}</small>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <!-- Header with Add Button and Statistics -->
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="mb-0">Daftar Mata Kuliah dalam Kurikulum</h5>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMataKuliahModal">
+                                        <i class="fas fa-plus me-2"></i>Tambah Mata Kuliah
+                                    </button>
+                                </div>
+
+                                <!-- Statistics Cards -->
+                                <div class="row mb-4">
+                                    <div class="col-md-3">
+                                        <div class="card bg-primary text-white">
+                                            <div class="card-body text-center">
+                                                <h4>{{ $kurikulum->kurikulumMataKuliah->count() }}</h4>
+                                                <small>Total Mata Kuliah</small>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="card bg-success text-white">
+                                            <div class="card-body text-center">
+                                                <h4>{{ $kurikulum->kurikulumMataKuliah->where('is_wajib', true)->count() }}</h4>
+                                                <small>Mata Kuliah Wajib</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="card bg-warning text-white">
+                                            <div class="card-body text-center">
+                                                <h4>{{ $kurikulum->kurikulumMataKuliah->where('is_wajib', false)->count() }}</h4>
+                                                <small>Mata Kuliah Pilihan</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="card bg-info text-white">
+                                            <div class="card-body text-center">
+                                                <h4>{{ $kurikulum->kurikulumMataKuliah->sum(function($kmk) { return $kmk->sks_override ?? $kmk->mataKuliah->beban_sks; }) }}</h4>
+                                                <small>Total SKS</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Filter and Search -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <select class="form-select" id="semesterFilter" onchange="filterMataKuliah()">
+                                            <option value="">Semua Semester</option>
+                                            @foreach($semesters as $semester)
+                                                <option value="{{ $semester->id }}">{{ $semester->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-select" id="statusFilter" onchange="filterMataKuliah()">
+                                            <option value="">Semua Status</option>
+                                            <option value="1">Wajib</option>
+                                            <option value="0">Pilihan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="searchMataKuliah" placeholder="Cari mata kuliah..." onkeyup="filterMataKuliah()">
+                                    </div>
+                                </div>
+
+                                @if($kurikulum->kurikulumMataKuliah->count() > 0)
+                                    <!-- Table View -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover" id="mataKuliahTable">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th width="5%">#</th>
+                                                    <th width="10%">Kode</th>
+                                                    <th width="30%">Nama Mata Kuliah</th>
+                                                    <th width="10%">Semester</th>
+                                                    <th width="8%">SKS</th>
+                                                    <th width="8%">Status</th>
+                                                    <th width="8%">Urutan</th>
+                                                    <th width="8%">Jenis</th>
+                                                    <th width="13%">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($kurikulum->kurikulumMataKuliah->sortBy(['semester.name', 'urutan']) as $index => $item)
+                                                    <tr data-semester="{{ $item->semester_id }}" data-status="{{ $item->is_wajib ? '1' : '0' }}">
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>
+                                                            <span class="badge bg-primary">{{ $item->mataKuliah->code ?? '-' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <strong>{{ $item->mataKuliah->name ?? '-' }}</strong>
+                                                            @if($item->catatan)
+                                                                <br><small class="text-muted">{{ $item->catatan }}</small>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $item->semester->name ?? '-' }}</td>
+                                                        <td>
+                                                            <span class="badge bg-secondary">
+                                                                {{ $item->sks_override ?? $item->mataKuliah->beban_sks ?? 0 }}
+                                                            </span>
+                                                            @if($item->sks_override)
+                                                                <br><small class="text-warning">Override</small>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge {{ $item->is_wajib ? 'bg-success' : 'bg-warning' }}">
+                                                                {{ $item->is_wajib ? 'Wajib' : 'Pilihan' }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-info">{{ $item->urutan }}</span>
+                                                        </td>
+                                                        <td>
+                                                            @if($item->mataKuliah->jenis)
+                                                                <span class="badge bg-light text-dark">{{ $item->mataKuliah->jenis }}</span>
+                                                            @else
+                                                                <span class="text-muted">-</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm">
+                                                                <button type="button" class="btn btn-outline-primary" 
+                                                                    onclick="editMataKuliah({{ $item->kurikulum_id }}, {{ $item->mata_kuliah_id }}, {{ $item->semester_id }}, {{ $item->is_wajib ? 'true' : 'false' }}, {{ $item->urutan }}, {{ $item->sks_override ? $item->sks_override : 'null' }}, '{{ $item->catatan ? addslashes($item->catatan) : '' }}')"
+                                                                    data-bs-toggle="tooltip" title="Edit">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                                <form action="{{ route($spref . 'akademik.kurikulum-matakuliah-remove', [$item->kurikulum_id, $item->mata_kuliah_id]) }}" method="POST" class="d-inline" onsubmit="return confirmDelete(this, '{{ $item->mataKuliah->name ?? 'mata kuliah ini' }}')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-outline-danger" data-bs-toggle="tooltip" title="Hapus">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 @else
                                     <div class="text-center text-muted py-5">
-                                        <i class="fas fa-info-circle fa-3x mb-3 me-2"></i>
-                                        <h5>Belum ada matakuliah yang terdaftar</h5>
-                                        <p>Belum ada matakuliah yang terdaftar dalam kurikulum ini</p>
+                                        <i class="fas fa-book fa-3x mb-3"></i>
+                                        <h5>Belum ada mata kuliah yang terdaftar</h5>
+                                        <p>Belum ada mata kuliah yang terdaftar dalam kurikulum ini</p>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMataKuliahModal">
+                                            <i class="fas fa-plus me-2"></i>Tambah Mata Kuliah Pertama
+                                        </button>
                                     </div>
                                 @endif
-                                
-
-                                
-                                <div class="alert alert-info mt-3">
-                                    <i class="fas fa-info-circle me-2 me-2"></i>
-                                    <strong>Informasi:</strong> Untuk mengelola matakuliah dalam kurikulum, silakan gunakan menu 
-                                    <a href="{{ route($spref . 'akademik.kurikulum.matakuliah-index') }}" class="alert-link">Kurikulum Matakuliah</a>.
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -357,17 +398,175 @@
         </div>
     </div>
 </div>
+<!-- Add Mata Kuliah Modal -->
+<div class="modal fade" id="addMataKuliahModal" tabindex="-1" aria-labelledby="addMataKuliahModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="{{ route($spref . 'akademik.kurikulum-matakuliah-store', $kurikulum->id) }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMataKuliahModalLabel">Tambah Mata Kuliah ke Kurikulum</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Mata Kuliah <span class="text-danger">*</span></label>
+                            <select class="form-select" name="mata_kuliah_id" required>
+                                <option value="">Pilih Mata Kuliah</option>
+                                @foreach($mataKuliahs as $mk)
+                                    <option value="{{ $mk->id }}" data-sks="{{ $mk->beban_sks }}" data-jenis="{{ $mk->jenis }}">
+                                        {{ $mk->code }} - {{ $mk->name }} ({{ $mk->beban_sks }} SKS)
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Semester <span class="text-danger">*</span></label>
+                            <select class="form-select" name="semester_id" required>
+                                <option value="">Pilih Semester</option>
+                                @foreach($semesters as $semester)
+                                    <option value="{{ $semester->id }}">{{ $semester->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" name="is_wajib" required>
+                                <option value="">Pilih Status</option>
+                                <option value="1">Wajib</option>
+                                <option value="0">Pilihan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Urutan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" name="urutan" min="0" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">SKS Override</label>
+                            <input type="number" class="form-control" name="sks_override" min="0" max="10" placeholder="Kosongkan jika sama">
+                            <small class="text-muted">Kosongkan jika mengikuti SKS mata kuliah</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catatan</label>
+                        <textarea class="form-control" name="catatan" rows="3" placeholder="Catatan khusus untuk mata kuliah ini dalam kurikulum"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah Mata Kuliah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Mata Kuliah Modal -->
+<div class="modal fade" id="editMataKuliahModal" tabindex="-1" aria-labelledby="editMataKuliahModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editMataKuliahForm" method="POST">
+                @csrf
+                @method('PATCH')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMataKuliahModalLabel">Edit Mata Kuliah dalam Kurikulum</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Semester <span class="text-danger">*</span></label>
+                            <select class="form-select" name="semester_id" id="edit_semester_id" required>
+                                <option value="">Pilih Semester</option>
+                                @foreach($semesters as $semester)
+                                    <option value="{{ $semester->id }}">{{ $semester->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" name="is_wajib" id="edit_is_wajib" required>
+                                <option value="">Pilih Status</option>
+                                <option value="1">Wajib</option>
+                                <option value="0">Pilihan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Urutan <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" name="urutan" id="edit_urutan" min="0" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">SKS Override</label>
+                            <input type="number" class="form-control" name="sks_override" id="edit_sks_override" min="0" max="10" placeholder="Kosongkan jika sama">
+                            <small class="text-muted">Kosongkan jika mengikuti SKS mata kuliah</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catatan</label>
+                        <textarea class="form-control" name="catatan" id="edit_catatan" rows="3" placeholder="Catatan khusus untuk mata kuliah ini dalam kurikulum"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+
+
 
 @section('custom-js')
 <script>
-    // Auto-calculate total SKS when SKS Wajib or SKS Pilihan changes
     document.addEventListener('DOMContentLoaded', function() {
-        const sksWajib = document.querySelector('input[name="sks_wajib"]');
-        const sksPilihan = document.querySelector('input[name="sks_pilihan"]');
-        const totalSks = document.querySelector('input[name="total_sks_lulus"]');
+        // Initialize tooltips
+        if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Tooltip) {
+            try {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new window.bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            } catch (e) {
+                console.warn('Tooltip initialization failed:', e);
+            }
+        }
+    });
+    
+    // SKS calculation
+    const sksWajib = document.querySelector('input[name="sks_wajib"]');
+    const sksPilihan = document.querySelector('input[name="sks_pilihan"]');
+    const totalSks = document.querySelector('input[name="total_sks_lulus"]');
         
-        function calculateTotal() {
+        // Edit Mata Kuliah function
+    function editMataKuliah(kurikulumId, mataKuliahId, semesterId, isWajib, urutan, sksOverride, catatan) {
+        // Set form action
+        const form = document.getElementById('editMataKuliahForm');
+        form.action = `{{ route($spref . 'akademik.kurikulum-matakuliah-update', [$kurikulum->id, '__MATA_KULIAH_ID__']) }}`.replace('__MATA_KULIAH_ID__', mataKuliahId);
+        
+        // Fill form fields
+        document.getElementById('edit_semester_id').value = semesterId;
+        document.getElementById('edit_is_wajib').value = isWajib ? '1' : '0';
+        document.getElementById('edit_urutan').value = urutan;
+        document.getElementById('edit_sks_override').value = sksOverride === null ? '' : sksOverride;
+        document.getElementById('edit_catatan').value = catatan || '';
+        
+        // Show modal
+        if (typeof window.bootstrap !== 'undefined') {
+            const modal = new window.bootstrap.Modal(document.getElementById('editMataKuliahModal'));
+            modal.show();
+        } else {
+            // Fallback: show modal without Bootstrap
+            document.getElementById('editMataKuliahModal').style.display = 'block';
+            document.getElementById('editMataKuliahModal').classList.add('show');
+        }
+    }
             const wajib = parseInt(sksWajib.value) || 0;
             const pilihan = parseInt(sksPilihan.value) || 0;
             const total = wajib + pilihan;
@@ -381,6 +580,119 @@
             sksWajib.addEventListener('input', calculateTotal);
             sksPilihan.addEventListener('input', calculateTotal);
         }
-    });
+    }
+    
+    // Confirm delete function
+    function confirmDelete(form, mataKuliahName) {
+        const confirmed = confirm(`Yakin ingin menghapus mata kuliah "${mataKuliahName}" dari kurikulum ini?`);
+        if (confirmed) {
+            console.log('Delete confirmed for:', mataKuliahName);
+            return true;
+        }
+        return false;
+    }
+    
+    // Filter functions for mata kuliah table
+    function filterMataKuliah() {
+        const semesterFilter = document.getElementById('semesterFilter').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+        const searchText = document.getElementById('searchMataKuliah').value.toLowerCase();
+        const rows = document.querySelectorAll('#mataKuliahTable tbody tr');
+        
+        rows.forEach(row => {
+            const semesterData = row.getAttribute('data-semester');
+            const statusData = row.getAttribute('data-status');
+            const textContent = row.textContent.toLowerCase();
+            
+            let showRow = true;
+            
+            // Filter by semester
+            if (semesterFilter !== '' && semesterData !== semesterFilter) {
+                showRow = false;
+            }
+            
+            // Filter by status
+            if (statusFilter !== '' && statusData !== statusFilter) {
+                showRow = false;
+            }
+            
+            // Filter by search text
+            if (searchText !== '' && !textContent.includes(searchText)) {
+                showRow = false;
+            }
+            
+            row.style.display = showRow ? '' : 'none';
+        });
+    }
+    
+    // Edit mata kuliah function
+    function editMataKuliah(kurikulumId, mataKuliahId, semesterId, isWajib, urutan, sksOverride, catatan) {
+        console.log('Edit function called with:', {kurikulumId, mataKuliahId, semesterId, isWajib, urutan, sksOverride, catatan});
+        
+        const form = document.getElementById('editMataKuliahForm');
+        if (!form) {
+            console.error('Edit form not found');
+            return;
+        }
+        
+        const action = `{{ route($spref . 'akademik.kurikulum-matakuliah-update', [$kurikulum->id, ':mataKuliahId']) }}`;
+        form.action = action.replace(':mataKuliahId', mataKuliahId);
+        
+        const semesterSelect = document.getElementById('edit_semester_id');
+        const statusSelect = document.getElementById('edit_is_wajib');
+        const urutanInput = document.getElementById('edit_urutan');
+        const sksInput = document.getElementById('edit_sks_override');
+        const catatanInput = document.getElementById('edit_catatan');
+        
+        if (semesterSelect) semesterSelect.value = semesterId;
+        if (statusSelect) statusSelect.value = isWajib ? '1' : '0';
+        if (urutanInput) urutanInput.value = urutan;
+        if (sksInput) sksInput.value = (sksOverride === 'null' || sksOverride === null || sksOverride === '') ? '' : sksOverride;
+        if (catatanInput) catatanInput.value = (catatan === 'null' || catatan === null) ? '' : catatan;
+        
+        // Show modal
+        const modalElement = document.getElementById('editMataKuliahModal');
+        if (modalElement) {
+            // Try Bootstrap modal first
+            if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Modal) {
+                const modal = new window.bootstrap.Modal(modalElement);
+                modal.show();
+            } else {
+                // Fallback: manually show modal
+                console.warn('Bootstrap Modal not available, using fallback');
+                modalElement.classList.add('show');
+                modalElement.style.display = 'block';
+                modalElement.setAttribute('aria-modal', 'true');
+                modalElement.setAttribute('role', 'dialog');
+                document.body.classList.add('modal-open');
+                
+                // Add backdrop
+                const backdrop = document.createElement('div');
+                backdrop.className = 'modal-backdrop fade show';
+                backdrop.id = 'modal-backdrop-' + Date.now();
+                document.body.appendChild(backdrop);
+                
+                // Handle close button
+                const closeBtn = modalElement.querySelector('.btn-close, [data-bs-dismiss="modal"]');
+                if (closeBtn) {
+                    closeBtn.onclick = function() {
+                        modalElement.classList.remove('show');
+                        modalElement.style.display = 'none';
+                        modalElement.removeAttribute('aria-modal');
+                        modalElement.removeAttribute('role');
+                        document.body.classList.remove('modal-open');
+                        document.getElementById(backdrop.id)?.remove();
+                    };
+                }
+                
+                // Handle backdrop click
+                backdrop.onclick = function() {
+                    closeBtn.click();
+                };
+            }
+        } else {
+            console.error('Edit modal not found');
+        }
+    }
 </script>
 @endsection

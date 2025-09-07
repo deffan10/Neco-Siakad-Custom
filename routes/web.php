@@ -223,6 +223,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/akademik/kurikulum/{id}/delete', [App\Http\Controllers\Master\Akademik\KurikulumController::class, 'destroy'])->name('akademik.kurikulum-destroy');
     Route::post('/akademik/kurikulum/{id}/restore', [App\Http\Controllers\Master\Akademik\KurikulumController::class, 'restore'])->name('akademik.kurikulum-restore');
     
+    // Kurikulum Mata Kuliah Management within Kurikulum Detail
+    Route::post('/akademik/kurikulum/{id}/mata-kuliah', [App\Http\Controllers\Master\Akademik\KurikulumController::class, 'storeMataKuliah'])->name('akademik.kurikulum-matakuliah-store');
+    Route::patch('/akademik/kurikulum/{kurikulumId}/mata-kuliah/{mataKuliahId}', [App\Http\Controllers\Master\Akademik\KurikulumController::class, 'updateMataKuliah'])->name('akademik.kurikulum-matakuliah-update');
+    Route::delete('/akademik/kurikulum/{kurikulumId}/mata-kuliah/{mataKuliahId}', [App\Http\Controllers\Master\Akademik\KurikulumController::class, 'removeMataKuliah'])->name('akademik.kurikulum-matakuliah-remove');
+    
     Route::get('/akademik/matakuliah', [App\Http\Controllers\Master\Akademik\MataKuliahController::class, 'index'])->name('akademik.matakuliah-index');
     Route::get('/akademik/matakuliah/view/{id}', [App\Http\Controllers\Master\Akademik\MataKuliahController::class, 'view'])->name('akademik.matakuliah-view');
     Route::get('/akademik/matakuliah/trashed', [App\Http\Controllers\Master\Akademik\MataKuliahController::class, 'trash'])->name('akademik.matakuliah-trash');

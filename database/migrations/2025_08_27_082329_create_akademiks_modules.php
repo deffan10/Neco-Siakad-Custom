@@ -305,6 +305,8 @@ return new class extends Migration
             $table->foreignId('ruang_id')->nullable()->constrained('ruangan');
 
             $table->enum('hari', ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu']);
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai')->nullable();
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->enum('metode', ['Tatap Muka', 'Teleconference', 'Hybrid'])->default('Tatap Muka');

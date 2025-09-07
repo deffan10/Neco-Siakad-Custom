@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 // Use Models
 use App\Models\Akademik\Kurikulum;
-use App\Models\Akademik\ProgramStudi;
+use App\Models\Akademik\KurikulumMataKuliah;
 use App\Models\Akademik\TahunAkademik;
+use App\Models\Akademik\ProgramStudi;
+use App\Models\Akademik\MataKuliah;
+use App\Models\Referensi\Semester;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
 
@@ -45,6 +48,146 @@ class KurikulumController extends Controller
         $data['is_trash'] = true;
 
         return view('master.akademik.kurikulum-index', $data, compact('user'));
+    }
+
+    public function view($id)
+    {
+        $user = Auth::user();
+        $data['spref'] = $user ? $user->prefix : '';
+        $data['menus'] = 'Akademik Kurikulum';
+        $data['pages'] = "Detail Kurikulum";
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+        
+        // Get kurikulum with relationships
+        $data['kurikulum'] = Kurikulum::with([
+            'programStudi', 
+            'tahunAkademikAwal', 
+            'tahunAkademikAkhir',
+            'kurikulumMataKuliah' => function($query) {
+                $query->with(['mataKuliah', 'semester'])->orderBy('semester_id')->orderBy('urutan');
+            }
+        ])->findOrFail($id);
+        
+        // Data for dropdowns
+        $data['mataKuliahs'] = MataKuliah::where('is_active', true)->orderBy('name')->get();
+        $data['semesters'] = Semester::all();
+        $data['programStudis'] = ProgramStudi::where('is_active', true)->orderBy('name')->get();
+        $data['tahunAkademiks'] = TahunAkademik::orderBy('created_at', 'desc')->get();
+        $data['is_trash'] = false;
+
+        return view('master.akademik.kurikulum-view', $data, compact('user'));
+    }
+
+    public function storeMataKuliah(Request $request, $id)
+    {
+        $request->validate([
+            'mata_kuliah_id' => 'required|exists:mata_kuliah,id',
+            'semester_id' => 'required|exists:semesters,id',
+            'is_wajib' => 'required|boolean',
+            'urutan' => 'required|integer|min:0',
+            'sks_override' => 'nullable|integer|min:0|max:10',
+            'catatan' => 'nullable|string'
+        ], [
+            'mata_kuliah_id.required' => 'Mata kuliah wajib dipilih',
+            'mata_kuliah_id.exists' => 'Mata kuliah tidak valid',
+            'semester_id.required' => 'Semester wajib dipilih',
+            'semester_id.exists' => 'Semester tidak valid',
+            'is_wajib.required' => 'Status wajib wajib dipilih',
+            'urutan.required' => 'Urutan wajib diisi',
+            'urutan.integer' => 'Urutan harus berupa angka',
+            'sks_override.integer' => 'SKS override harus berupa angka',
+            'sks_override.max' => 'SKS override maksimal 10'
+        ]);
+
+        $kurikulum = Kurikulum::findOrFail($id);
+
+        try {
+            $user = Auth::user();
+            
+            // Check if mata kuliah already exists in this kurikulum
+            $existing = KurikulumMataKuliah::where('kurikulum_id', $kurikulum->id)
+                ->where('mata_kuliah_id', $request->mata_kuliah_id)
+                ->first();
+                
+            if ($existing) {
+                Alert::error('Error', 'Mata kuliah sudah ada dalam kurikulum ini');
+                return redirect()->back();
+            }
+            
+            KurikulumMataKuliah::create([
+                'kurikulum_id' => $kurikulum->id,
+                'mata_kuliah_id' => $request->mata_kuliah_id,
+                'semester_id' => $request->semester_id,
+                'is_wajib' => $request->is_wajib,
+                'urutan' => $request->urutan,
+                'sks_override' => $request->sks_override,
+                'catatan' => $request->catatan,
+                'created_by' => $user->id
+            ]);
+
+            Alert::success('Berhasil', 'Mata kuliah berhasil ditambahkan ke kurikulum');
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function updateMataKuliah(Request $request, $kurikulumId, $mataKuliahId)
+    {
+        $kurikulumMataKuliah = KurikulumMataKuliah::where('kurikulum_id', $kurikulumId)
+            ->where('mata_kuliah_id', $mataKuliahId)
+            ->firstOrFail();
+        
+        $request->validate([
+            'semester_id' => 'required|exists:semesters,id',
+            'is_wajib' => 'required|boolean',
+            'urutan' => 'required|integer|min:0',
+            'sks_override' => 'nullable|integer|min:0|max:10',
+            'catatan' => 'nullable|string'
+        ]);
+
+        try {
+            $user = Auth::user();
+            
+            $kurikulumMataKuliah->update([
+                'semester_id' => $request->semester_id,
+                'is_wajib' => $request->is_wajib,
+                'urutan' => $request->urutan,
+                'sks_override' => $request->sks_override,
+                'catatan' => $request->catatan,
+                'updated_by' => $user->id
+            ]);
+
+            Alert::success('Berhasil', 'Mata kuliah dalam kurikulum berhasil diperbarui');
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function removeMataKuliah($kurikulumId, $mataKuliahId)
+    {
+        try {
+            $kurikulumMataKuliah = KurikulumMataKuliah::where('kurikulum_id', $kurikulumId)
+                ->where('mata_kuliah_id', $mataKuliahId)
+                ->firstOrFail();
+
+            $user = Auth::user();
+            $kurikulumMataKuliah->update(['deleted_by' => $user->id]);
+            $kurikulumMataKuliah->delete();
+
+            Alert::success('Berhasil', 'Mata kuliah berhasil dihapus dari kurikulum');
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -195,26 +338,7 @@ class KurikulumController extends Controller
         }
     }
 
-    public function view($id)
-    {
-        $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
-        $data['menus'] = 'Akademik Kurikulum';
-        $data['pages'] = "Halaman Detail Kurikulum";
-        $data['system'] = System::first();
-        $data['academy'] = Kampus::first();
-        $data['kurikulum'] = Kurikulum::with([
-            'programStudi.fakultas.profile', 
-            'tahunAkademikAwal', 
-            'tahunAkademikAkhir',
-            'kurikulumMataKuliah.mataKuliah',
-            'kurikulumMataKuliah.semester'
-        ])->findOrFail($id);
-        $data['programStudis'] = ProgramStudi::where('is_active', true)->orderBy('name')->get();
-        $data['tahunAkademiks'] = TahunAkademik::orderBy('created_at', 'desc')->get();
 
-        return view('master.akademik.kurikulum-view', $data, compact('user'));
-    }
 
     public function destroy($id)
     {

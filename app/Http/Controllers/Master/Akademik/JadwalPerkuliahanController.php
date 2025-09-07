@@ -95,8 +95,8 @@ class JadwalPerkuliahanController extends Controller
             'dosen_id' => 'required|exists:users,id',
             'ruang_id' => 'nullable|exists:ruangan,id',
             'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'jam_mulai' => 'required|date_format:H:i:s',
+            'jam_selesai' => 'required|date_format:H:i:s|after:jam_mulai',
             'metode' => 'required|in:Tatap Muka,Teleconference,Hybrid',
             'code' => 'required|string|unique:jadwal_perkuliahan,code'
         ], [
@@ -136,6 +136,7 @@ class JadwalPerkuliahanController extends Controller
                 'created_by' => $user->id
             ]);
 
+
             Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil ditambahkan');
             return redirect()->back();
 
@@ -169,8 +170,8 @@ class JadwalPerkuliahanController extends Controller
             'dosen_id' => 'required|exists:users,id',
             'ruang_id' => 'nullable|exists:ruangan,id',
             'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'jam_mulai' => 'required|date_format:H:i:s',
+            'jam_selesai' => 'required|date_format:H:i:s|after:jam_mulai',
             'metode' => 'required|in:Tatap Muka,Teleconference,Hybrid',
             'code' => 'required|string|unique:jadwal_perkuliahan,code,' . $id,
             'kelas' => 'nullable|array',
@@ -178,14 +179,20 @@ class JadwalPerkuliahanController extends Controller
             'kelas.*.kapasitas' => 'required_with:kelas|integer|min:1',
             'kelas.*.is_active' => 'required_with:kelas|boolean',
             'kelas.*.keterangan' => 'nullable|string',
+            'kelas_assign' => 'nullable|array',
+            'kelas_assign.*.kelas_perkuliahan_id' => 'required_with:kelas_assign|exists:kelas_perkuliahan,id',
             'pertemuan' => 'nullable|array',
             'pertemuan.*.pertemuan_ke' => 'required_with:pertemuan|integer|min:1',
             'pertemuan.*.tanggal' => 'required_with:pertemuan|date',
             'pertemuan.*.jam_mulai' => 'nullable|date_format:H:i',
             'pertemuan.*.jam_selesai' => 'nullable|date_format:H:i',
+            'pertemuan.*.ruang_id' => 'nullable|exists:ruangan,id',
+            'pertemuan.*.dosen_id' => 'nullable|exists:users,id',
+            'pertemuan.*.metode' => 'nullable|in:Tatap Muka,Teleconference,Hybrid',
             'pertemuan.*.materi' => 'nullable|string',
-            'pertemuan.*.status' => 'required_with:pertemuan|in:Belum Terlaksana,Terlaksana,Dibatalkan',
-            'pertemuan.*.link' => 'nullable|url'
+            'pertemuan.*.status' => 'required_with:pertemuan|in:Terjadwal,Terlaksana,Ditunda,Dibatalkan',
+            'pertemuan.*.link' => 'nullable|url',
+            'pertemuan.*.is_realisasi' => 'nullable|boolean'
         ], [
             'tahun_akademik_id.required' => 'Tahun akademik wajib dipilih',
             'tahun_akademik_id.exists' => 'Tahun akademik tidak valid',
@@ -208,6 +215,8 @@ class JadwalPerkuliahanController extends Controller
             'kelas.*.name.required_with' => 'Nama kelas wajib diisi',
             'kelas.*.kapasitas.required_with' => 'Kapasitas kelas wajib diisi',
             'kelas.*.kapasitas.min' => 'Kapasitas minimal 1',
+            'kelas_assign.*.kelas_perkuliahan_id.required_with' => 'Kelas perkuliahan wajib dipilih',
+            'kelas_assign.*.kelas_perkuliahan_id.exists' => 'Kelas perkuliahan tidak valid',
             'pertemuan.*.pertemuan_ke.required_with' => 'Nomor pertemuan wajib diisi',
             'pertemuan.*.tanggal.required_with' => 'Tanggal pertemuan wajib diisi',
             'pertemuan.*.status.required_with' => 'Status pertemuan wajib dipilih'
@@ -230,10 +239,28 @@ class JadwalPerkuliahanController extends Controller
                 'updated_by' => $user->id
             ]);
 
-            // Update kelas
-            if ($request->has('kelas')) {
+            // Update kelas assign
+            if ($request->has('kelas_assign')) {
                 // Delete existing jadwal kelas
                 $jadwalPerkuliahan->jadwalKelas()->delete();
+                
+                // Create new kelas assign
+                foreach ($request->kelas_assign as $kelasAssignData) {
+                    if (!empty($kelasAssignData['kelas_perkuliahan_id'])) {
+                        $jadwalPerkuliahan->jadwalKelas()->create([
+                            'kelas_id' => $kelasAssignData['kelas_perkuliahan_id'],
+                            'created_by' => $user->id
+                        ]);
+                    }
+                }
+            }
+
+            // Update kelas (legacy support)
+            if ($request->has('kelas')) {
+                // Delete existing jadwal kelas if not already deleted by kelas_assign
+                if (!$request->has('kelas_assign')) {
+                    $jadwalPerkuliahan->jadwalKelas()->delete();
+                }
                 
                 // Create new kelas
                 foreach ($request->kelas as $kelasData) {
@@ -260,11 +287,15 @@ class JadwalPerkuliahanController extends Controller
                         $jadwalPerkuliahan->jadwalPertemuan()->create([
                             'pertemuan_ke' => $pertemuanData['pertemuan_ke'],
                             'tanggal' => $pertemuanData['tanggal'],
-                            'jam_mulai' => $pertemuanData['jam_mulai'] ?? null,
-                            'jam_selesai' => $pertemuanData['jam_selesai'] ?? null,
+                            'jam_mulai' => !empty($pertemuanData['jam_mulai']) ? $pertemuanData['jam_mulai'] . ':00' : null,
+                            'jam_selesai' => !empty($pertemuanData['jam_selesai']) ? $pertemuanData['jam_selesai'] . ':00' : null,
+                            'ruang_id' => $pertemuanData['ruang_id'] ?? null,
+                            'dosen_id' => $pertemuanData['dosen_id'] ?? null,
+                            'metode' => $pertemuanData['metode'] ?? null,
                             'materi' => $pertemuanData['materi'] ?? null,
-                            'status' => $pertemuanData['status'] ?? 'Belum Terlaksana',
+                            'status' => $pertemuanData['status'] ?? 'Terjadwal',
                             'link' => $pertemuanData['link'] ?? null,
+                            'is_realisasi' => isset($pertemuanData['is_realisasi']) && $pertemuanData['is_realisasi'] == '1' ? true : false,
                             'created_by' => $user->id
                         ]);
                     }
