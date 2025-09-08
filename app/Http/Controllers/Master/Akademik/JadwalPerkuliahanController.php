@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Carbon\Carbon;
 // Use Models
 use App\Models\Akademik\JadwalPerkuliahan;
 use App\Models\Akademik\JadwalKelas;
@@ -52,7 +53,11 @@ class JadwalPerkuliahanController extends Controller
             'mataKuliah', 
             'dosen', 
             'ruangan',
-            'jadwalKelas',
+            'jadwalKelas' => function($query) {
+                $query->with(['kelas' => function($q) {
+                    $q->with('programStudi');
+                }]);
+            },
             'jadwalPertemuan' => function($query) {
                 $query->orderBy('pertemuan_ke');
             }
@@ -95,8 +100,10 @@ class JadwalPerkuliahanController extends Controller
             'dosen_id' => 'required|exists:users,id',
             'ruang_id' => 'nullable|exists:ruangan,id',
             'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required|date_format:H:i:s',
-            'jam_selesai' => 'required|date_format:H:i:s|after:jam_mulai',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required|after:jam_mulai',
             'metode' => 'required|in:Tatap Muka,Teleconference,Hybrid',
             'code' => 'required|string|unique:jadwal_perkuliahan,code'
         ], [
@@ -109,10 +116,10 @@ class JadwalPerkuliahanController extends Controller
             'ruang_id.exists' => 'Ruangan tidak valid',
             'hari.required' => 'Hari wajib dipilih',
             'hari.in' => 'Hari tidak valid',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai',
             'jam_mulai.required' => 'Jam mulai wajib diisi',
-            'jam_mulai.date_format' => 'Format jam mulai tidak valid',
             'jam_selesai.required' => 'Jam selesai wajib diisi',
-            'jam_selesai.date_format' => 'Format jam selesai tidak valid',
             'jam_selesai.after' => 'Jam selesai harus setelah jam mulai',
             'metode.required' => 'Metode perkuliahan wajib dipilih',
             'metode.in' => 'Metode perkuliahan tidak valid',
@@ -129,6 +136,8 @@ class JadwalPerkuliahanController extends Controller
                 'dosen_id' => $request->dosen_id,
                 'ruang_id' => $request->ruang_id,
                 'hari' => $request->hari,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
                 'jam_mulai' => $request->jam_mulai,
                 'jam_selesai' => $request->jam_selesai,
                 'metode' => $request->metode,
@@ -136,8 +145,10 @@ class JadwalPerkuliahanController extends Controller
                 'created_by' => $user->id
             ]);
 
+            // Auto-generate jadwal pertemuan
+            $this->generateJadwalPertemuan($jadwalPerkuliahan, $request->tanggal_selesai ?? null);
 
-            Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil ditambahkan');
+            Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil ditambahkan dan jadwal pertemuan otomatis dibuat');
             return redirect()->back();
 
         } catch (\Throwable $th) {
@@ -170,22 +181,24 @@ class JadwalPerkuliahanController extends Controller
             'dosen_id' => 'required|exists:users,id',
             'ruang_id' => 'nullable|exists:ruangan,id',
             'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required|date_format:H:i:s',
-            'jam_selesai' => 'required|date_format:H:i:s|after:jam_mulai',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required|after:jam_mulai',
             'metode' => 'required|in:Tatap Muka,Teleconference,Hybrid',
             'code' => 'required|string|unique:jadwal_perkuliahan,code,' . $id,
-            'kelas' => 'nullable|array',
-            'kelas.*.name' => 'required_with:kelas|string|max:255',
-            'kelas.*.kapasitas' => 'required_with:kelas|integer|min:1',
-            'kelas.*.is_active' => 'required_with:kelas|boolean',
-            'kelas.*.keterangan' => 'nullable|string',
+            // 'kelas' => 'nullable|array', // DISABLED: jadwal_kelas table structure changed
+            // 'kelas.*.name' => 'required_with:kelas|string|max:255',
+            // 'kelas.*.kapasitas' => 'required_with:kelas|integer|min:1',
+            // 'kelas.*.is_active' => 'required_with:kelas|boolean',
+            // 'kelas.*.keterangan' => 'nullable|string',
             'kelas_assign' => 'nullable|array',
             'kelas_assign.*.kelas_perkuliahan_id' => 'required_with:kelas_assign|exists:kelas_perkuliahan,id',
             'pertemuan' => 'nullable|array',
             'pertemuan.*.pertemuan_ke' => 'required_with:pertemuan|integer|min:1',
             'pertemuan.*.tanggal' => 'required_with:pertemuan|date',
-            'pertemuan.*.jam_mulai' => 'nullable|date_format:H:i',
-            'pertemuan.*.jam_selesai' => 'nullable|date_format:H:i',
+            'pertemuan.*.jam_mulai' => 'nullable',
+            'pertemuan.*.jam_selesai' => 'nullable',
             'pertemuan.*.ruang_id' => 'nullable|exists:ruangan,id',
             'pertemuan.*.dosen_id' => 'nullable|exists:users,id',
             'pertemuan.*.metode' => 'nullable|in:Tatap Muka,Teleconference,Hybrid',
@@ -204,17 +217,15 @@ class JadwalPerkuliahanController extends Controller
             'hari.required' => 'Hari wajib dipilih',
             'hari.in' => 'Hari tidak valid',
             'jam_mulai.required' => 'Jam mulai wajib diisi',
-            'jam_mulai.date_format' => 'Format jam mulai tidak valid',
             'jam_selesai.required' => 'Jam selesai wajib diisi',
-            'jam_selesai.date_format' => 'Format jam selesai tidak valid',
             'jam_selesai.after' => 'Jam selesai harus setelah jam mulai',
             'metode.required' => 'Metode perkuliahan wajib dipilih',
             'metode.in' => 'Metode perkuliahan tidak valid',
             'code.required' => 'Kode jadwal wajib diisi',
             'code.unique' => 'Kode jadwal sudah ada',
-            'kelas.*.name.required_with' => 'Nama kelas wajib diisi',
-            'kelas.*.kapasitas.required_with' => 'Kapasitas kelas wajib diisi',
-            'kelas.*.kapasitas.min' => 'Kapasitas minimal 1',
+            // 'kelas.*.name.required_with' => 'Nama kelas wajib diisi', // DISABLED
+            // 'kelas.*.kapasitas.required_with' => 'Kapasitas kelas wajib diisi', // DISABLED
+            // 'kelas.*.kapasitas.min' => 'Kapasitas minimal 1', // DISABLED
             'kelas_assign.*.kelas_perkuliahan_id.required_with' => 'Kelas perkuliahan wajib dipilih',
             'kelas_assign.*.kelas_perkuliahan_id.exists' => 'Kelas perkuliahan tidak valid',
             'pertemuan.*.pertemuan_ke.required_with' => 'Nomor pertemuan wajib diisi',
@@ -232,6 +243,8 @@ class JadwalPerkuliahanController extends Controller
                 'dosen_id' => $request->dosen_id,
                 'ruang_id' => $request->ruang_id,
                 'hari' => $request->hari,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
                 'jam_mulai' => $request->jam_mulai,
                 'jam_selesai' => $request->jam_selesai,
                 'metode' => $request->metode,
@@ -239,67 +252,119 @@ class JadwalPerkuliahanController extends Controller
                 'updated_by' => $user->id
             ]);
 
-            // Update kelas assign
+            // Don't regenerate jadwal pertemuan automatically on every update
+            // Only update what's provided in the form
+            // $this->regenerateJadwalPertemuan($jadwalPerkuliahan);
+
+            // Update kelas assign - don't delete all, only add new ones and remove unselected
             if ($request->has('kelas_assign')) {
-                // Delete existing jadwal kelas
-                $jadwalPerkuliahan->jadwalKelas()->delete();
+                // Get existing kelas IDs
+                $existingKelasIds = $jadwalPerkuliahan->jadwalKelas()->pluck('kelas_id')->toArray();
                 
-                // Create new kelas assign
+                // Get requested kelas IDs - filter duplicates and empty values
+                $requestedKelasIds = [];
                 foreach ($request->kelas_assign as $kelasAssignData) {
-                    if (!empty($kelasAssignData['kelas_perkuliahan_id'])) {
-                        $jadwalPerkuliahan->jadwalKelas()->create([
-                            'kelas_id' => $kelasAssignData['kelas_perkuliahan_id'],
-                            'created_by' => $user->id
-                        ]);
+                    $kelasId = $kelasAssignData['kelas_perkuliahan_id'] ?? null;
+                    if (!empty($kelasId) && !in_array($kelasId, $requestedKelasIds)) {
+                        $requestedKelasIds[] = $kelasId;
                     }
-                }
-            }
-
-            // Update kelas (legacy support)
-            if ($request->has('kelas')) {
-                // Delete existing jadwal kelas if not already deleted by kelas_assign
-                if (!$request->has('kelas_assign')) {
-                    $jadwalPerkuliahan->jadwalKelas()->delete();
                 }
                 
-                // Create new kelas
-                foreach ($request->kelas as $kelasData) {
-                    if (!empty($kelasData['name'])) {
-                        $jadwalPerkuliahan->jadwalKelas()->create([
-                            'name' => $kelasData['name'],
-                            'kapasitas' => $kelasData['kapasitas'],
-                            'is_active' => $kelasData['is_active'] ?? true,
-                            'keterangan' => $kelasData['keterangan'] ?? null,
-                            'created_by' => $user->id
-                        ]);
+                // Remove kelas that are no longer selected (permanent delete)
+                $kelasToRemove = array_diff($existingKelasIds, $requestedKelasIds);
+                if (!empty($kelasToRemove)) {
+                    $jadwalPerkuliahan->jadwalKelas()->whereIn('kelas_id', $kelasToRemove)->forceDelete();
+                }
+                
+                // Add new kelas that don't exist yet
+                foreach ($requestedKelasIds as $kelasId) {
+                    if (!in_array($kelasId, $existingKelasIds)) {
+                        // Check if kelas exists
+                        $kelasExists = \App\Models\Akademik\KelasPerkuliahan::find($kelasId);
+                        if ($kelasExists) {
+                            $jadwalPerkuliahan->jadwalKelas()->create([
+                                'kelas_id' => $kelasId,
+                                'created_by' => $user->id
+                            ]);
+                        }
                     }
                 }
+            } else {
+                // If no kelas_assign provided, remove all existing (permanent delete)
+                $jadwalPerkuliahan->jadwalKelas()->forceDelete();
             }
 
-            // Update pertemuan
+            // Update kelas (legacy support) - DISABLED: jadwal_kelas table only has jadwal_id and kelas_id
+            // if ($request->has('kelas')) {
+            //     // This legacy code is no longer valid as jadwal_kelas table structure has changed
+            // }
+
+            // Update pertemuan - don't regenerate all, only update what's provided
             if ($request->has('pertemuan')) {
-                // Delete existing jadwal pertemuan
-                $jadwalPerkuliahan->jadwalPertemuan()->delete();
-                
-                // Create new pertemuan
+                // Get existing pertemuan_ke from database
+                $existingPertemuanKes = $jadwalPerkuliahan->jadwalPertemuan()->pluck('pertemuan_ke')->toArray();
+
+                // Get pertemuan_ke from form data
+                $formPertemuanKes = [];
+                foreach ($request->pertemuan as $pertemuanData) {
+                    if (!empty($pertemuanData['pertemuan_ke'])) {
+                        $formPertemuanKes[] = $pertemuanData['pertemuan_ke'];
+                    }
+                }
+
+                // Find pertemuan to delete (exist in DB but not in form)
+                $pertemuanToDelete = array_diff($existingPertemuanKes, $formPertemuanKes);
+                if (!empty($pertemuanToDelete)) {
+                    $jadwalPerkuliahan->jadwalPertemuan()
+                        ->whereIn('pertemuan_ke', $pertemuanToDelete)
+                        ->forceDelete();
+                }
+
+                // Update or create pertemuan from form
                 foreach ($request->pertemuan as $pertemuanData) {
                     if (!empty($pertemuanData['pertemuan_ke']) && !empty($pertemuanData['tanggal'])) {
-                        $jadwalPerkuliahan->jadwalPertemuan()->create([
-                            'pertemuan_ke' => $pertemuanData['pertemuan_ke'],
-                            'tanggal' => $pertemuanData['tanggal'],
-                            'jam_mulai' => !empty($pertemuanData['jam_mulai']) ? $pertemuanData['jam_mulai'] . ':00' : null,
-                            'jam_selesai' => !empty($pertemuanData['jam_selesai']) ? $pertemuanData['jam_selesai'] . ':00' : null,
-                            'ruang_id' => $pertemuanData['ruang_id'] ?? null,
-                            'dosen_id' => $pertemuanData['dosen_id'] ?? null,
-                            'metode' => $pertemuanData['metode'] ?? null,
-                            'materi' => $pertemuanData['materi'] ?? null,
-                            'status' => $pertemuanData['status'] ?? 'Terjadwal',
-                            'link' => $pertemuanData['link'] ?? null,
-                            'is_realisasi' => isset($pertemuanData['is_realisasi']) && $pertemuanData['is_realisasi'] == '1' ? true : false,
-                            'created_by' => $user->id
-                        ]);
+                        // Check if pertemuan already exists
+                        $existingPertemuan = $jadwalPerkuliahan->jadwalPertemuan()
+                            ->where('pertemuan_ke', $pertemuanData['pertemuan_ke'])
+                            ->first();
+
+                        if ($existingPertemuan) {
+                            // Update existing pertemuan
+                            $existingPertemuan->update([
+                                'tanggal' => $pertemuanData['tanggal'],
+                                'jam_mulai' => !empty($pertemuanData['jam_mulai']) ? $pertemuanData['jam_mulai'] . ':00' : null,
+                                'jam_selesai' => !empty($pertemuanData['jam_selesai']) ? $pertemuanData['jam_selesai'] . ':00' : null,
+                                'ruang_id' => $pertemuanData['ruang_id'] ?? null,
+                                'dosen_id' => $pertemuanData['dosen_id'] ?? null,
+                                'metode' => $pertemuanData['metode'] ?? null,
+                                'materi' => $pertemuanData['materi'] ?? null,
+                                'status' => $pertemuanData['status'] ?? 'Terjadwal',
+                                'link' => $pertemuanData['link'] ?? null,
+                                'is_realisasi' => isset($pertemuanData['is_realisasi']) && $pertemuanData['is_realisasi'] == '1' ? true : false,
+                                'updated_by' => $user->id
+                            ]);
+                        } else {
+                            // Create new pertemuan
+                            $jadwalPerkuliahan->jadwalPertemuan()->create([
+                                'pertemuan_ke' => $pertemuanData['pertemuan_ke'],
+                                'tanggal' => $pertemuanData['tanggal'],
+                                'jam_mulai' => !empty($pertemuanData['jam_mulai']) ? $pertemuanData['jam_mulai'] . ':00' : null,
+                                'jam_selesai' => !empty($pertemuanData['jam_selesai']) ? $pertemuanData['jam_selesai'] . ':00' : null,
+                                'ruang_id' => $pertemuanData['ruang_id'] ?? null,
+                                'dosen_id' => $pertemuanData['dosen_id'] ?? null,
+                                'metode' => $pertemuanData['metode'] ?? null,
+                                'materi' => $pertemuanData['materi'] ?? null,
+                                'status' => $pertemuanData['status'] ?? 'Terjadwal',
+                                'link' => $pertemuanData['link'] ?? null,
+                                'is_realisasi' => isset($pertemuanData['is_realisasi']) && $pertemuanData['is_realisasi'] == '1' ? true : false,
+                                'created_by' => $user->id
+                            ]);
+                        }
                     }
                 }
+            } else {
+                // If no pertemuan provided, delete all existing (permanent delete)
+                $jadwalPerkuliahan->jadwalPertemuan()->forceDelete();
             }
 
             Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil diperbarui');
@@ -316,11 +381,14 @@ class JadwalPerkuliahanController extends Controller
         try {
             $jadwalPerkuliahan = JadwalPerkuliahan::findOrFail($id);
 
-            $user = Auth::user();
-            $jadwalPerkuliahan->update(['deleted_by' => $user->id]);
-            $jadwalPerkuliahan->delete();
+            // Permanently delete all related records first
+            $jadwalPerkuliahan->jadwalKelas()->forceDelete();
+            $jadwalPerkuliahan->jadwalPertemuan()->forceDelete();
 
-            Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil dihapus');
+            // Permanently delete the main jadwal record
+            $jadwalPerkuliahan->forceDelete();
+
+            Alert::success('Berhasil', 'Data jadwal perkuliahan berhasil dihapus permanen');
             return redirect()->back();
 
         } catch (\Throwable $th) {
@@ -345,5 +413,79 @@ class JadwalPerkuliahanController extends Controller
             Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
             return redirect()->back();
         }
+    }
+
+    /**
+     * Generate jadwal pertemuan otomatis berdasarkan hari dan tanggal mulai
+     */
+    private function generateJadwalPertemuan($jadwalPerkuliahan, $tanggalSelesai = null)
+    {
+        $user = Auth::user();
+
+        // Mapping hari ke nomor hari dalam seminggu (0 = Minggu, 1 = Senin, dst)
+        $hariMapping = [
+            'Minggu' => 0,
+            'Senin' => 1,
+            'Selasa' => 2,
+            'Rabu' => 3,
+            'Kamis' => 4,
+            'Jumat' => 5,
+            'Sabtu' => 6
+        ];
+
+        $hariTarget = $hariMapping[$jadwalPerkuliahan->hari];
+        $tanggalMulai = Carbon::parse($jadwalPerkuliahan->tanggal_mulai);
+
+        // Jika tidak ada tanggal selesai, gunakan 15 minggu ke depan sebagai default
+        if (!$tanggalSelesai) {
+            $tanggalSelesai = $tanggalMulai->copy()->addWeeks(15);
+        } else {
+            $tanggalSelesai = Carbon::parse($tanggalSelesai);
+        }
+
+        // Cari tanggal pertama yang sesuai dengan hari target
+        $tanggalPertama = $tanggalMulai->copy();
+        if ($tanggalPertama->dayOfWeek !== $hariTarget) {
+            // Jika tanggal mulai bukan hari target, cari hari target berikutnya
+            $tanggalPertama = $tanggalPertama->next($hariTarget);
+        }
+
+        $pertemuanKe = 1;
+        $tanggalSaatIni = $tanggalPertama->copy();
+
+        // Generate jadwal pertemuan mingguan sampai tanggal selesai
+        while ($tanggalSaatIni->lte($tanggalSelesai)) {
+            // Buat jadwal pertemuan
+            $jadwalPerkuliahan->jadwalPertemuan()->create([
+                'pertemuan_ke' => $pertemuanKe,
+                'tanggal' => $tanggalSaatIni->format('Y-m-d'),
+                'jam_mulai' => $jadwalPerkuliahan->jam_mulai,
+                'jam_selesai' => $jadwalPerkuliahan->jam_selesai,
+                'ruang_id' => $jadwalPerkuliahan->ruang_id,
+                'dosen_id' => $jadwalPerkuliahan->dosen_id,
+                'metode' => $jadwalPerkuliahan->metode,
+                'materi' => null,
+                'status' => 'Terjadwal',
+                'link' => null,
+                'is_realisasi' => false,
+                'created_by' => $user->id
+            ]);
+
+            // Lanjut ke minggu berikutnya
+            $tanggalSaatIni->addWeek();
+            $pertemuanKe++;
+        }
+    }
+
+    /**
+     * Regenerate jadwal pertemuan otomatis berdasarkan hari dan tanggal mulai
+     */
+    private function regenerateJadwalPertemuan($jadwalPerkuliahan)
+    {
+        // Hapus semua jadwal pertemuan yang ada (permanent delete)
+        $jadwalPerkuliahan->jadwalPertemuan()->forceDelete();
+
+        // Generate ulang jadwal pertemuan
+        $this->generateJadwalPertemuan($jadwalPerkuliahan, $jadwalPerkuliahan->tanggal_selesai);
     }
 }

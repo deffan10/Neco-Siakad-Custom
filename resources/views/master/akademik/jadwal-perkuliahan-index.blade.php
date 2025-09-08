@@ -479,6 +479,21 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
+                                            <label for="tanggal_mulai" class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" name="tanggal_mulai" id="tanggal_mulai" required>
+                                            @error('tanggal_mulai')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="tanggal_selesai" class="form-label">Tanggal Selesai <small class="text-muted">(Opsional)</small></label>
+                                            <input type="date" class="form-control" name="tanggal_selesai" id="tanggal_selesai">
+                                            <small class="text-muted">Jika kosong, akan menggunakan 16 minggu ke depan. Sistem akan otomatis generate jadwal pertemuan mingguan.</small>
+                                            @error('tanggal_selesai')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
                                             <label for="metode" class="form-label">Metode <span class="text-danger">*</span></label>
                                             <select class="form-select" name="metode" id="metode" required>
                                                 <option value="">Pilih Metode</option>
@@ -579,7 +594,7 @@
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Jadwal">
+                                                <a href="{{ route('akademik.jadwal-perkuliahan-view', $item->id) }}" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Jadwal">
                                                     <i class="fas fa-edit me-1"></i> Edit
                                                 </a>
                                                 <form action="{{ route('akademik.jadwal-perkuliahan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
@@ -601,145 +616,7 @@
         </div>
     </div>
 
-    <!-- Edit Modals -->
-    @if(!$is_trash)
-        @foreach ($jadwalPerkuliahans as $item)
-            <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <form action="{{ route('akademik.jadwal-perkuliahan-update', $item->id) }}" method="POST">
-                            @method('PATCH')
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Jadwal Perkuliahan - {{ $item->code }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_tahun_akademik_id{{ $item->id }}" class="form-label">Tahun Akademik <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="tahun_akademik_id" id="edit_tahun_akademik_id{{ $item->id }}" required>
-                                            <option value="">Pilih Tahun Akademik</option>
-                                            @foreach($tahunAkademiks as $tahun)
-                                                <option value="{{ $tahun->id }}" {{ $item->tahun_akademik_id == $tahun->id ? 'selected' : '' }}>{{ $tahun->name }} - {{ $tahun->semester }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('tahun_akademik_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_mata_kuliah_id{{ $item->id }}" class="form-label">Mata Kuliah <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="mata_kuliah_id" id="edit_mata_kuliah_id{{ $item->id }}" required>
-                                            <option value="">Pilih Mata Kuliah</option>
-                                            @foreach($mataKuliahs as $mk)
-                                                <option value="{{ $mk->id }}" {{ $item->mata_kuliah_id == $mk->id ? 'selected' : '' }}>{{ $mk->code }} - {{ $mk->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('mata_kuliah_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_dosen_id{{ $item->id }}" class="form-label">Dosen Pengampu <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="dosen_id" id="edit_dosen_id{{ $item->id }}" required>
-                                            <option value="">Pilih Dosen</option>
-                                            @foreach($dosens as $dosen)
-                                                <option value="{{ $dosen->id }}" {{ $item->dosen_id == $dosen->id ? 'selected' : '' }}>{{ $dosen->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('dosen_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_ruang_id{{ $item->id }}" class="form-label">Ruangan</label>
-                                        <select class="form-select" name="ruang_id" id="edit_ruang_id{{ $item->id }}">
-                                            <option value="">Pilih Ruangan</option>
-                                            @foreach($ruangans as $ruang)
-                                                <option value="{{ $ruang->id }}" {{ $item->ruang_id == $ruang->id ? 'selected' : '' }}>{{ $ruang->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('ruang_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_hari{{ $item->id }}" class="form-label">Hari <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="hari" id="edit_hari{{ $item->id }}" required>
-                                            <option value="">Pilih Hari</option>
-                                            <option value="Senin" {{ $item->hari == 'Senin' ? 'selected' : '' }}>Senin</option>
-                                            <option value="Selasa" {{ $item->hari == 'Selasa' ? 'selected' : '' }}>Selasa</option>
-                                            <option value="Rabu" {{ $item->hari == 'Rabu' ? 'selected' : '' }}>Rabu</option>
-                                            <option value="Kamis" {{ $item->hari == 'Kamis' ? 'selected' : '' }}>Kamis</option>
-                                            <option value="Jumat" {{ $item->hari == 'Jumat' ? 'selected' : '' }}>Jumat</option>
-                                            <option value="Sabtu" {{ $item->hari == 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
-                                            <option value="Minggu" {{ $item->hari == 'Minggu' ? 'selected' : '' }}>Minggu</option>
-                                        </select>
-                                        @error('hari')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_code{{ $item->id }}" class="form-label">Kode Jadwal <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="code" id="edit_code{{ $item->id }}" value="{{ $item->code }}" placeholder="Masukkan kode jadwal" required>
-                                        @error('code')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_jam_mulai{{ $item->id }}" class="form-label">Jam Mulai <span class="text-danger">*</span></label>
-                                        <input type="time" class="form-control" name="jam_mulai" id="edit_jam_mulai{{ $item->id }}" value="{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }}" required>
-                                        @error('jam_mulai')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_jam_selesai{{ $item->id }}" class="form-label">Jam Selesai <span class="text-danger">*</span></label>
-                                        <input type="time" class="form-control" name="jam_selesai" id="edit_jam_selesai{{ $item->id }}" value="{{ \Carbon\Carbon::parse($item->jam_selesai)->format('H:i') }}" required>
-                                        @error('jam_selesai')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_metode{{ $item->id }}" class="form-label">Metode <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="metode" id="edit_metode{{ $item->id }}" required>
-                                            <option value="">Pilih Metode</option>
-                                            <option value="Tatap Muka" {{ $item->metode == 'Tatap Muka' ? 'selected' : '' }}>Tatap Muka</option>
-                                            <option value="Teleconference" {{ $item->metode == 'Teleconference' ? 'selected' : '' }}>Teleconference</option>
-                                            <option value="Hybrid" {{ $item->metode == 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
-                                        </select>
-                                        @error('metode')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_status{{ $item->id }}" class="form-label">Status <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="status" id="edit_status{{ $item->id }}" required>
-                                            <option value="">Pilih Status</option>
-                                            <option value="Terjadwal" {{ $item->status == 'Terjadwal' ? 'selected' : '' }}>Terjadwal</option>
-                                            <option value="Terlaksana" {{ $item->status == 'Terlaksana' ? 'selected' : '' }}>Terlaksana</option>
-                                            <option value="Ditunda" {{ $item->status == 'Ditunda' ? 'selected' : '' }}>Ditunda</option>
-                                            <option value="Dibatalkan" {{ $item->status == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-                                        </select>
-                                        @error('status')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> Simpan Perubahan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
+
 @endsection
 
 @section('custom-js')

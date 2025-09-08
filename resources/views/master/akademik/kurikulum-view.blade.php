@@ -24,7 +24,101 @@
     }
     .form-section {
         padding: 1.5rem;
-        border-radius: 8px;
+              }
+    }
+    
+    // Submit edit form function
+    function submitEditForm() {
+        const form = document.getElementById('editMataKuliahForm');
+        if (!form) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form edit tidak ditemukan'
+            });
+            return;
+        }
+        
+        // Get form data
+        const formData = new FormData(form);
+        // Add method spoofing for Laravel
+        formData.append('_method', 'PATCH');
+        const data = Object.fromEntries(formData.entries());
+        
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+                        document.querySelector('input[name="_token"]')?.value;
+        
+        if (!csrfToken) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'CSRF token tidak ditemukan'
+            });
+            return;
+        }
+        
+        // Show loading
+        Swal.fire({
+            title: 'Menyimpan...',
+            text: 'Mohon tunggu sebentar',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        // Send PATCH request
+        fetch(form.action, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Terjadi kesalahan saat menyimpan');
+                });
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editMataKuliahModal'));
+                if (modal) {
+                    modal.hide();
+                }
+                
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: data.message || 'Mata kuliah berhasil diperbarui',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    location.reload();
+                });
+            } else {
+                throw new Error(data.message || 'Terjadi kesalahan saat menyimpan');
+            }
+        })
+        .catch(error => {
+            console.error('Edit error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Terjadi kesalahan saat menyimpan'
+            });
+        });
+    }rder-radius: 8px;
         margin-bottom: 1rem;
         border: 1px solid #e9ecef;
     }
@@ -66,7 +160,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route($spref . 'akademik.kurikulum-update', $kurikulum->id) }}" method="POST">
+                <form action="{{ route('akademik.kurikulum-update', $kurikulum->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     
@@ -361,13 +455,9 @@
                                                                     data-bs-toggle="tooltip" title="Edit">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
-                                                                <form action="{{ route($spref . 'akademik.kurikulum-matakuliah-remove', [$item->kurikulum_id, $item->mata_kuliah_id]) }}" method="POST" class="d-inline" onsubmit="return confirmDelete(this, '{{ $item->mataKuliah->name ?? 'mata kuliah ini' }}')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-outline-danger" data-bs-toggle="tooltip" title="Hapus">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                                <button type="button" class="btn btn-outline-danger" onclick="deleteMataKuliah({{ $item->kurikulum_id }}, {{ $item->mata_kuliah_id }}, '{{ $item->mataKuliah->name ?? 'mata kuliah ini' }}')" data-bs-toggle="tooltip" title="Hapus">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -391,7 +481,7 @@
 
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="{{ route($spref . 'akademik.kurikulum-index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('akademik.kurikulum-index') }}" class="btn btn-secondary">Batal</a>
                     </div>
                 </form>
             </div>
@@ -402,7 +492,7 @@
 <div class="modal fade" id="addMataKuliahModal" tabindex="-1" aria-labelledby="addMataKuliahModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ route($spref . 'akademik.kurikulum-matakuliah-store', $kurikulum->id) }}" method="POST">
+            <form action="{{ route('akademik.kurikulum-matakuliah-store', $kurikulum->id) }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMataKuliahModalLabel">Tambah Mata Kuliah ke Kurikulum</h5>
@@ -513,7 +603,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditForm()">Simpan Perubahan</button>
                 </div>
             </form>
         </div>
@@ -543,53 +633,108 @@
     const sksWajib = document.querySelector('input[name="sks_wajib"]');
     const sksPilihan = document.querySelector('input[name="sks_pilihan"]');
     const totalSks = document.querySelector('input[name="total_sks_lulus"]');
+    
+    function calculateTotal() {
+        const wajib = parseInt(sksWajib.value) || 0;
+        const pilihan = parseInt(sksPilihan.value) || 0;
+        const total = wajib + pilihan;
         
-        // Edit Mata Kuliah function
-    function editMataKuliah(kurikulumId, mataKuliahId, semesterId, isWajib, urutan, sksOverride, catatan) {
-        // Set form action
-        const form = document.getElementById('editMataKuliahForm');
-        form.action = `{{ route($spref . 'akademik.kurikulum-matakuliah-update', [$kurikulum->id, '__MATA_KULIAH_ID__']) }}`.replace('__MATA_KULIAH_ID__', mataKuliahId);
-        
-        // Fill form fields
-        document.getElementById('edit_semester_id').value = semesterId;
-        document.getElementById('edit_is_wajib').value = isWajib ? '1' : '0';
-        document.getElementById('edit_urutan').value = urutan;
-        document.getElementById('edit_sks_override').value = sksOverride === null ? '' : sksOverride;
-        document.getElementById('edit_catatan').value = catatan || '';
-        
-        // Show modal
-        if (typeof window.bootstrap !== 'undefined') {
-            const modal = new window.bootstrap.Modal(document.getElementById('editMataKuliahModal'));
-            modal.show();
-        } else {
-            // Fallback: show modal without Bootstrap
-            document.getElementById('editMataKuliahModal').style.display = 'block';
-            document.getElementById('editMataKuliahModal').classList.add('show');
-        }
-    }
-            const wajib = parseInt(sksWajib.value) || 0;
-            const pilihan = parseInt(sksPilihan.value) || 0;
-            const total = wajib + pilihan;
-            
-            if (total > 0) {
-                totalSks.value = total;
-            }
-        }
-        
-        if (sksWajib && sksPilihan && totalSks) {
-            sksWajib.addEventListener('input', calculateTotal);
-            sksPilihan.addEventListener('input', calculateTotal);
+        if (total > 0) {
+            totalSks.value = total;
         }
     }
     
-    // Confirm delete function
-    function confirmDelete(form, mataKuliahName) {
-        const confirmed = confirm(`Yakin ingin menghapus mata kuliah "${mataKuliahName}" dari kurikulum ini?`);
-        if (confirmed) {
-            console.log('Delete confirmed for:', mataKuliahName);
-            return true;
-        }
-        return false;
+    if (sksWajib && sksPilihan && totalSks) {
+        sksWajib.addEventListener('input', calculateTotal);
+        sksPilihan.addEventListener('input', calculateTotal);
+    }
+    
+    // Delete mata kuliah function
+    function deleteMataKuliah(kurikulumId, mataKuliahId, mataKuliahName) {
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            text: `Apakah Anda yakin ingin menghapus mata kuliah "${mataKuliahName}" dari kurikulum ini?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal',
+            customClass: {
+                confirmButton: 'btn btn-danger',
+                cancelButton: 'btn btn-secondary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading
+                Swal.fire({
+                    title: 'Menghapus...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Get CSRF token
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+                                document.querySelector('input[name="_token"]')?.value;
+                
+                if (!csrfToken) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'CSRF token tidak ditemukan'
+                    });
+                    return;
+                }
+                
+                // Send DELETE request
+                const baseUrl = window.location.origin;
+                const deleteUrl = `${baseUrl}/akademik/kurikulum/${kurikulumId}/mata-kuliah/${mataKuliahId}`;
+                fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
+                        });
+                    }
+                })
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: data.message || 'Mata kuliah berhasil dihapus',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        throw new Error(data.message || 'Terjadi kesalahan saat menghapus');
+                    }
+                })
+                .catch(error => {
+                    console.error('Delete error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.message || 'Terjadi kesalahan saat menghapus'
+                    });
+                });
+            }
+        });
     }
     
     // Filter functions for mata kuliah table
@@ -631,11 +776,15 @@
         
         const form = document.getElementById('editMataKuliahForm');
         if (!form) {
-            console.error('Edit form not found');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Form edit tidak ditemukan'
+            });
             return;
         }
         
-        const action = `{{ route($spref . 'akademik.kurikulum-matakuliah-update', [$kurikulum->id, ':mataKuliahId']) }}`;
+        const action = `{{ route('akademik.kurikulum-matakuliah-update', [$kurikulum->id, ':mataKuliahId']) }}`;
         form.action = action.replace(':mataKuliahId', mataKuliahId);
         
         const semesterSelect = document.getElementById('edit_semester_id');
@@ -691,7 +840,11 @@
                 };
             }
         } else {
-            console.error('Edit modal not found');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Modal edit tidak ditemukan'
+            });
         }
     }
 </script>

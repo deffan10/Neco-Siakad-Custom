@@ -26,8 +26,8 @@ class Semester extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function deletedBy()
+    public function mataKuliah()
     {
-        return $this->belongsTo(User::class, 'deleted_by');
+        return $this->hasMany(\App\Models\Akademik\MataKuliah::class, 'semester_id');
     }
 }

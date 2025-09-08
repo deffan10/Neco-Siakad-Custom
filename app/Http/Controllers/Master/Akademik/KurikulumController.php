@@ -161,10 +161,24 @@ class KurikulumController extends Controller
                 'updated_by' => $user->id
             ]);
 
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Mata kuliah dalam kurikulum berhasil diperbarui'
+                ]);
+            }
+
             Alert::success('Berhasil', 'Mata kuliah dalam kurikulum berhasil diperbarui');
             return redirect()->back();
 
         } catch (\Throwable $th) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan: ' . $th->getMessage()
+                ], 500);
+            }
+
             Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
             return redirect()->back();
         }
@@ -181,10 +195,24 @@ class KurikulumController extends Controller
             $kurikulumMataKuliah->update(['deleted_by' => $user->id]);
             $kurikulumMataKuliah->delete();
 
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Mata kuliah berhasil dihapus dari kurikulum'
+                ]);
+            }
+
             Alert::success('Berhasil', 'Mata kuliah berhasil dihapus dari kurikulum');
             return redirect()->back();
 
         } catch (\Throwable $th) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan: ' . $th->getMessage()
+                ], 500);
+            }
+
             Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
             return redirect()->back();
         }

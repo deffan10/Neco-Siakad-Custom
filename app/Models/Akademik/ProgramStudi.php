@@ -28,6 +28,23 @@ class ProgramStudi extends Model
         return $this->hasMany(Kurikulum::class, 'program_studi_id');
     }
 
+    public function kelasPerkuliahan()
+    {
+        return $this->hasMany(\App\Models\Akademik\KelasPerkuliahan::class, 'program_studi_id');
+    }
+
+    public function kelasMahasiswa()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Akademik\KelasMahasiswa::class,
+            \App\Models\Akademik\KelasPerkuliahan::class,
+            'program_studi_id',
+            'kelas_id',
+            'id',
+            'id'
+        );
+    }
+
     public function profile()
     {
         return $this->hasOne(ProgramStudiProfile::class, 'program_studi_id');

@@ -533,8 +533,8 @@
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Kelas Perkuliahan">
-                                                    <i class="fas fa-edit me-1"></i> Edit
+                                                <a href="{{ route('akademik.kelas-perkuliahan-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Detail">
+                                                    <i class="fas fa-eye me-1"></i> View
                                                 </a>
                                                 <form action="{{ route('akademik.kelas-perkuliahan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
@@ -555,92 +555,6 @@
         </div>
     </div>
 
-    <!-- Edit Modals -->
-    @if(!$is_trash)
-        @foreach ($kelasPerkuliahans as $item)
-            <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <form action="{{ route('akademik.kelas-perkuliahan-update', $item->id) }}" method="POST">
-                            @method('PATCH')
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Kelas Perkuliahan - {{ $item->code }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_tahun_akademik_id{{ $item->id }}" class="form-label">Tahun Akademik <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="tahun_akademik_id" id="edit_tahun_akademik_id{{ $item->id }}" required>
-                                            <option value="">Pilih Tahun Akademik</option>
-                                            @foreach($tahunAkademiks as $tahunAkademik)
-                                                <option value="{{ $tahunAkademik->id }}" {{ $item->tahun_akademik_id == $tahunAkademik->id ? 'selected' : '' }}>{{ $tahunAkademik->name }} ({{ $tahunAkademik->code }})</option>
-                                            @endforeach
-                                        </select>
-                                        @error('tahun_akademik_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_program_studi_id{{ $item->id }}" class="form-label">Program Studi <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="program_studi_id" id="edit_program_studi_id{{ $item->id }}" required>
-                                            <option value="">Pilih Program Studi</option>
-                                            @foreach($programStudis as $programStudi)
-                                                <option value="{{ $programStudi->id }}" {{ $item->program_studi_id == $programStudi->id ? 'selected' : '' }}>{{ $programStudi->name }} ({{ $programStudi->code }})</option>
-                                            @endforeach
-                                        </select>
-                                        @error('program_studi_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_mata_kuliah_id{{ $item->id }}" class="form-label">Mata Kuliah</label>
-                                        <select class="form-select" name="mata_kuliah_id" id="edit_mata_kuliah_id{{ $item->id }}">
-                                            <option value="">Pilih Mata Kuliah (Opsional)</option>
-                                            @foreach($mataKuliahs as $mataKuliah)
-                                                <option value="{{ $mataKuliah->id }}" {{ $item->mata_kuliah_id == $mataKuliah->id ? 'selected' : '' }}>{{ $mataKuliah->name }} ({{ $mataKuliah->code }})</option>
-                                            @endforeach
-                                        </select>
-                                        @error('mata_kuliah_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_name{{ $item->id }}" class="form-label">Nama Kelas <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="name" id="edit_name{{ $item->id }}" value="{{ $item->name }}" placeholder="Masukkan nama kelas" required>
-                                        @error('name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_code{{ $item->id }}" class="form-label">Kode Kelas <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="code" id="edit_code{{ $item->id }}" value="{{ $item->code }}" placeholder="Masukkan kode kelas" required>
-                                        @error('code')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="edit_kapasitas{{ $item->id }}" class="form-label">Kapasitas</label>
-                                        <input type="number" class="form-control" name="kapasitas" id="edit_kapasitas{{ $item->id }}" value="{{ $item->kapasitas }}" placeholder="Masukkan kapasitas kelas" min="1" max="1000">
-                                        @error('kapasitas')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> Simpan Perubahan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
 @endsection
 
 @section('custom-js')

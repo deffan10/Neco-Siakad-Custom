@@ -21,6 +21,11 @@ class Fakultas extends Model
         return $this->hasMany(ProgramStudi::class, 'fakultas_id');
     }
 
+    public function programStudis()
+    {
+        return $this->hasMany(ProgramStudi::class, 'fakultas_id');
+    }
+
     public function profile()
     {
         return $this->hasOne(FakultasProfile::class, 'fakultas_id');

@@ -8,6 +8,7 @@
     @PwaHead
 
     <title>{{ (isset($menus) ? $menus . ' - ' : '') . $pages . ' - ' . $academy->name }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="./libs/jsvectormap/dist/jsvectormap.css" rel="stylesheet" />
     <!-- END PAGE LEVEL STYLES -->
@@ -25,6 +26,7 @@
     <!-- BEGIN DEMO STYLES -->
     <link href="./preview/css/demo.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">

@@ -25,8 +25,13 @@ class TahunAkademik extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function deletedBy()
+    public function kelasPerkuliahan()
     {
-        return $this->belongsTo(User::class, 'deleted_by');
+        return $this->hasMany(\App\Models\Akademik\KelasPerkuliahan::class, 'tahun_akademik_id');
+    }
+
+    public function jadwalPerkuliahan()
+    {
+        return $this->hasMany(\App\Models\Akademik\JadwalPerkuliahan::class, 'tahun_akademik_id');
     }
 }

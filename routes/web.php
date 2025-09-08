@@ -14,6 +14,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Private\User\RootController::class, 'renderDashboard'])->name('dashboard-index');
     Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard.dashboard-infra');
     Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard.dashboard-referensi');
+    Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard.dashboard-akademik');
 
     // Profile
     Route::get('/profile', [App\Http\Controllers\Private\User\RootController::class, 'renderProfile'])->name('profile-index');
@@ -236,20 +237,19 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/akademik/matakuliah/{id}/delete', [App\Http\Controllers\Master\Akademik\MataKuliahController::class, 'destroy'])->name('akademik.matakuliah-destroy');
     Route::post('/akademik/matakuliah/{id}/restore', [App\Http\Controllers\Master\Akademik\MataKuliahController::class, 'restore'])->name('akademik.matakuliah-restore');
     
-    Route::get('/akademik/kurikulum/mata-kuliah', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'index'])->name('akademik.kurikulum.matakuliah-index');
-    Route::get('/akademik/kurikulum/mata-kuliah/trashed', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'trash'])->name('akademik.kurikulum.matakuliah-trash');
-    Route::post('/akademik/kurikulum/mata-kuliah', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'store'])->name('akademik.kurikulum.matakuliah-store');
-    Route::patch('/akademik/kurikulum/mata-kuliah/{id}/update', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'update'])->name('akademik.kurikulum.matakuliah-update');
-    Route::delete('/akademik/kurikulum/mata-kuliah/{id}/delete', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'destroy'])->name('akademik.kurikulum.matakuliah-destroy');
-    Route::post('/akademik/kurikulum/mata-kuliah/{id}/restore', [App\Http\Controllers\Master\Akademik\KurikulumMataKuliahController::class, 'restore'])->name('akademik.kurikulum.matakuliah-restore');
-    
     Route::get('/akademik/kelas-perkuliahan', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'index'])->name('akademik.kelas-perkuliahan-index');
+    Route::get('/akademik/kelas-perkuliahan/view/{id}', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'view'])->name('akademik.kelas-perkuliahan-view');
     Route::get('/akademik/kelas-perkuliahan/trashed', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'trash'])->name('akademik.kelas-perkuliahan-trash');
     Route::post('/akademik/kelas-perkuliahan', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'store'])->name('akademik.kelas-perkuliahan-store');
     Route::patch('/akademik/kelas-perkuliahan/{id}/update', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'update'])->name('akademik.kelas-perkuliahan-update');
     Route::delete('/akademik/kelas-perkuliahan/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'destroy'])->name('akademik.kelas-perkuliahan-destroy');
     Route::post('/akademik/kelas-perkuliahan/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'restore'])->name('akademik.kelas-perkuliahan-restore');
     
+    Route::post('/akademik/kelas-perkuliahan/{id}/mahasiswa', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'storeMahasiswa'])->name('akademik.kelas-perkuliahan-store-mahasiswa');
+    Route::delete('/akademik/kelas-perkuliahan/{kelasId}/mahasiswa/{mahasiswaId}', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'removeMahasiswa'])->name('akademik.kelas-perkuliahan-remove-mahasiswa');
+    Route::post('/akademik/kelas-perkuliahan/{id}/jadwal', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'storeJadwal'])->name('akademik.kelas-perkuliahan-store-jadwal');
+    Route::delete('/akademik/kelas-perkuliahan/{kelasId}/jadwal/{jadwalId}', [App\Http\Controllers\Master\Akademik\KelasPerkuliahanController::class, 'removeJadwal'])->name('akademik.kelas-perkuliahan-remove-jadwal');
+
     Route::get('/akademik/jadwal-perkuliahan', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'index'])->name('akademik.jadwal-perkuliahan-index');
     Route::get('/akademik/jadwal-perkuliahan/view/{id}', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'view'])->name('akademik.jadwal-perkuliahan-view');
     Route::get('/akademik/jadwal-perkuliahan/trashed', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'trash'])->name('akademik.jadwal-perkuliahan-trash');
@@ -257,14 +257,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/akademik/jadwal-perkuliahan/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'update'])->name('akademik.jadwal-perkuliahan-update');
     Route::delete('/akademik/jadwal-perkuliahan/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'destroy'])->name('akademik.jadwal-perkuliahan-destroy');
     Route::post('/akademik/jadwal-perkuliahan/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'restore'])->name('akademik.jadwal-perkuliahan-restore');
-    
-    Route::get('/akademik/jadwal-pertemuan', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'index'])->name('akademik.jadwal-pertemuan-index');
-    Route::get('/akademik/jadwal-pertemuan/trashed', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'trash'])->name('akademik.jadwal-pertemuan-trash');
-    Route::post('/akademik/jadwal-pertemuan', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'store'])->name('akademik.jadwal-pertemuan-store');
-    Route::patch('/akademik/jadwal-pertemuan/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'update'])->name('akademik.jadwal-pertemuan-update');
-    Route::delete('/akademik/jadwal-pertemuan/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'destroy'])->name('akademik.jadwal-pertemuan-destroy');
-    Route::post('/akademik/jadwal-pertemuan/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalPertemuanController::class, 'restore'])->name('akademik.jadwal-pertemuan-restore');
-    
+
     Route::get('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'index'])->name('akademik.kelas-mahasiswa-index');
     Route::get('/akademik/kelas-mahasiswa/trashed', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'trash'])->name('akademik.kelas-mahasiswa-trash');
     Route::post('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'store'])->name('akademik.kelas-mahasiswa-store');
@@ -272,49 +265,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
     Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
     
-    // Additional Academic Modules
-    Route::get('/akademik/matakuliah/prasyarat', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'index'])->name('akademik.matakuliah.prasyarat-index');
-    Route::get('/akademik/matakuliah/prasyarat/trashed', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'trash'])->name('akademik.matakuliah.prasyarat-trash');
-    Route::post('/akademik/matakuliah/prasyarat', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'store'])->name('akademik.matakuliah.prasyarat-store');
-    Route::patch('/akademik/matakuliah/prasyarat/{id}/update', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'update'])->name('akademik.matakuliah.prasyarat-update');
-    Route::delete('/akademik/matakuliah/prasyarat/{id}/delete', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'destroy'])->name('akademik.matakuliah.prasyarat-destroy');
-    Route::post('/akademik/matakuliah/prasyarat/{id}/restore', [App\Http\Controllers\Master\Akademik\MataKuliahPrasyaratController::class, 'restore'])->name('akademik.matakuliah.prasyarat-restore');
-    
-    Route::get('/akademik/matakuliah/dosen', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'index'])->name('akademik.matakuliah.dosen-index');
-    Route::get('/akademik/matakuliah/dosen/trashed', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'trash'])->name('akademik.matakuliah.dosen-trash');
-    Route::post('/akademik/matakuliah/dosen', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'store'])->name('akademik.matakuliah.dosen-store');
-    Route::patch('/akademik/matakuliah/dosen/{id}/update', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'update'])->name('akademik.matakuliah.dosen-update');
-    Route::delete('/akademik/matakuliah/dosen/{id}/delete', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'destroy'])->name('akademik.matakuliah.dosen-destroy');
-    Route::post('/akademik/matakuliah/dosen/{id}/restore', [App\Http\Controllers\Master\Akademik\MataKuliahDosenController::class, 'restore'])->name('akademik.matakuliah.dosen-restore');
-    
-    Route::get('/akademik/matakuliah/detail', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'index'])->name('akademik.matakuliah.detail-index');
-    Route::get('/akademik/matakuliah/detail/trashed', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'trash'])->name('akademik.matakuliah.detail-trash');
-    Route::post('/akademik/matakuliah/detail', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'store'])->name('akademik.matakuliah.detail-store');
-    Route::patch('/akademik/matakuliah/detail/{id}/update', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'update'])->name('akademik.matakuliah.detail-update');
-    Route::delete('/akademik/matakuliah/detail/{id}/delete', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'destroy'])->name('akademik.matakuliah.detail-destroy');
-    Route::post('/akademik/matakuliah/detail/{id}/restore', [App\Http\Controllers\Master\Akademik\MataKuliahDetailController::class, 'restore'])->name('akademik.matakuliah.detail-restore');
-    
-    Route::get('/akademik/jadwal-kelas', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'index'])->name('akademik.jadwal-kelas-index');
-    Route::get('/akademik/jadwal-kelas/trashed', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'trash'])->name('akademik.jadwal-kelas-trash');
-    Route::post('/akademik/jadwal-kelas', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'store'])->name('akademik.jadwal-kelas-store');
-    Route::patch('/akademik/jadwal-kelas/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'update'])->name('akademik.jadwal-kelas-update');
-    Route::delete('/akademik/jadwal-kelas/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'destroy'])->name('akademik.jadwal-kelas-destroy');
-    Route::post('/akademik/jadwal-kelas/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalKelasController::class, 'restore'])->name('akademik.jadwal-kelas-restore');
-    
-    Route::get('/akademik/fakultas-profile', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'index'])->name('akademik.fakultas-profile-index');
-    Route::get('/akademik/fakultas-profile/trashed', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'trash'])->name('akademik.fakultas-profile-trash');
-    Route::post('/akademik/fakultas-profile', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'store'])->name('akademik.fakultas-profile-store');
-    Route::patch('/akademik/fakultas-profile/{id}/update', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'update'])->name('akademik.fakultas-profile-update');
-    Route::delete('/akademik/fakultas-profile/{id}/delete', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'destroy'])->name('akademik.fakultas-profile-destroy');
-    Route::post('/akademik/fakultas-profile/{id}/restore', [App\Http\Controllers\Master\Akademik\FakultasProfileController::class, 'restore'])->name('akademik.fakultas-profile-restore');
-    
-    Route::get('/akademik/program-studi-profile', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'index'])->name('akademik.program-studi-profile-index');
-    Route::get('/akademik/program-studi-profile/trashed', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'trash'])->name('akademik.program-studi-profile-trash');
-    Route::post('/akademik/program-studi-profile', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'store'])->name('akademik.program-studi-profile-store');
-    Route::patch('/akademik/program-studi-profile/{id}/update', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'update'])->name('akademik.program-studi-profile-update');
-    Route::delete('/akademik/program-studi-profile/{id}/delete', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'destroy'])->name('akademik.program-studi-profile-destroy');
-    Route::post('/akademik/program-studi-profile/{id}/restore', [App\Http\Controllers\Master\Akademik\ProgramStudiProfileController::class, 'restore'])->name('akademik.program-studi-profile-restore');
-
 });
 
 // Route::group(['prefix' => 'superuser', 'middleware' => ['auth:web','role:Super Admin'], 'as' => 'super.'],function(){
