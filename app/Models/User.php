@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 // use App\Traits\HasLogAktivitas;
 use Spatie\Permission\Traits\HasRoles;
 // USE MODELS
+use App\Models\User\Subrole;
 use App\Models\Referensi\Agama;
 use App\Models\Referensi\Alamat;
 use App\Models\Referensi\GolonganDarah;
@@ -100,5 +101,10 @@ class User extends Authenticatable
     public function pendidikans()
     {
         return $this->morphMany(Pendidikan::class, 'owner');
+    }
+
+    public function subroles()
+    {
+        return $this->belongsToMany(Subrole::class, 'user_subroles')->withTimestamps();
     }
 }

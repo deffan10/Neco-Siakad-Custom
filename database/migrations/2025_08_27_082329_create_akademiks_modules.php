@@ -288,7 +288,7 @@ return new class extends Migration
         Schema::create('kelas_mahasiswa', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kelas_id')->constrained('kelas_perkuliahan');
-            $table->foreignId('mahasiswa_id')->constrained('mahasiswas');
+            $table->foreignId('mahasiswa_id')->constrained('data_mahasiswa');
 
             // Audit fields
             $table->timestamps();

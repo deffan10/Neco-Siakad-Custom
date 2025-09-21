@@ -106,6 +106,14 @@ class AuthController extends Controller
                     if ($roles->count() === 1) {
                         // Kalau cuma punya 1 role → langsung simpan ke session
                         session(['active_role' => $roles->first()]);
+
+                        $subrole = $user->subroles()
+                            ->whereHas('role', fn($q) => $q->where('name', $roles->first()))
+                            ->first();
+
+                        if ($subrole) {
+                            session(['active_subrole' => $subrole->name]);
+                        }
                         Alert::toast('Login sebagai ' . $user->name . ' (' . $roles->first() . ')', 'success');
 
                         // redirect sesuai role
@@ -145,6 +153,15 @@ class AuthController extends Controller
 
         if (in_array($selectedRole, $roles->toArray())) {
             session(['active_role' => $selectedRole]);
+
+            $subrole = $user->subroles()
+                ->whereHas('role', fn($q) => $q->where('name', $selectedRole))
+                ->first();
+
+            if ($subrole) {
+                session(['active_subrole' => $subrole->name]);
+            }
+
             Alert::toast('Login sebagai ' . $user->name . ' (' . $selectedRole . ')', 'success');
 
             // redirect sesuai role

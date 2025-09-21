@@ -11,7 +11,9 @@ Route::post('/signin', [App\Http\Controllers\AuthController::class, 'handleSigni
 
 
 Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')->group(function () {
-    
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Tendik can be added here
+
     Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard-infra');
     Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard-referensi');
     Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard-akademik');
@@ -264,6 +266,26 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
     require __DIR__.'/basic-routes.php';
     // Other Menus for Tendik can be added here
+
+    Route::middleware('active_subrole:sekprodi')->group(function () {
+        Route::get('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'index'])->name('akademik.kelas-mahasiswa-index');
+        Route::get('/akademik/kelas-mahasiswa/trashed', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'trash'])->name('akademik.kelas-mahasiswa-trash');
+        Route::post('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'store'])->name('akademik.kelas-mahasiswa-store');
+        Route::patch('/akademik/kelas-mahasiswa/{id}/update', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'update'])->name('akademik.kelas-mahasiswa-update');
+        Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
+        Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
+        
+    });
+    Route::middleware('active_subrole:baak')->group(function () {
+        Route::get('/akademik/jadwal-perkuliahan', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'index'])->name('akademik.jadwal-perkuliahan-index');
+        Route::get('/akademik/jadwal-perkuliahan/view/{id}', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'view'])->name('akademik.jadwal-perkuliahan-view');
+        Route::get('/akademik/jadwal-perkuliahan/trashed', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'trash'])->name('akademik.jadwal-perkuliahan-trash');
+        Route::post('/akademik/jadwal-perkuliahan', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'store'])->name('akademik.jadwal-perkuliahan-store');
+        Route::patch('/akademik/jadwal-perkuliahan/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'update'])->name('akademik.jadwal-perkuliahan-update');
+        Route::delete('/akademik/jadwal-perkuliahan/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'destroy'])->name('akademik.jadwal-perkuliahan-destroy');
+        Route::post('/akademik/jadwal-perkuliahan/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'restore'])->name('akademik.jadwal-perkuliahan-restore');
+
+    });
 
 });
 
