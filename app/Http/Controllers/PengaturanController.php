@@ -17,7 +17,7 @@ class PengaturanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "HomePage";
         $data['system'] = System::first();

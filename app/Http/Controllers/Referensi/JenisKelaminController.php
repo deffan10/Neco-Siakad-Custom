@@ -16,7 +16,7 @@ class JenisKelaminController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Jenis Kelamin';
         $data['pages'] = "Halaman Data Jenis Kelamin";
         $data['system'] = System::first();
@@ -30,7 +30,7 @@ class JenisKelaminController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Jenis Kelamin';
         $data['pages'] = "Halaman Data Jenis Kelamin yang Dihapus";
         $data['system'] = System::first();

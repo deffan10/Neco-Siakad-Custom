@@ -19,7 +19,7 @@ class PengecekanBarangController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Pengecekan Barang';
         $data['pages'] = "Halaman Data Pengecekan Barang";
         $data['system'] = System::first();
@@ -35,7 +35,7 @@ class PengecekanBarangController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Pengecekan Barang';
         $data['pages'] = "Halaman Data Pengecekan Barang yang Dihapus";
         $data['system'] = System::first();

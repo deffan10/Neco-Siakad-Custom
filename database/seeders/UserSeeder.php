@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 // Use Models
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 // Use Plugins
 
 class UserSeeder extends Seeder
@@ -18,7 +19,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        // Create Roles
+        $roles = ['admin', 'dosen', 'tendik', 'alumni','mahasiswa' ,'peserta-pmb'];
+        foreach ($roles as $role) {
+            Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
+        }
+
+        $user = User::create([
             'name' => 'Administrator',
             'photo' => 'default.jpg',
             'username' => 'superuser',
@@ -33,5 +40,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin_id' => null,
             'kewarganegaraan_id' => null,
         ]);
+
+        $user->assignRole('admin', 'dosen', 'tendik');
     }
 }

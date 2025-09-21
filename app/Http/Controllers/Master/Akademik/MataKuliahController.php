@@ -21,7 +21,7 @@ class MataKuliahController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Mata Kuliah';
         $data['pages'] = "Halaman Data Mata Kuliah";
         $data['system'] = System::first();
@@ -36,7 +36,7 @@ class MataKuliahController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Mata Kuliah';
         $data['pages'] = "Halaman Data Mata Kuliah yang Dihapus";
         $data['system'] = System::first();
@@ -50,7 +50,7 @@ class MataKuliahController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Mata Kuliah';
         $data['pages'] = "Halaman Detail Mata Kuliah";
         $data['system'] = System::first();

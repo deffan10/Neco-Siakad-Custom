@@ -19,7 +19,7 @@ class JadwalPemeliharaanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Perawatan Jadwal Pemeliharaan';
         $data['pages'] = "Halaman Data Jadwal Pemeliharaan";
         $data['system'] = System::first();
@@ -34,7 +34,7 @@ class JadwalPemeliharaanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Perawatan Jadwal Pemeliharaan';
         $data['pages'] = "Halaman Data Jadwal Pemeliharaan yang Dihapus";
         $data['system'] = System::first();

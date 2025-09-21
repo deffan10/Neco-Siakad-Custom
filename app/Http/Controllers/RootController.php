@@ -47,7 +47,7 @@ class RootController extends Controller
     public function renderHomePage()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "HomePage";
         $data['system'] = System::first();
@@ -59,7 +59,7 @@ class RootController extends Controller
     public function indexReferensi()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "Dashboard Referensi";
         $data['system'] = System::first();
@@ -139,7 +139,7 @@ class RootController extends Controller
     public function indexInfra()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "Dashboard Infrastruktur & Inventaris";
         $data['system'] = System::first();

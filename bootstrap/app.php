@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => \App\Http\Middleware\Authenticate::class,
             'maintenance' => \App\Http\Middleware\CheckForMaintenanceMode::class,
+            'active_role' => \App\Http\Middleware\EnsureRoleIsActive::class,
         ]);
         
         // Tambahkan middleware maintenance mode ke grup web

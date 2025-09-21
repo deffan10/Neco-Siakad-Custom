@@ -17,7 +17,7 @@ class KeluargaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Keluarga';
         $data['pages'] = "Halaman Data Keluarga";
         $data['system'] = System::first();
@@ -32,7 +32,7 @@ class KeluargaController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Keluarga';
         $data['pages'] = "Halaman Data Keluarga yang Dihapus";
         $data['system'] = System::first();

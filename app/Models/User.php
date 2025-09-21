@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 // use App\Traits\HasLogAktivitas;
+use Spatie\Permission\Traits\HasRoles;
 // USE MODELS
 use App\Models\Referensi\Agama;
 use App\Models\Referensi\Alamat;
@@ -18,7 +19,7 @@ use App\Models\Referensi\Pendidikan;
 
 class User extends Authenticatable
 {
-    // use SoftDeletes, HasLogAktivitas;
+    use HasRoles;// use SoftDeletes, HasLogAktivitas;
 
     protected $table = 'users';
     protected $guarded = [];

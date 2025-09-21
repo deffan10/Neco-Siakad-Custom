@@ -23,7 +23,7 @@ class KelasPerkuliahanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kelas Perkuliahan';
         $data['pages'] = "Halaman Data Kelas Perkuliahan";
         $data['system'] = System::first();
@@ -40,7 +40,7 @@ class KelasPerkuliahanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kelas Perkuliahan';
         $data['pages'] = "Halaman Data Kelas Perkuliahan yang Dihapus";
         $data['system'] = System::first();
@@ -198,7 +198,7 @@ class KelasPerkuliahanController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kelas Perkuliahan';
         $data['pages'] = "Detail Kelas Perkuliahan";
         $data['system'] = System::first();

@@ -16,7 +16,7 @@ class GedungController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Gedung';
         $data['pages'] = "Halaman Data Gedung";
         $data['system'] = System::first();
@@ -30,7 +30,7 @@ class GedungController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Gedung';
         $data['pages'] = "Halaman Data Gedung yang Dihapus";
         $data['system'] = System::first();

@@ -23,7 +23,7 @@ class RootController extends Controller
     public function renderDashboard()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Dashboard';
         $data['pages'] = "HomePage";
         $data['system'] = System::first();
@@ -35,7 +35,7 @@ class RootController extends Controller
     public function renderProfile()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Profile';
         $data['pages'] = "Halaman Profile" ;
         $data['system'] = System::first();

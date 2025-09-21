@@ -20,7 +20,7 @@ class HistoriPemeliharaanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Perawatan Histori Pemeliharaan';
         $data['pages'] = "Halaman Data Histori Pemeliharaan";
         $data['system'] = System::first();
@@ -37,7 +37,7 @@ class HistoriPemeliharaanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Perawatan Histori Pemeliharaan';
         $data['pages'] = "Halaman Data Histori Pemeliharaan yang Dihapus";
         $data['system'] = System::first();

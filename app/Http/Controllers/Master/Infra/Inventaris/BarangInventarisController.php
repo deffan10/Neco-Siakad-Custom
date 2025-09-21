@@ -19,7 +19,7 @@ class BarangInventarisController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Barang Inventaris';
         $data['pages'] = "Halaman Data Barang Inventaris";
         $data['system'] = System::first();
@@ -36,7 +36,7 @@ class BarangInventarisController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Barang Inventaris';
         $data['pages'] = "Halaman Data Barang Inventaris yang Dihapus";
         $data['system'] = System::first();

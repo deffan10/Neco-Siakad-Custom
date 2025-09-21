@@ -19,7 +19,7 @@ class FakultasController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Fakultas';
         $data['pages'] = "Halaman Data Fakultas";
         $data['system'] = System::first();
@@ -34,7 +34,7 @@ class FakultasController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Fakultas';
         $data['pages'] = "Halaman Data Fakultas";
         $data['system'] = System::first();
@@ -49,7 +49,7 @@ class FakultasController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Fakultas';
         $data['pages'] = "Halaman Data Fakultas yang Dihapus";
         $data['system'] = System::first();

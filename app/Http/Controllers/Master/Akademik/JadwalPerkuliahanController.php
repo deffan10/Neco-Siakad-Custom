@@ -24,7 +24,7 @@ class JadwalPerkuliahanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Jadwal Perkuliahan';
         $data['pages'] = "Halaman Data Jadwal Perkuliahan";
         $data['system'] = System::first();
@@ -41,7 +41,7 @@ class JadwalPerkuliahanController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Jadwal Perkuliahan';
         $data['pages'] = "Halaman Detail Jadwal Perkuliahan";
         $data['system'] = System::first();
@@ -77,7 +77,7 @@ class JadwalPerkuliahanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Jadwal Perkuliahan';
         $data['pages'] = "Halaman Data Jadwal Perkuliahan yang Dihapus";
         $data['system'] = System::first();

@@ -19,7 +19,7 @@ class ProgramStudiController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Program Studi';
         $data['pages'] = "Halaman Data Program Studi";
         $data['system'] = System::first();
@@ -35,7 +35,7 @@ class ProgramStudiController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Program Studi';
         $data['pages'] = "Halaman Data Program Studi yang Dihapus";
         $data['system'] = System::first();
@@ -51,7 +51,7 @@ class ProgramStudiController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Program Studi';
         $data['pages'] = "Detail Program Studi";
         $data['system'] = System::first();

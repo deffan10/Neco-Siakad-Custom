@@ -5,16 +5,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\RootController::class, 'renderHomePage'])->name('root.home-index');
 
 Route::get('/signin', [App\Http\Controllers\AuthController::class, 'renderSignin'])->name('auth.render-signin');
+Route::get('/gateway/choose-role', [App\Http\Controllers\AuthController::class, 'renderChooseRole'])->name('auth.choose-role');
+Route::post('/gateway/set-role', [App\Http\Controllers\AuthController::class, 'handleSetRole'])->name('auth.set-role');
 Route::post('/signin', [App\Http\Controllers\AuthController::class, 'handleSignin'])->name('auth.handle-signin');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/logout', [App\Http\Controllers\AuthController::class, 'handleLogout'])->name('auth.handle-logout');
     // GLOBAL MENU AUTHENTIKASI
     Route::get('/dashboard', [App\Http\Controllers\Private\User\RootController::class, 'renderDashboard'])->name('dashboard-index');
-    Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard.dashboard-infra');
-    Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard.dashboard-referensi');
-    Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard.dashboard-akademik');
+    Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard-infra');
+    Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard-referensi');
+    Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard-akademik');
 
     // Profile
     Route::get('/profile', [App\Http\Controllers\Private\User\RootController::class, 'renderProfile'])->name('profile-index');
@@ -265,6 +267,17 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
     Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
     
+});
+Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
+    Route::get('/logout', [App\Http\Controllers\AuthController::class, 'handleLogout'])->name('auth.handle-logout');
+    // GLOBAL MENU AUTHENTIKASI
+    Route::get('/dashboard', [App\Http\Controllers\Private\User\RootController::class, 'renderDashboard'])->name('dashboard-index');
+
+    // Profile
+    Route::get('/profile', [App\Http\Controllers\Private\User\RootController::class, 'renderProfile'])->name('profile-index');
+    Route::post('/profile', [App\Http\Controllers\Private\User\RootController::class, 'handleProfile'])->name('profile-update');
+    Route::delete('/profile/pendidikan/{id}', [App\Http\Controllers\Private\User\RootController::class, 'deletePendidikan'])->name('profile.delete-pendidikan');
+    Route::delete('/profile/keluarga/{id}', [App\Http\Controllers\Private\User\RootController::class, 'deleteKeluarga'])->name('profile.delete-keluarga');
 });
 
 // Route::group(['prefix' => 'superuser', 'middleware' => ['auth:web','role:Super Admin'], 'as' => 'super.'],function(){
