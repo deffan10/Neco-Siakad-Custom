@@ -137,7 +137,7 @@
                             <h5 class="mb-0">Informasi Detail Kelas Perkuliahan</h5>
                         </div>
                         <div class="card-body">
-                            <form id="editKelasForm" action="{{ route('akademik.kelas-perkuliahan-update', $kelasPerkuliahan->id) }}" method="POST">
+                            <form id="editKelasForm" action="{{ route($activeRole . '.akademik.kelas-perkuliahan-update', $kelasPerkuliahan->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
 
@@ -199,7 +199,7 @@
                                     <button type="button" class="btn btn-primary me-2" onclick="submitEditForm()">
                                         <i class="fas fa-save me-2"></i>Simpan Perubahan
                                     </button>
-                                    <a href="{{ route('akademik.kelas-perkuliahan-index') }}" class="btn btn-secondary">
+                                    <a href="{{ route($activeRole . '.akademik.kelas-perkuliahan-index') }}" class="btn btn-secondary">
                                         <i class="fas fa-arrow-left me-2"></i>Kembali
                                     </a>
                                 </div>
@@ -503,7 +503,7 @@ function removeMahasiswa(id, name) {
             });
             
             // Send DELETE request
-            fetch(`{{ route('akademik.kelas-perkuliahan-remove-mahasiswa', [$kelasPerkuliahan->id, ':id']) }}`.replace(':id', id), {
+            fetch(`{{ route($activeRole . '.akademik.kelas-perkuliahan-remove-mahasiswa', [$kelasPerkuliahan->id, ':id']) }}`.replace(':id', id), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
@@ -567,7 +567,7 @@ function deleteJadwal(id, hari) {
             });
             
             // Send DELETE request
-            fetch(`{{ route('akademik.kelas-perkuliahan-remove-jadwal', [$kelasPerkuliahan->id, ':id']) }}`.replace(':id', id), {
+            fetch(`{{ route($activeRole . '.akademik.kelas-perkuliahan-remove-jadwal', [$kelasPerkuliahan->id, ':id']) }}`.replace(':id', id), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
@@ -640,7 +640,7 @@ document.getElementById('addMahasiswaForm').addEventListener('submit', function(
     });
     
     // Send POST request
-    fetch(`{{ route('akademik.kelas-perkuliahan-store-mahasiswa', $kelasPerkuliahan->id) }}`, {
+    fetch(`{{ route($activeRole . '.akademik.kelas-perkuliahan-store-mahasiswa', $kelasPerkuliahan->id) }}`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': csrfToken,
@@ -711,7 +711,7 @@ document.getElementById('addJadwalForm').addEventListener('submit', function(e) 
     });
     
     // Send POST request
-    fetch(`{{ route('akademik.kelas-perkuliahan-store-jadwal', $kelasPerkuliahan->id) }}`, {
+    fetch(`{{ route($activeRole . '.akademik.kelas-perkuliahan-store-jadwal', $kelasPerkuliahan->id) }}`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': csrfToken,

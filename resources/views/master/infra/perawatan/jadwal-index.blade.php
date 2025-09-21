@@ -252,11 +252,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Jadwal Pemeliharaan' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('perawatan.jadwal-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route($activeRole . '.perawatan.jadwal-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('perawatan.jadwal-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route($activeRole . '.perawatan.jadwal-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -271,7 +271,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Jadwal Pemeliharaan Baru</h5>
-                                <form action="{{ route('perawatan.jadwal-store') }}" method="post">
+                                <form action="{{ route($activeRole . '.perawatan.jadwal-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -386,7 +386,7 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('perawatan.jadwal-restore', $item->id) }}" method="POST" class="d-inline restore-form">
+                                                <form action="{{ route($activeRole . '.perawatan.jadwal-restore', $item->id) }}" method="POST" class="d-inline restore-form">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" title="Restore">
                                                         <i class="fas fa-undo"></i>
@@ -396,7 +396,7 @@
                                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <form action="{{ route('perawatan.jadwal-destroy', $item->id) }}" method="POST" class="d-inline delete-form">
+                                                <form action="{{ route($activeRole . '.perawatan.jadwal-destroy', $item->id) }}" method="POST" class="d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
@@ -416,7 +416,7 @@
                                                         <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Jadwal Pemeliharaan</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <form action="{{ route('perawatan.jadwal-update', $item->id) }}" method="post">
+                                                    <form action="{{ route($activeRole . '.perawatan.jadwal-update', $item->id) }}" method="post">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="modal-body">

@@ -58,7 +58,7 @@
                 </div>
 
                 <!-- Form Update Settings -->
-                <form action="{{ route($spref . 'pengaturan-update') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route($activeRole . '.pengaturan-update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <!-- Nav Tabs -->

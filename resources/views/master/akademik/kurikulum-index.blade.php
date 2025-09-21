@@ -387,11 +387,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Kurikulum' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('akademik.kurikulum-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route($activeRole . '.akademik.kurikulum-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('akademik.kurikulum-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route($activeRole . '.akademik.kurikulum-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -406,7 +406,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Kurikulum Baru</h5>
-                                <form action="{{ route('akademik.kurikulum-store') }}" method="post">
+                                <form action="{{ route($activeRole . '.akademik.kurikulum-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -623,17 +623,17 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('akademik.kurikulum-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route($activeRole . '.akademik.kurikulum-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Kurikulum">
                                                         <i class="fas fa-undo me-1"></i> Restore
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="{{ route('akademik.kurikulum-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Kurikulum">
+                                                <a href="{{ route($activeRole . '.akademik.kurikulum-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Kurikulum">
                                                     <i class="fas fa-eye me-1"></i> Lihat
                                                 </a>
-                                                <form action="{{ route('akademik.kurikulum-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route($activeRole . '.akademik.kurikulum-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Kurikulum" onclick="confirmDelete('{{ $item->id }}')">

@@ -160,7 +160,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('akademik.kurikulum-update', $kurikulum->id) }}" method="POST">
+                <form action="{{ route($activeRole . '.akademik.kurikulum-update', $kurikulum->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     
@@ -481,7 +481,7 @@
 
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="{{ route('akademik.kurikulum-index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route($activeRole . '.akademik.kurikulum-index') }}" class="btn btn-secondary">Batal</a>
                     </div>
                 </form>
             </div>
@@ -492,7 +492,7 @@
 <div class="modal fade" id="addMataKuliahModal" tabindex="-1" aria-labelledby="addMataKuliahModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ route('akademik.kurikulum-matakuliah-store', $kurikulum->id) }}" method="POST">
+            <form action="{{ route($activeRole . '.akademik.kurikulum-matakuliah-store', $kurikulum->id) }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMataKuliahModalLabel">Tambah Mata Kuliah ke Kurikulum</h5>
@@ -784,7 +784,7 @@
             return;
         }
         
-        const action = `{{ route('akademik.kurikulum-matakuliah-update', [$kurikulum->id, ':mataKuliahId']) }}`;
+        const action = `{{ route($activeRole . '.akademik.kurikulum-matakuliah-update', [$kurikulum->id, ':mataKuliahId']) }}`;
         form.action = action.replace(':mataKuliahId', mataKuliahId);
         
         const semesterSelect = document.getElementById('edit_semester_id');

@@ -16,7 +16,7 @@ use App\Models\Referensi\Kewarganegaraan;
 use App\Models\Referensi\Jabatan;
 use App\Models\Referensi\Semester;
 use App\Models\Referensi\StatusMahasiswa;
-use App\Models\Referensi\Role;
+use Spatie\Permission\Models\Role;
 use App\Models\Referensi\Alamat;
 use App\Models\Referensi\Pendidikan;
 use App\Models\Referensi\Keluarga;

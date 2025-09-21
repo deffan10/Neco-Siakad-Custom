@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route($spref . 'akademik.jadwal-perkuliahan-update', $jadwal->id) }}" method="POST">
+                <form action="{{ route($activeRole . '.akademik.jadwal-perkuliahan-update', $jadwal->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     
@@ -477,7 +477,7 @@
 
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="{{ route($spref . 'akademik.matakuliah-index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route($activeRole . '.akademik.matakuliah-index') }}" class="btn btn-secondary">Batal</a>
                     </div>
                 </form>
             </div>

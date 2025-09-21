@@ -41,27 +41,27 @@ class AuthController extends Controller
         [
             'admin' => [
                 'desc' => 'Akses penuh ke sistem',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5z"></path><path d="M21 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path></svg>'
-            ],
+                'icon' => '<i class="fas fa-user-shield"></i>'
+            ],  
             'dosen' => [
                 'desc' => 'Akses dosen & pengajaran',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M12 2l4 4-4 4-4-4 4-4z"></path><path d="M6 14c-1 1-1 3 0 4s3 1 4 0 1-3 0-4-3-1-4 0z"></path></svg>'
+                'icon' => '<i class="fas fa-chalkboard-teacher"></i>'
             ],
             'tendik' => [
                 'desc' => 'Tenaga kependidikan (staff)',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
+                'icon' => '<i class="fas fa-user-tie"></i>'
             ],
             'alumni' => [
                 'desc' => 'Akses khusus alumni',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14v7"></path></svg>'
+                'icon' => '<i class="fas fa-user-graduate"></i>'
             ],
             'mahasiswa' => [
                 'desc' => 'Akses mahasiswa aktif',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14v7"></path><path d="M7 20a2 2 0 0 0 4 0"></path></svg>'
+                'icon' => '<i class="fas fa-user-graduate"></i>'
             ],
             'peserta-pmb' => [
                 'desc' => 'Peserta Penerimaan Mahasiswa Baru',
-                'icon' => '<svg class="role-icon" xmlns="http://www.w3.org/2000/svg" ...><path d="M5 3v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3"></path><rect x="3" y="7" width="18" height="13" rx="2"></rect></svg>'
+                'icon' => '<i class="fas fa-user-graduate"></i>'
             ],
         ];
 
@@ -77,6 +77,7 @@ class AuthController extends Controller
             ]);
 
             $login = $request->input('login');
+            $remember = $request->has('remember');
 
             // ==== RATE LIMIT ====
             $pengaturan = System::first();
@@ -97,7 +98,7 @@ class AuthController extends Controller
             $checkUser = User::where($fieldType, $login)->first();
 
             if ($checkUser) {
-                if (Auth::attempt([$fieldType => $login, 'password' => $request->input('password')])) {
+                if (Auth::attempt([$fieldType => $login, 'password' => $request->input('password')], $remember)) {
 
                     $user = Auth::user();
                     $roles = $user->getRoleNames(); // Spatie
@@ -155,16 +156,25 @@ class AuthController extends Controller
     }
 
     
-    public function handleLogout(Request $request) {
+    public function handleLogout(Request $request)
+    {
         if (Auth::check()) {
+            // hapus role aktif di session
+            $request->session()->forget('active_role');
 
+            // clear semua session biar aman
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            // logout user
             Auth::logout();
+
             Alert::success('Berhasil!', 'Logout telah sukses!');
             return redirect()->route('auth.render-signin');
         } else {
-
             Alert::error('Gagal!', 'Logout gagal, Silahkan coba lagi!');
             return back();
         }
     }
+
 }

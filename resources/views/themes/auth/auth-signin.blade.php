@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-check">
-                                            <input type="checkbox" class="form-check-input" />
+                                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
                                             <span class="form-check-label">Remember me on this device</span>
                                         </label>
                                     </div>

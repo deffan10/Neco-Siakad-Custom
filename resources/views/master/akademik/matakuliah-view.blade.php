@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route($spref . 'akademik.matakuliah-update', $mataKuliah->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route($activeRole . '.akademik.matakuliah-update', $mataKuliah->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     
@@ -420,7 +420,7 @@
 
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                        <a href="{{ route($spref . 'akademik.matakuliah-index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route($activeRole . '.akademik.matakuliah-index') }}" class="btn btn-secondary">Batal</a>
                     </div>
                 </form>
             </div>
