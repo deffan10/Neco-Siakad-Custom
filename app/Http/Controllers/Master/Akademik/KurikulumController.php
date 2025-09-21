@@ -21,7 +21,7 @@ class KurikulumController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kurikulum';
         $data['pages'] = "Halaman Data Kurikulum";
         $data['system'] = System::first();
@@ -37,7 +37,7 @@ class KurikulumController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kurikulum';
         $data['pages'] = "Halaman Data Kurikulum yang Dihapus";
         $data['system'] = System::first();
@@ -53,7 +53,7 @@ class KurikulumController extends Controller
     public function view($id)
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kurikulum';
         $data['pages'] = "Detail Kurikulum";
         $data['system'] = System::first();

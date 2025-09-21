@@ -2,36 +2,75 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-// Use System
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-// Use Models
+// Models
 use App\Models\User;
-// Use Plugins
+use Spatie\Permission\Models\Role;
+use App\Models\User\Subrole;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        User::create([
-            'name' => 'Administrator',
-            'photo' => 'default.jpg',
-            'username' => 'superuser',
-            'phone' => '0800000001',
+        // Daftar role
+        $roles = ['admin', 'dosen', 'tendik', 'alumni', 'mahasiswa', 'peserta-pmb'];
+
+        foreach ($roles as $role) {
+            Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => 'web'
+            ]);
+        }
+
+        // Daftar subrole (hanya untuk role tertentu)
+        $subroles = [
+            'tendik' => [
+                ['name' => 'baak', 'label' => 'Biro Administrasi Akademik']
+            ],
+            'dosen'  => [
+                ['name' => 'sekprodi', 'label' => 'Sekretaris Program Studi'],
+                ['name' => 'kaprodi', 'label' => 'Ketua Program Studi']
+            ],
+        ];
+
+        foreach ($subroles as $roleName => $subs) {
+            $role = Role::where('name', $roleName)->first();
+
+            foreach ($subs as $sub) {
+                Subrole::firstOrCreate([
+                    'name'    => $sub['name'],
+                    'role_id' => $role->id,
+                ], [
+                    'label'   => $sub['label'],
+                    'jobdesk' => null,
+                ]);
+            }
+        }
+
+        // Buat superuser
+        $user = User::firstOrCreate([
             'email' => 'superuser@example.com',
-            'code' => Str::random(6),
+        ], [
+            'name'     => 'Administrator',
+            'photo'    => 'default.jpg',
+            'username' => 'superuser',
+            'phone'    => '0800000001',
+            'code'     => Str::random(6),
             'password' => Hash::make('admin123'),
-    
-            // nullable foreign keys
-            'agama_id' => null,
-            'golongan_darah_id' => null,
-            'jenis_kelamin_id' => null,
-            'kewarganegaraan_id' => null,
+        ]);
+
+        // Assign beberapa role
+        $user->syncRoles(['admin', 'dosen', 'tendik']);
+
+        // Assign subrole otomatis (sekprodi untuk dosen, baak untuk tendik)
+        $sekprodi = Subrole::where('name', 'sekprodi')->first();
+        $baak     = Subrole::where('name', 'baak')->first();
+
+        $user->subroles()->syncWithoutDetaching([
+            $sekprodi->id,
+            $baak->id,
         ]);
     }
 }

@@ -371,11 +371,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Kelas Perkuliahan' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('akademik.kelas-perkuliahan-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route($activeRole . '.akademik.kelas-perkuliahan-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('akademik.kelas-perkuliahan-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route($activeRole . '.akademik.kelas-perkuliahan-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -390,7 +390,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Kelas Perkuliahan Baru</h5>
-                                <form action="{{ route('akademik.kelas-perkuliahan-store') }}" method="post">
+                                <form action="{{ route($activeRole . '.akademik.kelas-perkuliahan-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -526,17 +526,17 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('akademik.kelas-perkuliahan-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route($activeRole . '.akademik.kelas-perkuliahan-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Kelas Perkuliahan">
                                                         <i class="fas fa-undo me-1"></i> Restore
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="{{ route('akademik.kelas-perkuliahan-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Detail">
+                                                <a href="{{ route($activeRole . '.akademik.kelas-perkuliahan-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Detail">
                                                     <i class="fas fa-eye me-1"></i> View
                                                 </a>
-                                                <form action="{{ route('akademik.kelas-perkuliahan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route($activeRole . '.akademik.kelas-perkuliahan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Kelas Perkuliahan" onclick="confirmDelete('{{ $item->id }}')">

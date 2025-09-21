@@ -16,7 +16,7 @@ class AgamaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Agama';
         $data['pages'] = "Halaman Data Agama";
         $data['system'] = System::first();
@@ -30,7 +30,7 @@ class AgamaController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Agama';
         $data['pages'] = "Halaman Data Agama yang Dihapus";
         $data['system'] = System::first();

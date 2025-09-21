@@ -16,7 +16,7 @@ use App\Models\Referensi\Kewarganegaraan;
 use App\Models\Referensi\Jabatan;
 use App\Models\Referensi\Semester;
 use App\Models\Referensi\StatusMahasiswa;
-use App\Models\Referensi\Role;
+use Spatie\Permission\Models\Role;
 use App\Models\Referensi\Alamat;
 use App\Models\Referensi\Pendidikan;
 use App\Models\Referensi\Keluarga;
@@ -47,7 +47,7 @@ class RootController extends Controller
     public function renderHomePage()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "HomePage";
         $data['system'] = System::first();
@@ -59,7 +59,7 @@ class RootController extends Controller
     public function indexReferensi()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "Dashboard Referensi";
         $data['system'] = System::first();
@@ -139,7 +139,7 @@ class RootController extends Controller
     public function indexInfra()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = null;
         $data['pages'] = "Dashboard Infrastruktur & Inventaris";
         $data['system'] = System::first();

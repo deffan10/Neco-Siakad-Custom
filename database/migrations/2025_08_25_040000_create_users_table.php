@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             // Relasi Role
-            $table->foreignId('jabatan_id')->nullable()->constrained('jabatans');
+            // $table->foreignId('jabatan_id')->nullable()->constrained('jabatans');
             // $table->foreignId('role_id')->constrained('ref_roles')->cascadeOnDelete();
             
             $table->string('name');
@@ -54,6 +54,7 @@ return new class extends Migration
             // Google auth
             $table->string('google_id')->nullable();
             $table->string('google_token')->nullable();
+            $table->string('remember_token')->nullable();
             $table->string('google_refresh_token')->nullable();
 
             // Audit

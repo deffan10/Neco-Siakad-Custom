@@ -22,7 +22,6 @@
         border-color: #667eea;
     }
     .form-section {
-        /* background: #f8f9fa; */
         padding: 1.5rem;
         border-radius: 8px;
         margin-bottom: 1.5rem;
@@ -43,14 +42,13 @@
                         </div>
                         <div class="col-md-10">
                             <h2 class="mb-0">{{ $user->name }}</h2>
-                            <p class="mb-1">{{ $user->role->name ?? 'No Role' }}</p>
+                            <p class="mb-1">{{ ucfirst($activeRole) }}</p>
                             <p class="mb-0"><i class="fas fa-envelope"></i> {{ $user->email }} | <i class="fas fa-phone"></i> {{ $user->phone }}</p>
                         </div>
                     </div>
                 </div>
-
                 <!-- Form Update Profile -->
-                <form action="{{ route($user->prefix . 'profile-update') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route($activeRole . '.profile-update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <!-- Hidden inputs for deleted items -->
@@ -61,37 +59,37 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#biodata" role="tab">
-                                <i class="fas fa-user"></i> Biodata
+                                <i class="fas fa-user me-2"></i> Biodata
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#kontak" role="tab">
-                                <i class="fas fa-address-card"></i> Kontak & Sosial Media
+                                <i class="fas fa-address-card me-2"></i> Kontak & Sosial Media
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#identitas" role="tab">
-                                <i class="fas fa-id-card"></i> Identitas
+                                <i class="fas fa-id-card me-2"></i> Identitas
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#alamat" role="tab">
-                                <i class="fas fa-map-marker-alt"></i> Alamat
+                                <i class="fas fa-map-marker-alt me-2"></i> Alamat
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#pendidikan" role="tab">
-                                <i class="fas fa-graduation-cap"></i> Pendidikan
+                                <i class="fas fa-graduation-cap me-2"></i> Pendidikan
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#keluarga" role="tab">
-                                <i class="fas fa-users"></i> Keluarga
+                                <i class="fas fa-users me-2"></i> Keluarga
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#keamanan" role="tab">
-                                <i class="fas fa-lock"></i> Keamanan
+                                <i class="fas fa-lock me-2"></i> Keamanan
                             </a>
                         </li>
                     </ul>

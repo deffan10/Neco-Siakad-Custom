@@ -233,28 +233,7 @@
 @endsection
 
 @section('content')
-<div class="page-header d-print-none">
-    <div class="container-xl">
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <h2 class="page-title">
-                    <i class="fas fa-database me-2"></i>Dashboard Data Referensi
-                </h2>
-                <div class="text-muted">
-                    Monitoring dan statistik seluruh data referensi sistem SIAKAD
-                </div>
-            </div>
-            <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    <a href="{{ route('dashboard.dashboard-referensi') }}" class="btn btn-primary management-btn">
-                        <i class="fas fa-cog me-1"></i>
-                        Kelola Data Referensi
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="page-body">
     <div class="container-xl">
@@ -757,37 +736,37 @@
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/agama') }}" class="management-btn btn btn-primary w-100">
+                        <a href="{{ route($activeRole . '.referensi.agama-index') }}" class="management-btn btn btn-primary w-100">
                             <i class="fas fa-pray me-2"></i>
                             <div class="small">Kelola Agama</div>
                         </a>
                     </div>
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/golongan-darah') }}" class="management-btn btn btn-danger w-100">
+                        <a href="{{ route($activeRole . '.referensi.golongan-darah-index') }}" class="management-btn btn btn-danger w-100">
                             <i class="fas fa-tint me-2"></i>
                             <div class="small">Kelola Golongan Darah</div>
                         </a>
                     </div>
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/jenis-kelamin') }}" class="management-btn btn btn-success w-100">
+                        <a href="{{ route($activeRole . '.referensi.jenis-kelamin-index') }}" class="management-btn btn btn-success w-100">
                             <i class="fas fa-venus-mars me-2"></i>
                             <div class="small">Kelola Jenis Kelamin</div>
                         </a>
                     </div>
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/kewarganegaraan') }}" class="management-btn btn btn-info w-100">
+                        <a href="{{ route($activeRole . '.referensi.kewarganegaraan-index') }}" class="management-btn btn btn-info w-100">
                             <i class="fas fa-flag me-2"></i>
                             <div class="small">Kelola Kewarganegaraan</div>
                         </a>
                     </div>
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/jabatan') }}" class="management-btn btn btn-warning w-100">
+                        <a href="{{ route($activeRole . '.referensi.jabatan-index') }}" class="management-btn btn btn-warning w-100">
                             <i class="fas fa-briefcase me-2"></i>
                             <div class="small">Kelola Jabatan</div>
                         </a>
                     </div>
                     <div class="col-md-4 col-lg-2">
-                        <a href="{{ url('/referensi/semester') }}" class="management-btn btn btn-purple w-100">
+                        <a href="{{ route($activeRole . '.referensi.semester-index') }}" class="management-btn btn btn-purple w-100">
                             <i class="fas fa-calendar-alt me-2"></i>
                             <div class="small">Kelola Semester</div>
                         </a>

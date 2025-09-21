@@ -5,23 +5,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\RootController::class, 'renderHomePage'])->name('root.home-index');
 
 Route::get('/signin', [App\Http\Controllers\AuthController::class, 'renderSignin'])->name('auth.render-signin');
+Route::get('/gateway/choose-role', [App\Http\Controllers\AuthController::class, 'renderChooseRole'])->name('auth.choose-role');
+Route::post('/gateway/set-role', [App\Http\Controllers\AuthController::class, 'handleSetRole'])->name('auth.set-role');
 Route::post('/signin', [App\Http\Controllers\AuthController::class, 'handleSignin'])->name('auth.handle-signin');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', [App\Http\Controllers\AuthController::class, 'handleLogout'])->name('auth.handle-logout');
-    // GLOBAL MENU AUTHENTIKASI
-    Route::get('/dashboard', [App\Http\Controllers\Private\User\RootController::class, 'renderDashboard'])->name('dashboard-index');
-    Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard.dashboard-infra');
-    Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard.dashboard-referensi');
-    Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard.dashboard-akademik');
+Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Tendik can be added here
 
-    // Profile
-    Route::get('/profile', [App\Http\Controllers\Private\User\RootController::class, 'renderProfile'])->name('profile-index');
-    Route::post('/profile', [App\Http\Controllers\Private\User\RootController::class, 'handleProfile'])->name('profile-update');
-    Route::delete('/profile/pendidikan/{id}', [App\Http\Controllers\Private\User\RootController::class, 'deletePendidikan'])->name('profile.delete-pendidikan');
-    Route::delete('/profile/keluarga/{id}', [App\Http\Controllers\Private\User\RootController::class, 'deleteKeluarga'])->name('profile.delete-keluarga');
-    
+    Route::get('/dashboard/infra', [App\Http\Controllers\RootController::class, 'indexInfra'])->name('dashboard-infra');
+    Route::get('/dashboard/referensi', [App\Http\Controllers\RootController::class, 'indexReferensi'])->name('dashboard-referensi');
+    Route::get('/dashboard/akademik', [App\Http\Controllers\RootController::class, 'indexAkademik'])->name('dashboard-akademik');
+
     Route::get('/pengaturan', [App\Http\Controllers\PengaturanController::class, 'index'])->name('pengaturan-index');
     Route::post('/pengaturan', [App\Http\Controllers\PengaturanController::class, 'update'])->name('pengaturan-update');
     
@@ -265,6 +261,52 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
     Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
     
+});
+
+Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Tendik can be added here
+
+    Route::middleware('active_subrole:sekprodi')->group(function () {
+        Route::get('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'index'])->name('akademik.kelas-mahasiswa-index');
+        Route::get('/akademik/kelas-mahasiswa/trashed', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'trash'])->name('akademik.kelas-mahasiswa-trash');
+        Route::post('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'store'])->name('akademik.kelas-mahasiswa-store');
+        Route::patch('/akademik/kelas-mahasiswa/{id}/update', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'update'])->name('akademik.kelas-mahasiswa-update');
+        Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
+        Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
+        
+    });
+    Route::middleware('active_subrole:baak')->group(function () {
+        Route::get('/akademik/jadwal-perkuliahan', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'index'])->name('akademik.jadwal-perkuliahan-index');
+        Route::get('/akademik/jadwal-perkuliahan/view/{id}', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'view'])->name('akademik.jadwal-perkuliahan-view');
+        Route::get('/akademik/jadwal-perkuliahan/trashed', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'trash'])->name('akademik.jadwal-perkuliahan-trash');
+        Route::post('/akademik/jadwal-perkuliahan', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'store'])->name('akademik.jadwal-perkuliahan-store');
+        Route::patch('/akademik/jadwal-perkuliahan/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'update'])->name('akademik.jadwal-perkuliahan-update');
+        Route::delete('/akademik/jadwal-perkuliahan/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'destroy'])->name('akademik.jadwal-perkuliahan-destroy');
+        Route::post('/akademik/jadwal-perkuliahan/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'restore'])->name('akademik.jadwal-perkuliahan-restore');
+
+    });
+
+});
+
+Route::middleware(['auth', 'active_role:dosen'])->prefix('dosen')->as('dosen.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Dosen can be added here
+
+});
+Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('mahasiswa.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Mahasiswa can be added here
+});
+Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->as('peserta-pmb.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Peserta PMB can be added here
+
+});
+Route::middleware(['auth', 'active_role:alumni'])->prefix('alumni')->as('alumni.')->group(function () {
+    require __DIR__.'/basic-routes.php';
+    // Other Menus for Alumni can be added here
+
 });
 
 // Route::group(['prefix' => 'superuser', 'middleware' => ['auth:web','role:Super Admin'], 'as' => 'super.'],function(){

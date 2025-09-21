@@ -16,7 +16,7 @@ class SemesterController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Semester';
         $data['pages'] = "Halaman Data Semester";
         $data['system'] = System::first();
@@ -30,7 +30,7 @@ class SemesterController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Semester';
         $data['pages'] = "Halaman Data Semester yang Dihapus";
         $data['system'] = System::first();

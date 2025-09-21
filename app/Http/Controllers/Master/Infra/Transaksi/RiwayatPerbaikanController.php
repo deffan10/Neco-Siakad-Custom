@@ -20,7 +20,7 @@ class RiwayatPerbaikanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Riwayat Perbaikan';
         $data['pages'] = "Halaman Data Riwayat Perbaikan";
         $data['system'] = System::first();
@@ -36,7 +36,7 @@ class RiwayatPerbaikanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Riwayat Perbaikan';
         $data['pages'] = "Halaman Data Riwayat Perbaikan yang Dihapus";
         $data['system'] = System::first();

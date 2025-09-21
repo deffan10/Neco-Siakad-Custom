@@ -7,7 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 // use App\Traits\HasLogAktivitas;
+use Spatie\Permission\Traits\HasRoles;
 // USE MODELS
+use App\Models\User\Subrole;
 use App\Models\Referensi\Agama;
 use App\Models\Referensi\Alamat;
 use App\Models\Referensi\GolonganDarah;
@@ -18,7 +20,7 @@ use App\Models\Referensi\Pendidikan;
 
 class User extends Authenticatable
 {
-    // use SoftDeletes, HasLogAktivitas;
+    use HasRoles;// use SoftDeletes, HasLogAktivitas;
 
     protected $table = 'users';
     protected $guarded = [];
@@ -99,5 +101,10 @@ class User extends Authenticatable
     public function pendidikans()
     {
         return $this->morphMany(Pendidikan::class, 'owner');
+    }
+
+    public function subroles()
+    {
+        return $this->belongsToMany(Subrole::class, 'user_subroles')->withTimestamps();
     }
 }

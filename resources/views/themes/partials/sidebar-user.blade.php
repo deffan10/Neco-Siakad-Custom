@@ -1,6 +1,6 @@
 <ul class="navbar-nav">
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle {{ request()->routeIs('dashboard.*') ? 'show' : '' }}" href="#navbar-referensi" data-bs-toggle="dropdown"
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.*') ? 'show' : '' }}" href="#navbar-referensi" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" role="button" aria-expanded="{{ request()->routeIs('referensi*') ? 'true' : 'false' }}">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -18,14 +18,14 @@
         <div class="dropdown-menu {{ request()->routeIs('dashboard.*') ? 'show' : '' }}">
             <div class="dropdown-menu-columns">
                 <div class="dropdown-menu-column">
-                    <a class="dropdown-item {{ request()->routeIs('dashboard.dashboard-infra') ? 'active' : '' }}" href="{{ route('dashboard.dashboard-infra') }}">Dashboard Infrastruktur</a>
-                    <a class="dropdown-item {{ request()->routeIs('dashboard.dashboard-referensi') ? 'active' : '' }}" href="{{ route('dashboard.dashboard-referensi') }}">Dashboard Referensi</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole.'.dashboard-infra') ? 'active' : '' }}" href="{{ route($activeRole.'.dashboard-infra') }}">Dashboard Infrastruktur</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole.'.dashboard-referensi') ? 'active' : '' }}" href="{{ route($activeRole.'.dashboard-referensi') }}">Dashboard Referensi</a>
                 </div>
             </div>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('profile-index') ? 'active' : '' }}" href="{{ route('profile-index') }}">
+        <a class="nav-link {{ request()->routeIs($activeRole.'.profile-index') ? 'active' : '' }}" href="{{ route($activeRole.'.profile-index') }}">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -35,7 +35,7 @@
                     <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
                 </svg>
             </span>
-            <span class="nav-link-title">Profil</span>
+            <span class="nav-link-title">Profile</span>
         </a>
     </li>
 
@@ -200,18 +200,5 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('auth.handle-logout') }}">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" class="icon icon-1">
-                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                    <path d="M9 12h12l-3 -3" />
-                    <path d="M18 15l3 -3" />
-                </svg>
-            </span>
-            <span class="nav-link-title">Logout</span>
-        </a>
-    </li>
+
 </ul>

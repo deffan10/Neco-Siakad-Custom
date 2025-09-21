@@ -17,7 +17,7 @@ class RuanganController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Ruangan';
         $data['pages'] = "Halaman Data Ruangan";
         $data['system'] = System::first();
@@ -32,7 +32,7 @@ class RuanganController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Ruangan';
         $data['pages'] = "Halaman Data Ruangan yang Dihapus";
         $data['system'] = System::first();

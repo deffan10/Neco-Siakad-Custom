@@ -252,11 +252,11 @@
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Jabatan' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route('referensi.jabatan-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route($activeRole .'.referensi.jabatan-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
-                            <a href="{{ route('referensi.jabatan-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route($activeRole .'.referensi.jabatan-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
@@ -271,7 +271,7 @@
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Jabatan Baru</h5>
-                                <form action="{{ route('referensi.jabatan-store') }}" method="post">
+                                <form action="{{ route($activeRole .'.referensi.jabatan-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
@@ -356,7 +356,7 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route('referensi.jabatan-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route($activeRole .'.referensi.jabatan-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Jabatan">
                                                         <i class="fas fa-undo me-1"></i> Restore
@@ -366,7 +366,7 @@
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Jabatan">
                                                     <i class="fas fa-edit me-1"></i> Edit
                                                 </a>
-                                                <form action="{{ route('referensi.jabatan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route($activeRole .'.referensi.jabatan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Jabatan" onclick="confirmDelete('{{ $item->id }}')">
@@ -433,7 +433,7 @@
             <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form action="{{ route('referensi.jabatan-update', $item->id) }}" method="POST">
+                        <form action="{{ route($activeRole .'.referensi.jabatan-update', $item->id) }}" method="POST">
                             @method('PATCH')
                             @csrf
                             <div class="modal-header">

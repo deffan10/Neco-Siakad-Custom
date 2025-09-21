@@ -16,7 +16,7 @@ class KewarganegaraanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Kewarganegaraan';
         $data['pages'] = "Halaman Data Kewarganegaraan";
         $data['system'] = System::first();
@@ -30,7 +30,7 @@ class KewarganegaraanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Kewarganegaraan';
         $data['pages'] = "Halaman Data Kewarganegaraan yang Dihapus";
         $data['system'] = System::first();

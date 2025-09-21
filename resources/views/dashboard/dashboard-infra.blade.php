@@ -211,29 +211,6 @@
 
 
 @section('content')
-<div class="page-header d-print-none">
-    <div class="container-xl">
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <h2 class="page-title">
-                    <i class="fas fa-building me-2"></i>Dashboard Infrastruktur & Inventaris
-                </h2>
-                <div class="text-muted">
-                    Monitoring dan statistik infrastruktur, inventaris, dan transaksi sistem
-                </div>
-            </div>
-            <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    <a href="{{ route('dashboard-index') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left me-1"></i>
-                        Kembali ke Dashboard
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="page-body">
     <div class="container-xl">
         <!-- Overview Statistics -->

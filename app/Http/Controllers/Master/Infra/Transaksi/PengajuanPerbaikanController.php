@@ -19,7 +19,7 @@ class PengajuanPerbaikanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Pengajuan Perbaikan';
         $data['pages'] = "Halaman Data Pengajuan Perbaikan";
         $data['system'] = System::first();
@@ -35,7 +35,7 @@ class PengajuanPerbaikanController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Transaksi Pengajuan Perbaikan';
         $data['pages'] = "Halaman Data Pengajuan Perbaikan yang Dihapus";
         $data['system'] = System::first();

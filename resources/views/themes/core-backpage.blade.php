@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @PwaHead
 
+
     <title>{{ (isset($menus) ? $menus . ' - ' : '') . $pages . ' - ' . $academy->name }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- BEGIN PAGE LEVEL STYLES -->
@@ -260,20 +261,20 @@
                                 style="background-image: url({{ $user == null ? '' : $user->photo }})"> </span>
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ $user == null ? '' : $user->name }}</div>
-                                <div class="mt-1 small text-secondary">{{ $user == null ? '' : $user->name }}</div>
+                                <div class="mt-1 small text-secondary">{{ ucfirst($activeRole) }}</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a href="{{ route('profile-index') }}" class="dropdown-item">Profile</a>
-                            <a href="#" class="dropdown-item">Feedback</a>
+                            <a href="{{ route($activeRole.'.profile-index') }}" class="dropdown-item">Profile</a>
+                            <!-- <a href="#" class="dropdown-item">Feedback</a> -->
                             <div class="dropdown-divider"></div>
-                            <a href="{{ route('auth.handle-logout') }}" class="dropdown-item">Logout</a>
+                            <a href="{{ route($activeRole.'.auth.handle-logout') }}" class="dropdown-item">Logout</a>
                         </div>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="sidebar-menu">
                     <!-- BEGIN NAVBAR MENU -->
-                    @include('themes.partials.sidebar-user')
+                    @include('themes.partials.sidebar-index')
                     <!-- END NAVBAR MENU -->
                 </div>
             </div>
@@ -302,16 +303,16 @@
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ $user == null ? 'Guest Name' : $user->name }}</div>
                                 <div class="mt-1 small text-secondary">
-                                    {{ $user == null ? 'Guest Position' : $user->username }}</div>
+                                    {{ $user == null ? 'Guest Position' : ucfirst($activeRole) }}</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <a href="#" class="dropdown-item">Status</a>
-                            <a href="{{ route('profile-index') }}" class="dropdown-item">Profile</a>
+                            <a href="{{ route($activeRole.'.profile-index') }}" class="dropdown-item">Profile</a>
                             <a href="#" class="dropdown-item">Feedback</a>
                             <div class="dropdown-divider"></div>
                             <a href="./settings.html" class="dropdown-item">Settings</a>
-                            <a href="{{ route('auth.handle-logout') }}" class="dropdown-item">Logout</a>
+                            <a href="{{ route($activeRole.'.auth.handle-logout') }}" class="dropdown-item">Logout</a>
                         </div>
                     </div>
                 </div>

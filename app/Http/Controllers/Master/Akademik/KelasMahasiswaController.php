@@ -18,7 +18,7 @@ class KelasMahasiswaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kelas Mahasiswa';
         $data['pages'] = "Halaman Data Kelas Mahasiswa";
         $data['system'] = System::first();
@@ -34,7 +34,7 @@ class KelasMahasiswaController extends Controller
     public function trash()
     {
         $user = Auth::user();
-        $data['spref'] = $user ? $user->prefix : '';
+        $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Akademik Kelas Mahasiswa';
         $data['pages'] = "Halaman Data Kelas Mahasiswa yang Dihapus";
         $data['system'] = System::first();
