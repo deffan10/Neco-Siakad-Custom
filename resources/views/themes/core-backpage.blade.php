@@ -456,6 +456,25 @@
     <script src="./preview/js/demo.min.js" defer></script>
     <!-- END DEMO SCRIPTS -->
     <!-- BEGIN PAGE SCRIPTS -->
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Data yang sudah dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
+    </script>
+
     @yield('custom-js')
     <!-- END PAGE SCRIPTS -->
 </body>

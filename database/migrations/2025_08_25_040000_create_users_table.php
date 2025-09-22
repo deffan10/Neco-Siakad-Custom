@@ -48,6 +48,7 @@ return new class extends Migration
             // Keamanan
             $table->string('code')->unique();
             $table->string('password');
+            $table->boolean('is_active')->default(true);    // Is Active
             $table->boolean('fst_setup')->default(false);   // First Setup Account
             $table->boolean('tfa_setup')->default(false);   // Two Factor Authentication
 

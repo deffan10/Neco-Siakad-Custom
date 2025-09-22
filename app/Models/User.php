@@ -20,7 +20,7 @@ use App\Models\Referensi\Pendidikan;
 
 class User extends Authenticatable
 {
-    use HasRoles;// use SoftDeletes, HasLogAktivitas;
+    use HasRoles, SoftDeletes;
 
     protected $table = 'users';
     protected $guarded = [];
@@ -37,13 +37,6 @@ class User extends Authenticatable
     {
         return $value == 'default.jpg' ? asset('storage/images/profile/default.jpg') : asset('storage/images/profile/' . $value);
     }
-
-    public function getPrefixAttribute()
-    {
-        // Return empty string for now - this can be customized based on user roles
-        return '';
-    }
-
 
     // Relations
 

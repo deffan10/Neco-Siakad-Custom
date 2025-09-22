@@ -73,4 +73,42 @@ class RootController extends Controller
         }
     }
 
+    public function deletePendidikan($id)
+    {
+        try {
+            $user = Auth::user();
+            $pendidikan = $user->pendidikans()->findOrFail($id);
+            $pendidikan->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Data pendidikan berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus data pendidikan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function deleteKeluarga($id)
+    {
+        try {
+            $user = Auth::user();
+            $keluarga = $user->keluargas()->findOrFail($id);
+            $keluarga->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Data keluarga berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus data keluarga: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

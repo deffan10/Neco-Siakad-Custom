@@ -21,6 +21,31 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/pengaturan', [App\Http\Controllers\PengaturanController::class, 'index'])->name('pengaturan-index');
     Route::post('/pengaturan', [App\Http\Controllers\PengaturanController::class, 'update'])->name('pengaturan-update');
     
+    // Master Data Users
+    Route::get('/users', [App\Http\Controllers\Master\Users\UsersController::class, 'index'])->name('users.user-index');
+    Route::get('/users/{id}/view', [App\Http\Controllers\Master\Users\UsersController::class, 'show'])->name('users.user-view');
+    Route::get('/users/trashed', [App\Http\Controllers\Master\Users\UsersController::class, 'trash'])->name('users.user-trash');
+    Route::post('/users', [App\Http\Controllers\Master\Users\UsersController::class, 'store'])->name('users.user-store');
+    Route::patch('/users/{id}/update', [App\Http\Controllers\Master\Users\UsersController::class, 'update'])->name('users.user-update');
+    Route::delete('/users/{id}/delete', [App\Http\Controllers\Master\Users\UsersController::class, 'destroy'])->name('users.user-destroy');
+    Route::post('/users/{id}/restore', [App\Http\Controllers\Master\Users\UsersController::class, 'restore'])->name('users.user-restore');
+
+    Route::get('/users/role', [App\Http\Controllers\Master\Users\RoleController::class, 'index'])->name('users.role-index');
+    Route::get('/users/role/{id}/view', [App\Http\Controllers\Master\Users\RoleController::class, 'show'])->name('users.role-view');
+    Route::get('/users/role/trashed', [App\Http\Controllers\Master\Users\RoleController::class, 'trash'])->name('users.role-trash');
+    Route::post('/users/role', [App\Http\Controllers\Master\Users\RoleController::class, 'store'])->name('users.role-store');
+    Route::patch('/users/role/{id}/update', [App\Http\Controllers\Master\Users\RoleController::class, 'update'])->name('users.role-update');
+    Route::delete('/users/role/{id}/delete', [App\Http\Controllers\Master\Users\RoleController::class, 'destroy'])->name('users.role-destroy');
+    Route::post('/users/role/{id}/restore', [App\Http\Controllers\Master\Users\RoleController::class, 'restore'])->name('users.role-restore');
+
+    Route::get('/users/subrole', [App\Http\Controllers\Master\Users\SubroleController::class, 'index'])->name('users.subrole-index');
+    Route::get('/users/subrole/{id}/view', [App\Http\Controllers\Master\Users\SubroleController::class, 'show'])->name('users.subrole-view');
+    Route::get('/users/subrole/trashed', [App\Http\Controllers\Master\Users\SubroleController::class, 'trash'])->name('users.subrole-trash');
+    Route::post('/users/subrole', [App\Http\Controllers\Master\Users\SubroleController::class, 'store'])->name('users.subrole-store');
+    Route::patch('/users/subrole/{id}/update', [App\Http\Controllers\Master\Users\SubroleController::class, 'update'])->name('users.subrole-update');
+    Route::delete('/users/subrole/{id}/delete', [App\Http\Controllers\Master\Users\SubroleController::class, 'destroy'])->name('users.subrole-destroy');
+    Route::post('/users/subrole/{id}/restore', [App\Http\Controllers\Master\Users\SubroleController::class, 'restore'])->name('users.subrole-restore');
+
     // Master Data Referensi
     Route::get('/referensi/agama', [App\Http\Controllers\Referensi\AgamaController::class, 'index'])->name('referensi.agama-index');
     Route::get('/referensi/agama/trashed', [App\Http\Controllers\Referensi\AgamaController::class, 'trash'])->name('referensi.agama-trash');
