@@ -3,6 +3,7 @@
 @section('custom-css')
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         /* Stats cards */
         .bg-light-primary {
@@ -237,6 +238,61 @@
                 justify-content: center;
             }
         }
+
+        /* Select2 fixes for dark Tabler theme: make selected tags readable */
+        .select2-container--default .select2-selection--multiple {
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.06);
+            min-height: 44px;
+            border-radius: 5px;
+            padding: 4px 8px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: rgba(67,94,190,0.95); /* primary-ish */
+            color: #ffffff;
+            border: none;
+            padding: 4px 8px 4px 24px; /* left padding for remove button space */
+            margin-top: 4px;
+            margin-right: 6px;
+            box-shadow: none;
+            position: relative;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: rgba(255,255,255,0.85);
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 14px;
+            font-size: 14px;
+            margin: 0;
+            opacity: 0.9;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Ensure placeholder/inputs are visible */
+        .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            padding: 4px 0;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+            display:flex;
+            align-items:center;
+            gap:4px;
+        }
     </style>
 @endsection
 
@@ -343,6 +399,31 @@
                                             <label for="name" class="form-label">Nama Pengguna</label>
                                             <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama Pengguna" required>
                                             @error('name')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email" required>
+                                            @error('email')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">No Telepon</label>
+                                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Masukkan no telepon" required>
+                                            @error('phone')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="roles" class="form-label">Roles</label>
+                                            <select class="form-select" name="roles[]" id="roles" multiple required>
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('roles')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -460,6 +541,35 @@
 
 
     <script>
+        // Initialize Select2 for roles multi-select
+        $(document).ready(function() {
+            if ($.fn.select2) {
+                $('#roles').select2({
+                    placeholder: 'Pilih role',
+                    width: '100%'
+                });
+
+                // Set previously selected values if available (old input)
+                var oldRoles = @json(old('roles', []));
+                if (oldRoles && oldRoles.length) {
+                    $('#roles').val(oldRoles).trigger('change');
+                }
+            }
+        });
+
+        // load select2 script dynamically if not present
+        (function loadSelect2(){
+            if (typeof $.fn.select2 === 'undefined') {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js';
+                script.onload = function(){
+                    $('#roles').select2({ placeholder: 'Pilih role', width: '100%' });
+                    var oldRoles = @json(old('roles', []));
+                    if (oldRoles && oldRoles.length) $('#roles').val(oldRoles).trigger('change');
+                };
+                document.head.appendChild(script);
+            }
+        })();
         // Initialize DataTable
         $(document).ready(function() {
             var table = $('#usersTable').DataTable({

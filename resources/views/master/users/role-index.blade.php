@@ -282,6 +282,13 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="guard_name" class="form-label">Guard Name ( default: web )</label>
+                                            <input type="text" class="form-control" name="guard_name" id="guard_name" value="{{ old('guard_name') }}" placeholder="Masukkan guard name" required>
+                                            @error('guard_name')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
 
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-sm btn-primary">
