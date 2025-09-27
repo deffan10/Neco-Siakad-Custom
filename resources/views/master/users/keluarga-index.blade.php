@@ -183,7 +183,7 @@
         }
         
         /* Custom DataTables styling */
-        #pendidikanTable_wrapper .row:first-child {
+        #keluargaTable_wrapper .row:first-child {
             margin-bottom: 1rem;
         }
         
@@ -243,18 +243,18 @@
         <div class="col-lg-8 col-12 mb-2">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">{{ $pages ?? 'Daftar Pendidikan' }}</h5>
+                    <h5 class="mb-0">{{ $pages ?? 'Daftar Keluarga' }}</h5>
                     <div>
                         @if($is_trash)
-                            <a href="{{ route($activeRole . '.referensi.pendidikan-index') }}" class="btn btn-sm btn-secondary me-2">
+                            <a href="{{ route($activeRole . '.users.keluarga-index') }}" class="btn btn-sm btn-secondary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali
                             </a>
                         @else
-                            <a href="{{ route($activeRole . '.referensi.pendidikan-trash') }}" class="btn btn-sm btn-warning me-2">
+                            <a href="{{ route($activeRole . '.users.keluarga-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
                             <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm">
-                                <i class="fas fa-plus-circle me-2"></i>Tambah Pendidikan
+                                <i class="fas fa-plus-circle me-2"></i>Tambah Keluarga
                             </button>
                         @endif
                     </div>
@@ -263,30 +263,31 @@
                     @if(!$is_trash)
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
-                                <h5 class="card-title mb-3">Tambah Data Pendidikan</h5>
-                                <form action="{{ route($activeRole . '.referensi.pendidikan-store') }}" method="post">
+                                <h5 class="card-title mb-3">Tambah Data Keluarga</h5>
+                                <form action="{{ route($activeRole . '.users.keluarga-store') }}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Jenjang Pendidikan</label>
-                                            <select class="form-select" name="jenjang" required>
-                                                <option value="">Pilih Jenjang</option>
-                                                <option value="Paket C">Paket C</option>
-                                                <option value="SMA">SMA</option>
-                                                <option value="SMK">SMK</option>
-                                                <option value="D3">D3</option>
-                                                <option value="S1">S1</option>
-                                                <option value="S2">S2</option>
-                                                <option value="S3">S3</option>
+                                            <label class="form-label">Hubungan Keluarga</label>
+                                            <select class="form-select" name="hubungan" required>
+                                                <option value="">Pilih Hubungan</option>
+                                                <option value="Ayah">Ayah</option>
+                                                <option value="Ibu">Ibu</option>
+                                                <option value="Suami">Suami</option>
+                                                <option value="Istri">Istri</option>
+                                                <option value="Anak">Anak</option>
+                                                <option value="Kakak">Kakak</option>
+                                                <option value="Adik">Adik</option>
+                                                <option value="Wali">Wali</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Nama Institusi</label>
-                                            <input type="text" class="form-control" name="nama_institusi" required>
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control" name="nama" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Pemilik</label>
-                                            <select class="form-select" name="owner_id" required>
+                                            <select class="form-select" name="user_id" required>
                                                 <option value="">Pilih Pemilik</option>
                                                 @foreach($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -294,23 +295,27 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Jurusan</label>
-                                            <input type="text" class="form-control" name="jurusan">
+                                            <label class="form-label">Pekerjaan</label>
+                                            <input type="text" class="form-control" name="pekerjaan">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">IPK</label>
-                                            <input type="text" class="form-control" name="ipk" placeholder="contoh: 3.85">
+                                            <label class="form-label">Telepon</label>
+                                            <input type="text" class="form-control" name="telepon">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Tahun Masuk</label>
-                                            <input type="number" class="form-control" name="tahun_masuk" min="1900" max="{{ date('Y') + 5 }}">
+                                            <label class="form-label">Tempat Lahir</label>
+                                            <input type="text" class="form-control" name="tempat_lahir">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Tahun Lulus</label>
-                                            <input type="number" class="form-control" name="tahun_lulus" min="1900" max="{{ date('Y') + 10 }}">
+                                            <label class="form-label">Tanggal Lahir</label>
+                                            <input type="date" class="form-control" name="tanggal_lahir">
                                         </div>
-                                        <div class="col-md-12 mb-3">
-                                            <label class="form-label">Alamat Institusi</label>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Penghasilan</label>
+                                            <input type="number" class="form-control" name="penghasilan" min="0">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Alamat</label>
                                             <textarea class="form-control" name="alamat" rows="2"></textarea>
                                         </div>
                                         <div class="col-12 d-flex justify-content-end">
@@ -341,14 +346,14 @@
                     </div>
                     
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="pendidikanTable">
+                        <table class="table table-striped table-bordered" id="keluargaTable">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Jenjang</th>
-                                    <th>Institusi</th>
+                                    <th>Hubungan</th>
+                                    <th>Nama</th>
                                     <th>Pemilik</th>
-                                    <th>Periode</th>
+                                    <th>Pekerjaan</th>
                                     @if($is_trash)
                                         <th>Dihapus Oleh</th>
                                         <th>Dihapus Pada</th>
@@ -357,28 +362,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach ($pendidikans as $key => $item)
+                                                                @foreach ($keluargas as $key => $item)
                                     <tr>
                                         <td data-label="No">{{ ++$key }}</td>
-                                        <td data-label="Jenjang"><span class="badge {{ $item->jenjang_badge_class }}">{{ $item->jenjang_display }}</span></td>
-                                        <td data-label="Institusi">
+                                        <td data-label="Hubungan"><span class="badge bg-primary">{{ $item->hubungan_display }}</span></td>
+                                        <td data-label="Nama">
                                             <div>
-                                                <strong>{{ $item->nama_institusi }}</strong>
-                                                @if($item->jurusan)
-                                                    <small class="d-block text-muted">{{ $item->jurusan }}</small>
-                                                @endif
-                                                @if($item->ipk)
-                                                    <small class="d-block text-muted"><i class="fas fa-star text-warning"></i> IPK: {{ $item->ipk }}</small>
+                                                <strong>{{ $item->nama }}</strong>
+                                                @if($item->telepon)
+                                                    <small class="d-block text-muted"><i class="fas fa-phone"></i> {{ $item->telepon }}</small>
                                                 @endif
                                             </div>
                                         </td>
                                         <td data-label="Pemilik">
                                             <div>
-                                                <strong>{{ $item->owner->name }}</strong>
-                                                <small class="d-block text-muted">{{ $item->owner_type_display }}</small>
+                                                <strong>{{ $item->user->name }}</strong>
+                                                <small class="d-block text-muted">{{ $item->user->role }}</small>
                                             </div>
                                         </td>
-                                        <td data-label="Periode">{{ $item->periode }}</td>
+                                        <td data-label="Pekerjaan">{{ $item->pekerjaan ?? '-' }}</td>
                                         @if($is_trash)
                                             <td data-label="Dihapus Oleh">
                                                 <div class="d-flex align-items-center">
@@ -398,20 +400,20 @@
                                         @endif
                                         <td data-label="Aksi">
                                             @if($is_trash)
-                                                <form action="{{ route($activeRole . '.referensi.pendidikan-restore', $item->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route($activeRole . '.users.keluarga-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Pendidikan">
+                                                    <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Keluarga">
                                                         <i class="fas fa-undo me-1"></i> Restore
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Pendidikan">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editData{{ $item->id }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Keluarga">
                                                     <i class="fas fa-edit me-1"></i> Edit
                                                 </a>
-                                                <form action="{{ route($activeRole . '.referensi.pendidikan-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                <form action="{{ route($activeRole . '.users.keluarga-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Pendidikan" onclick="confirmDelete('{{ $item->id }}')">
+                                                    <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Keluarga" onclick="confirmDelete('{{ $item->id }}')">
                                                         <i class="fas fa-trash me-1"></i> Delete
                                                     </button>
                                                 </form>
@@ -429,33 +431,33 @@
         <div class="col-lg-4 col-12 mb-2">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Informasi Pendidikan</h5>
+                    <h5 class="card-title">Informasi Keluarga</h5>
                 </div>
                 <div class="card-body">
-                    <p>Pengelolaan data pendidikan dengan dukungan polymorphic relationship.</p>
+                    <p>Pengelolaan data keluarga dengan dukungan polymorphic relationship.</p>
                     
                     <div class="alert alert-light-success">
                         <h6>Fitur:</h6>
                         <ul class="mb-0">
-                            <li>Jenjang pendidikan lengkap</li>
-                            <li>Data institusi dan periode</li>
+                            <li>Data keluarga lengkap</li>
+                            <li>Hubungan keluarga terstruktur</li>
                             <li>Polymorphic ownership</li>
-                            <li>Tracking IPK dan jurusan</li>
+                            <li>Soft delete support</li>
                         </ul>
                     </div>
 
-                    @if(count($pendidikans) > 0)
+                    @if(count($keluargas) > 0)
                         <div class="mt-4">
-                            <h6>Pendidikan Terbaru</h6>
+                            <h6>Keluarga Terbaru</h6>
                             <div class="list-group">
-                                @foreach($pendidikans->sortByDesc('created_at')->take(3) as $item)
+                                @foreach($keluargas->sortByDesc('created_at')->take(3) as $item)
                                     <div class="list-group-item">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">{{ $item->nama_institusi }}</h6>
+                                            <h6 class="mb-1">{{ $item->nama }}</h6>
                                             <small>{{ $item->created_at->diffForHumans() }}</small>
                                         </div>
-                                        <p class="mb-1">{{ $item->jenjang }} - {{ $item->owner->name }}</p>
-                                        <small class="text-muted">{{ $item->periode }}</small>
+                                        <p class="mb-1">{{ $item->hubungan }} dari {{ $item->user->name }}</p>
+                                        <small class="text-muted">{{ $item->pekerjaan ?? 'Pekerjaan tidak diisi' }}</small>
                                     </div>
                                 @endforeach
                             </div>
@@ -468,63 +470,68 @@
 
     <!-- Edit Modals -->
     @if(!$is_trash)
-        @foreach ($pendidikans as $item)
+        @foreach ($keluargas as $item)
             <div class="modal fade" id="editData{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form action="{{ route($activeRole . '.referensi.pendidikan-update', $item->id) }}" method="POST">
+                        <form action="{{ route($activeRole . '.users.keluarga-update', $item->id) }}" method="POST">
                             @method('PATCH')
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Pendidikan - {{ $item->nama_institusi }}</h5>
+                                <h5 class="modal-title" id="editModalLabel{{ $item->id }}">Edit Keluarga - {{ $item->nama }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Jenjang Pendidikan</label>
-                                        <select class="form-select" name="jenjang" required>
-                                            <option value="">Pilih Jenjang</option>
-                                            <option value="Paket C" {{ $item->jenjang == 'Paket C' ? 'selected' : '' }}>Paket C</option>
-                                            <option value="SMA" {{ $item->jenjang == 'SMA' ? 'selected' : '' }}>SMA</option>
-                                            <option value="SMK" {{ $item->jenjang == 'SMK' ? 'selected' : '' }}>SMK</option>
-                                            <option value="D3" {{ $item->jenjang == 'D3' ? 'selected' : '' }}>D3</option>
-                                            <option value="S1" {{ $item->jenjang == 'S1' ? 'selected' : '' }}>S1</option>
-                                            <option value="S2" {{ $item->jenjang == 'S2' ? 'selected' : '' }}>S2</option>
-                                            <option value="S3" {{ $item->jenjang == 'S3' ? 'selected' : '' }}>S3</option>
+                                        <label class="form-label">Hubungan Keluarga</label>
+                                        <select class="form-select" name="hubungan" required>
+                                            <option value="">Pilih Hubungan</option>
+                                            <option value="Ayah" {{ $item->hubungan == 'Ayah' ? 'selected' : '' }}>Ayah</option>
+                                            <option value="Ibu" {{ $item->hubungan == 'Ibu' ? 'selected' : '' }}>Ibu</option>
+                                            <option value="Suami" {{ $item->hubungan == 'Suami' ? 'selected' : '' }}>Suami</option>
+                                            <option value="Istri" {{ $item->hubungan == 'Istri' ? 'selected' : '' }}>Istri</option>
+                                            <option value="Anak" {{ $item->hubungan == 'Anak' ? 'selected' : '' }}>Anak</option>
+                                            <option value="Kakak" {{ $item->hubungan == 'Kakak' ? 'selected' : '' }}>Kakak</option>
+                                            <option value="Adik" {{ $item->hubungan == 'Adik' ? 'selected' : '' }}>Adik</option>
+                                            <option value="Wali" {{ $item->hubungan == 'Wali' ? 'selected' : '' }}>Wali</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Nama Institusi</label>
-                                        <input type="text" class="form-control" name="nama_institusi" value="{{ $item->nama_institusi }}" required>
+                                        <label class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" name="nama" value="{{ $item->nama }}" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Pemilik</label>
-                                        <select class="form-select" name="owner_id" required>
+                                        <select class="form-select" name="user_id" required>
                                             <option value="">Pilih Pemilik</option>
                                             @foreach($users as $user)
-                                                <option value="{{ $user->id }}" {{ $item->owner_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->id }}" {{ $item->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Jurusan</label>
-                                        <input type="text" class="form-control" name="jurusan" value="{{ $item->jurusan }}">
+                                        <label class="form-label">Pekerjaan</label>
+                                        <input type="text" class="form-control" name="pekerjaan" value="{{ $item->pekerjaan }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">IPK</label>
-                                        <input type="text" class="form-control" name="ipk" value="{{ $item->ipk }}" placeholder="contoh: 3.85">
+                                        <label class="form-label">Telepon</label>
+                                        <input type="text" class="form-control" name="telepon" value="{{ $item->telepon }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tahun Masuk</label>
-                                        <input type="number" class="form-control" name="tahun_masuk" value="{{ $item->tahun_masuk }}" min="1900" max="{{ date('Y') + 5 }}">
+                                        <label class="form-label">Tempat Lahir</label>
+                                        <input type="text" class="form-control" name="tempat_lahir" value="{{ $item->tempat_lahir }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tahun Lulus</label>
-                                        <input type="number" class="form-control" name="tahun_lulus" value="{{ $item->tahun_lulus }}" min="1900" max="{{ date('Y') + 10 }}">
+                                        <label class="form-label">Tanggal Lahir</label>
+                                        <input type="date" class="form-control" name="tanggal_lahir" value="{{ $item->tanggal_lahir }}">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Penghasilan</label>
+                                        <input type="number" class="form-control" name="penghasilan" value="{{ $item->penghasilan }}" min="0">
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <label class="form-label">Alamat Institusi</label>
+                                        <label class="form-label">Alamat</label>
                                         <textarea class="form-control" name="alamat" rows="2">{{ $item->alamat }}</textarea>
                                     </div>
                                 </div>
@@ -560,7 +567,7 @@
     <script>
         // Initialize DataTable
         $(document).ready(function() {
-            var table = $('#pendidikanTable').DataTable({
+            var table = $('#keluargaTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     {
@@ -579,7 +586,7 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Pendidikan_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Keluarga_' + new Date().toISOString().slice(0,10);
                         }
                     },
                     {
@@ -590,9 +597,9 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Pendidikan_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Keluarga_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Pendidikan'
+                        title: 'Data Keluarga'
                     },
                     {
                         extend: 'pdf',
@@ -602,15 +609,15 @@
                             columns: ':not(:last-child)'
                         },
                         filename: function() {
-                            return 'Data_Pendidikan_' + new Date().toISOString().slice(0,10);
+                            return 'Data_Keluarga_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Pendidikan',
+                        title: 'Data Keluarga',
                         customize: function(doc) {
                             doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
                             doc.styles.tableHeader.fontSize = 10;
                             doc.styles.tableBodyEven.fontSize = 9;
                             doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Pendidikan';
+                            doc.content[0].text = 'Data Keluarga';
                             doc.content[0].alignment = 'center';
                         }
                     },
@@ -621,11 +628,11 @@
                         exportOptions: {
                             columns: ':not(:last-child)'
                         },
-                        title: 'Data Pendidikan',
+                        title: 'Data Keluarga',
                         customize: function(win) {
                             $(win.document.body)
                                 .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Pendidikan</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
+                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Keluarga</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
                             
                             $(win.document.body).find('table')
                                 .addClass('compact')
@@ -669,7 +676,7 @@
                     
                     // Hide default DataTables controls
                     $('.dt-buttons').hide();
-                    $('#pendidikanTable_length').hide();
+                    $('#keluargaTable_length').hide();
                 }
             });
             
@@ -700,7 +707,7 @@
         function confirmDelete(code) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: "Data pendidikan yang dihapus tidak dapat dikembalikan!",
+                text: "Data keluarga yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

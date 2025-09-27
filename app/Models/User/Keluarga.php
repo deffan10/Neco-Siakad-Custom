@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Referensi;
+namespace App\Models\User;
 
 // USE SYSTEM
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,9 +21,9 @@ class Keluarga extends Model
         'penghasilan' => 'integer'
     ];
 
-    public function owner()
+    public function user()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function createdBy()
@@ -39,32 +39,6 @@ class Keluarga extends Model
     public function deletedBy()
     {
         return $this->belongsTo(User::class, 'deleted_by');
-    }
-
-    public function getOwnerNameAttribute()
-    {
-        if ($this->owner) {
-            return $this->owner->name ?? $this->owner->nama ?? 'Tidak diketahui';
-        }
-        return 'Tidak diketahui';
-    }
-
-    public function getOwnerTypeDisplayAttribute()
-    {
-        $type = class_basename($this->owner_type);
-        
-        switch ($type) {
-            case 'User':
-                return 'Pengguna';
-            case 'Mahasiswa':
-                return 'Mahasiswa';
-            case 'Dosen':
-                return 'Dosen';
-            case 'Staff':
-                return 'Staff';
-            default:
-                return ucfirst($type);
-        }
     }
 
     public function getHubunganDisplayAttribute()

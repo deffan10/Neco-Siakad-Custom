@@ -1,0 +1,67 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - feature/user-management-and-profiling
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+          
+      - name: Install cloudflared
+        run: |
+          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared.deb
+
+      - name: Setup SSH key and config
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY_BASE64 }}" | base64 -d > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          
+          # Add cloudflared SSH config
+          echo "Host ${{ secrets.SERVER_IP }}" >> ~/.ssh/config
+          echo "ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            echo "Switching to project directory..."
+            cd /var/www/neco-siakad.idev-fun.org
+
+            echo "Resetting any local changes..."
+            git reset --hard
+            
+            echo "Cleaning untracked files..."
+            git clean -fd
+
+            echo "Fetching all branches..."
+            git fetch origin
+
+            echo "Checking out feature/user-management-and-profiling branch..."
+            git checkout -B feature/user-management-and-profiling origin/feature/user-management-and-profiling
+
+            echo "git pull latest changes..."
+            git pull 
+
+            echo "Updating dependencies..."
+            composer update
+
+            echo "Clearing Laravel cache..."
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "Running migrations with fresh database..."
+            php artisan migrate:fresh --seed --force
+
+            echo "Deployment finished!"
+          EOF

@@ -8,15 +8,22 @@ use Illuminate\Support\Arr;
 
 class UpdateProfileRequest extends FormRequest
 {
+    protected $userToUpdate;
+
     public function authorize(): bool
     {
-        $user = Auth::user() ?: Auth::guard('mahasiswa')->user();
-        return (bool) ($user);
+        return true; // Authorization handled by controller
+    }
+
+    public function setUser($user)
+    {
+        $this->userToUpdate = $user;
+        return $this;
     }
 
     public function rules(): array
     {
-        $user = Auth::user() ?: Auth::guard('mahasiswa')->user();
+        $user = $this->userToUpdate ?? Auth::user();
         $table = $user->getTable();
 
         return [

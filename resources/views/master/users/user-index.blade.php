@@ -248,6 +248,18 @@
             padding: 4px 8px;
         }
 
+        /* Select2 for light mode - visible border */
+        [data-bs-theme="light"] .select2-container--default .select2-selection--multiple,
+        body:not([data-bs-theme="dark"]) .select2-container--default .select2-selection--multiple {
+            border: 1px solid #dee2e6;
+            background-color: #ffffff;
+        }
+
+        [data-bs-theme="light"] .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field,
+        body:not([data-bs-theme="dark"]) .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
+            color: #212529;
+        }
+
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             background-color: rgba(67,94,190,0.95); /* primary-ish */
             color: #ffffff;
@@ -332,15 +344,15 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card bg-light-danger">
+            <div class="card bg-light-warning">
                 <div class="card-body p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="text-muted mb-1">User Nonaktif</h6>
-                            <h3 class="mb-0">{{ $users->where('is_active', false)->count() }}</h3>
+                            <h6 class="text-muted mb-1">User Dihapus</h6>
+                            <h3 class="mb-0">{{ \App\Models\User::onlyTrashed()->count() }}</h3>
                         </div>
-                        <div class="bg-danger bg-opacity-25 p-3 rounded">
-                            <i class="fas fa-user-slash text-danger fa-2x"></i>
+                        <div class="bg-warning bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-user-slash text-warning fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -418,7 +430,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="roles" class="form-label">Roles</label>
-                                            <select class="form-select" name="roles[]" id="roles" multiple required>
+                                            <select class="form-control form-select" name="roles[]" id="roles" multiple required>
                                                 @foreach($roles as $role)
                                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                                                 @endforeach
@@ -508,18 +520,25 @@
                                                 <form action="{{ route($activeRole . '.users.user-restore', $item->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Pengguna">
-                                                        <i class="fas fa-undo me-1"></i> Restore
+                                                        <i class="fas fa-undo"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route($activeRole . '.users.user-force-delete', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Permanent" onclick="confirmDelete('{{ $item->id }}')">
+                                                        <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
                                             @else
-                                                <a href="{{ route($activeRole . '.users.user-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="View Pengguna">
-                                                    <i class="fas fa-edit me-1"></i> View
+                                                <a href="{{ route($activeRole . '.users.user-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Pengguna">
+                                                    <i class="fas fa-eye"></i>
                                                 </a>
                                                 <form action="{{ route($activeRole . '.users.user-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Pengguna" onclick="confirmDelete('{{ $item->id }}')">
-                                                        <i class="fas fa-trash me-1"></i> Delete
+                                                        <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
                                             @endif
@@ -533,6 +552,113 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">
+                        <i class="fas fa-upload me-2"></i>Import Data Users
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Alert untuk hasil import -->
+                    <div id="importAlert" class="alert d-none" role="alert"></div>
+                    
+                    <!-- Form Import -->
+                    <form id="importForm" action="{{ route($activeRole . '.users.user-import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <!-- File Upload Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label for="excel_file" class="form-label">
+                                    <strong>Pilih File Excel</strong>
+                                    <small class="text-muted">(Format: .xlsx, .xls)</small>
+                                </label>
+                                <input type="file" class="form-control" id="excel_file" name="excel_file" accept=".xlsx,.xls" required>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    File maksimal 10MB. Pastikan format sesuai dengan template yang disediakan.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Template Download Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-info">
+                                            <i class="fas fa-download me-2"></i>Download Template
+                                        </h6>
+                                        <p class="card-text small text-muted">
+                                            Download template Excel untuk memastikan format yang benar sebelum import.
+                                        </p>
+                                        <a href="{{ route($activeRole . '.users.user-template') }}" class="btn btn-outline-info btn-sm">
+                                            <i class="fas fa-file-excel me-1"></i>Download Template
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Import Options -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label class="form-label"><strong>Opsi Import</strong></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="skip_duplicates" name="skip_duplicates" checked>
+                                    <label class="form-check-label" for="skip_duplicates">
+                                        Skip data duplikat (berdasarkan email dan phone)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="send_welcome" name="send_welcome">
+                                    <label class="form-check-label" for="send_welcome">
+                                        Kirim email welcome ke user yang berhasil diimport
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar (Hidden by default) -->
+                        <div id="importProgress" class="mb-3 d-none">
+                            <label class="form-label">Progress Import:</label>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted">Sedang memproses data...</small>
+                        </div>
+
+                        <!-- Important Notes -->
+                        <div class="alert alert-warning">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Penting!
+                            </h6>
+                            <ul class="mb-0 small">
+                                <li><strong>Kolom Wajib:</strong> Nama, Email, Phone harus diisi</li>
+                                <li><strong>Format Tanggal:</strong> YYYY-MM-DD (contoh: 2025-01-15)</li>
+                                <li><strong>Status Boolean:</strong> Ya/Tidak, Aktif/Non-Aktif, True/False</li>
+                                <li><strong>Password Default:</strong> Semua user akan mendapat password "password123"</li>
+                                <li><strong>Role Default:</strong> User yang tidak memiliki role akan mendapat role "User"</li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Batal
+                    </button>
+                    <button type="submit" form="importForm" class="btn btn-success" id="importBtn">
+                        <i class="fas fa-upload me-2"></i>Import Data
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection
@@ -584,48 +710,44 @@
                         }
                     },
                     {
-                        extend: 'csv',
+                        // extend: 'csv',
                         text: '<i class="fas fa-file-csv"></i> CSV',
                         className: 'btn btn-success btn-sm',
-                        exportOptions: {
-                            columns: ':not(:last-child)'
-                        },
-                        filename: function() {
-                            return 'Data_MataKuliah_' + new Date().toISOString().slice(0,10);
+                        action: function (e, dt, node, config) {
+                            window.open('{{ route($activeRole . ".users.user-export-csv") }}', '_blank');
                         }
                     },
                     {
-                        extend: 'excel',
+                        // extend: 'excel',
                         text: '<i class="fas fa-file-excel"></i> Excel',
                         className: 'btn btn-success btn-sm',
-                        exportOptions: {
-                            columns: ':not(:last-child)'
-                        },
-                        filename: function() {
-                            return 'Data_MataKuliah_' + new Date().toISOString().slice(0,10);
+                        action: function (e, dt, node, config) {
+                            window.open('{{ route($activeRole . ".users.user-export-excel") }}', '_blank');
                         }
                     },
                     {
-                        extend: 'pdf',
+                        // extend: 'excel',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger btn-sm',
-                        exportOptions: {
-                            columns: ':not(:last-child)'
-                        },
-                        filename: function() {
-                            return 'Data_Program_Studi' + new Date().toISOString().slice(0,10);
-                        },
-                        orientation: 'landscape',
-                        pageSize: 'A4'
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fas fa-print"></i> Print',
-                        className: 'btn btn-info btn-sm',
-                        exportOptions: {
-                            columns: ':not(:last-child)'
+                        action: function (e, dt, node, config) {
+                            window.open('{{ route($activeRole . ".users.user-export-pdf") }}', '_blank');
                         }
                     },
+                    {
+                        text: '<i class="fas fa-upload"></i> Import Excel',
+                        className: 'btn btn-info btn-sm',
+                        action: function (e, dt, node, config) {
+                            $('#importModal').modal('show');
+                        }
+                    },
+                    // {
+                    //     extend: 'print',
+                    //     text: '<i class="fas fa-print"></i> Print',
+                    //     className: 'btn btn-info btn-sm',
+                    //     exportOptions: {
+                    //         columns: ':not(:last-child)'
+                    //     }
+                    // },
                     {
                         extend: 'colvis',
                         text: '<i class="fas fa-columns"></i> Columns',
@@ -714,5 +836,132 @@
                 }
             });
         });
+
+        // Handle Import Form
+        $('#importForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const fileInput = $('#excel_file')[0];
+            
+            // Validation
+            if (!fileInput.files.length) {
+                showImportAlert('danger', 'Silahkan pilih file Excel terlebih dahulu!');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            
+            if (!allowedTypes.includes(file.type)) {
+                showImportAlert('danger', 'Format file tidak didukung! Gunakan file .xlsx atau .xls');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) { // 10MB
+                showImportAlert('danger', 'Ukuran file terlalu besar! Maksimal 10MB');
+                return;
+            }
+            
+            // Show loading
+            $('#importBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Importing...');
+            $('#importProgress').removeClass('d-none');
+            
+            // Simulate progress (since we can't get real progress from server)
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                $('.progress-bar').css('width', progress + '%');
+            }, 500);
+            
+            // Submit form
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    clearInterval(progressInterval);
+                    $('.progress-bar').css('width', '100%');
+                    
+                    if (response.success) {
+                        showImportAlert('success', response.message);
+                        
+                        // Show detailed results if available
+                        if (response.success_count || response.skip_count) {
+                            let details = `<br><small>`;
+                            details += `✅ Berhasil: ${response.success_count || 0} data<br>`;
+                            details += `⚠️ Dilewati: ${response.skip_count || 0} data`;
+                            if (response.errors && response.errors.length > 0) {
+                                details += `<br>❌ Error: ${response.errors.length} data`;
+                            }
+                            details += `</small>`;
+                            $('#importAlert').append(details);
+                        }
+                        
+                        // Reload page after 3 seconds
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
+                        
+                    } else {
+                        showImportAlert('danger', response.message || 'Terjadi kesalahan saat import');
+                        
+                        // Show errors if available
+                        if (response.errors && response.errors.length > 0) {
+                            let errorList = '<br><small><strong>Detail Error:</strong><ul class="mt-2 mb-0">';
+                            response.errors.slice(0, 5).forEach(error => { // Show max 5 errors
+                                errorList += `<li>${error}</li>`;
+                            });
+                            if (response.errors.length > 5) {
+                                errorList += `<li>... dan ${response.errors.length - 5} error lainnya</li>`;
+                            }
+                            errorList += '</ul></small>';
+                            $('#importAlert').append(errorList);
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    clearInterval(progressInterval);
+                    let errorMessage = 'Terjadi kesalahan saat upload file';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    } else if (xhr.status === 422) {
+                        errorMessage = 'Data yang diupload tidak valid';
+                    } else if (xhr.status === 413) {
+                        errorMessage = 'Ukuran file terlalu besar';
+                    }
+                    
+                    showImportAlert('danger', errorMessage);
+                },
+                complete: function() {
+                    // Reset button and progress
+                    $('#importBtn').prop('disabled', false).html('<i class="fas fa-upload me-2"></i>Import Data');
+                    setTimeout(() => {
+                        $('#importProgress').addClass('d-none');
+                        $('.progress-bar').css('width', '0%');
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Reset modal when closed
+        $('#importModal').on('hidden.bs.modal', function() {
+            $('#importForm')[0].reset();
+            $('#importAlert').addClass('d-none').removeClass('alert-success alert-danger').html('');
+            $('#importProgress').addClass('d-none');
+            $('.progress-bar').css('width', '0%');
+        });
+        
+        // Show import alert
+        function showImportAlert(type, message) {
+            $('#importAlert')
+                .removeClass('d-none alert-success alert-danger alert-warning')
+                .addClass('alert-' + type)
+                .html('<i class="fas fa-' + (type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle') + ' me-2"></i>' + message);
+        }
     </script>
 @endsection

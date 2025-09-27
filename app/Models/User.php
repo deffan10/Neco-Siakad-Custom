@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 // use App\Traits\HasLogAktivitas;
 use Spatie\Permission\Traits\HasRoles;
 // USE MODELS
+use App\Models\User\Alamat;
+use App\Models\User\Keluarga;
+use App\Models\User\Pendidikan;
 use App\Models\User\Subrole;
 use App\Models\Referensi\Agama;
-use App\Models\Referensi\Alamat;
 use App\Models\Referensi\GolonganDarah;
 use App\Models\Referensi\JenisKelamin;
-use App\Models\Referensi\Keluarga;
 use App\Models\Referensi\Kewarganegaraan;
-use App\Models\Referensi\Pendidikan;
 
 class User extends Authenticatable
 {
@@ -24,12 +24,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $guarded = [];
-    protected $guard_name = 'web';
 
-    public function owner() 
-    {
-        return $this->morphTo(); 
-    }
 
     // Shortcut
 
@@ -47,17 +42,17 @@ class User extends Authenticatable
 
     public function alamats()
     {
-        return $this->morphMany(Alamat::class, 'owner');
+        return $this->hasMany(Alamat::class, 'user_id');
     }
 
     public function alamatKtp()
     {
-        return $this->morphMany(Alamat::class, 'owner')->where('tipe', 'ktp');
+        return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'ktp');
     }
     
     public function alamatDomisili()
     {
-        return $this->morphMany(Alamat::class, 'owner')->where('tipe', 'domisili');
+        return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'domisili');
     }
 
     // Single address access methods
@@ -83,7 +78,7 @@ class User extends Authenticatable
 
     public function keluargas()
     {
-        return $this->morphMany(Keluarga::class, 'owner');
+        return $this->hasMany(Keluarga::class, 'user_id');
     }
 
     public function kewarganegaraan()
@@ -93,7 +88,7 @@ class User extends Authenticatable
 
     public function pendidikans()
     {
-        return $this->morphMany(Pendidikan::class, 'owner');
+        return $this->hasMany(Pendidikan::class, 'user_id');
     }
 
     public function subroles()

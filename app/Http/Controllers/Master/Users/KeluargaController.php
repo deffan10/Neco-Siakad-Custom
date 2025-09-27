@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Referensi;
+namespace App\Http\Controllers\Master\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 // Use Models
-use App\Models\Referensi\Keluarga;
+use App\Models\User\Keluarga;
 use App\Models\User;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
@@ -22,11 +22,11 @@ class KeluargaController extends Controller
         $data['pages'] = "Halaman Data Keluarga";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['keluargas'] = Keluarga::with(['owner'])->orderBy('created_at', 'desc')->get();
+        $data['keluargas'] = Keluarga::with(['user'])->orderBy('created_at', 'desc')->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = false;
 
-        return view('referensi.keluarga-index', $data, compact('user'));
+        return view('master.users.keluarga-index', $data, compact('user'));
     }
 
     public function trash()
@@ -37,11 +37,11 @@ class KeluargaController extends Controller
         $data['pages'] = "Halaman Data Keluarga yang Dihapus";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['keluargas'] = Keluarga::onlyTrashed()->with(['owner'])->get();
+        $data['keluargas'] = Keluarga::onlyTrashed()->with(['user'])->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = true;
 
-        return view('referensi.keluarga-index', $data, compact('user'));
+        return view('master.users.keluarga-index', $data, compact('user'));
     }
 
     public function store(Request $request)
@@ -49,8 +49,7 @@ class KeluargaController extends Controller
         $request->validate([
             'hubungan' => 'required|in:Ayah,Ibu,Suami,Istri,Anak,Kakak,Adik,Wali',
             'nama' => 'required|string|max:255',
-            // 'owner_type' => 'required|string',
-            'owner_id' => 'required|integer',
+            'user_id' => 'required|integer',
             'pekerjaan' => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:15',
             'tempat_lahir' => 'nullable|string|max:255',
@@ -61,21 +60,19 @@ class KeluargaController extends Controller
             'hubungan.required' => 'Hubungan keluarga wajib dipilih',
             'hubungan.in' => 'Hubungan keluarga tidak valid',
             'nama.required' => 'Nama keluarga wajib diisi',
-            'owner_type.required' => 'Tipe pemilik wajib dipilih',
-            'owner_id.required' => 'Pemilik data wajib dipilih',
+            'user_id.required' => 'Pemilik data wajib dipilih',
             'penghasilan.integer' => 'Penghasilan harus berupa angka',
             'penghasilan.min' => 'Penghasilan tidak boleh negatif'
         ]);
 
         try {
             $user = Auth::user();
-            $checkUser = User::where('id', $request->owner_id)->first() ?: Mahasiswa::where('id', $request->owner_id)->first();
+            $checkUser = User::where('id', $request->user_id)->first() ?: Mahasiswa::where('id', $request->user_id)->first();
 
             Keluarga::create([
                 'hubungan' => $request->hubungan,
                 'nama' => $request->nama,
-                'owner_type' => get_class($checkUser),
-                'owner_id' => $request->owner_id,
+                'user_id' => $request->user_id,
                 'pekerjaan' => $request->pekerjaan,
                 'telepon' => $request->telepon,
                 'tempat_lahir' => $request->tempat_lahir,
@@ -101,8 +98,7 @@ class KeluargaController extends Controller
         $request->validate([
             'hubungan' => 'required|in:Ayah,Ibu,Suami,Istri,Anak,Kakak,Adik,Wali',
             'nama' => 'required|string|max:255',
-            // 'owner_type' => 'required|string',
-            'owner_id' => 'required|integer',
+            'user_id' => 'required|integer',
             'pekerjaan' => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:15',
             'tempat_lahir' => 'nullable|string|max:255',
@@ -113,21 +109,19 @@ class KeluargaController extends Controller
             'hubungan.required' => 'Hubungan keluarga wajib dipilih',
             'hubungan.in' => 'Hubungan keluarga tidak valid',
             'nama.required' => 'Nama keluarga wajib diisi',
-            'owner_type.required' => 'Tipe pemilik wajib dipilih',
-            'owner_id.required' => 'Pemilik data wajib dipilih',
+            'user_id.required' => 'Pemilik data wajib dipilih',
             'penghasilan.integer' => 'Penghasilan harus berupa angka',
             'penghasilan.min' => 'Penghasilan tidak boleh negatif'
         ]);
 
         try {
             $user = Auth::user();
-            $checkUser = User::where('id', $request->owner_id)->first() ?: Mahasiswa::where('id', $request->owner_id)->first();
+            $checkUser = User::where('id', $request->user_id)->first() ?: Mahasiswa::where('id', $request->user_id)->first();
 
             $keluarga->update([
                 'hubungan' => $request->hubungan,
                 'nama' => $request->nama,
-                'owner_type' => get_class($checkUser),
-                'owner_id' => $request->owner_id,
+                'user_id' => $request->user_id,
                 'pekerjaan' => $request->pekerjaan,
                 'telepon' => $request->telepon,
                 'tempat_lahir' => $request->tempat_lahir,

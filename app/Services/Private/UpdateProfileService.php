@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 // Use Models
-use App\Models\Referensi\Alamat;
+use App\Models\User\Alamat;
 
 class UpdateProfileService
 {
-    public function updateProfile(array $data){
-
-        $user = Auth::user() ?: Auth::guard('mahasiswa')->user();
+    public function updateProfile($user, array $data){
 
         try {
 
@@ -171,10 +169,9 @@ class UpdateProfileService
             if (!empty($ktpData)) {
                 // Check if user already has a KTP address
                 $existingKtp = $user->alamatKtp()->first();
-                
-                // Make sure we have the required fields for owner relationship
-                $ktpData['owner_type'] = get_class($user);
-                $ktpData['owner_id'] = $user->id;
+
+                // Make sure we have the required fields for user relationship
+                $ktpData['user_id'] = $user->id;
                 $ktpData['tipe'] = 'ktp';
                 
                 if ($existingKtp) {
@@ -202,9 +199,8 @@ class UpdateProfileService
                 // Check if user already has a Domisili address
                 $existingDomisili = $user->alamatDomisili()->first();
                 
-                // Make sure we have the required fields for owner relationship
-                $domisiliData['owner_type'] = get_class($user);
-                $domisiliData['owner_id'] = $user->id;
+                // Make sure we have the required fields for user relationship
+                $domisiliData['user_id'] = $user->id;
                 $domisiliData['tipe'] = 'domisili';
                 
                 if ($existingDomisili) {
@@ -235,10 +231,9 @@ class UpdateProfileService
                 if (empty($pendidikanData)) {
                     continue;
                 }
-                
-                // Make sure we have the required fields for owner relationship
-                $pendidikanData['owner_type'] = get_class($user);
-                $pendidikanData['owner_id'] = $user->id;
+
+                // Make sure we have the required fields for user relationship
+                $pendidikanData['user_id'] = $user->id;
                 
                 if (!empty($pendidikanData['id'])) {
                     // Update existing education record
@@ -290,10 +285,9 @@ class UpdateProfileService
                 if (empty($keluargaData)) {
                     continue;
                 }
-                
-                // Make sure we have the required fields for owner relationship
-                $keluargaData['owner_type'] = get_class($user);
-                $keluargaData['owner_id'] = $user->id;
+
+                // Make sure we have the required fields for user relationship
+                $keluargaData['user_id'] = $user->id;
                 
                 if (!empty($keluargaData['id'])) {
                     // Update existing family record

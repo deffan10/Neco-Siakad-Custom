@@ -55,7 +55,11 @@ class RootController extends Controller
     public function handleProfile(UpdateProfileRequest $request, UpdateProfileService $service)
     {
         try {
-            $service->updateProfile($request->validated());
+            $user = Auth::user();
+            
+            $request->setUser($user);
+            
+            $service->updateProfile($user, $request->validated());
             
             Alert::toast('Profil berhasil diperbarui', 'success');
             return redirect()->back();

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Referensi;
+namespace App\Http\Controllers\Master\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 // Use Models
-use App\Models\Referensi\Alamat;
+use App\Models\User\Alamat;
 use App\Models\User;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
@@ -22,11 +22,11 @@ class AlamatController extends Controller
         $data['pages'] = "Halaman Data Alamat";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['alamats'] = Alamat::with(['owner'])->orderBy('created_at', 'desc')->get();
+        $data['alamats'] = Alamat::with(['user'])->orderBy('created_at', 'desc')->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = false;
 
-        return view('referensi.alamat-index', $data, compact('user'));
+        return view('master.users.alamat-index', $data, compact('user'));
     }
 
     public function trash()
@@ -37,11 +37,11 @@ class AlamatController extends Controller
         $data['pages'] = "Halaman Data Alamat yang Dihapus";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['alamats'] = Alamat::onlyTrashed()->with(['owner'])->get();
+        $data['alamats'] = Alamat::onlyTrashed()->with(['user'])->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = true;
 
-        return view('referensi.alamat-index', $data, compact('user'));
+        return view('master.users.alamat-index', $data, compact('user'));
     }
 
     public function store(Request $request)
@@ -49,8 +49,7 @@ class AlamatController extends Controller
         $request->validate([
             'tipe' => 'required|in:ktp,domisili',
             'alamat_lengkap' => 'required|string',
-            // 'owner_type' => 'required|string',
-            'owner_id' => 'required|integer',
+            'user_id' => 'required|integer',
             'kelurahan' => 'nullable|string|max:255',
             'kecamatan' => 'nullable|string|max:255',
             'kota_kabupaten' => 'nullable|string|max:255',
@@ -62,19 +61,17 @@ class AlamatController extends Controller
             'tipe.required' => 'Tipe alamat wajib dipilih',
             'tipe.in' => 'Tipe alamat harus KTP atau Domisili',
             'alamat_lengkap.required' => 'Alamat lengkap wajib diisi',
-            'owner_type.required' => 'Tipe pemilik wajib dipilih',
-            'owner_id.required' => 'Pemilik alamat wajib dipilih'
+            'user_id.required' => 'Pemilik alamat wajib dipilih'
         ]);
 
         try {
             $user = Auth::user();
-            $checkUser = User::where('id', $request->owner_id)->first() ?: Mahasiswa::where('id', $request->owner_id)->first();
+            $checkUser = User::where('id', $request->user_id)->first();
             
             Alamat::create([
                 'tipe' => $request->tipe,
                 'alamat_lengkap' => $request->alamat_lengkap,
-                'owner_type' => get_class($checkUser),
-                'owner_id' => $request->owner_id,
+                'user_id' => $request->user_id,
                 'kelurahan' => $request->kelurahan,
                 'kecamatan' => $request->kecamatan,
                 'kota_kabupaten' => $request->kota_kabupaten,
@@ -101,8 +98,7 @@ class AlamatController extends Controller
         $request->validate([
             'tipe' => 'required|in:ktp,domisili',
             'alamat_lengkap' => 'required|string',
-            // 'owner_type' => 'required|string',
-            'owner_id' => 'required|integer',
+            'user_id' => 'required|integer',
             'kelurahan' => 'nullable|string|max:255',
             'kecamatan' => 'nullable|string|max:255',
             'kota_kabupaten' => 'nullable|string|max:255',
@@ -114,19 +110,17 @@ class AlamatController extends Controller
             'tipe.required' => 'Tipe alamat wajib dipilih',
             'tipe.in' => 'Tipe alamat harus KTP atau Domisili',
             'alamat_lengkap.required' => 'Alamat lengkap wajib diisi',
-            'owner_type.required' => 'Tipe pemilik wajib dipilih',
-            'owner_id.required' => 'Pemilik alamat wajib dipilih'
+            'user_id.required' => 'Pemilik alamat wajib dipilih'
         ]);
 
         try {
             $user = Auth::user();
-            $checkUser = User::where('id', $request->owner_id)->first() ?: Mahasiswa::where('id', $request->owner_id)->first();
+            $checkUser = User::where('id', $request->user_id)->first();
 
             $alamat->update([
                 'tipe' => $request->tipe,
                 'alamat_lengkap' => $request->alamat_lengkap,
-                'owner_type' => get_class($checkUser),
-                'owner_id' => $request->owner_id,
+                'user_id' => $request->user_id,
                 'kelurahan' => $request->kelurahan,
                 'kecamatan' => $request->kecamatan,
                 'kota_kabupaten' => $request->kota_kabupaten,
