@@ -18,16 +18,19 @@ jobs:
           curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
           sudo dpkg -i cloudflared.deb
 
-      - name: Setup SSH key and config
+      - name: Setup SSH key with agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.SERVER_SSH_KEY_BASE64 }}
+
+      - name: Add server to known_hosts
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY_BASE64 }}" | base64 -d > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-          
-          # Add cloudflared SSH config
+
+          # Tambahin cloudflared ke config
           echo "Host ${{ secrets.SERVER_IP }}" >> ~/.ssh/config
-          echo "ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
+          echo "  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
           chmod 600 ~/.ssh/config
 
       - name: Deploy to server
