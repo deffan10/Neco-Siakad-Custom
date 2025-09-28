@@ -55,7 +55,7 @@
                 <div class="dropdown-menu-column">
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.user*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.user-index') }}">User</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.role*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.role-index') }}">Role</a>
-                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.subrole*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.subrole-index') }}">Subrole</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.subrole*') ? 'active' : '' }}" href="#">Subrole ( Soon )</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.alamat*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.alamat-index') }}">Alamat</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.keluarga*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.keluarga-index') }}">Keluarga</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.pendidikan*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.pendidikan-index') }}">Pendidikan</a>

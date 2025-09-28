@@ -240,7 +240,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-12 mb-2">
+        <div class="col-lg-12 col-12 mb-2">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Alamat' }}</h5>
@@ -349,9 +349,12 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tipe</th>
-                                    <th>Pemilik</th>
+                                    <th>Pengguna</th>
                                     <th>Alamat</th>
+                                    <th>Kelurahan</th>
+                                    <th>Kecamatan</th>
                                     <th>Kota</th>
+                                    <th>Provinsi</th>
                                     @if($is_trash)
                                         <th>Dihapus Oleh</th>
                                         <th>Dihapus Pada</th>
@@ -364,14 +367,17 @@
                                     <tr>
                                         <td data-label="No">{{ ++$key }}</td>
                                         <td data-label="Tipe"><span class="badge bg-{{ $item->tipe == 'ktp' ? 'primary' : 'info' }}">{{ $item->tipe_display }}</span></td>
-                                        <td data-label="Pemilik">
+                                        <td data-label="Pengguna">
                                             <div>
                                                 <strong>{{ $item->user->name }}</strong>
                                                 <small class="d-block text-muted">{{ $item->user->role }}</small>
                                             </div>
                                         </td>
                                         <td data-label="Alamat">{{ Str::limit($item->alamat_lengkap, 50) }}</td>
+                                        <td data-label="Kelurahan">{{ $item->kelurahan ?? '-' }}</td>
+                                        <td data-label="Kecamatan">{{ $item->kecamatan ?? '-' }}</td>
                                         <td data-label="Kota">{{ $item->kota_kabupaten ?? '-' }}</td>
+                                        <td data-label="Provinsi">{{ $item->provinsi ?? '-' }}</td>
                                         @if($is_trash)
                                             <td data-label="Dihapus Oleh">
                                                 <div class="d-flex align-items-center">
@@ -419,44 +425,6 @@
             </div>
         </div>
         
-        <div class="col-lg-4 col-12 mb-2">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Informasi Alamat</h5>
-                </div>
-                <div class="card-body">
-                    <p>Pengelolaan data alamat dengan dukungan polymorphic relationship.</p>
-                    
-                    <div class="alert alert-light-success">
-                        <h6>Fitur:</h6>
-                        <ul class="mb-0">
-                            <li>Alamat KTP dan Domisili</li>
-                            <li>Polymorphic ownership</li>
-                            <li>Data lokasi lengkap</li>
-                            <li>Soft delete support</li>
-                        </ul>
-                    </div>
-
-                    @if(count($alamats) > 0)
-                        <div class="mt-4">
-                            <h6>Alamat Terbaru</h6>
-                            <div class="list-group">
-                                @foreach($alamats->sortByDesc('created_at')->take(3) as $item)
-                                    <div class="list-group-item">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">{{ $item->user->name }}</h6>
-                                            <small>{{ $item->created_at->diffForHumans() }}</small>
-                                        </div>
-                                        <p class="mb-1">{{ Str::limit($item->alamat_lengkap, 40) }}</p>
-                                        <small class="text-muted">{{ $item->tipe_display }}</small>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Edit Modals will be here but truncated for space -->
@@ -487,7 +455,7 @@
                         text: '<i class="fas fa-copy"></i> Copy',
                         className: 'btn btn-secondary btn-sm',
                         exportOptions: {
-                            columns: ':not(:last-child)' // Exclude action column
+                            columns: ':not(:last-child)' 
                         }
                     },
                     {
@@ -510,8 +478,7 @@
                         },
                         filename: function() {
                             return 'Data_Alamat_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Alamat'
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -523,15 +490,8 @@
                         filename: function() {
                             return 'Data_Alamat_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Alamat',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Alamat';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -539,56 +499,25 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Alamat',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Alamat</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#alamatTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
             
