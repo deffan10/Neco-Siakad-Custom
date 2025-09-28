@@ -57,7 +57,7 @@ class RootController extends Controller
         try {
             $user = Auth::user();
             
-            $request->setUser($user);
+            // $request->setUser($user);
             
             $service->updateProfile($user, $request->validated());
             

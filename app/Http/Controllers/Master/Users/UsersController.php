@@ -149,7 +149,7 @@ class UsersController extends Controller
         try {
             $user = User::findOrFail($id);
 
-            $request->setUser($user);
+            // $request->setUser($user);
 
             $service->updateProfile($user, $request->validated());
             

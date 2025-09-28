@@ -12,13 +12,20 @@ class UpdateProfileRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true; // Authorization handled by controller
+        return true;
     }
 
-    public function setUser($user)
+    public function getValidatorInstance()
     {
-        $this->userToUpdate = $user;
-        return $this;
+        // kalau dari management → id ada di route
+        if ($this->route('id')) {
+            $this->userToUpdate = \App\Models\User::find($this->route('id'));
+        } else {
+            // kalau update profile sendiri
+            $this->userToUpdate = Auth::user();
+        }
+
+        return parent::getValidatorInstance();
     }
 
     public function rules(): array
