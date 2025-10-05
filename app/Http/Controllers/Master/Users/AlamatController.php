@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Master\Users;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 // Use Models
-use App\Models\User\Alamat;
 use App\Models\User;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
+// Use Others
+use App\DataTables\Manager\Users\AlamatDataTable;
+use App\Services\Manager\Users\AlamatService;
+use App\Http\Requests\Manager\Users\AlamatRequest;
 
 class AlamatController extends Controller
 {
-    public function index()
+    protected AlamatService $alamatService;
+
+    public function __construct(AlamatService $alamatService)
+    {
+        $this->alamatService = $alamatService;
+    }
+
+    public function index(AlamatDataTable $dataTable)
     {
         $user = Auth::user();
         $data['activeRole'] = session('active_role') ?? '';
@@ -22,14 +31,14 @@ class AlamatController extends Controller
         $data['pages'] = "Halaman Data Alamat";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['alamats'] = Alamat::with(['user'])->orderBy('created_at', 'desc')->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = false;
 
-        return view('master.users.alamat-index', $data, compact('user'));
+        $dataTable->setTrash(false);
+        return $dataTable->render('master.users.alamat-index', $data, compact('user'));
     }
 
-    public function trash()
+    public function trash(AlamatDataTable $dataTable)
     {
         $user = Auth::user();
         $data['activeRole'] = session('active_role') ?? '';
@@ -37,50 +46,17 @@ class AlamatController extends Controller
         $data['pages'] = "Halaman Data Alamat yang Dihapus";
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['alamats'] = Alamat::onlyTrashed()->with(['user'])->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = true;
 
-        return view('master.users.alamat-index', $data, compact('user'));
+        $dataTable->setTrash(true);
+        return $dataTable->render('master.users.alamat-index', $data, compact('user'));
     }
 
-    public function store(Request $request)
+    public function store(AlamatRequest $request)
     {
-        $request->validate([
-            'tipe' => 'required|in:ktp,domisili',
-            'alamat_lengkap' => 'required|string',
-            'user_id' => 'required|integer',
-            'kelurahan' => 'nullable|string|max:255',
-            'kecamatan' => 'nullable|string|max:255',
-            'kota_kabupaten' => 'nullable|string|max:255',
-            'provinsi' => 'nullable|string|max:255',
-            'kode_pos' => 'nullable|string|max:10',
-            'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10'
-        ], [
-            'tipe.required' => 'Tipe alamat wajib dipilih',
-            'tipe.in' => 'Tipe alamat harus KTP atau Domisili',
-            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi',
-            'user_id.required' => 'Pemilik alamat wajib dipilih'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first();
-            
-            Alamat::create([
-                'tipe' => $request->tipe,
-                'alamat_lengkap' => $request->alamat_lengkap,
-                'user_id' => $request->user_id,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'kota_kabupaten' => $request->kota_kabupaten,
-                'provinsi' => $request->provinsi,
-                'kode_pos' => $request->kode_pos,
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'created_by' => $user->id
-            ]);
+            $this->alamatService->createAlamat($request->validated());
 
             Alert::success('Berhasil', 'Data alamat berhasil ditambahkan');
             return redirect()->back();
@@ -91,45 +67,10 @@ class AlamatController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(AlamatRequest $request, $id)
     {
-        $alamat = Alamat::findOrFail($id);
-        
-        $request->validate([
-            'tipe' => 'required|in:ktp,domisili',
-            'alamat_lengkap' => 'required|string',
-            'user_id' => 'required|integer',
-            'kelurahan' => 'nullable|string|max:255',
-            'kecamatan' => 'nullable|string|max:255',
-            'kota_kabupaten' => 'nullable|string|max:255',
-            'provinsi' => 'nullable|string|max:255',
-            'kode_pos' => 'nullable|string|max:10',
-            'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10'
-        ], [
-            'tipe.required' => 'Tipe alamat wajib dipilih',
-            'tipe.in' => 'Tipe alamat harus KTP atau Domisili',
-            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi',
-            'user_id.required' => 'Pemilik alamat wajib dipilih'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first();
-
-            $alamat->update([
-                'tipe' => $request->tipe,
-                'alamat_lengkap' => $request->alamat_lengkap,
-                'user_id' => $request->user_id,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'kota_kabupaten' => $request->kota_kabupaten,
-                'provinsi' => $request->provinsi,
-                'kode_pos' => $request->kode_pos,
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'updated_by' => $user->id
-            ]);
+            $this->alamatService->updateAlamat($id, $request->validated());
 
             Alert::success('Berhasil', 'Data alamat berhasil diperbarui');
             return redirect()->back();
@@ -143,11 +84,7 @@ class AlamatController extends Controller
     public function destroy($id)
     {
         try {
-            $alamat = Alamat::findOrFail($id);
-
-            $user = Auth::user();
-            $alamat->update(['deleted_by' => $user->id]);
-            $alamat->delete();
+            $this->alamatService->deleteAlamat($id);
 
             Alert::success('Berhasil', 'Data alamat berhasil dihapus');
             return redirect()->back();
@@ -161,11 +98,7 @@ class AlamatController extends Controller
     public function restore($id)
     {
         try {
-            $alamat = Alamat::onlyTrashed()->findOrFail($id);
-
-            $user = Auth::user();
-            $alamat->update(['updated_by' => $user->id, 'deleted_by' => null]);
-            $alamat->restore();
+            $this->alamatService->restoreAlamat($id);
 
             Alert::success('Berhasil', 'Data alamat berhasil dikembalikan');
             return redirect()->back();

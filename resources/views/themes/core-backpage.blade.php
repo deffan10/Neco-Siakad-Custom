@@ -475,6 +475,8 @@
         }
     </script>
 
+    @stack('scripts')
+
     @yield('custom-js')
     <!-- END PAGE SCRIPTS -->
 </body>
