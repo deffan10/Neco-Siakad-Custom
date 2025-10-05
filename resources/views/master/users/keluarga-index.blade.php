@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-12 mb-2">
+        <div class="col-lg-12 col-12 mb-2">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">{{ $pages ?? 'Daftar Keluarga' }}</h5>
@@ -53,9 +53,9 @@
                                             <input type="text" class="form-control" name="nama" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label">Pemilik</label>
+                                            <label class="form-label">Pengguna</label>
                                             <select class="form-select" name="user_id" required>
-                                                <option value="">Pilih Pemilik</option>
+                                                <option value="">Pilih Pengguna</option>
                                                 @foreach($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endforeach
@@ -119,8 +119,9 @@
                                     <th>No</th>
                                     <th>Hubungan</th>
                                     <th>Nama</th>
-                                    <th>Pemilik</th>
+                                    <th>Pengguna</th>
                                     <th>Pekerjaan</th>
+                                    <th>Penghasilan</th>
                                     @if($is_trash)
                                         <th>Dihapus Oleh</th>
                                         <th>Dihapus Pada</th>
@@ -129,7 +130,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                                                @foreach ($keluargas as $key => $item)
+                                @foreach ($keluargas as $key => $item)
                                     <tr>
                                         <td data-label="No">{{ ++$key }}</td>
                                         <td data-label="Hubungan"><span class="badge bg-primary">{{ $item->hubungan_display }}</span></td>
@@ -141,13 +142,14 @@
                                                 @endif
                                             </div>
                                         </td>
-                                        <td data-label="Pemilik">
+                                        <td data-label="Pengguna">
                                             <div>
                                                 <strong>{{ $item->user->name }}</strong>
                                                 <small class="d-block text-muted">{{ $item->user->role }}</small>
                                             </div>
                                         </td>
                                         <td data-label="Pekerjaan">{{ $item->pekerjaan ?? '-' }}</td>
+                                        <td data-label="Penghasilan">{{ $item->penghasilan ?? '-' }}</td>
                                         @if($is_trash)
                                             <td data-label="Dihapus Oleh">
                                                 <div class="d-flex align-items-center">
@@ -195,44 +197,7 @@
             </div>
         </div>
         
-        <div class="col-lg-4 col-12 mb-2">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Informasi Keluarga</h5>
-                </div>
-                <div class="card-body">
-                    <p>Pengelolaan data keluarga dengan dukungan polymorphic relationship.</p>
-                    
-                    <div class="alert alert-light-success">
-                        <h6>Fitur:</h6>
-                        <ul class="mb-0">
-                            <li>Data keluarga lengkap</li>
-                            <li>Hubungan keluarga terstruktur</li>
-                            <li>Polymorphic ownership</li>
-                            <li>Soft delete support</li>
-                        </ul>
-                    </div>
 
-                    @if(count($keluargas) > 0)
-                        <div class="mt-4">
-                            <h6>Keluarga Terbaru</h6>
-                            <div class="list-group">
-                                @foreach($keluargas->sortByDesc('created_at')->take(3) as $item)
-                                    <div class="list-group-item">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">{{ $item->nama }}</h6>
-                                            <small>{{ $item->created_at->diffForHumans() }}</small>
-                                        </div>
-                                        <p class="mb-1">{{ $item->hubungan }} dari {{ $item->user->name }}</p>
-                                        <small class="text-muted">{{ $item->pekerjaan ?? 'Pekerjaan tidak diisi' }}</small>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Edit Modals -->
@@ -269,9 +234,9 @@
                                         <input type="text" class="form-control" name="nama" value="{{ $item->nama }}" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Pemilik</label>
+                                        <label class="form-label">Pengguna</label>
                                         <select class="form-select" name="user_id" required>
-                                            <option value="">Pilih Pemilik</option>
+                                            <option value="">Pilih Pengguna</option>
                                             @foreach($users as $user)
                                                 <option value="{{ $user->id }}" {{ $item->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                             @endforeach
@@ -342,7 +307,7 @@
                         text: '<i class="fas fa-copy"></i> Copy',
                         className: 'btn btn-secondary btn-sm',
                         exportOptions: {
-                            columns: ':not(:last-child)' // Exclude action column
+                            columns: ':not(:last-child)' 
                         }
                     },
                     {
@@ -365,8 +330,7 @@
                         },
                         filename: function() {
                             return 'Data_Keluarga_' + new Date().toISOString().slice(0,10);
-                        },
-                        title: 'Data Keluarga'
+                        }
                     },
                     {
                         extend: 'pdf',
@@ -378,15 +342,8 @@
                         filename: function() {
                             return 'Data_Keluarga_' + new Date().toISOString().slice(0,10);
                         },
-                        title: 'Data Keluarga',
-                        customize: function(doc) {
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.styles.tableHeader.fontSize = 10;
-                            doc.styles.tableBodyEven.fontSize = 9;
-                            doc.styles.tableBodyOdd.fontSize = 9;
-                            doc.content[0].text = 'Data Keluarga';
-                            doc.content[0].alignment = 'center';
-                        }
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
                     {
                         extend: 'print',
@@ -394,56 +351,25 @@
                         className: 'btn btn-info btn-sm',
                         exportOptions: {
                             columns: ':not(:last-child)'
-                        },
-                        title: 'Data Keluarga',
-                        customize: function(win) {
-                            $(win.document.body)
-                                .css('font-size', '10pt')
-                                .prepend('<div style="text-align:center; margin-bottom: 20px;"><h3>Data Keluarga</h3><p>Dicetak pada: ' + new Date().toLocaleDateString('id-ID') + '</p></div>');
-                            
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
                         }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fas fa-columns"></i> Columns',
+                        className: 'btn btn-dark btn-sm'
                     }
                 ],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan halaman _PAGE_ dari _PAGES_",
-                    infoEmpty: "Tidak ada data yang tersedia",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    buttons: {
-                        copy: "Salin",
-                        copyTitle: "Disalin ke clipboard",
-                        copySuccess: {
-                            _: "%d baris disalin",
-                            1: "1 baris disalin"
-                        }
-                    }
-                },
                 responsive: true,
-                pageLength: 10,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
-                order: [[0, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
                 initComplete: function() {
                     // Move buttons to custom toolbar
-                    var buttons = $('.dt-buttons').detach();
-                    $('#exportButtons').append(buttons.html());
-                    
-                    // Show custom toolbar
                     $('#customToolbar').show();
-                    
-                    // Hide default DataTables controls
-                    $('.dt-buttons').hide();
-                    $('#keluargaTable_length').hide();
+                    $('#exportButtons').empty();
+                    $('.dt-buttons').appendTo('#exportButtons');
                 }
             });
             
