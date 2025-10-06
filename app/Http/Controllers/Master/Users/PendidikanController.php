@@ -2,150 +2,88 @@
 
 namespace App\Http\Controllers\Master\Users;
 
+use App\DataTables\Manager\Users\PendidikanDataTable;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Manager\Users\PendidikanRequest;
+// Use Models
+use App\Models\Pengaturan\Kampus;
+use App\Models\Pengaturan\System;
+use App\Models\User;
+// Use Others
+use App\Services\Manager\Users\PendidikanService;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-// Use Models
-use App\Models\User;
-use App\Models\User\Pendidikan;
-use App\Models\Pengaturan\System;
-use App\Models\Pengaturan\Kampus;
 
 class PendidikanController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user();
-        $data['activeRole'] = session('active_role') ?? '';
-        $data['menus'] = 'Referensi Pendidikan';
-        $data['pages'] = "Halaman Data Pendidikan";
-        $data['system'] = System::first();
-        $data['academy'] = Kampus::first();
-        $data['pendidikans'] = Pendidikan::with(['user'])->orderBy('created_at', 'desc')->get(); 
-        $data['users'] = User::all();
-        $data['is_trash'] = false;
+    protected PendidikanService $pendidikanService;
 
-        return view('master.users.pendidikan-index', $data, compact('user'));
+    public function __construct(PendidikanService $pendidikanService)
+    {
+        $this->pendidikanService = $pendidikanService;
     }
 
-    public function trash()
+    public function index(PendidikanDataTable $dataTable)
     {
         $user = Auth::user();
         $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Pendidikan';
-        $data['pages'] = "Halaman Data Pendidikan yang Dihapus";
+        $data['pages'] = 'Halaman Data Pendidikan';
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['pendidikans'] = Pendidikan::onlyTrashed()->with(['user'])->get();
+        $data['users'] = User::orderBy('name')->get();
+        $data['is_trash'] = false;
+
+        $dataTable->setTrash(false);
+
+        return $dataTable->render('master.users.pendidikan-index', $data, compact('user'));
+    }
+
+    public function trash(PendidikanDataTable $dataTable)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? '';
+        $data['menus'] = 'Referensi Pendidikan';
+        $data['pages'] = 'Halaman Data Pendidikan yang Dihapus';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = true;
 
-        return view('master.users.pendidikan-index', $data, compact('user'));
+        $dataTable->setTrash(true);
+
+        return $dataTable->render('master.users.pendidikan-index', $data, compact('user'));
     }
 
-    public function store(Request $request)
+    public function store(PendidikanRequest $request)
     {
-        $request->validate([
-            'jenjang' => 'required|in:Paket C,SMA,SMK,D3,S1,S2,S3',
-            'nama_institusi' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-            'jurusan' => 'nullable|string|max:255',
-            'tahun_masuk' => 'nullable|integer|min:1900|max:' . (date('Y') + 5),
-            'tahun_lulus' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
-            'ipk' => 'nullable|string|max:10',
-            'alamat' => 'nullable|string'
-        ], [
-            'jenjang.required' => 'Jenjang pendidikan wajib dipilih',
-            'jenjang.in' => 'Jenjang pendidikan tidak valid',
-            'nama_institusi.required' => 'Nama institusi wajib diisi',
-            'user_id.required' => 'Pemilik data wajib dipilih',
-            'tahun_masuk.min' => 'Tahun masuk tidak valid',
-            'tahun_masuk.max' => 'Tahun masuk tidak valid',
-            'tahun_lulus.min' => 'Tahun lulus tidak valid',
-            'tahun_lulus.max' => 'Tahun lulus tidak valid'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first();
-
-            if (!$checkUser) {
-                Alert::error('Error', 'Pemilik data tidak ditemukan');
-                return redirect()->back();
-            }
-
-            Pendidikan::create([
-                'jenjang' => $request->jenjang,
-                'nama_institusi' => $request->nama_institusi,
-                'user_id' => $request->user_id,
-                'jurusan' => $request->jurusan,
-                'tahun_masuk' => $request->tahun_masuk,
-                'tahun_lulus' => $request->tahun_lulus,
-                'ipk' => $request->ipk,
-                'alamat' => $request->alamat,
-                'created_by' => $user->id
-            ]);
+            $validated = $request->validated();
+            $this->pendidikanService->createPendidikan($validated);
 
             Alert::success('Berhasil', 'Data pendidikan berhasil ditambahkan');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(PendidikanRequest $request, $id)
     {
-        $pendidikan = Pendidikan::findOrFail($id);
-        
-        $request->validate([
-            'jenjang' => 'required|in:Paket C,SMA,SMK,D3,S1,S2,S3',
-            'nama_institusi' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-            'jurusan' => 'nullable|string|max:255',
-            'tahun_masuk' => 'nullable|integer|min:1900|max:' . (date('Y') + 5),
-            'tahun_lulus' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
-            'ipk' => 'nullable|string|max:10',
-            'alamat' => 'nullable|string'
-        ], [
-            'jenjang.required' => 'Jenjang pendidikan wajib dipilih',
-            'jenjang.in' => 'Jenjang pendidikan tidak valid',
-            'nama_institusi.required' => 'Nama institusi wajib diisi',
-            'user_id.required' => 'Pemilik data wajib dipilih',
-            'tahun_masuk.min' => 'Tahun masuk tidak valid',
-            'tahun_masuk.max' => 'Tahun masuk tidak valid',
-            'tahun_lulus.min' => 'Tahun lulus tidak valid',
-            'tahun_lulus.max' => 'Tahun lulus tidak valid'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first();
-
-            if (!$checkUser) {
-                Alert::error('Error', 'Pemilik data tidak ditemukan');
-                return redirect()->back();
-            }
-
-            $pendidikan->update([
-                'jenjang' => $request->jenjang,
-                'nama_institusi' => $request->nama_institusi,
-                'user_id' => $request->user_id,
-                'jurusan' => $request->jurusan,
-                'tahun_masuk' => $request->tahun_masuk,
-                'tahun_lulus' => $request->tahun_lulus,
-                'ipk' => $request->ipk,
-                'alamat' => $request->alamat,
-                'updated_by' => $user->id
-            ]);
+            $this->pendidikanService->updatePendidikan($id, $request->validated());
 
             Alert::success('Berhasil', 'Data pendidikan berhasil diperbarui');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
@@ -153,17 +91,15 @@ class PendidikanController extends Controller
     public function destroy($id)
     {
         try {
-            $pendidikan = Pendidikan::findOrFail($id);
-
-            $user = Auth::user();
-            $pendidikan->update(['deleted_by' => $user->id]);
-            $pendidikan->delete();
+            $this->pendidikanService->deletePendidikan($id);
 
             Alert::success('Berhasil', 'Data pendidikan berhasil dihapus');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
@@ -171,17 +107,31 @@ class PendidikanController extends Controller
     public function restore($id)
     {
         try {
-            $pendidikan = Pendidikan::onlyTrashed()->findOrFail($id);
-
-            $user = Auth::user();
-            $pendidikan->update(['updated_by' => $user->id, 'deleted_by' => null]);
-            $pendidikan->restore();
+            $this->pendidikanService->restorePendidikan($id);
 
             Alert::success('Berhasil', 'Data pendidikan berhasil dikembalikan');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function forceDelete($id)
+    {
+        try {
+            $this->pendidikanService->forceDeletePendidikan($id);
+
+            Alert::success('Berhasil', 'Data pendidikan berhasil dihapus permanen');
+
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }

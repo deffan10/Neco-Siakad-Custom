@@ -473,6 +473,23 @@
                 }
             })
         }
+
+        function confirmForceDelete(id) {
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Data akan dihapus secara permanen dan tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus permanen!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('force-delete-form-' + id).submit();
+                }
+            })
+        }
     </script>
 
     @stack('scripts')

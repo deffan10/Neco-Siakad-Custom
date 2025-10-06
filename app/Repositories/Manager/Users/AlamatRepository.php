@@ -9,8 +9,6 @@ class AlamatRepository
 {
     /**
      * Get all alamat with user relation
-     *
-     * @return Collection
      */
     public function getAll(): Collection
     {
@@ -21,8 +19,6 @@ class AlamatRepository
 
     /**
      * Get all trashed alamat with user relation
-     *
-     * @return Collection
      */
     public function getTrashed(): Collection
     {
@@ -33,9 +29,6 @@ class AlamatRepository
 
     /**
      * Find alamat by ID
-     *
-     * @param int $id
-     * @return Alamat
      */
     public function findById(int $id): Alamat
     {
@@ -44,9 +37,6 @@ class AlamatRepository
 
     /**
      * Find trashed alamat by ID
-     *
-     * @param int $id
-     * @return Alamat
      */
     public function findTrashedById(int $id): Alamat
     {
@@ -55,9 +45,6 @@ class AlamatRepository
 
     /**
      * Create new alamat
-     *
-     * @param array $data
-     * @return Alamat
      */
     public function create(array $data): Alamat
     {
@@ -66,10 +53,6 @@ class AlamatRepository
 
     /**
      * Update alamat
-     *
-     * @param Alamat $alamat
-     * @param array $data
-     * @return bool
      */
     public function update(Alamat $alamat, array $data): bool
     {
@@ -78,9 +61,6 @@ class AlamatRepository
 
     /**
      * Soft delete alamat
-     *
-     * @param Alamat $alamat
-     * @return bool|null
      */
     public function delete(Alamat $alamat): ?bool
     {
@@ -89,12 +69,17 @@ class AlamatRepository
 
     /**
      * Restore alamat
-     *
-     * @param Alamat $alamat
-     * @return bool|null
      */
     public function restore(Alamat $alamat): ?bool
     {
         return $alamat->restore();
+    }
+
+    /**
+     * Force delete alamat
+     */
+    public function forceDelete(Alamat $alamat): ?bool
+    {
+        return $alamat->forceDelete();
     }
 }

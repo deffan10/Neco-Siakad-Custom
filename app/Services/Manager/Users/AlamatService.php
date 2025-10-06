@@ -19,8 +19,6 @@ class AlamatService
 
     /**
      * Get all alamat
-     *
-     * @return Collection
      */
     public function getAllAlamat(): Collection
     {
@@ -29,8 +27,6 @@ class AlamatService
 
     /**
      * Get all trashed alamat
-     *
-     * @return Collection
      */
     public function getTrashedAlamat(): Collection
     {
@@ -40,15 +36,13 @@ class AlamatService
     /**
      * Create new alamat
      *
-     * @param array $data
-     * @return Alamat
      * @throws \Throwable
      */
     public function createAlamat(array $data): Alamat
     {
         return DB::transaction(function () use ($data) {
             $data['created_by'] = Auth::id();
-            
+
             return $this->alamatRepository->create($data);
         });
     }
@@ -56,20 +50,17 @@ class AlamatService
     /**
      * Update alamat
      *
-     * @param int $id
-     * @param array $data
-     * @return Alamat
      * @throws \Throwable
      */
     public function updateAlamat(int $id, array $data): Alamat
     {
         return DB::transaction(function () use ($id, $data) {
             $alamat = $this->alamatRepository->findById($id);
-            
+
             $data['updated_by'] = Auth::id();
-            
+
             $this->alamatRepository->update($alamat, $data);
-            
+
             return $alamat->fresh();
         });
     }
@@ -77,19 +68,17 @@ class AlamatService
     /**
      * Delete alamat (soft delete)
      *
-     * @param int $id
-     * @return bool
      * @throws \Throwable
      */
     public function deleteAlamat(int $id): bool
     {
         return DB::transaction(function () use ($id) {
             $alamat = $this->alamatRepository->findById($id);
-            
+
             $this->alamatRepository->update($alamat, [
-                'deleted_by' => Auth::id()
+                'deleted_by' => Auth::id(),
             ]);
-            
+
             return $this->alamatRepository->delete($alamat);
         });
     }
@@ -97,21 +86,33 @@ class AlamatService
     /**
      * Restore deleted alamat
      *
-     * @param int $id
-     * @return bool
      * @throws \Throwable
      */
     public function restoreAlamat(int $id): bool
     {
         return DB::transaction(function () use ($id) {
             $alamat = $this->alamatRepository->findTrashedById($id);
-            
+
             $this->alamatRepository->update($alamat, [
                 'updated_by' => Auth::id(),
-                'deleted_by' => null
+                'deleted_by' => null,
             ]);
-            
+
             return $this->alamatRepository->restore($alamat);
+        });
+    }
+
+    /**
+     * Force delete alamat permanently
+     *
+     * @throws \Throwable
+     */
+    public function forceDeleteAlamat(int $id): bool
+    {
+        return DB::transaction(function () use ($id) {
+            $alamat = $this->alamatRepository->findTrashedById($id);
+
+            return $this->alamatRepository->forceDelete($alamat);
         });
     }
 }

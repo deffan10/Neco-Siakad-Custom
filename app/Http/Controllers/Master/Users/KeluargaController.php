@@ -2,140 +2,87 @@
 
 namespace App\Http\Controllers\Master\Users;
 
+use App\DataTables\Manager\Users\KeluargaDataTable;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Manager\Users\KeluargaRequest;
+// Use Models
+use App\Models\Pengaturan\Kampus;
+use App\Models\Pengaturan\System;
+use App\Models\User;
+// Use Others
+use App\Services\Manager\Users\KeluargaService;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-// Use Models
-use App\Models\User\Keluarga;
-use App\Models\User;
-use App\Models\Pengaturan\System;
-use App\Models\Pengaturan\Kampus;
 
 class KeluargaController extends Controller
 {
-    public function index()
+    protected KeluargaService $keluargaService;
+
+    public function __construct(KeluargaService $keluargaService)
+    {
+        $this->keluargaService = $keluargaService;
+    }
+
+    public function index(KeluargaDataTable $dataTable)
     {
         $user = Auth::user();
         $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Keluarga';
-        $data['pages'] = "Halaman Data Keluarga";
+        $data['pages'] = 'Halaman Data Keluarga';
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['keluargas'] = Keluarga::with(['user'])->orderBy('created_at', 'desc')->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = false;
 
-        return view('master.users.keluarga-index', $data, compact('user'));
+        $dataTable->setTrash(false);
+
+        return $dataTable->render('master.users.keluarga-index', $data, compact('user'));
     }
 
-    public function trash()
+    public function trash(KeluargaDataTable $dataTable)
     {
         $user = Auth::user();
         $data['activeRole'] = session('active_role') ?? '';
         $data['menus'] = 'Referensi Keluarga';
-        $data['pages'] = "Halaman Data Keluarga yang Dihapus";
+        $data['pages'] = 'Halaman Data Keluarga yang Dihapus';
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
-        $data['keluargas'] = Keluarga::onlyTrashed()->with(['user'])->get();
         $data['users'] = User::orderBy('name')->get();
         $data['is_trash'] = true;
 
-        return view('master.users.keluarga-index', $data, compact('user'));
+        $dataTable->setTrash(true);
+
+        return $dataTable->render('master.users.keluarga-index', $data, compact('user'));
     }
 
-    public function store(Request $request)
+    public function store(KeluargaRequest $request)
     {
-        $request->validate([
-            'hubungan' => 'required|in:Ayah,Ibu,Suami,Istri,Anak,Kakak,Adik,Wali',
-            'nama' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-            'pekerjaan' => 'nullable|string|max:255',
-            'telepon' => 'nullable|string|max:15',
-            'tempat_lahir' => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'penghasilan' => 'nullable|integer|min:0',
-            'alamat' => 'nullable|string'
-        ], [
-            'hubungan.required' => 'Hubungan keluarga wajib dipilih',
-            'hubungan.in' => 'Hubungan keluarga tidak valid',
-            'nama.required' => 'Nama keluarga wajib diisi',
-            'user_id.required' => 'Pemilik data wajib dipilih',
-            'penghasilan.integer' => 'Penghasilan harus berupa angka',
-            'penghasilan.min' => 'Penghasilan tidak boleh negatif'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first() ?: Mahasiswa::where('id', $request->user_id)->first();
-
-            Keluarga::create([
-                'hubungan' => $request->hubungan,
-                'nama' => $request->nama,
-                'user_id' => $request->user_id,
-                'pekerjaan' => $request->pekerjaan,
-                'telepon' => $request->telepon,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'penghasilan' => $request->penghasilan,
-                'alamat' => $request->alamat,
-                'created_by' => $user->id
-            ]);
+            $this->keluargaService->createKeluarga($request->validated());
 
             Alert::success('Berhasil', 'Data keluarga berhasil ditambahkan');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(KeluargaRequest $request, $id)
     {
-        $keluarga = Keluarga::findOrFail($id);
-        
-        $request->validate([
-            'hubungan' => 'required|in:Ayah,Ibu,Suami,Istri,Anak,Kakak,Adik,Wali',
-            'nama' => 'required|string|max:255',
-            'user_id' => 'required|integer',
-            'pekerjaan' => 'nullable|string|max:255',
-            'telepon' => 'nullable|string|max:15',
-            'tempat_lahir' => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'penghasilan' => 'nullable|integer|min:0',
-            'alamat' => 'nullable|string'
-        ], [
-            'hubungan.required' => 'Hubungan keluarga wajib dipilih',
-            'hubungan.in' => 'Hubungan keluarga tidak valid',
-            'nama.required' => 'Nama keluarga wajib diisi',
-            'user_id.required' => 'Pemilik data wajib dipilih',
-            'penghasilan.integer' => 'Penghasilan harus berupa angka',
-            'penghasilan.min' => 'Penghasilan tidak boleh negatif'
-        ]);
-
         try {
-            $user = Auth::user();
-            $checkUser = User::where('id', $request->user_id)->first() ?: Mahasiswa::where('id', $request->user_id)->first();
-
-            $keluarga->update([
-                'hubungan' => $request->hubungan,
-                'nama' => $request->nama,
-                'user_id' => $request->user_id,
-                'pekerjaan' => $request->pekerjaan,
-                'telepon' => $request->telepon,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'penghasilan' => $request->penghasilan,
-                'alamat' => $request->alamat,
-                'updated_by' => $user->id
-            ]);
+            $this->keluargaService->updateKeluarga($id, $request->validated());
 
             Alert::success('Berhasil', 'Data keluarga berhasil diperbarui');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
@@ -143,36 +90,30 @@ class KeluargaController extends Controller
     public function destroy($id)
     {
         try {
-            $keluarga = Keluarga::findOrFail($id);
-
-            $user = Auth::user();
-            $keluarga->update(['deleted_by' => $user->id]);
-            $keluarga->delete();
+            $this->keluargaService->deleteKeluarga($id);
 
             Alert::success('Berhasil', 'Data keluarga berhasil dihapus');
+
             return redirect()->back();
 
         } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
+            Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
             return redirect()->back();
         }
     }
 
-    public function restore($id)
+    public function restore(Keluarga $keluarga): RedirectResponse
     {
-        try {
-            $keluarga = Keluarga::onlyTrashed()->findOrFail($id);
+        $this->keluargaService->restoreKeluarga($keluarga->id);
 
-            $user = Auth::user();
-            $keluarga->update(['updated_by' => $user->id, 'deleted_by' => null]);
-            $keluarga->restore();
+        return redirect()->back()->with('success', 'Keluarga berhasil dipulihkan.');
+    }
 
-            Alert::success('Berhasil', 'Data keluarga berhasil dikembalikan');
-            return redirect()->back();
+    public function forceDelete(Keluarga $keluarga): RedirectResponse
+    {
+        $this->keluargaService->forceDeleteKeluarga($keluarga->id);
 
-        } catch (\Throwable $th) {
-            Alert::error('Error', 'Terjadi kesalahan: ' . $th->getMessage());
-            return redirect()->back();
-        }
+        return redirect()->back()->with('success', 'Keluarga berhasil dihapus permanen.');
     }
 }
