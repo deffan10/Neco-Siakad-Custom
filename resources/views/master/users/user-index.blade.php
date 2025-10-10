@@ -1,9 +1,9 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ asset('vendor') }}/siakad/siakad-crud.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
     <style>
         /* Stats cards */
         .bg-light-primary {
@@ -317,7 +317,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1">Total User</h6>
-                            <h3 class="mb-0">{{ $users->count() }}</h3>
+                            <h3 class="mb-0">{{ \App\Models\User::count() }}</h3>
                         </div>
                         <div class="bg-primary bg-opacity-25 p-3 rounded">
                             <i class="fas fa-users text-primary fa-2x"></i>
@@ -333,7 +333,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1">User Aktif</h6>
-                            <h3 class="mb-0">{{ $users->where('is_active', true)->count() }}</h3>
+                            <h3 class="mb-0">{{ \App\Models\User::where('is_active', true)->count() }}</h3>
                         </div>
                         <div class="bg-success bg-opacity-25 p-3 rounded">
                             <i class="fas fa-user-check text-success fa-2x"></i>
@@ -374,7 +374,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     
     <div class="row">
@@ -386,20 +385,19 @@
                     <div>
                         @if($is_trash)
                             <a href="{{ route($activeRole . '.users.user-index') }}" class="btn btn-sm btn-secondary me-2">
-                                <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
+                                <i class="fas fa-arrow-left me-2"></i>Kembali
                             </a>
                         @else
                             <a href="{{ route($activeRole . '.users.user-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
-                            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm">
                                 <i class="fas fa-plus-circle me-2"></i>Tambah Pengguna
                             </button>
                         @endif
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Collapsible Form -->
                     @if(!$is_trash)
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
@@ -408,28 +406,28 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="name" class="form-label">Nama Pengguna</label>
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama Pengguna" required>
+                                            <label class="form-label">Nama Pengguna</label>
+                                            <input type="text" class="form-control" name="name" placeholder="Masukkan nama pengguna" required>
                                             @error('name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email" required>
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
                                             @error('email')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="phone" class="form-label">No Telepon</label>
-                                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Masukkan no telepon" required>
+                                            <label class="form-label">No Telepon</label>
+                                            <input type="text" class="form-control" name="phone" placeholder="Masukkan no telepon" required>
                                             @error('phone')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="roles" class="form-label">Roles</label>
+                                            <label class="form-label">Roles</label>
                                             <select class="form-control form-select" name="roles[]" id="roles" multiple required>
                                                 @foreach($roles as $role)
                                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -439,7 +437,6 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
-
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-save me-2"></i>Simpan
@@ -451,107 +448,44 @@
                         </div>
                     @endif
                     
-                    <!-- Custom Toolbar -->
-                    <div class="dataTables-toolbar mt-3" id="customToolbar" style="display: none;">
-                        <div class="export-buttons" id="exportButtons">
-                            <!-- Export buttons will be moved here -->
+                    <!-- Advanced Filters -->
+                    @if(!$is_trash)
+                        <div class="filter-container">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label small">
+                                        <i class="fas fa-filter me-1"></i> Filter Role
+                                    </label>
+                                    <select class="form-select form-select-sm" id="filter-role">
+                                        <option value="">Semua Role</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small">
+                                        <i class="fas fa-user me-1"></i> Filter Nama
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="filter-name" placeholder="Cari nama...">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small">
+                                        <i class="fas fa-search me-1"></i> Cepat Cari
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="quick-search" placeholder="Ketik untuk cari...">
+                                </div>
+                            </div>
                         </div>
-                        <div class="entries-filter">
-                            <label for="entriesSelect" class="form-label mb-0">Tampilkan:</label>
-                            <select class="form-select form-select-sm" id="entriesSelect" style="width: auto;">
-                                <option value="10">10 entries</option>
-                                <option value="25">25 entries</option>
-                                <option value="50">50 entries</option>
-                                <option value="100">100 entries</option>
-                                <option value="-1">Semua entries</option>
-                            </select>
-                        </div>
-                    </div>
+                    @endif
                     
-                    <!-- Table -->
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="usersTable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>No Telepon</th>
-                                    <th>Roles</th>
-                                    @if($is_trash)
-                                        <th>Dihapus Oleh</th>
-                                        <th>Dihapus Pada</th>
-                                    @endif
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $key => $item)
-                                    <tr>
-                                        <td data-label="No">{{ ++$key }}</td>
-                                        <td data-label="Nama">{{ $item->name }}</td>
-                                        <td data-label="Email">{{ $item->email }}</td>
-                                        <td data-label="No Telepon">{{ $item->phone }}</td>
-                                        <td data-label="Roles">
-                                            @foreach($item->roles as $role)
-                                                <span class="badge bg-info">{{ $role->name }}</span>
-                                            @endforeach
-                                        </td>
-
-                                        @if($is_trash)
-                                            <td data-label="Dihapus Oleh">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-user-times text-danger me-2"></i>
-                                                    <span>{{ $item->deletedBy ? $item->deletedBy->name : 'Tidak diketahui' }}</span>
-                                                </div>
-                                            </td>
-                                            <td data-label="Dihapus Pada">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-calendar-times text-danger me-2"></i>
-                                                    <div>
-                                                        <small class="d-block">{{ $item->deleted_at ? $item->deleted_at->format('d/m/Y H:i') : '-' }}</small>
-                                                        <small class="text-muted">{{ $item->deleted_at ? $item->deleted_at->diffForHumans() : '-' }}</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        @endif
-                                        <td data-label="Aksi">
-                                            @if($is_trash)
-                                                <form action="{{ route($activeRole . '.users.user-restore', $item->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Pengguna">
-                                                        <i class="fas fa-undo"></i>
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route($activeRole . '.users.user-force-delete', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Permanent" onclick="confirmDelete('{{ $item->id }}')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route($activeRole . '.users.user-view', $item->id) }}" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Pengguna">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <form action="{{ route($activeRole . '.users.user-destroy', $item->id) }}" method="POST" class="d-inline" id="delete-form-{{ $item->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true" data-bs-toggle="tooltip" title="Hapus Pengguna" onclick="confirmDelete('{{ $item->id }}')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <!-- DataTable -->
+                    <div class="mt-3">
+                        {{ $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'style' => 'width:100%']) }}
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Import Modal -->
@@ -660,15 +594,61 @@
             </div>
         </div>
     </div>
-
 @endsection
 
-@section('custom-js')
 
-
+@push('scripts')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script>
-        // Initialize Select2 for roles multi-select
         $(document).ready(function() {
+            var table = window.LaravelDataTables["user-table"];
+            
+            // Add custom export/import buttons to DataTable
+            table.button().add(0, {
+                text: '<i class="fas fa-file-csv me-1"></i> CSV',
+                className: 'btn btn-sm btn-success',
+                action: function (e, dt, node, config) {
+                    window.open('{{ route($activeRole . ".users.user-export-csv") }}', '_blank');
+                }
+            });
+            
+            table.button().add(1, {
+                text: '<i class="fas fa-file-excel me-1"></i> Excel',
+                className: 'btn btn-sm btn-success',
+                action: function (e, dt, node, config) {
+                    window.open('{{ route($activeRole . ".users.user-export-excel") }}', '_blank');
+                }
+            });
+            
+            table.button().add(2, {
+                text: '<i class="fas fa-file-pdf me-1"></i> PDF',
+                className: 'btn btn-sm btn-danger',
+                action: function (e, dt, node, config) {
+                    window.open('{{ route($activeRole . ".users.user-export-pdf") }}', '_blank');
+                }
+            });
+            
+            table.button().add(3, {
+                text: '<i class="fas fa-print me-1"></i> Print',
+                extend: 'print',
+                className: 'btn btn-sm btn-info',
+                exportOptions: {
+                    columns: ':not(.no-export)'
+                }
+            });
+            
+            table.button().add(4, {
+                text: '<i class="fas fa-upload me-1"></i> Import Excel',
+                className: 'btn btn-sm btn-warning',
+                action: function (e, dt, node, config) {
+                    $('#importModal').modal('show');
+                }
+            });
+            
+            // Initialize Select2 for roles multi-select
             if ($.fn.select2) {
                 $('#roles').select2({
                     placeholder: 'Pilih role',
@@ -681,161 +661,44 @@
                     $('#roles').val(oldRoles).trigger('change');
                 }
             }
-        });
-
-        // load select2 script dynamically if not present
-        (function loadSelect2(){
-            if (typeof $.fn.select2 === 'undefined') {
-                var script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js';
-                script.onload = function(){
-                    $('#roles').select2({ placeholder: 'Pilih role', width: '100%' });
-                    var oldRoles = @json(old('roles', []));
-                    if (oldRoles && oldRoles.length) $('#roles').val(oldRoles).trigger('change');
-                };
-                document.head.appendChild(script);
-            }
-        })();
-        // Initialize DataTable
-        $(document).ready(function() {
-            var table = $('#usersTable').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        text: '<i class="fas fa-copy"></i> Copy',
-                        className: 'btn btn-secondary btn-sm',
-                        exportOptions: {
-                            columns: ':not(:last-child)' 
-                        }
-                    },
-                    {
-                        // extend: 'csv',
-                        text: '<i class="fas fa-file-csv"></i> CSV',
-                        className: 'btn btn-success btn-sm',
-                        action: function (e, dt, node, config) {
-                            window.open('{{ route($activeRole . ".users.user-export-csv") }}', '_blank');
-                        }
-                    },
-                    {
-                        // extend: 'excel',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
-                        className: 'btn btn-success btn-sm',
-                        action: function (e, dt, node, config) {
-                            window.open('{{ route($activeRole . ".users.user-export-excel") }}', '_blank');
-                        }
-                    },
-                    {
-                        // extend: 'excel',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger btn-sm',
-                        action: function (e, dt, node, config) {
-                            window.open('{{ route($activeRole . ".users.user-export-pdf") }}', '_blank');
-                        }
-                    },
-                    {
-                        text: '<i class="fas fa-upload"></i> Import Excel',
-                        className: 'btn btn-info btn-sm',
-                        action: function (e, dt, node, config) {
-                            $('#importModal').modal('show');
-                        }
-                    },
-                    // {
-                    //     extend: 'print',
-                    //     text: '<i class="fas fa-print"></i> Print',
-                    //     className: 'btn btn-info btn-sm',
-                    //     exportOptions: {
-                    //         columns: ':not(:last-child)'
-                    //     }
-                    // },
-                    {
-                        extend: 'colvis',
-                        text: '<i class="fas fa-columns"></i> Columns',
-                        className: 'btn btn-dark btn-sm'
-                    }
-                ],
-                responsive: true,
-                pageLength: 25,
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
-                },
-                initComplete: function() {
-                    // Move buttons to custom toolbar
-                    $('#customToolbar').show();
-                    $('#exportButtons').empty();
-                    $('.dt-buttons').appendTo('#exportButtons');
-                }
+            
+            // Filter by Role
+            $('#filter-role').on('change', function() {
+                table.column(4).search(this.value).draw();
             });
-
-            // Handle entries select change
-            $('#entriesSelect').on('change', function() {
-                var selectedValue = $(this).val();
-                table.page.len(selectedValue).draw();
+            
+            // Filter by Name
+            $('#filter-name').on('keyup', function() {
+                table.column(1).search(this.value).draw();
             });
-
+            
+            // Quick Search (Global)
+            $('#quick-search').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+            
             // Initialize tooltips
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+            $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Reinitialize tooltips after table redraw
+            table.on('draw', function() {
+                $('[data-bs-toggle="tooltip"]').tooltip();
             });
         });
 
-        // Image preview
-        function previewImage(input, previewId = 'preview') {
-            const preview = document.getElementById(previewId);
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none');
-                }
-                reader.readAsDataURL(input.files[0]);
+        // Confirm delete function
+        function confirmDelete(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                document.getElementById('delete-form-' + id).submit();
             }
         }
 
-        // Chart initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('mataKuliahChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Wajib', 'Pilihan', 'MKWU', 'MKU'],
-                    datasets: [{
-                        data: [
-                        ],
-                        backgroundColor: [
-                            'rgba(40, 167, 69, 0.7)',
-                            'rgba(23, 162, 184, 0.7)',
-                            'rgba(255, 193, 7, 0.7)',
-                            'rgba(0, 123, 255, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(40, 167, 69, 1)',
-                            'rgba(23, 162, 184, 1)',
-                            'rgba(255, 193, 7, 1)',
-                            'rgba(0, 123, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.label + ': ' + context.parsed;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
+        // Confirm force delete function
+        function confirmForceDelete(id) {
+            if (confirm('PERINGATAN: Data akan dihapus secara permanen dan tidak dapat dikembalikan! Apakah Anda yakin?')) {
+                document.getElementById('force-delete-form-' + id).submit();
+            }
+        }
 
         // Handle Import Form
         $('#importForm').on('submit', function(e) {
@@ -964,4 +827,4 @@
                 .html('<i class="fas fa-' + (type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle') + ' me-2"></i>' + message);
         }
     </script>
-@endsection
+@endpush

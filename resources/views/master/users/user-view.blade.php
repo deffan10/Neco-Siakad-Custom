@@ -107,6 +107,17 @@
                                         <input type="text" class="form-control" name="username" value="{{ $users->username }}" placeholder="Masukkan username unik">
                                     </div>
                                     <div class="col-md-6 mb-3">
+                                        <label class="form-label">Role <span class="text-danger">*</span></label>
+                                        <select class="form-select select2-roles" name="roles[]" multiple="multiple" required>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}" {{ $users->hasRole($role->name) ? 'selected' : '' }}>
+                                                    {{ ucfirst($role->name) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <small class="text-muted">Pilih satu atau lebih role untuk user</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
                                         <label class="form-label">Foto Profile</label>
                                         <input type="file" class="form-control" name="photo" accept="image/*" onchange="previewImage(this)">
                                         <small class="text-muted">Kosongkan jika tidak ingin mengubah foto</small>
@@ -559,6 +570,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeImagePreview();
     initializeDeleteButtons();
+    initializeSelect2();
 });
 
 // Global variables
@@ -566,6 +578,20 @@ let pendidikanIndex = {{ count($users->pendidikans) }};
 let keluargaIndex = {{ count($users->keluargas) }};
 const activeRole = '{{ $activeRole }}';
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+// ========== SELECT2 INITIALIZATION ==========
+function initializeSelect2() {
+    // Initialize Select2 for roles
+    if (jQuery('.select2-roles').length > 0) {
+        jQuery('.select2-roles').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Pilih Role',
+            allowClear: false,
+            width: '100%',
+            closeOnSelect: false
+        });
+    }
+}
 
 // ========== IMAGE PREVIEW FUNCTIONS ==========
 function initializeImagePreview() {
@@ -735,7 +761,7 @@ function removePendidikan(pendidikanId, index, pendidikanName = '') {
 function deletePendidikanFromServer(pendidikanId, index) {
     showLoadingAlert('Menghapus pendidikan...');
     
-    fetch(`/${activeRole}/profile/pendidikan/${pendidikanId}`, {
+    fetch(`/${activeRole}/users/pendidikan/${pendidikanId}`, {
         method: 'DELETE',
         headers: {
             'X-CSRF-TOKEN': csrfToken,
@@ -887,7 +913,7 @@ function removeKeluarga(keluargaId, index, keluargaName = '') {
 function deleteKeluargaFromServer(keluargaId, index) {
     showLoadingAlert('Menghapus data keluarga...');
     
-    fetch(`/${activeRole}/profile/keluarga/${keluargaId}`, {
+    fetch(`/${activeRole}/users/keluarga/${keluargaId}`, {
         method: 'DELETE',
         headers: {
             'X-CSRF-TOKEN': csrfToken,

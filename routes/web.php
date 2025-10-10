@@ -34,6 +34,8 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/users/{id}/restore', [App\Http\Controllers\Master\Users\UsersController::class, 'restore'])->name('users.user-restore');
     Route::delete('/users/{id}/delete', [App\Http\Controllers\Master\Users\UsersController::class, 'destroy'])->name('users.user-destroy');
     Route::delete('/users/{id}/force-delete', [App\Http\Controllers\Master\Users\UsersController::class, 'forceDelete'])->name('users.user-force-delete');
+    Route::delete('/users/pendidikan/{id}', [App\Http\Controllers\Master\Users\UsersController::class, 'deletePendidikan'])->name('users.delete-pendidikan');
+    Route::delete('/users/keluarga/{id}', [App\Http\Controllers\Master\Users\UsersController::class, 'deleteKeluarga'])->name('users.delete-keluarga');
 
     Route::get('/users/role', [App\Http\Controllers\Master\Users\RoleController::class, 'index'])->name('users.role-index');
     Route::get('/users/role/{id}/view', [App\Http\Controllers\Master\Users\RoleController::class, 'show'])->name('users.role-view');
