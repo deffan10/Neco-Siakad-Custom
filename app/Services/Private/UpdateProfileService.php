@@ -12,6 +12,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 // Use Models
 use App\Models\User\Alamat;
+use App\Models\User\Role;
 
 class UpdateProfileService
 {
@@ -41,6 +42,10 @@ class UpdateProfileService
             if ($this->hasFamilyData($data)) {
                 $this->updateFamilies($user, $data);
             }
+
+            if ($this->hasRolesData($data)) {
+                $this->updateRoles($user, $data);
+            }
             
             if (!empty($data['current_password']) && !empty($data['new_password'])) {
                 $this->updatePassword($user, $data);
@@ -58,6 +63,17 @@ class UpdateProfileService
             throw $th;
         }
     }
+
+    // private function hasRolesData(array $data): bool
+    // {
+    //     return isset($data['roles']) && is_array($data['roles']);
+        
+    // }
+    private function hasRolesData(array $data): bool
+    {
+        return isset($data['roles']) && !empty($data['roles']);
+    }
+
 
     private function hasBasicInfoData(array $data): bool
     {
@@ -153,6 +169,22 @@ class UpdateProfileService
 
         $user->update(['photo' => $fileName]);
     }
+
+    private function updateRoles($user, array $in)
+    {
+        if (!isset($in['roles']) || !is_array($in['roles'])) {
+            return;
+        }
+
+        $roleIds = $in['roles'];
+
+        // Ambil nama role berdasarkan ID (pastikan model Role kamu benar)
+        $roles = Role::whereIn('id', $roleIds)->pluck('name')->toArray();
+
+        // Sinkronisasi roles (hapus role lama, tambah role baru)
+        $user->syncRoles($roles);
+    }
+
 
     private function updateAddresses($user, array $in)
     {

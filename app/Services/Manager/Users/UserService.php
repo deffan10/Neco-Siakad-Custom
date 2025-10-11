@@ -74,7 +74,131 @@ class UserService
         });
     }
 
-    
+    /**
+     * Update user
+     *
+     * @throws \Throwable
+     */
+    public function updateUser(int $id, array $data): User
+    {
+        return DB::transaction(function () use ($id, $data) {
+            $user = $this->userRepository->findById($id);
+
+            // Handle password update
+            if (isset($data['current_password']) && ! empty($data['current_password'])) {
+                // Verify current password
+                if (! Hash::check($data['current_password'], $user->password)) {
+                    throw new \Exception('Password lama tidak sesuai.');
+                }
+
+                // Validate new password and confirmation
+                if (! isset($data['new_password']) || empty($data['new_password'])) {
+                    throw new \Exception('Password baru wajib diisi.');
+                }
+
+                if (! isset($data['new_password_confirmation']) || $data['new_password'] !== $data['new_password_confirmation']) {
+                    throw new \Exception('Konfirmasi password baru tidak sesuai.');
+                }
+
+                $data['password'] = Hash::make($data['new_password']);
+            }
+
+            // Remove password-related fields from data
+            unset($data['current_password'], $data['new_password'], $data['new_password_confirmation']);
+
+            // Remove password if not set
+            if (! isset($data['password'])) {
+                unset($data['password']);
+            }
+
+            $data['updated_by'] = Auth::id();
+
+            // Extract roles before updating user
+            $roleIds = $data['roles'] ?? null;
+            unset($data['roles']);
+
+            // Extract alamat data
+            $alamatKtp = $data['alamat_ktp'] ?? null;
+            $alamatDomisili = $data['alamat_domisili'] ?? null;
+            unset($data['alamat_ktp'], $data['alamat_domisili']);
+
+            // Extract pendidikan data
+            $pendidikanData = $data['pendidikan'] ?? null;
+            unset($data['pendidikan']);
+
+            // Extract keluarga data
+            $keluargaData = $data['keluarga'] ?? null;
+            unset($data['keluarga']);
+
+            // Handle photo upload
+            if (isset($data['photo']) && $data['photo'] instanceof \Illuminate\Http\UploadedFile) {
+                $photoPath = $data['photo']->store('photos/users', 'public');
+                $data['photo'] = '/storage/'.$photoPath;
+            } else {
+                unset($data['photo']);
+            }
+
+            // Update user
+            $this->userRepository->update($user, $data);
+
+            // Sync roles if provided
+            if ($roleIds !== null) {
+                $roles = Role::whereIn('id', $roleIds)->pluck('name')->toArray();
+                $user->syncRoles($roles);
+            }
+
+            // Update or create alamat KTP
+            if ($alamatKtp !== null) {
+                $alamatKtp['tipe'] = 'ktp';
+                $alamatKtp['user_id'] = $user->id;
+                if (isset($alamatKtp['id']) && ! empty($alamatKtp['id'])) {
+                    $user->alamats()->where('id', $alamatKtp['id'])->update($alamatKtp);
+                } else {
+                    $user->alamats()->create($alamatKtp);
+                }
+            }
+
+            // Update or create alamat domisili
+            if ($alamatDomisili !== null) {
+                $alamatDomisili['tipe'] = 'domisili';
+                $alamatDomisili['user_id'] = $user->id;
+                if (isset($alamatDomisili['id']) && ! empty($alamatDomisili['id'])) {
+                    $user->alamats()->where('id', $alamatDomisili['id'])->update($alamatDomisili);
+                } else {
+                    $user->alamats()->create($alamatDomisili);
+                }
+            }
+
+            // Update pendidikan data
+            if ($pendidikanData !== null && is_array($pendidikanData)) {
+                foreach ($pendidikanData as $pendidikan) {
+                    $pendidikan['user_id'] = $user->id;
+                    if (isset($pendidikan['id']) && ! empty($pendidikan['id'])) {
+                        $user->pendidikans()->where('id', $pendidikan['id'])->update($pendidikan);
+                    } else {
+                        unset($pendidikan['id']);
+                        $user->pendidikans()->create($pendidikan);
+                    }
+                }
+            }
+
+            // Update keluarga data
+            if ($keluargaData !== null && is_array($keluargaData)) {
+                foreach ($keluargaData as $keluarga) {
+                    $keluarga['user_id'] = $user->id;
+                    if (isset($keluarga['id']) && ! empty($keluarga['id'])) {
+                        $user->keluargas()->where('id', $keluarga['id'])->update($keluarga);
+                    } else {
+                        unset($keluarga['id']);
+                        $user->keluargas()->create($keluarga);
+                    }
+                }
+            }
+
+            return $user->fresh();
+        });
+    }
+
     /**
      * Delete user (soft delete)
      *

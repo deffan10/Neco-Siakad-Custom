@@ -99,6 +99,9 @@ class UserRequest extends FormRequest
             'alamat_domisili.kode_pos'          => 'nullable|string|max:10',
             'alamat_domisili.rt'                => 'nullable|string|max:5',
             'alamat_domisili.rw'                => 'nullable|string|max:5',
+
+            'roles'   => 'nullable|array',
+            'roles.*' => 'exists:roles,id',
         ];
     }
 
