@@ -6,7 +6,6 @@ use App\Models\User\Keluarga;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -72,12 +71,17 @@ class KeluargaDataTable extends DataTable
                     .'<button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(\''.$row->id.'\')" data-bs-toggle="tooltip" title="Hapus Keluarga">'
                     .'<i class="fas fa-trash me-1"></i> Delete</button></form>';
             })
+            // Filter hubungan (searchable)
             ->filterColumn('hubungan', function ($query, $keyword) {
                 $query->where('hubungan', 'like', "%{$keyword}%");
             })
+            // Filter nama (search by nama, tempat lahir, atau pekerjaan)
             ->filterColumn('nama_display', function ($query, $keyword) {
-                $query->where('nama', 'like', "%{$keyword}%");
+                $query->where('nama', 'like', "%{$keyword}%")
+                    ->orWhere('tempat_lahir', 'like', "%{$keyword}%")
+                    ->orWhere('pekerjaan', 'like', "%{$keyword}%");
             })
+            // Filter pengguna (search by user name or email)
             ->filterColumn('pengguna', function ($query, $keyword) {
                 $query->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name', 'like', "%{$keyword}%")
@@ -176,36 +180,8 @@ class KeluargaDataTable extends DataTable
                     ],
                 ],
                 'buttons' => [
-                    [
-                        'extend' => 'excel',
-                        'className' => 'btn btn-sm btn-success',
-                        'text' => '<i class="fas fa-file-excel me-1"></i> Excel',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'pdf',
-                        'className' => 'btn btn-sm btn-danger',
-                        'text' => '<i class="fas fa-file-pdf me-1"></i> PDF',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'print',
-                        'className' => 'btn btn-sm btn-info',
-                        'text' => '<i class="fas fa-print me-1"></i> Print',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
+
                 ],
-            ])
-            ->buttons([
-                Button::make('excel')->className('btn btn-sm btn-success')->text('<i class="fas fa-file-excel me-1"></i> Excel'),
-                Button::make('pdf')->className('btn btn-sm btn-danger')->text('<i class="fas fa-file-pdf me-1"></i> PDF'),
-                Button::make('print')->className('btn btn-sm btn-info')->text('<i class="fas fa-print me-1"></i> Print'),
             ]);
     }
 

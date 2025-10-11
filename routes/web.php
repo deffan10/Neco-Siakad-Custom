@@ -45,6 +45,12 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::delete('/users/role/{id}/delete', [App\Http\Controllers\Master\Users\RoleController::class, 'destroy'])->name('users.role-destroy');
     Route::post('/users/role/{id}/restore', [App\Http\Controllers\Master\Users\RoleController::class, 'restore'])->name('users.role-restore');
     Route::delete('/users/role/{id}/force-delete', [App\Http\Controllers\Master\Users\RoleController::class, 'forceDelete'])->name('users.role-force-delete');
+    // Export/Import Role
+    Route::get('/users/role/export-excel', [App\Http\Controllers\Master\Users\RoleController::class, 'exportExcel'])->name('users.role-export-excel');
+    Route::get('/users/role/export-csv', [App\Http\Controllers\Master\Users\RoleController::class, 'exportCSV'])->name('users.role-export-csv');
+    Route::get('/users/role/export-pdf', [App\Http\Controllers\Master\Users\RoleController::class, 'exportPDF'])->name('users.role-export-pdf');
+    Route::post('/users/role/import-excel', [App\Http\Controllers\Master\Users\RoleController::class, 'importExcel'])->name('users.role-import-excel');
+    Route::get('/users/role/download-template', [App\Http\Controllers\Master\Users\RoleController::class, 'downloadTemplate'])->name('users.role-template');
 
     Route::get('/users/subrole', [App\Http\Controllers\Master\Users\SubroleController::class, 'index'])->name('users.subrole-index');
     Route::get('/users/subrole/{id}/view', [App\Http\Controllers\Master\Users\SubroleController::class, 'show'])->name('users.subrole-view');
@@ -55,15 +61,24 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/users/subrole/{id}/restore', [App\Http\Controllers\Master\Users\SubroleController::class, 'restore'])->name('users.subrole-restore');
 
     Route::get('/users/alamat', [App\Http\Controllers\Master\Users\AlamatController::class, 'index'])->name('users.alamat-index');
+    Route::get('/users/alamat/export-excel', [App\Http\Controllers\Master\Users\AlamatController::class, 'exportExcel'])->name('users.alamat-export-excel');
+    Route::get('/users/alamat/export-csv', [App\Http\Controllers\Master\Users\AlamatController::class, 'exportCSV'])->name('users.alamat-export-csv');
+    Route::get('/users/alamat/export-pdf', [App\Http\Controllers\Master\Users\AlamatController::class, 'exportPDF'])->name('users.alamat-export-pdf');
+    Route::post('/users/alamat/import-excel', [App\Http\Controllers\Master\Users\AlamatController::class, 'importExcel'])->name('users.alamat-import');
+    Route::get('/users/alamat/template', [App\Http\Controllers\Master\Users\AlamatController::class, 'downloadTemplate'])->name('users.alamat-template');
     Route::get('/users/alamat/trashed', [App\Http\Controllers\Master\Users\AlamatController::class, 'trash'])->name('users.alamat-trash');
     Route::post('/users/alamat', [App\Http\Controllers\Master\Users\AlamatController::class, 'store'])->name('users.alamat-store');
     Route::patch('/users/alamat/{id}/update', [App\Http\Controllers\Master\Users\AlamatController::class, 'update'])->name('users.alamat-update');
     Route::delete('/users/alamat/{id}/delete', [App\Http\Controllers\Master\Users\AlamatController::class, 'destroy'])->name('users.alamat-destroy');
     Route::post('/users/alamat/{id}/restore', [App\Http\Controllers\Master\Users\AlamatController::class, 'restore'])->name('users.alamat-restore');
     Route::delete('/users/alamat/{id}/force-delete', [App\Http\Controllers\Master\Users\AlamatController::class, 'forceDelete'])->name('users.alamat-force-delete');
-    Route::delete('/users/alamat/{id}/force-delete', [App\Http\Controllers\Master\Users\AlamatController::class, 'forceDelete'])->name('users.alamat-force-delete');
 
     Route::get('/users/keluarga', [App\Http\Controllers\Master\Users\KeluargaController::class, 'index'])->name('users.keluarga-index');
+    Route::get('/users/keluarga/export-excel', [App\Http\Controllers\Master\Users\KeluargaController::class, 'exportExcel'])->name('users.keluarga-export-excel');
+    Route::get('/users/keluarga/export-csv', [App\Http\Controllers\Master\Users\KeluargaController::class, 'exportCSV'])->name('users.keluarga-export-csv');
+    Route::get('/users/keluarga/export-pdf', [App\Http\Controllers\Master\Users\KeluargaController::class, 'exportPDF'])->name('users.keluarga-export-pdf');
+    Route::post('/users/keluarga/import-excel', [App\Http\Controllers\Master\Users\KeluargaController::class, 'importExcel'])->name('users.keluarga-import');
+    Route::get('/users/keluarga/template', [App\Http\Controllers\Master\Users\KeluargaController::class, 'downloadTemplate'])->name('users.keluarga-template');
     Route::get('/users/keluarga/trashed', [App\Http\Controllers\Master\Users\KeluargaController::class, 'trash'])->name('users.keluarga-trash');
     Route::post('/users/keluarga', [App\Http\Controllers\Master\Users\KeluargaController::class, 'store'])->name('users.keluarga-store');
     Route::patch('/users/keluarga/{id}/update', [App\Http\Controllers\Master\Users\KeluargaController::class, 'update'])->name('users.keluarga-update');
@@ -72,6 +87,11 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::delete('/users/keluarga/{id}/force-delete', [App\Http\Controllers\Master\Users\KeluargaController::class, 'forceDelete'])->name('users.keluarga-force-delete');
 
     Route::get('/users/pendidikan', [App\Http\Controllers\Master\Users\PendidikanController::class, 'index'])->name('users.pendidikan-index');
+    Route::get('/users/pendidikan/export-excel', [App\Http\Controllers\Master\Users\PendidikanController::class, 'exportExcel'])->name('users.pendidikan-export-excel');
+    Route::get('/users/pendidikan/export-csv', [App\Http\Controllers\Master\Users\PendidikanController::class, 'exportCSV'])->name('users.pendidikan-export-csv');
+    Route::get('/users/pendidikan/export-pdf', [App\Http\Controllers\Master\Users\PendidikanController::class, 'exportPDF'])->name('users.pendidikan-export-pdf');
+    Route::post('/users/pendidikan/import-excel', [App\Http\Controllers\Master\Users\PendidikanController::class, 'importExcel'])->name('users.pendidikan-import');
+    Route::get('/users/pendidikan/template', [App\Http\Controllers\Master\Users\PendidikanController::class, 'downloadTemplate'])->name('users.pendidikan-template');
     Route::get('/users/pendidikan/trashed', [App\Http\Controllers\Master\Users\PendidikanController::class, 'trash'])->name('users.pendidikan-trash');
     Route::post('/users/pendidikan', [App\Http\Controllers\Master\Users\PendidikanController::class, 'store'])->name('users.pendidikan-store');
     Route::patch('/users/pendidikan/{id}/update', [App\Http\Controllers\Master\Users\PendidikanController::class, 'update'])->name('users.pendidikan-update');
@@ -86,6 +106,18 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::patch('/referensi/agama/{id}/update', [App\Http\Controllers\Referensi\AgamaController::class, 'update'])->name('referensi.agama-update');
     Route::delete('/referensi/agama/{id}/delete', [App\Http\Controllers\Referensi\AgamaController::class, 'destroy'])->name('referensi.agama-destroy');
     Route::post('/referensi/agama/{id}/restore', [App\Http\Controllers\Referensi\AgamaController::class, 'restore'])->name('referensi.agama-restore');
+
+    Route::get('/referensi/role', [App\Http\Controllers\Referensi\RoleController::class, 'index'])->name('referensi.role-index');
+    Route::get('/referensi/role/export-excel', [App\Http\Controllers\Referensi\RoleController::class, 'exportExcel'])->name('referensi.role-export-excel');
+    Route::get('/referensi/role/export-csv', [App\Http\Controllers\Referensi\RoleController::class, 'exportCSV'])->name('referensi.role-export-csv');
+    Route::get('/referensi/role/export-pdf', [App\Http\Controllers\Referensi\RoleController::class, 'exportPDF'])->name('referensi.role-export-pdf');
+    Route::post('/referensi/role/import-excel', [App\Http\Controllers\Referensi\RoleController::class, 'importExcel'])->name('referensi.role-import');
+    Route::get('/referensi/role/template', [App\Http\Controllers\Referensi\RoleController::class, 'downloadTemplate'])->name('referensi.role-template');
+    Route::get('/referensi/role/trashed', [App\Http\Controllers\Referensi\RoleController::class, 'trash'])->name('referensi.role-trash');
+    Route::post('/referensi/role', [App\Http\Controllers\Referensi\RoleController::class, 'store'])->name('referensi.role-store');
+    Route::patch('/referensi/role/{id}/update', [App\Http\Controllers\Referensi\RoleController::class, 'update'])->name('referensi.role-update');
+    Route::delete('/referensi/role/{id}/delete', [App\Http\Controllers\Referensi\RoleController::class, 'destroy'])->name('referensi.role-destroy');
+    Route::post('/referensi/role/{id}/restore', [App\Http\Controllers\Referensi\RoleController::class, 'restore'])->name('referensi.role-restore');
 
     Route::get('/referensi/golongan-darah', [App\Http\Controllers\Referensi\GolonganDarahController::class, 'index'])->name('referensi.golongan-darah-index');
     Route::get('/referensi/golongan-darah/trashed', [App\Http\Controllers\Referensi\GolonganDarahController::class, 'trash'])->name('referensi.golongan-darah-trash');

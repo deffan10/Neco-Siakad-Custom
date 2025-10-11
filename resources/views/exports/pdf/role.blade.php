@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ $title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 5px 0;
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>{{ $title }}</h2>
+        <div class="info">Dicetak pada: {{ $date }}</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 10%">No</th>
+                <th style="width: 30%">Nama</th>
+                <th style="width: 20%">Guard Name</th>
+                <th style="width: 20%">Jumlah User</th>
+                <th style="width: 20%">Dibuat Pada</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($roles as $index => $role)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $role->name }}</td>
+                    <td>{{ $role->guard_name }}</td>
+                    <td>{{ $role->users_count ?? 0 }}</td>
+                    <td>{{ $role->created_at?->format('Y-m-d H:i:s') }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" style="text-align: center;">Tidak ada data</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Total Data: {{ $roles->count() }}</p>
+    </div>
+</body>
+</html>

@@ -9,7 +9,12 @@ use App\Http\Requests\Manager\Users\RoleRequest;
 use App\Models\Pengaturan\Kampus;
 use App\Models\Pengaturan\System;
 // Use Others
+use App\Services\Export\CSV\RoleCSVExportService;
+use App\Services\Export\Excel\RoleExcelExportService;
+use App\Services\Export\PDF\RolePDFExportService;
+use App\Services\Import\Excel\RoleExcelImportService;
 use App\Services\Manager\Users\RoleService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -127,6 +132,74 @@ class RoleController extends Controller
 
         } catch (\Throwable $th) {
             Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function exportExcel(RoleExcelExportService $exportService)
+    {
+        try {
+            return $exportService->export();
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Gagal export Excel: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function exportCSV(RoleCSVExportService $exportService)
+    {
+        try {
+            return $exportService->export();
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Gagal export CSV: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function exportPDF(RolePDFExportService $exportService)
+    {
+        try {
+            return $exportService->export();
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Gagal export PDF: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function importExcel(Request $request, RoleExcelImportService $importService)
+    {
+        try {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls|max:5120',
+            ]);
+
+            $result = $importService->import($request->file('file'));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diimport',
+                'total' => $result['total'],
+                'success' => $result['success'],
+                'failed' => $result['failed'],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal import data: '.$th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function downloadTemplate(RoleExcelExportService $exportService)
+    {
+        try {
+            return $exportService->downloadTemplate();
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'Gagal download template: '.$th->getMessage());
 
             return redirect()->back();
         }

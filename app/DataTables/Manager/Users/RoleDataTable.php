@@ -155,36 +155,7 @@ class RoleDataTable extends DataTable
                     ],
                 ],
                 'buttons' => [
-                    [
-                        'extend' => 'excel',
-                        'className' => 'btn btn-sm btn-success',
-                        'text' => '<i class="fas fa-file-excel me-1"></i> Excel',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'pdf',
-                        'className' => 'btn btn-sm btn-danger',
-                        'text' => '<i class="fas fa-file-pdf me-1"></i> PDF',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'print',
-                        'className' => 'btn btn-sm btn-info',
-                        'text' => '<i class="fas fa-print me-1"></i> Print',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
                 ],
-            ])
-            ->buttons([
-                Button::make('excel')->className('btn btn-sm btn-success')->text('<i class="fas fa-file-excel me-1"></i> Excel'),
-                Button::make('pdf')->className('btn btn-sm btn-danger')->text('<i class="fas fa-file-pdf me-1"></i> PDF'),
-                Button::make('print')->className('btn btn-sm btn-info')->text('<i class="fas fa-print me-1"></i> Print'),
             ]);
     }
 

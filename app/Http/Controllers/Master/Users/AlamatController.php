@@ -10,8 +10,14 @@ use App\Models\Pengaturan\Kampus;
 use App\Models\Pengaturan\System;
 use App\Models\User;
 // Use Others
+use App\Services\Export\CSV\ExportAlamatCSVService;
+use App\Services\Export\Excel\ExportAlamatExcelService;
+use App\Services\Export\PDF\ExportAlamatPDFService;
+use App\Services\Import\Excel\ImportAlamatExcelService;
 use App\Services\Manager\Users\AlamatService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Rap2hpoutre\FastExcel\FastExcel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AlamatController extends Controller
@@ -130,6 +136,100 @@ class AlamatController extends Controller
 
         } catch (\Throwable $th) {
             Alert::error('Error', 'Terjadi kesalahan: '.$th->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function exportExcel(ExportAlamatExcelService $exporter)
+    {
+        return $exporter->export();
+    }
+
+    public function exportCSV(ExportAlamatCSVService $exporter)
+    {
+        return $exporter->export();
+    }
+
+    public function exportPDF(ExportAlamatPDFService $exporter)
+    {
+        return $exporter->export();
+    }
+
+    public function importExcel(Request $request, ImportAlamatExcelService $importer)
+    {
+        // Validasi file upload
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls|max:10240', // max 10MB
+        ], [
+            'excel_file.required' => 'File Excel wajib diupload.',
+            'excel_file.file' => 'File yang diupload harus berupa file.',
+            'excel_file.mimes' => 'File harus berformat Excel (.xlsx atau .xls).',
+            'excel_file.max' => 'Ukuran file maksimal 10MB.',
+        ]);
+
+        try {
+            $filePath = $request->file('excel_file')->getPathname();
+            $options = [
+                'skip_duplicates' => $request->boolean('skip_duplicates', true),
+            ];
+
+            $result = $importer->import($filePath, $options);
+
+            if ($request->ajax()) {
+                return response()->json($result);
+            }
+
+            if ($result['success']) {
+                Alert::success('Import Berhasil', $result['message']);
+            } else {
+                Alert::error('Import Gagal', $result['message']);
+            }
+
+            return redirect()->back();
+
+        } catch (\Exception $e) {
+            $errorMessage = 'Terjadi kesalahan saat import: '.$e->getMessage();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage,
+                    'errors' => [],
+                ], 500);
+            }
+
+            Alert::error('Error', $errorMessage);
+
+            return redirect()->back();
+        }
+    }
+
+    public function downloadTemplate()
+    {
+        try {
+            // Buat template Excel dengan header yang sesuai
+            $templateData = collect([
+                [
+                    'Email User' => 'user@example.com',
+                    'Tipe' => 'ktp',
+                    'Alamat Lengkap' => 'Jl. Contoh No. 123',
+                    'RT' => '001',
+                    'RW' => '002',
+                    'Kelurahan' => 'Kelurahan Contoh',
+                    'Kecamatan' => 'Kecamatan Contoh',
+                    'Kota/Kabupaten' => 'Jakarta Selatan',
+                    'Provinsi' => 'DKI Jakarta',
+                    'Kode Pos' => '12345',
+                ],
+            ]);
+
+            $filename = 'Template_Import_Alamat_'.date('Y-m-d').'.xlsx';
+
+            return (new FastExcel($templateData))->download($filename);
+
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Gagal mendownload template: '.$e->getMessage());
 
             return redirect()->back();
         }

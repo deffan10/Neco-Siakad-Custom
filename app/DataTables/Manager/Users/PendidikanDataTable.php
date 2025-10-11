@@ -6,7 +6,6 @@ use App\Models\User\Pendidikan;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -72,17 +71,27 @@ class PendidikanDataTable extends DataTable
                     .'<button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(\''.$row->id.'\')" data-bs-toggle="tooltip" title="Hapus Pendidikan">'
                     .'<i class="fas fa-trash me-1"></i> Delete</button></form>';
             })
+            // Filter jenjang (searchable)
             ->filterColumn('jenjang_badge', function ($query, $keyword) {
                 $query->where('jenjang', 'like', "%{$keyword}%");
             })
+            // Filter institusi (search by nama institusi, jurusan, atau IPK)
             ->filterColumn('institusi', function ($query, $keyword) {
-                $query->where('nama_institusi', 'like', "%{$keyword}%");
+                $query->where('nama_institusi', 'like', "%{$keyword}%")
+                    ->orWhere('jurusan', 'like', "%{$keyword}%")
+                    ->orWhere('ipk', 'like', "%{$keyword}%");
             })
+            // Filter pengguna (search by user name or email)
             ->filterColumn('pengguna', function ($query, $keyword) {
                 $query->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name', 'like', "%{$keyword}%")
                         ->orWhere('email', 'like', "%{$keyword}%");
                 });
+            })
+            // Filter periode
+            ->filterColumn('periode', function ($query, $keyword) {
+                $query->where('tahun_masuk', 'like', "%{$keyword}%")
+                    ->orWhere('tahun_lulus', 'like', "%{$keyword}%");
             })
             ->rawColumns(['jenjang_badge', 'institusi', 'pengguna', 'deleted_by_name', 'deleted_at_formatted', 'action'])
             ->setRowId('id');
@@ -170,36 +179,8 @@ class PendidikanDataTable extends DataTable
                     ],
                 ],
                 'buttons' => [
-                    [
-                        'extend' => 'excel',
-                        'className' => 'btn btn-sm btn-success',
-                        'text' => '<i class="fas fa-file-excel me-1"></i> Excel',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'pdf',
-                        'className' => 'btn btn-sm btn-danger',
-                        'text' => '<i class="fas fa-file-pdf me-1"></i> PDF',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
-                    [
-                        'extend' => 'print',
-                        'className' => 'btn btn-sm btn-info',
-                        'text' => '<i class="fas fa-print me-1"></i> Print',
-                        'exportOptions' => [
-                            'columns' => ':not(.no-export)',
-                        ],
-                    ],
+
                 ],
-            ])
-            ->buttons([
-                Button::make('excel')->className('btn btn-sm btn-success')->text('<i class="fas fa-file-excel me-1"></i> Excel'),
-                Button::make('pdf')->className('btn btn-sm btn-danger')->text('<i class="fas fa-file-pdf me-1"></i> PDF'),
-                Button::make('print')->className('btn btn-sm btn-info')->text('<i class="fas fa-print me-1"></i> Print'),
             ]);
     }
 

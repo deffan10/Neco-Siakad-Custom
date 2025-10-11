@@ -256,6 +256,19 @@
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Utama
                             </a>
                         @else
+                            <!-- Export Buttons -->
+                            <a href="{{ route($activeRole . '.referensi.role-export-csv') }}" class="btn btn-sm btn-success me-1">
+                                <i class="fas fa-file-csv me-1"></i>CSV
+                            </a>
+                            <a href="{{ route($activeRole . '.referensi.role-export-excel') }}" class="btn btn-sm btn-success me-1">
+                                <i class="fas fa-file-excel me-1"></i>Excel
+                            </a>
+                            <a href="{{ route($activeRole . '.referensi.role-export-pdf') }}" class="btn btn-sm btn-danger me-1">
+                                <i class="fas fa-file-pdf me-1"></i>PDF
+                            </a>
+                            <button type="button" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+                                <i class="fas fa-upload me-1"></i>Import
+                            </button>
                             <a href="{{ route($activeRole . '.referensi.role-trash') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fas fa-trash me-2"></i>Trash
                             </a>
@@ -493,6 +506,87 @@
             </div>
         @endforeach
     @endif
+
+    <!-- Import Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">
+                        <i class="fas fa-upload me-2"></i>Import Data Role
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="importAlert" class="alert d-none" role="alert"></div>
+                    
+                    <form id="importForm" action="{{ route($activeRole . '.referensi.role-import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label for="excel_file" class="form-label">
+                                    <strong>Pilih File Excel</strong>
+                                    <small class="text-muted">(Format: .xlsx, .xls)</small>
+                                </label>
+                                <input type="file" class="form-control" id="excel_file" name="file" accept=".xlsx,.xls" required>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    File maksimal 2MB. Pastikan format sesuai dengan template.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-info">
+                                            <i class="fas fa-download me-2"></i>Download Template
+                                        </h6>
+                                        <p class="card-text small text-muted">
+                                            Download template Excel untuk memastikan format yang benar.
+                                        </p>
+                                        <a href="{{ route($activeRole . '.referensi.role-template') }}" class="btn btn-outline-info btn-sm">
+                                            <i class="fas fa-file-excel me-1"></i>Download Template
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label class="form-label"><strong>Opsi Import</strong></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="skip_duplicates" name="skip_duplicates" checked>
+                                    <label class="form-check-label" for="skip_duplicates">
+                                        Skip data duplikat
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="importProgress" class="mb-3 d-none">
+                            <label class="form-label">Progress Import:</label>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted">Sedang memproses data...</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Batal
+                    </button>
+                    <button type="submit" form="importForm" class="btn btn-success" id="importBtn">
+                        <i class="fas fa-upload me-2"></i>Import Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('custom-js')
@@ -664,6 +758,74 @@
                     document.getElementById('delete-form-' + code).submit();
                 }
             });
+        }
+
+        // Handle Import Form
+        $('#importForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const fileInput = $('#excel_file')[0];
+            
+            if (!fileInput.files.length) {
+                showImportAlert('danger', 'Silahkan pilih file Excel terlebih dahulu!');
+                return;
+            }
+            
+            $('#importBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Importing...');
+            $('#importProgress').removeClass('d-none');
+            
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                $('.progress-bar').css('width', progress + '%');
+            }, 500);
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    clearInterval(progressInterval);
+                    $('.progress-bar').css('width', '100%');
+                    
+                    if (response.success) {
+                        showImportAlert('success', response.message);
+                        setTimeout(() => location.reload(), 2000);
+                    } else {
+                        showImportAlert('danger', response.message || 'Terjadi kesalahan');
+                    }
+                },
+                error: function(xhr) {
+                    clearInterval(progressInterval);
+                    showImportAlert('danger', 'Terjadi kesalahan saat upload file');
+                },
+                complete: function() {
+                    $('#importBtn').prop('disabled', false).html('<i class="fas fa-upload me-2"></i>Import Data');
+                    setTimeout(() => {
+                        $('#importProgress').addClass('d-none');
+                        $('.progress-bar').css('width', '0%');
+                    }, 2000);
+                }
+            });
+        });
+
+        // Reset modal when closed
+        $('#importModal').on('hidden.bs.modal', function() {
+            $('#importForm')[0].reset();
+            $('#importAlert').addClass('d-none').removeClass('alert-success alert-danger').html('');
+            $('#importProgress').addClass('d-none');
+            $('.progress-bar').css('width', '0%');
+        });
+
+        function showImportAlert(type, message) {
+            $('#importAlert')
+                .removeClass('d-none alert-success alert-danger')
+                .addClass('alert-' + type)
+                .html('<i class="fas fa-' + (type === 'success' ? 'check-circle' : 'exclamation-circle') + ' me-2"></i>' + message);
         }
     </script>
 @endsection 

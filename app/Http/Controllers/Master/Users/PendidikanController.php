@@ -10,8 +10,14 @@ use App\Models\Pengaturan\Kampus;
 use App\Models\Pengaturan\System;
 use App\Models\User;
 // Use Others
+use App\Services\Export\CSV\ExportPendidikanCSVService;
+use App\Services\Export\Excel\ExportPendidikanExcelService;
+use App\Services\Export\PDF\ExportPendidikanPDFService;
+use App\Services\Import\Excel\ImportPendidikanExcelService;
 use App\Services\Manager\Users\PendidikanService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Rap2hpoutre\FastExcel\FastExcel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PendidikanController extends Controller
@@ -134,5 +140,68 @@ class PendidikanController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function exportExcel(ExportPendidikanExcelService $exportService)
+    {
+        return $exportService->export();
+    }
+
+    public function exportCSV(ExportPendidikanCSVService $exportService)
+    {
+        return $exportService->export();
+    }
+
+    public function exportPDF(ExportPendidikanPDFService $exportService)
+    {
+        return $exportService->export();
+    }
+
+    public function importExcel(Request $request, ImportPendidikanExcelService $importService)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls|max:2048',
+        ]);
+
+        $file = $request->file('file');
+        $filePath = $file->getRealPath();
+
+        $options = [
+            'skip_duplicates' => $request->boolean('skip_duplicates', true),
+        ];
+
+        $results = $importService->import($filePath, $options);
+
+        if ($request->expectsJson()) {
+            return response()->json($results);
+        }
+
+        if ($results['success']) {
+            Alert::success('Sukses', $results['message']);
+        } else {
+            Alert::error('Error', $results['message']);
+        }
+
+        return redirect()->back();
+    }
+
+    public function downloadTemplate()
+    {
+        $sampleData = collect([
+            [
+                'Email User' => 'user@example.com',
+                'Jenjang' => 'S1',
+                'Nama Sekolah' => 'Universitas Indonesia',
+                'Jurusan' => 'Teknik Informatika',
+                'Tahun Masuk' => 2018,
+                'Tahun Lulus' => 2022,
+                'Nilai Akhir' => 3.75,
+                'Keterangan' => 'Lulus Cum Laude',
+            ],
+        ]);
+
+        $filename = 'template_pendidikan.xlsx';
+
+        return (new FastExcel($sampleData))->download($filename);
     }
 }
