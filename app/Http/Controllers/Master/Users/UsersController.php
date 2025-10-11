@@ -21,6 +21,8 @@ use App\Services\Export\Excel\ExportUserExcelService;
 use App\Services\Export\PDF\ExportUserPDFService;
 use App\Services\Import\Excel\ImportUserExcelService;
 use App\Services\Manager\Users\UserService;
+use App\Repositories\Manager\Users\UserRepository;
+use App\Services\Private\UpdateProfileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -30,10 +32,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 class UsersController extends Controller
 {
     protected UserService $userService;
+    protected UserRepository $userRepository;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, UserRepository $userRepository)
     {
         $this->userService = $userService;
+        $this->userRepository = $userRepository;
     }
 
     public function index(UserDataTable $dataTable)
@@ -102,10 +106,12 @@ class UsersController extends Controller
         }
     }
 
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request, $id, UpdateProfileService $service)
     {
         try {
-            $this->userService->updateUser($id, $request->validated());
+
+            $user = $this->userRepository->findById($id);
+            $service->updateProfile($user, $request->validated());
 
             Alert::success('Berhasil', 'Data pengguna berhasil diperbarui');
 
