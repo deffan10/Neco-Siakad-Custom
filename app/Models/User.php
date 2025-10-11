@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use App\Traits\HasLogAktivitas;
 use Spatie\Permission\Traits\HasRoles;
 // USE MODELS
@@ -20,7 +21,7 @@ use App\Models\Referensi\Kewarganegaraan;
 
 class User extends Authenticatable
 {
-    use HasRoles, SoftDeletes;
+    use HasRoles, HasFactory, SoftDeletes;
 
     protected $table = 'users';
     protected $guarded = [];

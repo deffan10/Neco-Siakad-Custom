@@ -9,7 +9,7 @@ class ExportUserPDFService
 {
     public function export()
     {
-        $users = User::with(['agama', 'jenisKelamin'])->get();
+        $users = User::all();
 
         $filename = 'Data_Users_' . date('Y-m-d_H-i-s') . '.pdf';
 

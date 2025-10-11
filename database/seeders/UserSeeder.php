@@ -72,5 +72,20 @@ class UserSeeder extends Seeder
             $sekprodi->id,
             $baak->id,
         ]);
+
+
+        // === Tambahkan 1000 user random ===
+        // User::factory()->count(100)->create()->each(function ($user) use ($roles) {
+        //     // Assign role random dari daftar role
+        //     $randomRole = collect($roles)->random();
+        //     $user->assignRole($randomRole);
+
+        //     // Kalau role-nya punya subrole, assign subrole random juga
+        //     $subroles = Subrole::whereHas('role', fn($q) => $q->where('name', $randomRole))->get();
+
+        //     if ($subroles->isNotEmpty()) {
+        //         $user->subroles()->syncWithoutDetaching([$subroles->random()->id]);
+        //     }
+        // });
     }
 }
