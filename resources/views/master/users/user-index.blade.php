@@ -1,311 +1,9 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
+    <link href="{{ asset('assets') }}/libs/tom-select/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet" />
+    <script src="{{ asset('assets') }}/libs/tom-select/dist/js/tom-select.base.min.js" defer></script>
     <link rel="stylesheet" href="{{ asset('vendor') }}/siakad/siakad-crud.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
-    <style>
-        /* Stats cards */
-        .bg-light-primary {
-            background-color: rgba(67, 94, 190, 0.1);
-        }
-        
-        .bg-light-success {
-            background-color: rgba(40, 167, 69, 0.1);
-        }
-        
-        .bg-light-warning {
-            background-color: rgba(255, 193, 7, 0.1);
-        }
-        
-        .bg-light-info {
-            background-color: rgba(23, 162, 184, 0.1);
-        }
-
-        /* Card styling */
-        .card {
-            border: none;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            border-radius: 10px;
-        }
-
-        .card-header {
-            background: none;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1.5rem;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .btn-sm {
-            padding: 0.25rem 0.5rem;
-        }
-
-        /* Form styling */
-        .form-control, .form-select {
-            border-radius: 5px;
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 0.5rem 1rem;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #435ebe;
-            box-shadow: 0 0 0 0.2rem rgba(67, 94, 190, 0.25);
-        }
-
-        /* Badge styling */
-        .badge {
-            padding: 0.5em 0.75em;
-            font-weight: 500;
-        }
-
-        /* Collapsible form */
-        .collapse {
-            transition: all 0.3s ease;
-        }
-
-        .collapse.show {
-            margin-top: 1rem;
-        }
-
-        /* Image preview */
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
-        }
-
-        /* SECTION TABLE SUPER */
-
-        table {
-            /* border: 1px solid #ccc; */
-            /* border-collapse: collapse; */
-            margin: 0;
-            padding: 0;
-            /* width: 100%; */
-            table-layout: fixed;
-        }
-
-        /* table caption {
-            font-size: 1.5em;
-            margin: 0.5em 0 0.75em;
-        } */
-
-        table tr {
-            /* background-color: #f8f8f8; */
-            border: 1px solid #ddd;
-            /* padding: 0.35em; */
-        }
-
-        table th,
-        table td {
-            padding: 0.625em;
-            text-align: center;
-        }
-
-        table th {
-            font-size: 0.85em;
-            text-align: center !important;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 0;
-            }
-
-            table caption {
-                font-size: 1.3em;
-            }
-
-            table thead {
-                border: none;
-                clip: rect(0 0 0 0);
-                height: 1px;
-                margin: -1px;
-                overflow: hidden;
-                padding: 0;
-                position: absolute;
-                width: 1px;
-            }
-
-            table tr {
-                border-bottom: 3px solid #ddd;
-                display: block;
-                margin-bottom: 0.625em;
-            }
-
-            table td {
-                border-bottom: 1px solid #ddd;
-                display: block;
-                font-size: 0.8em;
-                text-align: right;
-            }
-
-            table td::before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-
-            table td:last-child {
-                border-bottom: 0;
-            }
-            
-            /* Improve delete info display on mobile */
-            table td[data-label="Dihapus Oleh"] .d-flex.align-items-center,
-            table td[data-label="Dihapus Pada"] .d-flex.align-items-center {
-                align-items: flex-end !important;
-                justify-content: flex-end !important;
-            }
-            
-            /* Make delete info more compact on mobile */
-            table td[data-label="Dihapus Pada"] div {
-                text-align: right;
-            }
-        }
-        
-        /* DataTables Buttons Styling */
-        .dt-buttons {
-            margin-bottom: 1rem;
-        }
-        
-        .dt-buttons .btn {
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-        
-        /* Custom DataTables styling */
-        #usersTable_wrapper .row:first-child {
-            margin-bottom: 1rem;
-        }
-        
-        .dataTables_filter input {
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-            padding: 0.375rem 0.75rem;
-        }
-        
-        .dataTables_length select {
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-            padding: 0.375rem 0.75rem;
-        }
-        
-        /* Custom toolbar styling */
-        .dataTables-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .export-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        
-        .entries-filter {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .dataTables-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .export-buttons {
-                justify-content: center;
-            }
-            
-            .entries-filter {
-                justify-content: center;
-            }
-        }
-
-        /* Select2 fixes for dark Tabler theme: make selected tags readable */
-        .select2-container--default .select2-selection--multiple {
-            background-color: transparent;
-            border: 1px solid rgba(255,255,255,0.06);
-            min-height: 44px;
-            border-radius: 5px;
-            padding: 4px 8px;
-        }
-
-        /* Select2 for light mode - visible border */
-        [data-bs-theme="light"] .select2-container--default .select2-selection--multiple,
-        body:not([data-bs-theme="dark"]) .select2-container--default .select2-selection--multiple {
-            border: 1px solid #dee2e6;
-            background-color: #ffffff;
-        }
-
-        [data-bs-theme="light"] .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field,
-        body:not([data-bs-theme="dark"]) .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
-            color: #212529;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            background-color: rgba(67,94,190,0.95); /* primary-ish */
-            color: #ffffff;
-            border: none;
-            padding: 4px 8px 4px 24px; /* left padding for remove button space */
-            margin-top: 4px;
-            margin-right: 6px;
-            box-shadow: none;
-            position: relative;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            color: rgba(255,255,255,0.85);
-            position: absolute;
-            left: 4px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            text-align: center;
-            line-height: 14px;
-            font-size: 14px;
-            margin: 0;
-            opacity: 0.9;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-            background-color: rgba(255,255,255,0.2);
-        }
-
-        /* Ensure placeholder/inputs are visible */
-        .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
-            color: #ffffff;
-            background: transparent;
-            border: none;
-            padding: 4px 0;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-            display:flex;
-            align-items:center;
-            gap:4px;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -428,7 +126,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Roles</label>
-                                            <select class="form-control form-select" name="roles[]" id="roles" multiple required>
+                                            <select class="form-select" name="roles[]" id="select-roles" multiple required>
                                                 @foreach($roles as $role)
                                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                                                 @endforeach
@@ -481,7 +179,7 @@
                     
                     <!-- DataTable -->
                     <div class="mt-3">
-                        {{ $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive nowrap', 'style' => 'width:100%']) }}
+                        {{ $dataTable->table(['class' => 'table table-striped table-bordered dt-responsive', 'style' => 'width:100%']) }}
                     </div>
                 </div>
             </div>
@@ -595,12 +293,38 @@
         </div>
     </div>
 @endsection
-
+@section('custom-js')
+<script>
+                // Select roles
+            document.addEventListener("DOMContentLoaded", function () {
+                var el;
+                window.TomSelect &&
+                new TomSelect((el = document.getElementById("select-roles")), {
+                    copyClassesToDropdown: false,
+                    dropdownParent: "body",
+                    controlInput: "<input>",
+                    render: {
+                    item: function (data, escape) {
+                        if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + "</span>" + escape(data.text) + "</div>";
+                        }
+                        return "<div>" + escape(data.text) + "</div>";
+                    },
+                    option: function (data, escape) {
+                        if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + "</span>" + escape(data.text) + "</div>";
+                        }
+                        return "<div>" + escape(data.text) + "</div>";
+                    },
+                    },
+                });
+            });
+</script>
+@endsection
 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     <script>
         $(document).ready(function() {
@@ -648,20 +372,8 @@
                 }
             });
             
-            // Initialize Select2 for roles multi-select
-            if ($.fn.select2) {
-                $('#roles').select2({
-                    placeholder: 'Pilih role',
-                    width: '100%'
-                });
 
-                // Set previously selected values if available (old input)
-                var oldRoles = @json(old('roles', []));
-                if (oldRoles && oldRoles.length) {
-                    $('#roles').val(oldRoles).trigger('change');
-                }
-            }
-            
+
             // Filter by Role
             $('#filter-role').on('change', function() {
                 table.column(4).search(this.value).draw();
@@ -686,19 +398,6 @@
             });
         });
 
-        // Confirm delete function
-        function confirmDelete(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById('delete-form-' + id).submit();
-            }
-        }
-
-        // Confirm force delete function
-        function confirmForceDelete(id) {
-            if (confirm('PERINGATAN: Data akan dihapus secara permanen dan tidak dapat dikembalikan! Apakah Anda yakin?')) {
-                document.getElementById('force-delete-form-' + id).submit();
-            }
-        }
 
         // Handle Import Form
         $('#importForm').on('submit', function(e) {

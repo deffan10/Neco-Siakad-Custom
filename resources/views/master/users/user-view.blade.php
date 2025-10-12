@@ -1,6 +1,9 @@
 @extends('themes.core-backpage')
 
 @section('custom-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets') }}/libs/tom-select/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet" />
+    <script src="{{ asset('assets') }}/libs/tom-select/dist/js/tom-select.base.min.js" defer></script>
 <style>
     .profile-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -106,17 +109,7 @@
                                         <label class="form-label">Username</label>
                                         <input type="text" class="form-control" name="username" value="{{ $users->username }}" placeholder="Masukkan username unik">
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Role <span class="text-danger">*</span></label>
-                                        <select class="form-select select2-roles" name="roles[]" multiple="multiple" required>
-                                            @foreach($roles as $role)
-                                                <option value="{{ $role->id }}" {{ $users->hasRole($role->name) ? 'selected' : '' }}>
-                                                    {{ ucfirst($role->name) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <small class="text-muted">Pilih satu atau lebih role untuk user</small>
-                                    </div>
+
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Foto Profile</label>
                                         <input type="file" class="form-control" name="photo" accept="image/*" onchange="previewImage(this)">
@@ -187,6 +180,18 @@
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label">Berat Badan (kg)</label>
                                         <input type="text" class="form-control" name="berat_badan" value="{{ $users->berat_badan }}" placeholder="Contoh: 65">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Role <span class="text-danger">*</span></label>
+                                        <select class="form-select" name="roles[]" id="select-roles" multiple required>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}" {{ $users->hasRole($role->name) ? 'selected' : '' }}>
+                                                    {{ ucfirst($role->name) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <small class="text-muted">Pilih satu atau lebih role untuk user</small>
                                     </div>
                                 </div>
                             </div>
@@ -1006,6 +1011,30 @@ function initializeDeleteButtons() {
         }
     });
 }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect &&
+          new TomSelect((el = document.getElementById("select-roles")), {
+            copyClassesToDropdown: false,
+            dropdownParent: "body",
+            controlInput: "<input>",
+            render: {
+              item: function (data, escape) {
+                if (data.customProperties) {
+                  return '<div><span class="dropdown-item-indicator">' + data.customProperties + "</span>" + escape(data.text) + "</div>";
+                }
+                return "<div>" + escape(data.text) + "</div>";
+              },
+              option: function (data, escape) {
+                if (data.customProperties) {
+                  return '<div><span class="dropdown-item-indicator">' + data.customProperties + "</span>" + escape(data.text) + "</div>";
+                }
+                return "<div>" + escape(data.text) + "</div>";
+              },
+            },
+          });
+      });
 
 // ========== UTILITY FUNCTIONS ==========
 function showLoadingAlert(message = 'Memproses...') {
