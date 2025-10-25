@@ -11,122 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('data_mahasiswa', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users');
-
-            // Student Identifiers
-            $table->string('nim')->nullable()->unique();    // Nomor Induk Mahasiswa
-
-            // Academic Info
-            $table->foreignId('program_studi_id')->nullable()->constrained('program_studi');
-            $table->foreignId('status_mahasiswa_id')->nullable()->constrained('status_mahasiswas');
-            $table->integer('angkatan')->nullable();        // E.g., 2021, 2022, 2023
-
-            // Dates
-            $table->date('tanggal_masuk')->nullable();
-            $table->date('tanggal_lulus')->nullable();
-
-            // Academic Standing
-            $table->decimal('ipk', 3, 2)->nullable();       // Indeks Prestasi Kumulatif
-            $table->integer('sks_lulus')->nullable();       // Semester Kredit Units Completed
-            $table->integer('sks_total')->nullable();       // Total SKS Required
-
-            // Sponsorship / Financial
-            $table->enum('jenis_pembiayaan', ['Mandiri', 'Beasiswa', 'Beasiswa Penuh', 'Subsidi'])->default('Mandiri');
-            $table->string('nama_pemberi_beasiswa')->nullable();
-
-            // Additional Info
-            $table->text('asal_sekolah')->nullable();
-            $table->enum('jenis_sekolah', ['SMA', 'SMK', 'Pondok Pesantren', 'Lainnya'])->default('SMA');
-
-            // Audit
-            $table->timestamps();
-            $table->softDeletes();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->unsignedBigInteger('deleted_by')->nullable();
-        });
-
-        Schema::create('data_peserta_pmb', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users');
-
-            // PMB Identifiers
-            $table->string('nomor_pendaftaran')->nullable()->unique();
-
-            // Registration Info
-            $table->string('program_pilihan_1')->nullable();
-            $table->string('program_pilihan_2')->nullable();
-            $table->enum('jalur_masuk', ['SNMPTN', 'SBMPTN', 'Mandiri', 'Khusus', 'Transfer'])->default('Mandiri');
-
-            // Academic Info
-            $table->integer('tahun_masuk')->nullable();
-            $table->enum('status_pendaftaran', ['Menunggu', 'Lolos', 'Tidak Lolos', 'Daftar Ulang', 'Batal'])->default('Menunggu');
-
-            // Dates
-            $table->date('tanggal_daftar')->nullable();
-            $table->date('tanggal_pengumuman')->nullable();
-            $table->date('tanggal_daftar_ulang')->nullable();
-
-            // Test Scores
-            $table->decimal('nilai_tes_tulis', 5, 2)->nullable();
-            $table->decimal('nilai_wawancara', 5, 2)->nullable();
-            $table->decimal('nilai_akhir', 5, 2)->nullable();
-
-            // Additional Info
-            $table->text('catatan')->nullable();
-
-            // Audit
-            $table->timestamps();
-            $table->softDeletes();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->unsignedBigInteger('deleted_by')->nullable();
-        });
-
-        Schema::create('data_alumni', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users');
-
-            // Alumni Identifiers
-            $table->string('nomor_alumni')->nullable()->unique();
-
-            // Academic Info
-            $table->foreignId('program_studi_id')->nullable()->constrained('program_studi');
-            $table->integer('angkatan')->nullable();
-            $table->integer('tahun_lulus')->nullable();
-
-            // Graduation Details
-            $table->date('tanggal_lulus')->nullable();
-            $table->decimal('ipk_akhir', 3, 2)->nullable();
-            $table->string('predikat_lulus')->nullable();   // Cumlaude, Sangat Memuaskan, etc.
-
-            // Career Info
-            $table->enum('status_pekerjaan', ['Bekerja', 'Belum Bekerja', 'Melanjutkan Studi', 'Wiraswasta'])->nullable();
-            $table->string('bidang_pekerjaan')->nullable();
-            $table->string('instansi_pekerjaan')->nullable();
-            $table->string('jabatan_pekerjaan')->nullable();
-            $table->string('lokasi_pekerjaan')->nullable();
-            $table->integer('tahun_mulai_bekerja')->nullable();
-
-            // Further Education
-            $table->text('melanjutkan_ke')->nullable();     // University name if continuing studies
-
-            // Audit & Contact Info
-            $table->text('catatan')->nullable();
-            $table->date('tahun_pembaruan_data')->nullable();
-
-            // Audit
-            $table->timestamps();
-            $table->softDeletes();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->unsignedBigInteger('deleted_by')->nullable();
-        });
-
-
         Schema::create('tahun_akademik', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -194,6 +78,7 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
         });
+
         Schema::create('program_studi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fakultas_id')->constrained('fakultas');
@@ -404,7 +289,7 @@ return new class extends Migration
         Schema::create('kelas_mahasiswa', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kelas_id')->constrained('kelas_perkuliahan');
-            $table->foreignId('mahasiswa_id')->constrained('data_mahasiswa');
+            $table->foreignId('mahasiswa_id')->constrained('users');
 
             // Audit fields
             $table->timestamps();
@@ -485,9 +370,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_mahasiswa');
-        Schema::dropIfExists('data_peserta_pmb');
-        Schema::dropIfExists('data_alumni');
         Schema::dropIfExists('tahun_akademik');
         Schema::dropIfExists('fakultas');
         Schema::dropIfExists('fakultas_profile');
