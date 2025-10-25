@@ -87,6 +87,48 @@
                                 <i class="fas fa-users me-2"></i> Keluarga
                             </a>
                         </li>
+
+                        {{-- Role-specific tabs based on user roles --}}
+                        @if($users->hasRole('mahasiswa'))
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-mahasiswa" role="tab">
+                                    <i class="fas fa-book me-2"></i> Data Akademik
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($users->hasRole('karyawan') || $users->hasRole('tendik'))
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-karyawan" role="tab">
+                                    <i class="fas fa-briefcase me-2"></i> Data Karyawan
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($users->hasRole('dosen'))
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-dosen" role="tab">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i> Data Dosen
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($users->hasRole('peserta-pmb'))
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-pmb" role="tab">
+                                    <i class="fas fa-user-check me-2"></i> Data Pendaftaran
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($users->hasRole('alumni'))
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-alumni" role="tab">
+                                    <i class="fas fa-graduation-cap me-2"></i> Data Alumni
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#keamanan" role="tab">
                                 <i class="fas fa-lock me-2"></i> Keamanan
@@ -516,7 +558,356 @@
                             </div>
                         </div>
 
-                        <!-- Tab Keamanan -->
+                        <!-- Tab Data Mahasiswa (Student) -->
+                        @if($users->hasRole('mahasiswa'))
+                        <div class="tab-pane" id="data-mahasiswa" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Akademik</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIM <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nim" value="{{ old('nim', $users->dataMahasiswa?->nim ?? '') }}" placeholder="Nomor Induk Mahasiswa" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Program Studi</label>
+                                        <select class="form-select" name="program_studi_id">
+                                            <option value="">Pilih Program Studi</option>
+                                            @if(isset($programStudis))
+                                                @foreach($programStudis as $ps)
+                                                    <option value="{{ $ps->id }}" {{ (old('program_studi_id') ?? $users->dataMahasiswa?->program_studi_id ?? null) == $ps->id ? 'selected' : '' }}>
+                                                        {{ $ps->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Angkatan</label>
+                                        <input type="number" class="form-control" name="angkatan" value="{{ old('angkatan', $users->dataMahasiswa?->angkatan ?? '') }}" placeholder="2021" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Masuk</label>
+                                        <input type="date" class="form-control" name="tanggal_masuk" value="{{ old('tanggal_masuk', $users->dataMahasiswa?->tanggal_masuk ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">IPK</label>
+                                        <input type="number" step="0.01" class="form-control" name="ipk" value="{{ old('ipk', $users->dataMahasiswa?->ipk ?? '') }}" placeholder="3.50" min="0" max="4">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">SKS Lulus</label>
+                                        <input type="number" class="form-control" name="sks_lulus" value="{{ old('sks_lulus', $users->dataMahasiswa?->sks_lulus ?? '') }}" placeholder="120">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Jenis Pembiayaan</label>
+                                        <select class="form-select" name="jenis_pembiayaan">
+                                            <option value="">Pilih Jenis</option>
+                                            <option value="Mandiri" {{ (old('jenis_pembiayaan') ?? $users->dataMahasiswa?->jenis_pembiayaan ?? null) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                            <option value="Beasiswa" {{ (old('jenis_pembiayaan') ?? $users->dataMahasiswa?->jenis_pembiayaan ?? null) == 'Beasiswa' ? 'selected' : '' }}>Beasiswa</option>
+                                            <option value="Beasiswa Penuh" {{ (old('jenis_pembiayaan') ?? $users->dataMahasiswa?->jenis_pembiayaan ?? null) == 'Beasiswa Penuh' ? 'selected' : '' }}>Beasiswa Penuh</option>
+                                            <option value="Subsidi" {{ (old('jenis_pembiayaan') ?? $users->dataMahasiswa?->jenis_pembiayaan ?? null) == 'Subsidi' ? 'selected' : '' }}>Subsidi</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Asal Sekolah</label>
+                                        <input type="text" class="form-control" name="asal_sekolah" value="{{ old('asal_sekolah', $users->dataMahasiswa?->asal_sekolah ?? '') }}" placeholder="Nama sekolah asal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Karyawan (Employee) -->
+                        @if($users->hasRole('karyawan') || $users->hasRole('tendik'))
+                        <div class="tab-pane" id="data-karyawan" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Karyawan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIP <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nip" value="{{ old('nip', $users->dataKaryawan?->nip ?? '') }}" placeholder="Nomor Induk Pegawai" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIK</label>
+                                        <input type="text" class="form-control" name="nik" value="{{ old('nik', $users->dataKaryawan?->nik ?? '') }}" placeholder="Nomor Identitas Karyawan" maxlength="16">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Kerja</label>
+                                        <select class="form-select" name="status_kerja" required>
+                                            <option value="">Pilih Status</option>
+                                            <option value="Tetap" {{ (old('status_kerja') ?? $users->dataKaryawan?->status_kerja ?? null) == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                            <option value="Kontrak" {{ (old('status_kerja') ?? $users->dataKaryawan?->status_kerja ?? null) == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                            <option value="Honorer" {{ (old('status_kerja') ?? $users->dataKaryawan?->status_kerja ?? null) == 'Honorer' ? 'selected' : '' }}>Honorer</option>
+                                            <option value="Outsourcing" {{ (old('status_kerja') ?? $users->dataKaryawan?->status_kerja ?? null) == 'Outsourcing' ? 'selected' : '' }}>Outsourcing</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Bergabung</label>
+                                        <input type="date" class="form-control" name="tanggal_bergabung" value="{{ old('tanggal_bergabung', $users->dataKaryawan?->tanggal_bergabung ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Akhir Kontrak</label>
+                                        <input type="date" class="form-control" name="tanggal_berakhir_kontrak" value="{{ old('tanggal_berakhir_kontrak', $users->dataKaryawan?->tanggal_berakhir_kontrak ?? '') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Perbankan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">No. Rekening</label>
+                                        <input type="text" class="form-control" name="no_rekening" value="{{ old('no_rekening', $users->dataKaryawan?->no_rekening ?? '') }}" placeholder="1234567890">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nama Bank</label>
+                                        <input type="text" class="form-control" name="nama_bank" value="{{ old('nama_bank', $users->dataKaryawan?->nama_bank ?? '') }}" placeholder="Nama Bank">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Atas Nama Rekening</label>
+                                        <input type="text" class="form-control" name="atas_nama_rekening" value="{{ old('atas_nama_rekening', $users->dataKaryawan?->atas_nama_rekening ?? '') }}" placeholder="Nama Pemilik Rekening">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">NPWP</label>
+                                        <input type="text" class="form-control" name="npwp" value="{{ old('npwp', $users->dataKaryawan?->npwp ?? '') }}" placeholder="123456789012345" maxlength="15">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Dosen (Lecturer) -->
+                        @if($users->hasRole('dosen'))
+                        <div class="tab-pane" id="data-dosen" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Identifikasi Dosen</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIDN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nidn" value="{{ old('nidn', $users->dataDosen?->nidn ?? '') }}" placeholder="Nomor Identitas Dosen Nasional" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIP</label>
+                                        <input type="text" class="form-control" name="nip" value="{{ old('nip', $users->dataDosen?->nip ?? '') }}" placeholder="Nomor Induk Pegawai (jika ada)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Kepegawaian</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Dosen</label>
+                                        <select class="form-select" name="status_dosen">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Tetap" {{ (old('status_dosen') ?? $users->dataDosen?->status_dosen ?? null) == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                            <option value="Kontrak" {{ (old('status_dosen') ?? $users->dataDosen?->status_dosen ?? null) == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                            <option value="Tidak Tetap" {{ (old('status_dosen') ?? $users->dataDosen?->status_dosen ?? null) == 'Tidak Tetap' ? 'selected' : '' }}>Tidak Tetap</option>
+                                            <option value="Emeritus" {{ (old('status_dosen') ?? $users->dataDosen?->status_dosen ?? null) == 'Emeritus' ? 'selected' : '' }}>Emeritus</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Jenis Dosen</label>
+                                        <select class="form-select" name="jenis_dosen">
+                                            <option value="">Pilih Jenis</option>
+                                            <option value="Dosen Penuh" {{ (old('jenis_dosen') ?? $users->dataDosen?->jenis_dosen ?? null) == 'Dosen Penuh' ? 'selected' : '' }}>Dosen Penuh</option>
+                                            <option value="Dosen Luar Biasa" {{ (old('jenis_dosen') ?? $users->dataDosen?->jenis_dosen ?? null) == 'Dosen Luar Biasa' ? 'selected' : '' }}>Dosen Luar Biasa</option>
+                                            <option value="Doswal" {{ (old('jenis_dosen') ?? $users->dataDosen?->jenis_dosen ?? null) == 'Doswal' ? 'selected' : '' }}>Doswal</option>
+                                            <option value="Guest Lecturer" {{ (old('jenis_dosen') ?? $users->dataDosen?->jenis_dosen ?? null) == 'Guest Lecturer' ? 'selected' : '' }}>Guest Lecturer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tanggal Bergabung</label>
+                                        <input type="date" class="form-control" name="tanggal_bergabung" value="{{ old('tanggal_bergabung', $users->dataDosen?->tanggal_bergabung ?? '') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Akademik</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Bidang Keahlian</label>
+                                        <input type="text" class="form-control" name="bidang_keahlian" value="{{ old('bidang_keahlian', $users->dataDosen?->bidang_keahlian ?? '') }}" placeholder="Contoh: Teknologi Informasi">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Gelar Akademik</label>
+                                        <input type="text" class="form-control" name="gelar_akademik" value="{{ old('gelar_akademik', $users->dataDosen?->gelar_akademik ?? '') }}" placeholder="Contoh: S.Kom, M.Cs">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Riwayat Pendidikan</label>
+                                        <textarea class="form-control" name="riwayat_pendidikan" rows="3" placeholder="Masukkan riwayat pendidikan formal">{{ old('riwayat_pendidikan', $users->dataDosen?->riwayat_pendidikan ?? '') }}</textarea>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Sertifikasi</label>
+                                        <textarea class="form-control" name="sertifikasi" rows="3" placeholder="Masukkan sertifikasi yang dimiliki">{{ old('sertifikasi', $users->dataDosen?->sertifikasi ?? '') }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Perbankan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">No. Rekening</label>
+                                        <input type="text" class="form-control" name="no_rekening" value="{{ old('no_rekening', $users->dataDosen?->no_rekening ?? '') }}" placeholder="1234567890">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nama Bank</label>
+                                        <input type="text" class="form-control" name="nama_bank" value="{{ old('nama_bank', $users->dataDosen?->nama_bank ?? '') }}" placeholder="Nama Bank">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NPWP</label>
+                                        <input type="text" class="form-control" name="npwp" value="{{ old('npwp', $users->dataDosen?->npwp ?? '') }}" placeholder="123456789012345">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data PMB (New Student Admission) -->
+                        @if($users->hasRole('peserta-pmb'))
+                        <div class="tab-pane" id="data-pmb" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Pendaftaran PMB</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nomor Pendaftaran <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nomor_pendaftaran" value="{{ old('nomor_pendaftaran', $users->dataPestaPMB?->nomor_pendaftaran ?? '') }}" placeholder="Nomor Pendaftaran PMB" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Tahun Masuk</label>
+                                        <input type="number" class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk', $users->dataPestaPMB?->tahun_masuk ?? '') }}" placeholder="{{ date('Y') }}" min="2000" max="{{ date('Y') + 5 }}">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Jalur Masuk</label>
+                                        <select class="form-select" name="jalur_masuk">
+                                            <option value="">Pilih Jalur</option>
+                                            <option value="SNMPTN" {{ (old('jalur_masuk') ?? $users->dataPestaPMB?->jalur_masuk ?? null) == 'SNMPTN' ? 'selected' : '' }}>SNMPTN</option>
+                                            <option value="SBMPTN" {{ (old('jalur_masuk') ?? $users->dataPestaPMB?->jalur_masuk ?? null) == 'SBMPTN' ? 'selected' : '' }}>SBMPTN</option>
+                                            <option value="Mandiri" {{ (old('jalur_masuk') ?? $users->dataPestaPMB?->jalur_masuk ?? null) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                            <option value="Khusus" {{ (old('jalur_masuk') ?? $users->dataPestaPMB?->jalur_masuk ?? null) == 'Khusus' ? 'selected' : '' }}>Khusus</option>
+                                            <option value="Transfer" {{ (old('jalur_masuk') ?? $users->dataPestaPMB?->jalur_masuk ?? null) == 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Status Pendaftaran</label>
+                                        <select class="form-select" name="status_pendaftaran">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Menunggu" {{ (old('status_pendaftaran') ?? $users->dataPestaPMB?->status_pendaftaran ?? null) == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                            <option value="Lolos" {{ (old('status_pendaftaran') ?? $users->dataPestaPMB?->status_pendaftaran ?? null) == 'Lolos' ? 'selected' : '' }}>Lolos</option>
+                                            <option value="Tidak Lolos" {{ (old('status_pendaftaran') ?? $users->dataPestaPMB?->status_pendaftaran ?? null) == 'Tidak Lolos' ? 'selected' : '' }}>Tidak Lolos</option>
+                                            <option value="Daftar Ulang" {{ (old('status_pendaftaran') ?? $users->dataPestaPMB?->status_pendaftaran ?? null) == 'Daftar Ulang' ? 'selected' : '' }}>Daftar Ulang</option>
+                                            <option value="Batal" {{ (old('status_pendaftaran') ?? $users->dataPestaPMB?->status_pendaftaran ?? null) == 'Batal' ? 'selected' : '' }}>Batal</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Program Pilihan 1</label>
+                                        <input type="text" class="form-control" name="program_pilihan_1" value="{{ old('program_pilihan_1', $users->dataPestaPMB?->program_pilihan_1 ?? '') }}" placeholder="Program studi pilihan utama">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Program Pilihan 2</label>
+                                        <input type="text" class="form-control" name="program_pilihan_2" value="{{ old('program_pilihan_2', $users->dataPestaPMB?->program_pilihan_2 ?? '') }}" placeholder="Program studi pilihan alternatif">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Tes Tulis</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_tes_tulis" value="{{ old('nilai_tes_tulis', $users->dataPestaPMB?->nilai_tes_tulis ?? '') }}" placeholder="0.00">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Wawancara</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_wawancara" value="{{ old('nilai_wawancara', $users->dataPestaPMB?->nilai_wawancara ?? '') }}" placeholder="0.00">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Akhir</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_akhir" value="{{ old('nilai_akhir', $users->dataPestaPMB?->nilai_akhir ?? '') }}" placeholder="0.00" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Alumni -->
+                        @if($users->hasRole('alumni'))
+                        <div class="tab-pane" id="data-alumni" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Alumni</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nomor Alumni</label>
+                                        <input type="text" class="form-control" name="nomor_alumni" value="{{ old('nomor_alumni', $users->dataAlumni?->nomor_alumni ?? '') }}" placeholder="Nomor Alumni" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Angkatan</label>
+                                        <input type="number" class="form-control" name="angkatan" value="{{ old('angkatan', $users->dataAlumni?->angkatan ?? '') }}" placeholder="2020" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tahun Lulus</label>
+                                        <input type="number" class="form-control" name="tahun_lulus" value="{{ old('tahun_lulus', $users->dataAlumni?->tahun_lulus ?? '') }}" placeholder="{{ date('Y') }}" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Lulus</label>
+                                        <input type="date" class="form-control" name="tanggal_lulus" value="{{ old('tanggal_lulus', $users->dataAlumni?->tanggal_lulus ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">IPK Akhir</label>
+                                        <input type="number" step="0.01" class="form-control" name="ipk_akhir" value="{{ old('ipk_akhir', $users->dataAlumni?->ipk_akhir ?? '') }}" placeholder="3.50" min="0" max="4">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Predikat Lulus</label>
+                                        <input type="text" class="form-control" name="predikat_lulus" value="{{ old('predikat_lulus', $users->dataAlumni?->predikat_lulus ?? '') }}" placeholder="Cum Laude, Sangat Memuaskan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Karir</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Pekerjaan</label>
+                                        <select class="form-select" name="status_pekerjaan">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Bekerja" {{ (old('status_pekerjaan') ?? $users->dataAlumni?->status_pekerjaan ?? null) == 'Bekerja' ? 'selected' : '' }}>Bekerja</option>
+                                            <option value="Belum Bekerja" {{ (old('status_pekerjaan') ?? $users->dataAlumni?->status_pekerjaan ?? null) == 'Belum Bekerja' ? 'selected' : '' }}>Belum Bekerja</option>
+                                            <option value="Melanjutkan Studi" {{ (old('status_pekerjaan') ?? $users->dataAlumni?->status_pekerjaan ?? null) == 'Melanjutkan Studi' ? 'selected' : '' }}>Melanjutkan Studi</option>
+                                            <option value="Wiraswasta" {{ (old('status_pekerjaan') ?? $users->dataAlumni?->status_pekerjaan ?? null) == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Bidang Pekerjaan</label>
+                                        <input type="text" class="form-control" name="bidang_pekerjaan" value="{{ old('bidang_pekerjaan', $users->dataAlumni?->bidang_pekerjaan ?? '') }}" placeholder="Contoh: IT, HRD">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tahun Mulai Bekerja</label>
+                                        <input type="number" class="form-control" name="tahun_mulai_bekerja" value="{{ old('tahun_mulai_bekerja', $users->dataAlumni?->tahun_mulai_bekerja ?? '') }}" placeholder="{{ date('Y') }}" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Instansi Pekerjaan</label>
+                                        <input type="text" class="form-control" name="instansi_pekerjaan" value="{{ old('instansi_pekerjaan', $users->dataAlumni?->instansi_pekerjaan ?? '') }}" placeholder="Nama perusahaan / instansi">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Lokasi Pekerjaan</label>
+                                        <input type="text" class="form-control" name="lokasi_pekerjaan" value="{{ old('lokasi_pekerjaan', $users->dataAlumni?->lokasi_pekerjaan ?? '') }}" placeholder="Kota / Lokasi kerja">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Jabatan Pekerjaan</label>
+                                        <input type="text" class="form-control" name="jabatan_pekerjaan" value="{{ old('jabatan_pekerjaan', $users->dataAlumni?->jabatan_pekerjaan ?? '') }}" placeholder="Posisi / Jabatan">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Melanjutkan Ke (Universitas)</label>
+                                        <input type="text" class="form-control" name="melanjutkan_ke" value="{{ old('melanjutkan_ke', $users->dataAlumni?->melanjutkan_ke ?? '') }}" placeholder="Nama universitas (jika melanjutkan studi)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Catatan Tambahan</h5>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <textarea class="form-control" name="catatan" rows="3" placeholder="Catatan tambahan tentang alumni">{{ old('catatan', $users->dataAlumni?->catatan ?? '') }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="tab-pane" id="keamanan" role="tabpanel">
                             <div class="form-section">
                                 <h5 class="mb-3">Ubah Password</h5>

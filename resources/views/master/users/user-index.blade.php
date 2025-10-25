@@ -63,7 +63,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1">Total Admin</h6>
-                            <h3 class="mb-0">{{ \Spatie\Permission\Models\Role::where('name', 'Admin')->first()->users()->count() }}</h3>
+                            <h3 class="mb-0">{{ \Spatie\Permission\Models\Role::where('name', 'admin')->first()?->users()->count() ?? 0 }}</h3>
                         </div>
                         <div class="bg-info bg-opacity-25 p-3 rounded">
                             <i class="fas fa-user-shield text-info fa-2x"></i>

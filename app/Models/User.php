@@ -3,35 +3,34 @@
 namespace App\Models;
 
 // USE SYSTEM
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Referensi\Agama;
+use App\Models\Referensi\GolonganDarah;
+use App\Models\Referensi\JenisKelamin;
 // use App\Traits\HasLogAktivitas;
-use Spatie\Permission\Traits\HasRoles;
+use App\Models\Referensi\Kewarganegaraan;
 // USE MODELS
 use App\Models\User\Alamat;
 use App\Models\User\Keluarga;
 use App\Models\User\Pendidikan;
 use App\Models\User\Subrole;
-use App\Models\Referensi\Agama;
-use App\Models\Referensi\GolonganDarah;
-use App\Models\Referensi\JenisKelamin;
-use App\Models\Referensi\Kewarganegaraan;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles, HasFactory, SoftDeletes;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $table = 'users';
-    protected $guarded = [];
 
+    protected $guarded = [];
 
     // Shortcut
 
     public function getPhotoAttribute($value)
     {
-        return $value == 'default.jpg' ? asset('storage/images/profile/default.jpg') : asset('storage/images/profile/' . $value);
+        return $value == 'default.jpg' ? asset('storage/images/profile/default.jpg') : asset('storage/images/profile/'.$value);
     }
 
     // Relations
@@ -50,7 +49,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'ktp');
     }
-    
+
     public function alamatDomisili()
     {
         return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'domisili');
@@ -112,4 +111,30 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
+    // ============ ROLE-SPECIFIC DATA RELATIONSHIPS ============
+
+    public function dataMahasiswa()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataMahasiswa::class, 'user_id');
+    }
+
+    public function dataKaryawan()
+    {
+        return $this->hasOne(\App\Models\User\DataKaryawan::class, 'user_id');
+    }
+
+    public function dataDosen()
+    {
+        return $this->hasOne(\App\Models\User\DataDosen::class, 'user_id');
+    }
+
+    public function dataPestaPMB()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataPestaPMB::class, 'user_id');
+    }
+
+    public function dataAlumni()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataAlumni::class, 'user_id');
+    }
 }
