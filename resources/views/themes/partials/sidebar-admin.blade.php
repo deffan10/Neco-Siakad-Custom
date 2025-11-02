@@ -46,6 +46,27 @@
         <a class="nav-link dropdown-toggle {{ request()->routeIs($activeRole . '.referensi*') ? 'show' : '' }}" href="#navbar-referensi" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" role="button" aria-expanded="{{ request()->routeIs($activeRole . '.referensi*') ? 'true' : 'false' }}">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-replace-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 11v-3c0 -.53 -.211 -1.039 -.586 -1.414c-.375 -.375 -.884 -.586 -1.414 -.586h-6m0 0l3 3m-3 -3l3 -3" /><path d="M3 13.013v3c0 .53 .211 1.039 .586 1.414c.375 .375 .884 .586 1.414 .586h6m0 0l-3 -3m3 3l-3 3" /><path d="M16 16.502c0 .53 .211 1.039 .586 1.414c.375 .375 .884 .586 1.414 .586c.53 0 1.039 -.211 1.414 -.586c.375 -.375 .586 -.884 .586 -1.414c0 -.53 -.211 -1.039 -.586 -1.414c-.375 -.375 -.884 -.586 -1.414 -.586c-.53 0 -1.039 .211 -1.414 .586c-.375 .375 -.586 .884 -.586 1.414z" /><path d="M4 4.502c0 .53 .211 1.039 .586 1.414c.375 .375 .884 .586 1.414 .586c.53 0 1.039 -.211 1.414 -.586c.375 -.375 .586 -.884 .586 -1.414c0 -.53 -.211 -1.039 -.586 -1.414c-.375 -.375 -.884 -.586 -1.414 -.586c-.53 0 -1.039 .211 -1.414 .586c-.375 .375 -.586 .884 -.586 1.414z" /><path d="M21 21.499c0 -.53 -.211 -1.039 -.586 -1.414c-.375 -.375 -.884 -.586 -1.414 -.586h-2c-.53 0 -1.039 .211 -1.414 .586c-.375 .375 -.586 .884 -.586 1.414" /><path d="M9 9.499c0 -.53 -.211 -1.039 -.586 -1.414c-.375 -.375 -.884 -.586 -1.414 -.586h-2c-.53 0 -1.039 .211 -1.414 .586c-.375 .375 -.586 .884 -.586 1.414" /></svg>
+            </span>
+            <span class="nav-link-title">Data Pengguna</span>
+        </a>
+        <div class="dropdown-menu {{ request()->routeIs($activeRole . '.referensi*') ? 'show' : '' }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.user*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.user-index') }}">User</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.role*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.role-index') }}">Role</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.subrole*') ? 'active' : '' }}" href="#">Subrole ( Soon )</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.alamat*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.alamat-index') }}">Alamat</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.keluarga*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.keluarga-index') }}">Keluarga</a>
+                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.pendidikan*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.pendidikan-index') }}">Pendidikan</a>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs($activeRole . '.referensi*') ? 'show' : '' }}" href="#navbar-referensi" data-bs-toggle="dropdown"
+            data-bs-auto-close="outside" role="button" aria-expanded="{{ request()->routeIs($activeRole . '.referensi*') ? 'true' : 'false' }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-1">
@@ -68,10 +89,6 @@
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.semester*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.semester-index') }}">Semester</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.status-mahasiswa*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.status-mahasiswa-index') }}">Status Mahasiswa</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.jabatan*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.jabatan-index') }}">Jabatan</a>
-                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.role*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.role-index') }}">Role</a>
-                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.alamat*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.alamat-index') }}">Alamat</a>
-                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.keluarga*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.keluarga-index') }}">Keluarga</a>
-                    <a class="dropdown-item {{ request()->routeIs($activeRole . '.referensi.pendidikan*') ? 'active' : '' }}" href="{{ route($activeRole . '.referensi.pendidikan-index') }}">Pendidikan</a>
                 </div>
             </div>
         </div>

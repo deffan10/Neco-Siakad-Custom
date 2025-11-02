@@ -1,0 +1,224 @@
+<?php
+
+namespace App\DataTables\Manager\Users;
+
+use App\Models\User\Role;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Yajra\DataTables\Html\Button;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Services\DataTable;
+
+class RoleDataTable extends DataTable
+{
+    protected bool $isTrash = false;
+
+    public function dataTable(QueryBuilder $query): EloquentDataTable
+    {
+        return (new EloquentDataTable($query))
+            ->addIndexColumn()
+            ->addColumn('name_badge', function ($row) {
+                return '<span class="badge bg-primary">'.e($row->name).'</span>';
+            })
+            ->addColumn('guard_name', function ($row) {
+                return '<span class="badge bg-secondary">'.e($row->guard_name).'</span>';
+            })
+            ->addColumn('user_count', function ($row) {
+                return '<span class="badge bg-info">'.$row->users()->count().' pengguna</span>';
+            })
+            ->addColumn('subrole_count', function ($row) {
+                return '<span class="badge bg-warning">'.$row->subroles()->count().' subrole</span>';
+            })
+            ->addColumn('deleted_by_name', function ($row) {
+                if ($this->isTrash) {
+                    return '<div class="d-flex align-items-center"><i class="fas fa-user-times text-danger me-2"></i><span>'.($row->deletedBy ? e($row->deletedBy->name) : 'Tidak diketahui').'</span></div>';
+                }
+
+                return '-';
+            })
+            ->addColumn('deleted_at_formatted', function ($row) {
+                if ($this->isTrash && $row->deleted_at) {
+                    return '<div class="d-flex align-items-center"><i class="fas fa-calendar-times text-danger me-2"></i><div><small class="d-block">'.$row->deleted_at->format('d/m/Y H:i').'</small><small class="text-muted">'.$row->deleted_at->diffForHumans().'</small></div></div>';
+                }
+
+                return '-';
+            })
+            ->addColumn('action', function ($row) {
+                $activeRole = session('active_role') ?? 'admin';
+
+                if ($this->isTrash) {
+                    return '<form action="'.route($activeRole.'.users.role-restore', $row->id).'" method="POST" class="d-inline me-1">'
+                        .csrf_field().
+                        '<button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Restore Role">'
+                        .'<i class="fas fa-undo me-1"></i> Restore</button></form>'
+                        .'<form action="'.route($activeRole.'.users.role-force-delete', $row->id).'" method="POST" class="d-inline" id="force-delete-form-'.$row->id.'">'.csrf_field().method_field('DELETE')
+                        .'<button type="button" class="btn btn-sm btn-danger" onclick="confirmForceDelete(\''.$row->id.'\')" data-bs-toggle="tooltip" title="Hapus Permanen Role">'
+                        .'<i class="fas fa-trash-alt me-1"></i> Force Delete</button></form>';
+                }
+
+                return '<a href="#" data-bs-toggle="modal" data-bs-target="#editData'.$row->id.'" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Edit Role">'
+                    .'<i class="fas fa-edit me-1"></i> Edit</a>'
+                    .'<form action="'.route($activeRole.'.users.role-destroy', $row->id).'" method="POST" class="d-inline" id="delete-form-'.$row->id.'">'.csrf_field().method_field('DELETE')
+                    .'<button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(\''.$row->id.'\')" data-bs-toggle="tooltip" title="Hapus Role">'
+                    .'<i class="fas fa-trash me-1"></i> Delete</button></form>';
+            })
+            ->filterColumn('name_badge', function ($query, $keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            })
+            ->filterColumn('guard_name', function ($query, $keyword) {
+                $query->where('guard_name', 'like', "%{$keyword}%");
+            })
+            ->rawColumns(['name_badge', 'guard_name', 'user_count', 'subrole_count', 'deleted_by_name', 'deleted_at_formatted', 'action'])
+            ->setRowId('id');
+    }
+
+    public function query(Role $model): QueryBuilder
+    {
+        $query = $model->newQuery()->with(['deletedBy']);
+
+        if ($this->isTrash) {
+            $query->onlyTrashed();
+        }
+
+        return $query;
+    }
+
+    public function html(): HtmlBuilder
+    {
+        $columns = $this->getColumns();
+
+        return $this->builder()
+            ->setTableId('role-table')
+            ->columns($columns)
+            ->minifiedAjax()
+            ->dom('<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>')
+            ->orderBy(0, 'asc')
+            ->responsive(true)
+            ->autoWidth(true)
+            ->pageLength(10)
+            ->lengthMenu([[10, 20, 30, 50, 100, 250, -1], [10, 20, 30, 50, 100, 250, 'Semua']])
+            ->parameters([
+                'language' => [
+                    'emptyTable' => 'Tidak ada data role',
+                    'info' => 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
+                    'infoEmpty' => 'Menampilkan 0 sampai 0 dari 0 data',
+                    'infoFiltered' => '(disaring dari _MAX_ total data)',
+                    'lengthMenu' => 'Tampilkan _MENU_ data',
+                    'loadingRecords' => 'Memuat...',
+                    'processing' => 'Memproses...',
+                    'search' => 'Cari:',
+                    'zeroRecords' => 'Data tidak ditemukan',
+                    'paginate' => [
+                        'first' => 'Pertama',
+                        'last' => 'Terakhir',
+                        'next' => 'Selanjutnya',
+                        'previous' => 'Sebelumnya',
+                    ],
+                ],
+                'columnDefs' => [
+                    [
+                        'targets' => 0,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "No");
+                        }',
+                    ],
+                    [
+                        'targets' => 1,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "Nama Role");
+                        }',
+                    ],
+                    [
+                        'targets' => 2,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "Guard");
+                        }',
+                    ],
+                    [
+                        'targets' => 3,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "Pengguna");
+                        }',
+                    ],
+                    [
+                        'targets' => 4,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "Subrole");
+                        }',
+                    ],
+                    [
+                        'targets' => -1,
+                        'createdCell' => 'function (td, cellData, rowData, row, col) {
+                            $(td).attr("data-label", "Aksi");
+                        }',
+                    ],
+                ],
+                'buttons' => [
+                ],
+            ]);
+    }
+
+    public function getColumns(): array
+    {
+        $columns = [
+            Column::computed('DT_RowIndex')
+                ->title('No')
+                ->searchable(false)
+                ->orderable(false),
+            Column::computed('name_badge')
+                ->title('Nama Role')
+                ->searchable(true)
+                ->orderable(true),
+            Column::computed('guard_name')
+                ->title('Guard')
+                ->searchable(true)
+                ->orderable(true),
+            Column::computed('user_count')
+                ->title('Pengguna')
+                ->searchable(false)
+                ->orderable(false),
+            Column::computed('subrole_count')
+                ->title('Subrole')
+                ->searchable(false)
+                ->orderable(false),
+        ];
+
+        if ($this->isTrash) {
+            $columns[] = Column::computed('deleted_by_name')
+                ->title('Dihapus Oleh')
+                ->searchable(false)
+                ->orderable(false)
+                ->addClass('no-export');
+            $columns[] = Column::computed('deleted_at_formatted')
+                ->title('Dihapus Pada')
+                ->searchable(false)
+                ->orderable(false)
+                ->addClass('no-export');
+        }
+
+        $columns[] = Column::computed('action')
+            ->title('Aksi')
+            ->exportable(false)
+            ->printable(false)
+            ->searchable(false)
+            ->orderable(false)
+            ->addClass('text-center no-export');
+
+        return $columns;
+    }
+
+    public function setTrash(bool $isTrash)
+    {
+        $this->isTrash = $isTrash;
+
+        return $this;
+    }
+
+    protected function filename(): string
+    {
+        $prefix = $this->isTrash ? 'Role_Trash_' : 'Role_';
+
+        return $prefix.date('YmdHis');
+    }
+}

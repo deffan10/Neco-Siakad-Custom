@@ -78,6 +78,7 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
         });
+
         Schema::create('program_studi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fakultas_id')->constrained('fakultas');
@@ -288,7 +289,7 @@ return new class extends Migration
         Schema::create('kelas_mahasiswa', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kelas_id')->constrained('kelas_perkuliahan');
-            $table->foreignId('mahasiswa_id')->constrained('data_mahasiswa');
+            $table->foreignId('mahasiswa_id')->constrained('users');
 
             // Audit fields
             $table->timestamps();

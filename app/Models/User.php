@@ -3,47 +3,35 @@
 namespace App\Models;
 
 // USE SYSTEM
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-// use App\Traits\HasLogAktivitas;
-use Spatie\Permission\Traits\HasRoles;
-// USE MODELS
-use App\Models\User\Subrole;
 use App\Models\Referensi\Agama;
-use App\Models\Referensi\Alamat;
 use App\Models\Referensi\GolonganDarah;
 use App\Models\Referensi\JenisKelamin;
-use App\Models\Referensi\Keluarga;
+// use App\Traits\HasLogAktivitas;
 use App\Models\Referensi\Kewarganegaraan;
-use App\Models\Referensi\Pendidikan;
+// USE MODELS
+use App\Models\User\Alamat;
+use App\Models\User\Keluarga;
+use App\Models\User\Pendidikan;
+use App\Models\User\Subrole;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles;// use SoftDeletes, HasLogAktivitas;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $table = 'users';
-    protected $guarded = [];
-    protected $guard_name = 'web';
 
-    public function owner() 
-    {
-        return $this->morphTo(); 
-    }
+    protected $guarded = [];
 
     // Shortcut
 
     public function getPhotoAttribute($value)
     {
-        return $value == 'default.jpg' ? asset('storage/images/profile/default.jpg') : asset('storage/images/profile/' . $value);
+        return $value == 'default.jpg' ? asset('storage/images/profile/default.jpg') : asset('storage/images/profile/'.$value);
     }
-
-    public function getPrefixAttribute()
-    {
-        // Return empty string for now - this can be customized based on user roles
-        return '';
-    }
-
 
     // Relations
 
@@ -54,17 +42,17 @@ class User extends Authenticatable
 
     public function alamats()
     {
-        return $this->morphMany(Alamat::class, 'owner');
+        return $this->hasMany(Alamat::class, 'user_id');
     }
 
     public function alamatKtp()
     {
-        return $this->morphMany(Alamat::class, 'owner')->where('tipe', 'ktp');
+        return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'ktp');
     }
-    
+
     public function alamatDomisili()
     {
-        return $this->morphMany(Alamat::class, 'owner')->where('tipe', 'domisili');
+        return $this->hasOne(Alamat::class, 'user_id')->where('tipe', 'domisili');
     }
 
     // Single address access methods
@@ -90,7 +78,7 @@ class User extends Authenticatable
 
     public function keluargas()
     {
-        return $this->morphMany(Keluarga::class, 'owner');
+        return $this->hasMany(Keluarga::class, 'user_id');
     }
 
     public function kewarganegaraan()
@@ -100,11 +88,53 @@ class User extends Authenticatable
 
     public function pendidikans()
     {
-        return $this->morphMany(Pendidikan::class, 'owner');
+        return $this->hasMany(Pendidikan::class, 'user_id');
     }
 
     public function subroles()
     {
         return $this->belongsToMany(Subrole::class, 'user_subroles')->withTimestamps();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    // ============ ROLE-SPECIFIC DATA RELATIONSHIPS ============
+
+    public function dataMahasiswa()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataMahasiswa::class, 'user_id');
+    }
+
+    public function dataKaryawan()
+    {
+        return $this->hasOne(\App\Models\User\DataKaryawan::class, 'user_id');
+    }
+
+    public function dataDosen()
+    {
+        return $this->hasOne(\App\Models\User\DataDosen::class, 'user_id');
+    }
+
+    public function dataPestaPMB()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataPestaPMB::class, 'user_id');
+    }
+
+    public function dataAlumni()
+    {
+        return $this->hasOne(\App\Models\Akademik\DataAlumni::class, 'user_id');
     }
 }

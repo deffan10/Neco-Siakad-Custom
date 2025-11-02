@@ -5,9 +5,12 @@ namespace App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subrole extends Model
 {
+    use SoftDeletes;
+    
     protected $fillable = ['role_id', 'name', 'label', 'description'];
 
     public function role()

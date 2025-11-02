@@ -24,101 +24,10 @@
     }
     .form-section {
         padding: 1.5rem;
-              }
     }
-    
-    // Submit edit form function
-    function submitEditForm() {
-        const form = document.getElementById('editMataKuliahForm');
-        if (!form) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Form edit tidak ditemukan'
-            });
-            return;
-        }
-        
-        // Get form data
-        const formData = new FormData(form);
-        // Add method spoofing for Laravel
-        formData.append('_method', 'PATCH');
-        const data = Object.fromEntries(formData.entries());
-        
-        // Get CSRF token
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
-                        document.querySelector('input[name="_token"]')?.value;
-        
-        if (!csrfToken) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'CSRF token tidak ditemukan'
-            });
-            return;
-        }
-        
-        // Show loading
-        Swal.fire({
-            title: 'Menyimpan...',
-            text: 'Mohon tunggu sebentar',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => {
-                Swal.showLoading();
-            }
-        });
-        
-        // Send PATCH request
-        fetch(form.action, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return response.json().then(data => {
-                    throw new Error(data.message || 'Terjadi kesalahan saat menyimpan');
-                });
-            }
-        })
-        .then(data => {
-            if (data.success) {
-                // Close modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editMataKuliahModal'));
-                if (modal) {
-                    modal.hide();
-                }
-                
-                // Show success message
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: data.message || 'Mata kuliah berhasil diperbarui',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    location.reload();
-                });
-            } else {
-                throw new Error(data.message || 'Terjadi kesalahan saat menyimpan');
-            }
-        })
-        .catch(error => {
-            console.error('Edit error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.message || 'Terjadi kesalahan saat menyimpan'
-            });
-        });
-    }rder-radius: 8px;
+
+   .border-radius: {
+        border-radius: 8px;
         margin-bottom: 1rem;
         border: 1px solid #e9ecef;
     }
@@ -691,8 +600,9 @@
                 }
                 
                 // Send DELETE request
+                const activeRole = '{{ $activeRole }}';
                 const baseUrl = window.location.origin;
-                const deleteUrl = `${baseUrl}/akademik/kurikulum/${kurikulumId}/mata-kuliah/${mataKuliahId}`;
+                const deleteUrl = `${baseUrl}/${activeRole}/akademik/kurikulum/${kurikulumId}/mata-kuliah/${mataKuliahId}`;
                 fetch(deleteUrl, {
                     method: 'DELETE',
                     headers: {

@@ -51,10 +51,6 @@
                 <form action="{{ route($activeRole . '.profile-update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
-                    <!-- Hidden inputs for deleted items -->
-                    <input type="hidden" name="deleted_pendidikan" id="deleted_pendidikan" value="">
-                    <input type="hidden" name="deleted_keluarga" id="deleted_keluarga" value="">
-                    
                     <!-- Nav Tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -87,6 +83,39 @@
                                 <i class="fas fa-users me-2"></i> Keluarga
                             </a>
                         </li>
+
+                        @if($activeRole === 'mahasiswa')
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-mahasiswa" role="tab">
+                                    <i class="fas fa-book me-2"></i> Data Akademik
+                                </a>
+                            </li>
+                        @elseif($activeRole === 'karyawan' || $activeRole === 'tendik')
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-karyawan" role="tab">
+                                    <i class="fas fa-briefcase me-2"></i> Data Karyawan
+                                </a>
+                            </li>
+                        @elseif($activeRole === 'dosen')
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-dosen" role="tab">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i> Data Dosen
+                                </a>
+                            </li>
+                        @elseif($activeRole === 'peserta-pmb')
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-pmb" role="tab">
+                                    <i class="fas fa-user-check me-2"></i> Data Pendaftaran
+                                </a>
+                            </li>
+                        @elseif($activeRole === 'alumni')
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#data-alumni" role="tab">
+                                    <i class="fas fa-graduation-cap me-2"></i> Data Alumni
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#keamanan" role="tab">
                                 <i class="fas fa-lock me-2"></i> Keamanan
@@ -388,7 +417,7 @@
                                                     </div>
                                                     <div class="col-md-2 mb-3">
                                                         <label class="form-label">Aksi</label>
-                                                        <button type="button" class="btn btn-danger btn-sm d-block delete-pendidikan" data-index="{{ $index }}">
+                                                        <button type="button" data-id="{{ $pendidikan->id }}" data-name="{{ $pendidikan->nama_institusi }}" class="btn btn-danger btn-sm d-block delete-pendidikan" data-index="{{ $index }}">
                                                             <i class="fas fa-trash"></i> Hapus
                                                         </button>
                                                     </div>
@@ -464,7 +493,7 @@
                                                     </div>
                                                     <div class="col-md-2 mb-3">
                                                         <label class="form-label">Aksi</label>
-                                                        <button type="button" class="btn btn-danger btn-sm d-block delete-keluarga" data-index="{{ $index }}">
+                                                        <button type="button" data-id="{{ $keluarga->id }}" data-name="{{ $keluarga->nama }}" class="btn btn-danger btn-sm d-block delete-keluarga" data-index="{{ $index }}">
                                                             <i class="fas fa-trash"></i> Hapus
                                                         </button>
                                                     </div>
@@ -502,6 +531,357 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Tab Data Mahasiswa (Student) -->
+                        @if($activeRole === 'mahasiswa')
+                        <div class="tab-pane" id="data-mahasiswa" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Akademik</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIM <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nim" value="{{ old('nim', $user->dataMahasiswa?->nim ?? '') }}" placeholder="Nomor Induk Mahasiswa" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Program Studi</label>
+                                        <select class="form-select" name="program_studi_id">
+                                            <option value="">Pilih Program Studi</option>
+                                            @if(isset($programStudis))
+                                                @foreach($programStudis as $ps)
+                                                    <option value="{{ $ps->id }}" {{ (old('program_studi_id') ?? $user->dataMahasiswa?->program_studi_id ?? null) == $ps->id ? 'selected' : '' }}>
+                                                        {{ $ps->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Angkatan</label>
+                                        <input type="number" class="form-control" name="angkatan" value="{{ old('angkatan', $user->dataMahasiswa?->angkatan ?? '') }}" placeholder="2021" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Masuk</label>
+                                        <input type="date" class="form-control" name="tanggal_masuk" value="{{ old('tanggal_masuk', $user->dataMahasiswa->tanggal_masuk ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">IPK</label>
+                                        <input type="number" step="0.01" class="form-control" name="ipk" value="{{ old('ipk', $user->dataMahasiswa->ipk ?? '') }}" placeholder="3.50" min="0" max="4">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">SKS Lulus</label>
+                                        <input type="number" class="form-control" name="sks_lulus" value="{{ old('sks_lulus', $user->dataMahasiswa->sks_lulus ?? '') }}" placeholder="120">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Jenis Pembiayaan</label>
+                                        <select class="form-select" name="jenis_pembiayaan">
+                                            <option value="">Pilih Jenis</option>
+                                            <option value="Mandiri" {{ (old('jenis_pembiayaan') ?? $user->dataMahasiswa->jenis_pembiayaan ?? null) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                            <option value="Beasiswa" {{ (old('jenis_pembiayaan') ?? $user->dataMahasiswa->jenis_pembiayaan ?? null) == 'Beasiswa' ? 'selected' : '' }}>Beasiswa</option>
+                                            <option value="Beasiswa Penuh" {{ (old('jenis_pembiayaan') ?? $user->dataMahasiswa->jenis_pembiayaan ?? null) == 'Beasiswa Penuh' ? 'selected' : '' }}>Beasiswa Penuh</option>
+                                            <option value="Subsidi" {{ (old('jenis_pembiayaan') ?? $user->dataMahasiswa->jenis_pembiayaan ?? null) == 'Subsidi' ? 'selected' : '' }}>Subsidi</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Asal Sekolah</label>
+                                        <input type="text" class="form-control" name="asal_sekolah" value="{{ old('asal_sekolah', $user->dataMahasiswa->asal_sekolah ?? '') }}" placeholder="Nama sekolah asal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Karyawan (Employee) -->
+                        @if($activeRole === 'karyawan' || $activeRole === 'tendik')
+                        <div class="tab-pane" id="data-karyawan" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Karyawan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIP <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nip" value="{{ old('nip', $user->dataKaryawan?->nip ?? '') }}" placeholder="Nomor Induk Pegawai" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIK</label>
+                                        <input type="text" class="form-control" name="nik" value="{{ old('nik', $user->dataKaryawan?->nik ?? '') }}" placeholder="Nomor Identitas Karyawan" maxlength="16">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Kerja</label>
+                                        <select class="form-select" name="status_kerja" required>
+                                            <option value="">Pilih Status</option>
+                                            <option value="Tetap" {{ (old('status_kerja') ?? $user->dataKaryawan?->status_kerja ?? null) == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                            <option value="Kontrak" {{ (old('status_kerja') ?? $user->dataKaryawan?->status_kerja ?? null) == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                            <option value="Honorer" {{ (old('status_kerja') ?? $user->dataKaryawan?->status_kerja ?? null) == 'Honorer' ? 'selected' : '' }}>Honorer</option>
+                                            <option value="Outsourcing" {{ (old('status_kerja') ?? $user->dataKaryawan?->status_kerja ?? null) == 'Outsourcing' ? 'selected' : '' }}>Outsourcing</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Bergabung</label>
+                                        <input type="date" class="form-control" name="tanggal_bergabung" value="{{ old('tanggal_bergabung', $user->dataKaryawan?->tanggal_bergabung ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Akhir Kontrak</label>
+                                        <input type="date" class="form-control" name="tanggal_berakhir_kontrak" value="{{ old('tanggal_berakhir_kontrak', $user->dataKaryawan?->tanggal_berakhir_kontrak ?? '') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Perbankan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">No. Rekening</label>
+                                        <input type="text" class="form-control" name="no_rekening" value="{{ old('no_rekening', $user->dataKaryawan?->no_rekening ?? '') }}" placeholder="1234567890">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nama Bank</label>
+                                        <input type="text" class="form-control" name="nama_bank" value="{{ old('nama_bank', $user->dataKaryawan?->nama_bank ?? '') }}" placeholder="Nama Bank">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Atas Nama Rekening</label>
+                                        <input type="text" class="form-control" name="atas_nama_rekening" value="{{ old('atas_nama_rekening', $user->dataKaryawan?->atas_nama_rekening ?? '') }}" placeholder="Nama Pemilik Rekening">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">NPWP</label>
+                                        <input type="text" class="form-control" name="npwp" value="{{ old('npwp', $user->dataKaryawan?->npwp ?? '') }}" placeholder="123456789012345" maxlength="15">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Dosen (Lecturer) -->
+                        @if($activeRole === 'dosen')
+                        <div class="tab-pane" id="data-dosen" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Identifikasi Dosen</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIDN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nidn" value="{{ old('nidn', $user->dataDosen?->nidn ?? '') }}" placeholder="Nomor Identitas Dosen Nasional" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NIP</label>
+                                        <input type="text" class="form-control" name="nip" value="{{ old('nip', $user->dataDosen?->nip ?? '') }}" placeholder="Nomor Induk Pegawai (jika ada)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Kepegawaian</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Dosen</label>
+                                        <select class="form-select" name="status_dosen">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Tetap" {{ (old('status_dosen') ?? $user->dataDosen?->status_dosen ?? null) == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                            <option value="Kontrak" {{ (old('status_dosen') ?? $user->dataDosen?->status_dosen ?? null) == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                            <option value="Tidak Tetap" {{ (old('status_dosen') ?? $user->dataDosen?->status_dosen ?? null) == 'Tidak Tetap' ? 'selected' : '' }}>Tidak Tetap</option>
+                                            <option value="Emeritus" {{ (old('status_dosen') ?? $user->dataDosen?->status_dosen ?? null) == 'Emeritus' ? 'selected' : '' }}>Emeritus</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Jenis Dosen</label>
+                                        <select class="form-select" name="jenis_dosen">
+                                            <option value="">Pilih Jenis</option>
+                                            <option value="Dosen Penuh" {{ (old('jenis_dosen') ?? $user->dataDosen?->jenis_dosen ?? null) == 'Dosen Penuh' ? 'selected' : '' }}>Dosen Penuh</option>
+                                            <option value="Dosen Luar Biasa" {{ (old('jenis_dosen') ?? $user->dataDosen?->jenis_dosen ?? null) == 'Dosen Luar Biasa' ? 'selected' : '' }}>Dosen Luar Biasa</option>
+                                            <option value="Doswal" {{ (old('jenis_dosen') ?? $user->dataDosen?->jenis_dosen ?? null) == 'Doswal' ? 'selected' : '' }}>Doswal</option>
+                                            <option value="Guest Lecturer" {{ (old('jenis_dosen') ?? $user->dataDosen?->jenis_dosen ?? null) == 'Guest Lecturer' ? 'selected' : '' }}>Guest Lecturer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tanggal Bergabung</label>
+                                        <input type="date" class="form-control" name="tanggal_bergabung" value="{{ old('tanggal_bergabung', $user->dataDosen?->tanggal_bergabung ?? '') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Akademik</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Bidang Keahlian</label>
+                                        <input type="text" class="form-control" name="bidang_keahlian" value="{{ old('bidang_keahlian', $user->dataDosen?->bidang_keahlian ?? '') }}" placeholder="Contoh: Teknologi Informasi">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Gelar Akademik</label>
+                                        <input type="text" class="form-control" name="gelar_akademik" value="{{ old('gelar_akademik', $user->dataDosen?->gelar_akademik ?? '') }}" placeholder="Contoh: S.Kom, M.Cs">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Riwayat Pendidikan</label>
+                                        <textarea class="form-control" name="riwayat_pendidikan" rows="3" placeholder="Masukkan riwayat pendidikan formal">{{ old('riwayat_pendidikan', $user->dataDosen?->riwayat_pendidikan ?? '') }}</textarea>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Sertifikasi</label>
+                                        <textarea class="form-control" name="sertifikasi" rows="3" placeholder="Masukkan sertifikasi yang dimiliki">{{ old('sertifikasi', $user->dataDosen?->sertifikasi ?? '') }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Perbankan</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">No. Rekening</label>
+                                        <input type="text" class="form-control" name="no_rekening" value="{{ old('no_rekening', $user->dataDosen?->no_rekening ?? '') }}" placeholder="1234567890">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nama Bank</label>
+                                        <input type="text" class="form-control" name="nama_bank" value="{{ old('nama_bank', $user->dataDosen?->nama_bank ?? '') }}" placeholder="Nama Bank">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">NPWP</label>
+                                        <input type="text" class="form-control" name="npwp" value="{{ old('npwp', $user->dataDosen?->npwp ?? '') }}" placeholder="123456789012345">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data PMB (New Student Admission) -->
+                        @if($activeRole === 'peserta-pmb')
+                        <div class="tab-pane" id="data-pmb" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Pendaftaran PMB</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nomor Pendaftaran <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nomor_pendaftaran" value="{{ old('nomor_pendaftaran', $user->dataPestaPMB?->nomor_pendaftaran ?? '') }}" placeholder="Nomor Pendaftaran PMB" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Tahun Masuk</label>
+                                        <input type="number" class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk', $user->dataPestaPMB?->tahun_masuk ?? '') }}" placeholder="{{ date('Y') }}" min="2000" max="{{ date('Y') + 5 }}">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Jalur Masuk</label>
+                                        <select class="form-select" name="jalur_masuk">
+                                            <option value="">Pilih Jalur</option>
+                                            <option value="SNMPTN" {{ (old('jalur_masuk') ?? $user->dataPestaPMB?->jalur_masuk ?? null) == 'SNMPTN' ? 'selected' : '' }}>SNMPTN</option>
+                                            <option value="SBMPTN" {{ (old('jalur_masuk') ?? $user->dataPestaPMB?->jalur_masuk ?? null) == 'SBMPTN' ? 'selected' : '' }}>SBMPTN</option>
+                                            <option value="Mandiri" {{ (old('jalur_masuk') ?? $user->dataPestaPMB?->jalur_masuk ?? null) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                            <option value="Khusus" {{ (old('jalur_masuk') ?? $user->dataPestaPMB?->jalur_masuk ?? null) == 'Khusus' ? 'selected' : '' }}>Khusus</option>
+                                            <option value="Transfer" {{ (old('jalur_masuk') ?? $user->dataPestaPMB?->jalur_masuk ?? null) == 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Status Pendaftaran</label>
+                                        <select class="form-select" name="status_pendaftaran">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Menunggu" {{ (old('status_pendaftaran') ?? $user->dataPestaPMB?->status_pendaftaran ?? null) == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                            <option value="Lolos" {{ (old('status_pendaftaran') ?? $user->dataPestaPMB?->status_pendaftaran ?? null) == 'Lolos' ? 'selected' : '' }}>Lolos</option>
+                                            <option value="Tidak Lolos" {{ (old('status_pendaftaran') ?? $user->dataPestaPMB?->status_pendaftaran ?? null) == 'Tidak Lolos' ? 'selected' : '' }}>Tidak Lolos</option>
+                                            <option value="Daftar Ulang" {{ (old('status_pendaftaran') ?? $user->dataPestaPMB?->status_pendaftaran ?? null) == 'Daftar Ulang' ? 'selected' : '' }}>Daftar Ulang</option>
+                                            <option value="Batal" {{ (old('status_pendaftaran') ?? $user->dataPestaPMB?->status_pendaftaran ?? null) == 'Batal' ? 'selected' : '' }}>Batal</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Program Pilihan 1</label>
+                                        <input type="text" class="form-control" name="program_pilihan_1" value="{{ old('program_pilihan_1', $user->dataPestaPMB?->program_pilihan_1 ?? '') }}" placeholder="Program studi pilihan utama">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Program Pilihan 2</label>
+                                        <input type="text" class="form-control" name="program_pilihan_2" value="{{ old('program_pilihan_2', $user->dataPestaPMB?->program_pilihan_2 ?? '') }}" placeholder="Program studi pilihan alternatif">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Tes Tulis</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_tes_tulis" value="{{ old('nilai_tes_tulis', $user->dataPestaPMB?->nilai_tes_tulis ?? '') }}" placeholder="0.00">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Wawancara</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_wawancara" value="{{ old('nilai_wawancara', $user->dataPestaPMB?->nilai_wawancara ?? '') }}" placeholder="0.00">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nilai Akhir</label>
+                                        <input type="number" step="0.01" class="form-control" name="nilai_akhir" value="{{ old('nilai_akhir', $user->dataPestaPMB?->nilai_akhir ?? '') }}" placeholder="0.00" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Tab Data Alumni -->
+                        @if($activeRole === 'alumni')
+                        <div class="tab-pane" id="data-alumni" role="tabpanel">
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Alumni</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Nomor Alumni</label>
+                                        <input type="text" class="form-control" name="nomor_alumni" value="{{ old('nomor_alumni', $user->dataAlumni?->nomor_alumni ?? '') }}" placeholder="Nomor Alumni" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Angkatan</label>
+                                        <input type="number" class="form-control" name="angkatan" value="{{ old('angkatan', $user->dataAlumni?->angkatan ?? '') }}" placeholder="2020" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tahun Lulus</label>
+                                        <input type="number" class="form-control" name="tahun_lulus" value="{{ old('tahun_lulus', $user->dataAlumni?->tahun_lulus ?? '') }}" placeholder="{{ date('Y') }}" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Tanggal Lulus</label>
+                                        <input type="date" class="form-control" name="tanggal_lulus" value="{{ old('tanggal_lulus', $user->dataAlumni?->tanggal_lulus ?? '') }}">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">IPK Akhir</label>
+                                        <input type="number" step="0.01" class="form-control" name="ipk_akhir" value="{{ old('ipk_akhir', $user->dataAlumni?->ipk_akhir ?? '') }}" placeholder="3.50" min="0" max="4">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Predikat Lulus</label>
+                                        <input type="text" class="form-control" name="predikat_lulus" value="{{ old('predikat_lulus', $user->dataAlumni?->predikat_lulus ?? '') }}" placeholder="Cum Laude, Sangat Memuaskan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Informasi Karir</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Status Pekerjaan</label>
+                                        <select class="form-select" name="status_pekerjaan">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Bekerja" {{ (old('status_pekerjaan') ?? $user->dataAlumni?->status_pekerjaan ?? null) == 'Bekerja' ? 'selected' : '' }}>Bekerja</option>
+                                            <option value="Belum Bekerja" {{ (old('status_pekerjaan') ?? $user->dataAlumni?->status_pekerjaan ?? null) == 'Belum Bekerja' ? 'selected' : '' }}>Belum Bekerja</option>
+                                            <option value="Melanjutkan Studi" {{ (old('status_pekerjaan') ?? $user->dataAlumni?->status_pekerjaan ?? null) == 'Melanjutkan Studi' ? 'selected' : '' }}>Melanjutkan Studi</option>
+                                            <option value="Wiraswasta" {{ (old('status_pekerjaan') ?? $user->dataAlumni?->status_pekerjaan ?? null) == 'Wiraswasta' ? 'selected' : '' }}>Wiraswasta</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Bidang Pekerjaan</label>
+                                        <input type="text" class="form-control" name="bidang_pekerjaan" value="{{ old('bidang_pekerjaan', $user->dataAlumni?->bidang_pekerjaan ?? '') }}" placeholder="Contoh: IT, HRD">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Tahun Mulai Bekerja</label>
+                                        <input type="number" class="form-control" name="tahun_mulai_bekerja" value="{{ old('tahun_mulai_bekerja', $user->dataAlumni?->tahun_mulai_bekerja ?? '') }}" placeholder="{{ date('Y') }}" min="1990" max="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Instansi Pekerjaan</label>
+                                        <input type="text" class="form-control" name="instansi_pekerjaan" value="{{ old('instansi_pekerjaan', $user->dataAlumni?->instansi_pekerjaan ?? '') }}" placeholder="Nama perusahaan / instansi">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Lokasi Pekerjaan</label>
+                                        <input type="text" class="form-control" name="lokasi_pekerjaan" value="{{ old('lokasi_pekerjaan', $user->dataAlumni?->lokasi_pekerjaan ?? '') }}" placeholder="Kota / Lokasi kerja">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Jabatan Pekerjaan</label>
+                                        <input type="text" class="form-control" name="jabatan_pekerjaan" value="{{ old('jabatan_pekerjaan', $user->dataAlumni?->jabatan_pekerjaan ?? '') }}" placeholder="Posisi / Jabatan">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Melanjutkan Ke (Universitas)</label>
+                                        <input type="text" class="form-control" name="melanjutkan_ke" value="{{ old('melanjutkan_ke', $user->dataAlumni?->melanjutkan_ke ?? '') }}" placeholder="Nama universitas (jika melanjutkan studi)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h5 class="mb-3">Catatan Tambahan</h5>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <textarea class="form-control" name="catatan" rows="3" placeholder="Catatan tambahan tentang alumni">{{ old('catatan', $user->dataAlumni?->catatan ?? '') }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
                         <!-- Tab Keamanan -->
                         <div class="tab-pane" id="keamanan" role="tabpanel">
@@ -547,7 +927,7 @@
                     <!-- Submit Button -->
                     <div class="text-end mt-3">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Simpan Perubahan
+                            <i class="fas fa-save me-2"></i> Simpan Perubahan
                         </button>
                     </div>
                 </form>
@@ -559,25 +939,42 @@
 
 @section('custom-js')
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    initializeImagePreview();
+    initializeDeleteButtons();
+});
+
+// Global variables
+let pendidikanIndex = {{ count($user->pendidikans) }};
+let keluargaIndex = {{ count($user->keluargas) }};
+const activeRole = '{{ $activeRole }}';
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+// ========== IMAGE PREVIEW FUNCTIONS ==========
+function initializeImagePreview() {
+    const photoInput = document.querySelector('input[name="photo"]');
+    if (photoInput) {
+        photoInput.addEventListener('change', function() {
+            if (this.files.length === 0) {
+                resetImagePreview();
+            } else {
+                previewImage(this);
+            }
+        });
+    }
+}
+
 function previewImage(input) {
     if (input.files && input.files[0]) {
-        // Validasi file type
-        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
         const file = input.files[0];
         
-        if (!allowedTypes.includes(file.type)) {
-            alert('File harus berupa gambar (JPEG, JPG, PNG, atau GIF)');
+        // Validasi file
+        if (!validateImageFile(file)) {
             input.value = '';
             return;
         }
         
-        // Validasi ukuran file (max 2MB)
-        if (file.size > 2 * 1024 * 1024) {
-            alert('Ukuran file maksimal 2MB');
-            input.value = '';
-            return;
-        }
-        
+        // Preview image
         const reader = new FileReader();
         reader.onload = function(e) {
             const previewPhoto = document.getElementById('previewPhoto');
@@ -586,42 +983,61 @@ function previewImage(input) {
             }
         }
         reader.onerror = function() {
-            alert('Terjadi kesalahan saat membaca file');
+            showError('Terjadi kesalahan saat membaca file');
             input.value = '';
         }
         reader.readAsDataURL(file);
     }
 }
 
-// Tambahan: Reset preview jika input dikosongkan
-document.addEventListener('DOMContentLoaded', function() {
-    const photoInput = document.querySelector('input[name="photo"]');
-    if (photoInput) {
-        photoInput.addEventListener('change', function() {
-            if (this.files.length === 0) {
-                // Reset ke foto asli jika tidak ada file yang dipilih
-                const previewPhoto = document.getElementById('previewPhoto');
-                const originalSrc = '{{ $user->photo }}';
-                if (previewPhoto && originalSrc) {
-                    previewPhoto.src = originalSrc;
-                }
-            }
-        });
+function validateImageFile(file) {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    
+    if (!allowedTypes.includes(file.type)) {
+        showError('File harus berupa gambar (JPEG, JPG, PNG, atau GIF)');
+        return false;
     }
-});
+    
+    if (file.size > maxSize) {
+        showError('Ukuran file maksimal 2MB');
+        return false;
+    }
+    
+    return true;
+}
 
-// Pendidikan Functions
-let pendidikanIndex = {{ count($user->pendidikans) }};
+function resetImagePreview() {
+    const previewPhoto = document.getElementById('previewPhoto');
+    const originalSrc = '{{ $user->photo }}';
+    if (previewPhoto && originalSrc) {
+        previewPhoto.src = originalSrc;
+    }
+}
 
+// ========== PENDIDIKAN FUNCTIONS ==========
 function addPendidikan() {
     const container = document.getElementById('pendidikan-container');
-    const template = `
-        <div class="card mb-3 pendidikan-item" data-index="${pendidikanIndex}">
+    
+    // Remove empty message if exists
+    const emptyMessage = container.querySelector('.text-muted');
+    if (emptyMessage) {
+        emptyMessage.remove();
+    }
+    
+    const template = createPendidikanTemplate(pendidikanIndex);
+    container.insertAdjacentHTML('beforeend', template);
+    pendidikanIndex++;
+}
+
+function createPendidikanTemplate(index) {
+    return `
+        <div class="card mb-3 pendidikan-item" data-index="${index}">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Jenjang Pendidikan</label>
-                        <select class="form-select" name="pendidikan[${pendidikanIndex}][jenjang]" required>
+                        <label class="form-label">Jenjang Pendidikan <span class="text-danger">*</span></label>
+                        <select class="form-select" name="pendidikan[${index}][jenjang]" required>
                             <option value="">Pilih Jenjang</option>
                             <option value="Paket C">Paket C</option>
                             <option value="SMA">SMA</option>
@@ -633,61 +1049,142 @@ function addPendidikan() {
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Nama Institusi</label>
-                        <input type="text" class="form-control" name="pendidikan[${pendidikanIndex}][nama_institusi]" 
+                        <label class="form-label">Nama Institusi <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="pendidikan[${index}][nama_institusi]" 
                                placeholder="Nama sekolah/universitas" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Jurusan/Program Studi</label>
-                        <input type="text" class="form-control" name="pendidikan[${pendidikanIndex}][jurusan]" 
+                        <input type="text" class="form-control" name="pendidikan[${index}][jurusan]" 
                                placeholder="Nama jurusan/prodi">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label">Aksi</label>
-                        <button type="button" class="btn btn-danger btn-sm d-block delete-pendidikan" data-index="${pendidikanIndex}">
+                        <button type="button" class="btn btn-danger btn-sm d-block delete-pendidikan" data-index="${index}">
                             <i class="fas fa-trash"></i> Hapus
                         </button>
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label">Tahun Masuk</label>
-                        <input type="number" class="form-control" name="pendidikan[${pendidikanIndex}][tahun_masuk]" 
+                        <input type="number" class="form-control" name="pendidikan[${index}][tahun_masuk]" 
                                placeholder="2020" min="1950" max="{{ date('Y') }}">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label">Tahun Lulus</label>
-                        <input type="number" class="form-control" name="pendidikan[${pendidikanIndex}][tahun_lulus]" 
+                        <input type="number" class="form-control" name="pendidikan[${index}][tahun_lulus]" 
                                placeholder="2024" min="1950" max="{{ date('Y') + 10 }}">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label">IPK/Nilai</label>
-                        <input type="text" class="form-control" name="pendidikan[${pendidikanIndex}][ipk]" 
+                        <input type="text" class="form-control" name="pendidikan[${index}][ipk]" 
                                placeholder="3.50">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Alamat Institusi</label>
-                        <textarea class="form-control" name="pendidikan[${pendidikanIndex}][alamat]" rows="2" 
+                        <textarea class="form-control" name="pendidikan[${index}][alamat]" rows="2" 
                                   placeholder="Alamat lengkap institusi"></textarea>
                     </div>
                 </div>
             </div>
         </div>`;
-    
-    container.insertAdjacentHTML('beforeend', template);
-    pendidikanIndex++;
 }
 
-// Keluarga Functions
-let keluargaIndex = {{ count($user->keluargas) }};
+function removePendidikan(pendidikanId, index, pendidikanName = '') {
+    const title = pendidikanName ? `Hapus Pendidikan "${pendidikanName}"` : 'Hapus Pendidikan';
+    const text = pendidikanName ? 
+        `Apakah Anda yakin ingin menghapus pendidikan "${pendidikanName}"?` : 
+        'Apakah Anda yakin ingin menghapus data pendidikan ini?';
+    
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (pendidikanId) {
+                deletePendidikanFromServer(pendidikanId, index);
+            } else {
+                removePendidikanFromDOM(index);
+            }
+        }
+    });
+}
 
+function deletePendidikanFromServer(pendidikanId, index) {
+    showLoadingAlert('Menghapus pendidikan...');
+    
+    fetch(`/${activeRole}/profile/pendidikan/${pendidikanId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showSuccessAlert(data.message || 'Data pendidikan berhasil dihapus');
+            removePendidikanFromDOM(index);
+        } else {
+            throw new Error(data.message || 'Gagal menghapus data pendidikan');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting pendidikan:', error);
+        showError(error.message || 'Terjadi kesalahan saat menghapus data');
+    });
+}
+
+function removePendidikanFromDOM(index) {
+    const item = document.querySelector(`.pendidikan-item[data-index="${index}"]`);
+    if (item) {
+        item.remove();
+        checkEmptyPendidikanContainer();
+    }
+}
+
+function checkEmptyPendidikanContainer() {
+    const container = document.getElementById('pendidikan-container');
+    if (container.children.length === 0) {
+        container.innerHTML = '<p class="text-muted text-center">Belum ada data pendidikan. Klik tombol "Tambah Pendidikan" untuk menambah data.</p>';
+    }
+}
+
+// ========== KELUARGA FUNCTIONS ==========
 function addKeluarga() {
     const container = document.getElementById('keluarga-container');
-    const template = `
-        <div class="card mb-3 keluarga-item" data-index="${keluargaIndex}">
+    
+    // Remove empty message if exists
+    const emptyMessage = container.querySelector('.text-muted');
+    if (emptyMessage) {
+        emptyMessage.remove();
+    }
+    
+    const template = createKeluargaTemplate(keluargaIndex);
+    container.insertAdjacentHTML('beforeend', template);
+    keluargaIndex++;
+}
+
+function createKeluargaTemplate(index) {
+    return `
+        <div class="card mb-3 keluarga-item" data-index="${index}">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Hubungan Keluarga</label>
-                        <select class="form-select" name="keluarga[${keluargaIndex}][hubungan]" required>
+                        <label class="form-label">Hubungan Keluarga <span class="text-danger">*</span></label>
+                        <select class="form-select" name="keluarga[${index}][hubungan]" required>
                             <option value="">Pilih Hubungan</option>
                             <option value="Ayah">Ayah</option>
                             <option value="Ibu">Ibu</option>
@@ -700,133 +1197,158 @@ function addKeluarga() {
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" name="keluarga[${keluargaIndex}][nama]" 
+                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="keluarga[${index}][nama]" 
                                placeholder="Nama lengkap anggota keluarga" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Pekerjaan</label>
-                        <input type="text" class="form-control" name="keluarga[${keluargaIndex}][pekerjaan]" 
+                        <input type="text" class="form-control" name="keluarga[${index}][pekerjaan]" 
                                placeholder="Pekerjaan/profesi">
                     </div>
                     <div class="col-md-2 mb-3">
                         <label class="form-label">Aksi</label>
-                        <button type="button" class="btn btn-danger btn-sm d-block delete-keluarga" data-index="${keluargaIndex}">
+                        <button type="button" class="btn btn-danger btn-sm d-block delete-keluarga" data-index="${index}">
                             <i class="fas fa-trash"></i> Hapus
                         </button>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Nomor Telepon</label>
-                        <input type="text" class="form-control" name="keluarga[${keluargaIndex}][telepon]" 
+                        <input type="text" class="form-control" name="keluarga[${index}][telepon]" 
                                placeholder="081234567890">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Tempat Lahir</label>
-                        <input type="text" class="form-control" name="keluarga[${keluargaIndex}][tempat_lahir]" 
+                        <input type="text" class="form-control" name="keluarga[${index}][tempat_lahir]" 
                                placeholder="Jakarta">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" name="keluarga[${keluargaIndex}][tanggal_lahir]">
+                        <input type="date" class="form-control" name="keluarga[${index}][tanggal_lahir]">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Penghasilan (Rp)</label>
-                        <input type="number" class="form-control" name="keluarga[${keluargaIndex}][penghasilan]" 
+                        <input type="number" class="form-control" name="keluarga[${index}][penghasilan]" 
                                placeholder="5000000">
                     </div>
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Alamat</label>
-                        <textarea class="form-control" name="keluarga[${keluargaIndex}][alamat]" rows="2" 
+                        <textarea class="form-control" name="keluarga[${index}][alamat]" rows="2" 
                                   placeholder="Alamat lengkap"></textarea>
                     </div>
                 </div>
             </div>
         </div>`;
-    
-    container.insertAdjacentHTML('beforeend', template);
-    keluargaIndex++;
 }
 
-// === HAPUS PENDIDIKAN ===
-function removePendidikan(index) {
-  if (!confirm('Apakah Anda yakin ingin menghapus data pendidikan ini?')) {
-    return;
-  }
-
-  const item = document.querySelector(`.pendidikan-item[data-index="${index}"]`);
-  if (item) {
-    item.remove();
+function removeKeluarga(keluargaId, index, keluargaName = '') {
+    const title = keluargaName ? `Hapus Keluarga "${keluargaName}"` : 'Hapus Data Keluarga';
+    const text = keluargaName ? 
+        `Apakah Anda yakin ingin menghapus data keluarga "${keluargaName}"?` : 
+        'Apakah Anda yakin ingin menghapus data keluarga ini?';
     
-    // Show "no data" message if no items left
-    const container = document.getElementById('pendidikan-container');
-    if (container.children.length === 0) {
-      container.innerHTML = '<p class="text-muted text-center">Belum ada data pendidikan. Klik tombol "Tambah Pendidikan" untuk menambah data.</p>';
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (keluargaId) {
+                deleteKeluargaFromServer(keluargaId, index);
+            } else {
+                removeKeluargaFromDOM(index);
+            }
+        }
+    });
+}
+
+function deleteKeluargaFromServer(keluargaId, index) {
+    showLoadingAlert('Menghapus data keluarga...');
+    
+    fetch(`/${activeRole}/profile/keluarga/${keluargaId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showSuccessAlert(data.message || 'Data keluarga berhasil dihapus');
+            removeKeluargaFromDOM(index);
+        } else {
+            throw new Error(data.message || 'Gagal menghapus data keluarga');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting keluarga:', error);
+        showError(error.message || 'Terjadi kesalahan saat menghapus data');
+    });
+}
+
+function removeKeluargaFromDOM(index) {
+    const item = document.querySelector(`.keluarga-item[data-index="${index}"]`);
+    if (item) {
+        item.remove();
+        checkEmptyKeluargaContainer();
     }
-  }
 }
 
-function removeKeluarga(index) {
-  if (!confirm('Apakah Anda yakin ingin menghapus data keluarga ini?')) {
-    return;
-  }
-
-  const item = document.querySelector(`.keluarga-item[data-index="${index}"]`);
-  if (item) {
-    item.remove();
-    
-    // Show "no data" message if no items left
+function checkEmptyKeluargaContainer() {
     const container = document.getElementById('keluarga-container');
     if (container.children.length === 0) {
-      container.innerHTML = '<p class="text-muted text-center">Belum ada data keluarga. Klik tombol "Tambah Anggota Keluarga" untuk menambah data.</p>';
+        container.innerHTML = '<p class="text-muted text-center">Belum ada data keluarga. Klik tombol "Tambah Anggota Keluarga" untuk menambah data.</p>';
     }
-  }
 }
 
-// Tambahkan function copy alamat KTP ke Domisili
+// ========== ALAMAT FUNCTIONS ==========
 function copyFromKTP() {
     const checkbox = document.getElementById('samaDenganKTP');
+    const ktpFields = ['alamat_lengkap', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota_kabupaten', 'provinsi', 'kode_pos'];
+    
     if (checkbox.checked) {
-        // Copy alamat KTP ke domisili
-        document.getElementById('domisili_alamat_lengkap').value = document.querySelector('textarea[name="alamat_ktp[alamat_lengkap]"]').value;
-        document.getElementById('domisili_rt').value = document.querySelector('input[name="alamat_ktp[rt]"]').value;
-        document.getElementById('domisili_rw').value = document.querySelector('input[name="alamat_ktp[rw]"]').value;
-        document.getElementById('domisili_kelurahan').value = document.querySelector('input[name="alamat_ktp[kelurahan]"]').value;
-        document.getElementById('domisili_kecamatan').value = document.querySelector('input[name="alamat_ktp[kecamatan]"]').value;
-        document.getElementById('domisili_kota_kabupaten').value = document.querySelector('input[name="alamat_ktp[kota_kabupaten]"]').value;
-        document.getElementById('domisili_provinsi').value = document.querySelector('input[name="alamat_ktp[provinsi]"]').value;
-        document.getElementById('domisili_kode_pos').value = document.querySelector('input[name="alamat_ktp[kode_pos]"]').value;
+        ktpFields.forEach(field => {
+            const ktpInput = document.querySelector(`[name="alamat_ktp[${field}]"]`);
+            const domisiliInput = document.getElementById(`domisili_${field}`);
+            if (ktpInput && domisiliInput) {
+                domisiliInput.value = ktpInput.value;
+            }
+        });
     } else {
-        // Clear domisili fields
-        document.getElementById('domisili_alamat_lengkap').value = '';
-        document.getElementById('domisili_rt').value = '';
-        document.getElementById('domisili_rw').value = '';
-        document.getElementById('domisili_kelurahan').value = '';
-        document.getElementById('domisili_kecamatan').value = '';
-        document.getElementById('domisili_kota_kabupaten').value = '';
-        document.getElementById('domisili_provinsi').value = '';
-        document.getElementById('domisili_kode_pos').value = '';
+        ktpFields.forEach(field => {
+            const domisiliInput = document.getElementById(`domisili_${field}`);
+            if (domisiliInput) {
+                domisiliInput.value = '';
+            }
+        });
     }
 }
 
-// Show success/error messages are now handled by realrashid Alert package automatically
-// Event delegation for delete buttons
-document.addEventListener('DOMContentLoaded', function() {
+// ========== EVENT HANDLERS ==========
+function initializeDeleteButtons() {
     document.addEventListener('click', function(e) {
         // Handle delete pendidikan
         if (e.target.closest('.delete-pendidikan')) {
             e.preventDefault();
             const button = e.target.closest('.delete-pendidikan');
             const index = button.getAttribute('data-index');
+            const pendidikanId = button.getAttribute('data-id');
+            const pendidikanName = button.getAttribute('data-name');
             
-            // Add to deleted pendidikan list
-            const deletedInput = document.getElementById('deleted_pendidikan');
-            if (deletedInput.value) {
-                deletedInput.value += ',' + index;
-            } else {
-                deletedInput.value = index;
-            }
-            
-            removePendidikan(index);
+            removePendidikan(pendidikanId, index, pendidikanName);
         }
         
         // Handle delete keluarga
@@ -834,19 +1356,46 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const button = e.target.closest('.delete-keluarga');
             const index = button.getAttribute('data-index');
+            const keluargaId = button.getAttribute('data-id');
+            const keluargaName = button.getAttribute('data-name');
             
-            // Add to deleted keluarga list
-            const deletedInput = document.getElementById('deleted_keluarga');
-            if (deletedInput.value) {
-                deletedInput.value += ',' + index;
-            } else {
-                deletedInput.value = index;
-            }
-            
-            removeKeluarga(index);
+            removeKeluarga(keluargaId, index, keluargaName);
         }
     });
-});
+}
+
+// ========== UTILITY FUNCTIONS ==========
+function showLoadingAlert(message = 'Memproses...') {
+    Swal.fire({
+        title: message,
+        text: 'Mohon tunggu sebentar',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        willOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+
+function showSuccessAlert(message, timer = 2000) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: message,
+        timer: timer,
+        showConfirmButton: false
+    });
+}
+
+function showError(message) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: message,
+        confirmButtonText: 'OK'
+    });
+}
 </script>
 @endsection
 
