@@ -347,6 +347,41 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     // Impersonate (Admin trigger)
     Route::get('/impersonate/{id}', [App\Http\Controllers\Admin\ImpersonateController::class, 'impersonate'])->name('impersonate');
 
+    // Modul Wisuda (Admin)
+    Route::get('/wisuda/settings', [App\Http\Controllers\Akademik\WisudaController::class, 'indexAdmin'])->name('wisuda.settings');
+    Route::post('/wisuda/settings', [App\Http\Controllers\Akademik\WisudaController::class, 'storeKegiatan'])->name('wisuda.settings.store');
+    Route::post('/wisuda/{id}/toggle', [App\Http\Controllers\Akademik\WisudaController::class, 'toggleKegiatan'])->name('wisuda.toggle');
+    Route::get('/wisuda/{id}/applicants', [App\Http\Controllers\Akademik\WisudaController::class, 'applicants'])->name('wisuda.applicants');
+    Route::post('/wisuda/{id}/verify', [App\Http\Controllers\Akademik\WisudaController::class, 'verifyApplicant'])->name('wisuda.verify');
+
+    // Modul SKL (Admin)
+    Route::get('/skl', [App\Http\Controllers\Akademik\SklController::class, 'indexAdmin'])->name('skl.index');
+    Route::get('/skl/create', [App\Http\Controllers\Akademik\SklController::class, 'createForm'])->name('skl.create');
+    Route::post('/skl', [App\Http\Controllers\Akademik\SklController::class, 'store'])->name('skl.store');
+    Route::get('/skl/{id}/print', [App\Http\Controllers\Akademik\SklController::class, 'print'])->name('skl.print');
+    Route::delete('/skl/{id}', [App\Http\Controllers\Akademik\SklController::class, 'destroy'])->name('skl.destroy');
+    Route::get('/skl/get-student-data/{id}', [App\Http\Controllers\Akademik\SklController::class, 'getStudentData'])->name('skl.student-data');
+
+    // Modul Kuesioner (Admin)
+    Route::get('/kuesioner', [App\Http\Controllers\Akademik\KuesionerController::class, 'indexAdmin'])->name('kuesioner.index');
+    Route::post('/kuesioner', [App\Http\Controllers\Akademik\KuesionerController::class, 'store'])->name('kuesioner.store');
+    Route::post('/kuesioner/{id}/toggle', [App\Http\Controllers\Akademik\KuesionerController::class, 'togglePublish'])->name('kuesioner.toggle');
+    Route::delete('/kuesioner/{id}', [App\Http\Controllers\Akademik\KuesionerController::class, 'destroy'])->name('kuesioner.destroy');
+    Route::get('/kuesioner/{id}/questions', [App\Http\Controllers\Akademik\KuesionerController::class, 'questions'])->name('kuesioner.questions');
+    Route::post('/kuesioner/{id}/questions', [App\Http\Controllers\Akademik\KuesionerController::class, 'storeQuestion'])->name('kuesioner.questions.store');
+    Route::delete('/kuesioner/questions/{id}', [App\Http\Controllers\Akademik\KuesionerController::class, 'destroyQuestion'])->name('kuesioner.questions.destroy');
+    Route::get('/kuesioner/{id}/results', [App\Http\Controllers\Akademik\KuesionerController::class, 'results'])->name('kuesioner.results');
+
+    // Lock Jurnal (Admin)
+    Route::get('/lock-jurnal', [App\Http\Controllers\Akademik\LockJurnalController::class, 'indexAdmin'])->name('lock-jurnal.index');
+    Route::post('/lock-jurnal/{id}/toggle', [App\Http\Controllers\Akademik\LockJurnalController::class, 'toggleLock'])->name('lock-jurnal.toggle');
+    Route::post('/lock-jurnal/bulk', [App\Http\Controllers\Akademik\LockJurnalController::class, 'bulkLock'])->name('lock-jurnal.bulk');
+
+    // Broadcast Email (Admin)
+    Route::get('/broadcast', [App\Http\Controllers\Akademik\BroadcastController::class, 'index'])->name('broadcast.index');
+    Route::get('/broadcast/create', [App\Http\Controllers\Akademik\BroadcastController::class, 'createForm'])->name('broadcast.create');
+    Route::post('/broadcast/send', [App\Http\Controllers\Akademik\BroadcastController::class, 'send'])->name('broadcast.send');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
@@ -386,6 +421,10 @@ Route::middleware(['auth', 'active_role:dosen'])->prefix('dosen')->as('dosen.')-
     Route::get('/nilai/kelas', [App\Http\Controllers\Akademik\NilaiController::class, 'indexKelas'])->name('nilai.kelas-index');
     Route::get('/nilai/kelas/{id}/form', [App\Http\Controllers\Akademik\NilaiController::class, 'showFormNilai'])->name('nilai.kelas-form');
     Route::post('/nilai/kelas/{id}/store', [App\Http\Controllers\Akademik\NilaiController::class, 'storeNilai'])->name('nilai.kelas-store');
+
+    // Jurnal Mengajar Dosen
+    Route::get('/jurnal', [App\Http\Controllers\Akademik\LockJurnalController::class, 'indexDosen'])->name('jurnal.index');
+    Route::post('/jurnal/{id}/update', [App\Http\Controllers\Akademik\LockJurnalController::class, 'updateJurnal'])->name('jurnal.update');
 });
 
 Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('mahasiswa.')->group(function () {
@@ -402,6 +441,20 @@ Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('m
     // KHS & Transkrip Mahasiswa
     Route::get('/khs', [App\Http\Controllers\Akademik\NilaiController::class, 'indexKhs'])->name('khs.index');
     Route::get('/transkrip', [App\Http\Controllers\Akademik\NilaiController::class, 'indexTranskrip'])->name('transkrip.index');
+
+    // Wisuda Mahasiswa
+    Route::get('/wisuda', [App\Http\Controllers\Akademik\WisudaController::class, 'indexStudent'])->name('wisuda.index');
+    Route::post('/wisuda/store', [App\Http\Controllers\Akademik\WisudaController::class, 'storePendaftaran'])->name('wisuda.store');
+    Route::get('/wisuda/{id}/submit', [App\Http\Controllers\Akademik\WisudaController::class, 'submitPendaftaran'])->name('wisuda.submit');
+
+    // SKL Mahasiswa
+    Route::get('/skl', [App\Http\Controllers\Akademik\SklController::class, 'indexStudent'])->name('skl.index');
+    Route::get('/skl/{id}/print', [App\Http\Controllers\Akademik\SklController::class, 'print'])->name('skl.print');
+
+    // Kuesioner Mahasiswa
+    Route::get('/kuesioner', [App\Http\Controllers\Akademik\KuesionerController::class, 'indexPortal'])->name('kuesioner.index');
+    Route::get('/kuesioner/{id}', [App\Http\Controllers\Akademik\KuesionerController::class, 'showForm'])->name('kuesioner.show');
+    Route::post('/kuesioner/{id}/submit', [App\Http\Controllers\Akademik\KuesionerController::class, 'submitForm'])->name('kuesioner.submit');
 });
 
 Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->as('peserta-pmb.')->group(function () {
@@ -410,6 +463,11 @@ Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->a
 
 Route::middleware(['auth', 'active_role:alumni'])->prefix('alumni')->as('alumni.')->group(function () {
     require __DIR__.'/basic-routes.php';
+
+    // Kuesioner Alumni
+    Route::get('/kuesioner', [App\Http\Controllers\Akademik\KuesionerController::class, 'indexPortal'])->name('kuesioner.index');
+    Route::get('/kuesioner/{id}', [App\Http\Controllers\Akademik\KuesionerController::class, 'showForm'])->name('kuesioner.show');
+    Route::post('/kuesioner/{id}/submit', [App\Http\Controllers\Akademik\KuesionerController::class, 'submitForm'])->name('kuesioner.submit');
 });
 
 // Global impersonation leave session

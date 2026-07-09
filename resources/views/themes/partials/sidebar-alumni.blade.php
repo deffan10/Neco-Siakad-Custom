@@ -29,3 +29,11 @@
         <span class="nav-link-title">Profile</span>
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('*.kuesioner*') ? 'active' : '' }}" href="{{ route(session('active_role', 'alumni') . '.kuesioner.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-forms" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" /><path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" /><path d="M13 7h7" /><path d="M13 11h7" /><path d="M13 15h7" /></svg>
+        </span>
+        <span class="nav-link-title">Tracer Study</span>
+    </a>
+</li>

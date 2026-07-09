@@ -229,6 +229,46 @@
                 </div>
             </div>
         </div>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.wisuda*', 'admin.skl*') ? 'show' : '' }}" href="#navbar-wisuda" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></svg>
+            </span>
+            <span class="nav-link-title">Wisuda & Kelulusan</span>
+        </a>
+        <div class="dropdown-menu {{ request()->routeIs('admin.wisuda*', 'admin.skl*') ? 'show' : '' }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    <a class="dropdown-item {{ request()->routeIs('admin.wisuda.settings') ? 'active' : '' }}" href="{{ route('admin.wisuda.settings') }}">Kegiatan Wisuda</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.skl.*') ? 'active' : '' }}" href="{{ route('admin.skl.index') }}">Cetak SKL</a>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.kuesioner*') ? 'active' : '' }}" href="{{ route('admin.kuesioner.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-forms" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" /><path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" /><path d="M13 7h7" /><path d="M13 11h7" /><path d="M13 15h7" /></svg>
+            </span>
+            <span class="nav-link-title">Kuesioner & Tracer</span>
+        </a>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.lock-jurnal*') ? 'active' : '' }}" href="{{ route('admin.lock-jurnal.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M12 9a3 3 0 0 0 3 -3v-3h-6v3a3 3 0 0 0 3 3" /></svg>
+            </span>
+            <span class="nav-link-title">Lock Jurnal Dosen</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.broadcast*') ? 'active' : '' }}" href="{{ route('admin.broadcast.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail-forward" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" /><path d="M3 6l9 6l9 -6" /><path d="M15 18h6" /><path d="M18 15l3 3l-3 3" /></svg>
+            </span>
+            <span class="nav-link-title">Broadcast Email</span>
+        </a>
     </li>
 
     <li class="nav-item">
