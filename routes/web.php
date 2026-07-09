@@ -382,6 +382,18 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/broadcast/create', [App\Http\Controllers\Akademik\BroadcastController::class, 'createForm'])->name('broadcast.create');
     Route::post('/broadcast/send', [App\Http\Controllers\Akademik\BroadcastController::class, 'send'])->name('broadcast.send');
 
+    // Event Seminar (Admin)
+    Route::get('/seminar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'indexAdmin'])->name('seminar.index');
+    Route::post('/seminar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'store'])->name('seminar.store');
+    Route::post('/seminar/{id}/toggle', [App\Http\Controllers\Akademik\EventSeminarController::class, 'toggleOpen'])->name('seminar.toggle');
+    Route::delete('/seminar/{id}', [App\Http\Controllers\Akademik\EventSeminarController::class, 'destroy'])->name('seminar.destroy');
+    Route::get('/seminar/{id}/peserta', [App\Http\Controllers\Akademik\EventSeminarController::class, 'peserta'])->name('seminar.peserta');
+    Route::post('/seminar/peserta/{id}/status', [App\Http\Controllers\Akademik\EventSeminarController::class, 'updateStatusPeserta'])->name('seminar.update-peserta');
+
+    // Sertifikasi (Admin)
+    Route::get('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'indexAdmin'])->name('sertifikasi.index');
+    Route::post('/sertifikasi/{id}/verifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'updateVerifikasi'])->name('sertifikasi.verifikasi');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
@@ -455,6 +467,15 @@ Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('m
     Route::get('/kuesioner', [App\Http\Controllers\Akademik\KuesionerController::class, 'indexPortal'])->name('kuesioner.index');
     Route::get('/kuesioner/{id}', [App\Http\Controllers\Akademik\KuesionerController::class, 'showForm'])->name('kuesioner.show');
     Route::post('/kuesioner/{id}/submit', [App\Http\Controllers\Akademik\KuesionerController::class, 'submitForm'])->name('kuesioner.submit');
+
+    // Event Seminar Mahasiswa
+    Route::get('/seminar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'indexPortal'])->name('seminar.index');
+    Route::post('/seminar/{id}/daftar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'daftar'])->name('seminar.daftar');
+
+    // Sertifikasi Mahasiswa (SKPI)
+    Route::get('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'indexPortal'])->name('sertifikasi.index');
+    Route::post('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'store'])->name('sertifikasi.store');
+    Route::delete('/sertifikasi/{id}', [App\Http\Controllers\Akademik\SertifikasiController::class, 'destroy'])->name('sertifikasi.destroy');
 });
 
 Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->as('peserta-pmb.')->group(function () {
