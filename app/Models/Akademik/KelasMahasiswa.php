@@ -41,4 +41,9 @@ class KelasMahasiswa extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+
+    public function nilai()
+    {
+        return $this->hasOne(NilaiKuliah::class, 'kelas_mahasiswa_id');
+    }
 }

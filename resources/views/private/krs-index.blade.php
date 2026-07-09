@@ -58,13 +58,13 @@
                                         <tr>
                                             <td>
                                                 <input type="checkbox" class="form-check-input krs-cb" name="kelas_ids[]" value="{{ $kelas->id }}" 
-                                                    data-sks="{{ $kelas->mataKuliah->beban_sks }}"
+                                                    data-sks="{{ $kelas->mataKuliah->beban_sks ?? 0 }}"
                                                     {{ in_array($kelas->id, $selectedClassIds) ? 'checked' : '' }}
                                                     {{ $krs->status !== 'Draft' ? 'disabled' : '' }}>
                                             </td>
                                             <td>{{ $kelas->code }}</td>
-                                            <td><strong>{{ $kelas->mataKuliah->name }}</strong></td>
-                                            <td>{{ $kelas->mataKuliah->beban_sks }} SKS</td>
+                                            <td><strong>{{ $kelas->mataKuliah->name ?? 'Tidak Ditentukan' }}</strong></td>
+                                            <td>{{ $kelas->mataKuliah->beban_sks ?? 0 }} SKS</td>
                                             <td>{{ $kelas->name }}</td>
                                             <td>{{ $kelas->kapasitas ?? 'Unlimited' }}</td>
                                         </tr>

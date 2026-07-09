@@ -5,7 +5,7 @@
     <div class="page-header d-print-none">
         <div class="row align-items-center">
             <div class="col">
-                <h2 class="page-title">Input Nilai Kelas: {{ $kelas->mataKuliah->name }} ({{ $kelas->name }})</h2>
+                <h2 class="page-title">Input Nilai Kelas: {{ $kelas->mataKuliah->name ?? 'Tidak Ditentukan' }} ({{ $kelas->name }})</h2>
                 <div class="text-muted mt-1">Isi nilai Tugas (30%), UTS (30%), dan UAS (40%) untuk masing-masing mahasiswa. Nilai Akhir Angka, Nilai Huruf, dan Indeks akan terhitung otomatis saat disimpan.</div>
             </div>
         </div>
