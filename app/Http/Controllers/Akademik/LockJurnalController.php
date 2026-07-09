@@ -56,7 +56,22 @@ class LockJurnalController extends Controller
     public function toggleLock($id)
     {
         $pertemuan = JadwalPertemuan::findOrFail($id);
-        $pertemuan->update(['is_locked' => !$pertemuan->is_locked]);
+        $newStatus = !$pertemuan->is_locked;
+        $pertemuan->update(['is_locked' => $newStatus]);
+
+        // Send Notification to Dosen
+        try {
+            if ($newStatus && $pertemuan->dosen_id) {
+                \App\Helpers\NotifikasiHelper::send(
+                    $pertemuan->dosen_id,
+                    'Jurnal Mengajar Dikunci',
+                    'Jurnal mengajar Anda untuk pertemuan ke-' . $pertemuan->pertemuan_ke . ' telah dikunci oleh admin.',
+                    'warning',
+                    'lock',
+                    route('dosen.lock-jurnal.index')
+                );
+            }
+        } catch (\Exception $e) {}
 
         Alert::success('Berhasil', 'Status kunci pertemuan berhasil diperbarui');
         return redirect()->back();
@@ -71,8 +86,27 @@ class LockJurnalController extends Controller
 
         $status = $request->action === 'lock';
         
-        $count = JadwalPertemuan::whereDate('tanggal', '<=', $request->tanggal_batas)
-            ->update(['is_locked' => $status]);
+        $pertemuans = JadwalPertemuan::whereDate('tanggal', '<=', $request->tanggal_batas)->get();
+        
+        $count = 0;
+        foreach ($pertemuans as $pertemuan) {
+            $pertemuan->update(['is_locked' => $status]);
+            $count++;
+
+            // Notify Lecturer
+            try {
+                if ($status && $pertemuan->dosen_id) {
+                    \App\Helpers\NotifikasiHelper::send(
+                        $pertemuan->dosen_id,
+                        'Jurnal Mengajar Dikunci (Bulk)',
+                        'Jurnal mengajar untuk pertemuan ke-' . $pertemuan->pertemuan_ke . ' tanggal ' . $pertemuan->tanggal . ' telah dikunci masal oleh admin.',
+                        'warning',
+                        'lock',
+                        route('dosen.lock-jurnal.index')
+                    );
+                }
+            } catch (\Exception $e) {}
+        }
 
         $msg = $request->action === 'lock' ? "mengunci" : "membuka kunci";
         Alert::success('Berhasil', "Telah berhasil {$msg} {$count} pertemuan kuliah.");

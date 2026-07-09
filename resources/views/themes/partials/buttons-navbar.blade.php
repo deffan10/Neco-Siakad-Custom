@@ -13,100 +13,66 @@
         </svg>
     </a>
 </div>
+@php
+    $unreadNotifications = \App\Models\NotifikasiInApp::where('user_id', Auth::id())
+        ->where('is_read', false)
+        ->latest()
+        ->take(5)
+        ->get();
+    $unreadCount = \App\Models\NotifikasiInApp::where('user_id', Auth::id())
+        ->where('is_read', false)
+        ->count();
+@endphp
 <div class="nav-item dropdown d-none d-md-flex">
     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications" data-bs-auto-close="outside" aria-expanded="false">
-        <!-- Download SVG icon from http://tabler.io/icons/icon/bell -->
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
             <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
         </svg>
-        <span class="badge bg-red"></span>
+        @if($unreadCount > 0)
+            <span class="badge bg-red">{{ $unreadCount }}</span>
+        @endif
     </a>
-    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card" style="min-width: 320px;">
         <div class="card">
-            <div class="card-header d-flex">
-                <h3 class="card-title">Notifications</h3>
+            <div class="card-header d-flex py-2">
+                <h3 class="card-title">Notifikasi</h3>
+                <span class="badge bg-red-lt ms-2">{{ $unreadCount }} Baru</span>
                 <div class="btn-close ms-auto" data-bs-dismiss="dropdown"></div>
             </div>
-            <div class="list-group list-group-flush list-group-hoverable">
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span>
-                        </div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Pengumuman: Jadwal UTS</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">Jadwal UTS Semester Ganjil 2023/2024 telah dirilis</div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Info: Pembayaran UKT</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">Pengingat: Batas akhir pembayaran UKT tanggal 30 September 2023</div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions show">
-                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-yellow icon-2">
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                </svg>
-                            </a>
+            <div class="list-group list-group-flush list-group-hoverable" style="max-height: 300px; overflow-y: auto;">
+                @forelse($unreadNotifications as $n)
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="status-dot status-dot-animated bg-{{ $n->tipe }} d-block"></span>
+                            </div>
+                            <div class="col text-truncate">
+                                <a href="{{ route('notifications.read', $n->id) }}" class="text-body d-block font-weight-bold" style="font-size: 11px;">
+                                    {{ $n->judul }}
+                                </a>
+                                <div class="d-block text-secondary text-truncate mt-n1" style="font-size: 10px;">
+                                    {{ $n->pesan }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Akademik: KRS</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">Pengisian KRS akan dibuka pada tanggal 15 September 2023</div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                </svg>
-                            </a>
-                        </div>
+                @empty
+                    <div class="list-group-item text-center text-muted py-3">
+                        Tidak ada notifikasi baru
                     </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span>
-                        </div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">Info: Beasiswa</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">Pendaftaran beasiswa prestasi telah dibuka</div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
-            <div class="card-body">
+            <div class="card-body py-2 border-top">
                 <div class="row">
                     <div class="col">
-                        <a href="#" class="btn btn-2 w-100"> Archive all </a>
+                        <a href="{{ route('notifications.index') }}" class="btn btn-sm w-100"> Semua Notifikasi </a>
                     </div>
                     <div class="col">
-                        <a href="#" class="btn btn-2 w-100"> Mark all as read </a>
+                        <form action="{{ route('notifications.mark-all-read') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary w-100"> Tandai Dibaca </button>
+                        </form>
                     </div>
                 </div>
             </div>

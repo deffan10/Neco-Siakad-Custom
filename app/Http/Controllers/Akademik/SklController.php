@@ -105,7 +105,7 @@ class SklController extends Controller
             'jabatan_penandatangan' => 'required|string|max:255',
         ]);
 
-        Skl::create([
+        $skl = Skl::create([
             'mahasiswa_id' => $request->mahasiswa_id,
             'nomor_skl' => $request->nomor_skl,
             'tanggal_lulus' => $request->tanggal_lulus,
@@ -116,6 +116,21 @@ class SklController extends Controller
             'jabatan_penandatangan' => $request->jabatan_penandatangan,
             'created_by' => Auth::id(),
         ]);
+
+        // Send Notification to Mahasiswa
+        try {
+            $mhs = DataMahasiswa::find($request->mahasiswa_id);
+            if ($mhs && $mhs->user_id) {
+                \App\Helpers\NotifikasiHelper::send(
+                    $mhs->user_id, 
+                    'Surat Keterangan Lulus (SKL) Diterbitkan', 
+                    'SKL Anda dengan No: ' . $request->nomor_skl . ' telah diterbitkan oleh akademik. Silakan cetak mandiri.',
+                    'success', 
+                    'certificate', 
+                    route('mahasiswa.skl.index')
+                );
+            }
+        } catch (\Exception $e) {}
 
         Alert::success('Berhasil', 'Surat Keterangan Lulus (SKL) berhasil diterbitkan');
         return redirect()->route('admin.skl.index');

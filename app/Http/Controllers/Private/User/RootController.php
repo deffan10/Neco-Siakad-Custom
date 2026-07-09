@@ -28,6 +28,37 @@ class RootController extends Controller
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
 
+        if ($data['activeRole'] === 'mahasiswa') {
+            $user->load('dataMahasiswa.programStudi');
+            $data['sksLulus'] = $user->dataMahasiswa?->sks_lulus ?? 0;
+            $data['sksTotal'] = $user->dataMahasiswa?->sks_total ?: 144; // default target
+            $data['ipk']      = $user->dataMahasiswa?->ipk ?? 0.00;
+            
+            // Tagihan Aktif
+            $data['tagihanAktif'] = \App\Models\Keuangan\TagihanMahasiswa::where('user_id', $user->id)
+                ->where('status', 'Belum Lunas')
+                ->sum('nominal');
+
+            // Jadwal Hari Ini
+            $data['jadwalHariIni'] = \App\Models\Akademik\JadwalKelas::whereHas('kelasPerkuliahan.kelasMahasiswas', function($q) use ($user) {
+                $q->where('mahasiswa_id', $user->id);
+            })
+            ->with(['jadwalPerkuliahan.mataKuliah', 'jadwalPerkuliahan.dosen'])
+            ->get();
+
+            // Pendaftaran Wisuda Aktif
+            $data['wisudaAktif'] = \App\Models\Akademik\PendaftaranWisuda::where('mahasiswa_id', $user->id)
+                ->first();
+
+            // Notifikasi terbaru
+            $data['logNotif'] = \App\Models\NotifikasiInApp::where('user_id', $user->id)
+                ->latest()
+                ->take(5)
+                ->get();
+
+            return view('private.portal-mahasiswa-dashboard', $data, compact('user'));
+        }
+
         return view('default-bcontent', $data, compact('user'));
     }
 

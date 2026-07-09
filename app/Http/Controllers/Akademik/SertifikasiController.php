@@ -56,6 +56,20 @@ class SertifikasiController extends Controller
             'catatan_verifikasi'   => $request->catatan_verifikasi,
         ]);
 
+        // Send Notification to Mahasiswa
+        try {
+            if ($sertifikasi->mahasiswa_id) {
+                \App\Helpers\NotifikasiHelper::send(
+                    $sertifikasi->mahasiswa_id,
+                    'Verifikasi Sertifikat: ' . $request->status_verifikasi,
+                    'Sertifikat Anda "' . $sertifikasi->nama_sertifikat . '" dinyatakan ' . $request->status_verifikasi . ($request->catatan_verifikasi ? '. Catatan: ' . $request->catatan_verifikasi : '.'),
+                    $request->status_verifikasi === 'Disetujui' ? 'success' : 'danger',
+                    'certificate',
+                    route('mahasiswa.sertifikasi.index')
+                );
+            }
+        } catch (\Exception $e) {}
+
         Alert::success('Berhasil', 'Status verifikasi sertifikat berhasil diperbarui.');
         return redirect()->back();
     }

@@ -65,7 +65,25 @@ class KuesionerController extends Controller
     public function togglePublish($id)
     {
         $kuesioner = Kuesioner::findOrFail($id);
-        $kuesioner->update(['is_published' => !$kuesioner->is_published]);
+        $newStatus = !$kuesioner->is_published;
+        $kuesioner->update(['is_published' => $newStatus]);
+
+        if ($newStatus) {
+            // Target dispatch
+            try {
+                $roleTarget = strtolower($kuesioner->target_responden);
+                if (in_array($roleTarget, ['mahasiswa', 'alumni', 'dosen'])) {
+                    \App\Helpers\NotifikasiHelper::sendToRole(
+                        $roleTarget,
+                        'Kuesioner Baru Tersedia',
+                        'Kuesioner "' . $kuesioner->judul . '" telah dibuka. Mohon kesediaannya mengisi kuesioner ini.',
+                        'info',
+                        'forms',
+                        route($roleTarget . '.kuesioner.index')
+                    );
+                }
+            } catch (\Exception $e) {}
+        }
 
         Alert::success('Berhasil', 'Status publikasi kuesioner berhasil diperbarui');
         return redirect()->back();

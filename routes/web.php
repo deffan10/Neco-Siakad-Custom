@@ -394,6 +394,20 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'indexAdmin'])->name('sertifikasi.index');
     Route::post('/sertifikasi/{id}/verifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'updateVerifikasi'])->name('sertifikasi.verifikasi');
 
+    // PMB Dashboard (Admin)
+    Route::get('/pmb/dashboard', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'index'])->name('pmb.dashboard');
+
+    // Export & Laporan (Admin)
+    Route::get('/export', [App\Http\Controllers\Akademik\ExportController::class, 'index'])->name('export.index');
+    Route::get('/export/mahasiswa/excel', [App\Http\Controllers\Akademik\ExportController::class, 'mahasiswaExcel'])->name('export.mahasiswa-excel');
+    Route::get('/export/mahasiswa/pdf', [App\Http\Controllers\Akademik\ExportController::class, 'mahasiswaPdf'])->name('export.mahasiswa-pdf');
+    Route::get('/export/keuangan/excel', [App\Http\Controllers\Akademik\ExportController::class, 'keuanganExcel'])->name('export.keuangan-excel');
+    Route::get('/export/jurnal/excel', [App\Http\Controllers\Akademik\ExportController::class, 'jurnalDosenExcel'])->name('export.jurnal-excel');
+    Route::get('/export/wisuda/excel', [App\Http\Controllers\Akademik\ExportController::class, 'wisudaExcel'])->name('export.wisuda-excel');
+    Route::get('/export/pmb/excel', [App\Http\Controllers\Akademik\ExportController::class, 'pmbExcel'])->name('export.pmb-excel');
+    Route::get('/export/sertifikasi/excel', [App\Http\Controllers\Akademik\ExportController::class, 'sertifikasiExcel'])->name('export.sertifikasi-excel');
+    Route::get('/export/seminar/{eventId}/excel', [App\Http\Controllers\Akademik\ExportController::class, 'seminarPesertaExcel'])->name('export.seminar-peserta-excel');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
@@ -494,6 +508,12 @@ Route::middleware(['auth', 'active_role:alumni'])->prefix('alumni')->as('alumni.
 // Global impersonation leave session
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/impersonate/leave', [App\Http\Controllers\Admin\ImpersonateController::class, 'leave'])->name('admin.impersonate.leave');
+
+    // Notifications
+    Route::get('/notifications', [App\Http\Controllers\NotifikasiController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{id}/read', [App\Http\Controllers\NotifikasiController::class, 'read'])->name('notifications.read');
+    Route::post('/notifications/mark-all-read', [App\Http\Controllers\NotifikasiController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+    Route::delete('/notifications/clear-all', [App\Http\Controllers\NotifikasiController::class, 'clearAll'])->name('notifications.clear-all');
 });
 
 // Route::group(['prefix' => 'superuser', 'middleware' => ['auth:web','role:Super Admin'], 'as' => 'super.'],function(){

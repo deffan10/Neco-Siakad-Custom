@@ -135,6 +135,21 @@ class WisudaController extends Controller
             'verified_at' => now(),
         ]);
 
+        // Send Notification to Mahasiswa
+        try {
+            $studentUserId = $pendaftaran->mahasiswa->user_id;
+            \App\Helpers\NotifikasiHelper::send(
+                $studentUserId, 
+                'Status Pendaftaran Wisuda: ' . $request->status, 
+                $request->status === 'Disetujui' 
+                    ? 'Selamat! Pengajuan pendaftaran wisuda Anda telah disetujui admin.' 
+                    : 'Pengajuan wisuda Anda ditolak. Catatan: ' . ($request->catatan ?: '-'),
+                $request->status === 'Disetujui' ? 'success' : 'danger', 
+                'graduation-cap', 
+                route('mahasiswa.wisuda.index')
+            );
+        } catch (\Exception $e) {}
+
         Alert::success('Berhasil', 'Status pendaftaran wisuda mahasiswa telah diperbarui');
         return redirect()->back();
     }
@@ -284,6 +299,18 @@ class WisudaController extends Controller
         }
 
         $pendaftaran->update(['status' => 'Diajukan']);
+
+        // Send Notification to Admins
+        try {
+            \App\Helpers\NotifikasiHelper::sendToRole(
+                'admin', 
+                'Pendaftaran Wisuda Baru', 
+                'Mahasiswa ' . ($pendaftaran->mahasiswa->user->name ?? 'N/A') . ' telah mengajukan pendaftaran wisuda.',
+                'warning', 
+                'graduation-cap', 
+                route('admin.wisuda.applicants', $pendaftaran->kegiatan_wisuda_id)
+            );
+        } catch (\Exception $e) {}
 
         Alert::success('Berhasil', 'Pendaftaran wisuda Anda telah diajukan ke admin');
         return redirect()->back();
