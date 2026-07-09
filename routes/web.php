@@ -320,6 +320,33 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::delete('/akademik/kelas-mahasiswa/{id}/delete', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'destroy'])->name('akademik.kelas-mahasiswa-destroy');
     Route::post('/akademik/kelas-mahasiswa/{id}/restore', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'restore'])->name('akademik.kelas-mahasiswa-restore');
 
+    // Modul Keuangan (Admin)
+    Route::get('/keuangan/tarif', [App\Http\Controllers\Keuangan\KeuanganController::class, 'indexTarif'])->name('keuangan.tarif-index');
+    Route::post('/keuangan/komponen', [App\Http\Controllers\Keuangan\KeuanganController::class, 'storeKomponen'])->name('keuangan.komponen-store');
+    Route::post('/keuangan/tarif', [App\Http\Controllers\Keuangan\KeuanganController::class, 'storeTarif'])->name('keuangan.tarif-store');
+    Route::get('/keuangan/tagihan', [App\Http\Controllers\Keuangan\KeuanganController::class, 'indexTagihan'])->name('keuangan.tagihan-index');
+    Route::post('/keuangan/tagihan', [App\Http\Controllers\Keuangan\KeuanganController::class, 'storeTagihan'])->name('keuangan.tagihan-store');
+    Route::post('/keuangan/tagihan/generate-massal', [App\Http\Controllers\Keuangan\KeuanganController::class, 'generateTagihanMassal'])->name('keuangan.tagihan-generate-massal');
+    Route::get('/keuangan/pembayaran', [App\Http\Controllers\Keuangan\KeuanganController::class, 'indexPembayaran'])->name('keuangan.pembayaran-index');
+    Route::get('/keuangan/pembayaran/{id}/verify/{action}', [App\Http\Controllers\Keuangan\KeuanganController::class, 'verifikasiPembayaran'])->name('keuangan.pembayaran-verify');
+
+    // Modul KRS (Admin)
+    Route::get('/krs/settings', [App\Http\Controllers\Akademik\KrsController::class, 'indexAdminKrs'])->name('krs.settings');
+    Route::post('/krs/waktu', [App\Http\Controllers\Akademik\KrsController::class, 'storeWaktuKrs'])->name('krs.waktu-store');
+    Route::post('/krs/syarat', [App\Http\Controllers\Akademik\KrsController::class, 'storeSyaratSks'])->name('krs.syarat-store');
+    Route::get('/krs/perwalian', [App\Http\Controllers\Akademik\KrsController::class, 'indexBimbinganPa'])->name('krs.perwalian');
+    Route::post('/krs/approve/{id}', [App\Http\Controllers\Akademik\KrsController::class, 'approveKrs'])->name('krs.approve');
+
+    // Modul Nilai (Admin)
+    Route::get('/nilai/kelas', [App\Http\Controllers\Akademik\NilaiController::class, 'indexKelas'])->name('nilai.kelas-index');
+    Route::get('/nilai/kelas/{id}/form', [App\Http\Controllers\Akademik\NilaiController::class, 'showFormNilai'])->name('nilai.kelas-form');
+    Route::post('/nilai/kelas/{id}/store', [App\Http\Controllers\Akademik\NilaiController::class, 'storeNilai'])->name('nilai.kelas-store');
+    Route::get('/nilai/proses-ipk', [App\Http\Controllers\Akademik\NilaiController::class, 'showProsesIpk'])->name('nilai.proses-ipk');
+    Route::post('/nilai/hitung-ipk', [App\Http\Controllers\Akademik\NilaiController::class, 'hitungIpsIpkMassal'])->name('nilai.hitung-ipk');
+
+    // Impersonate (Admin trigger)
+    Route::get('/impersonate/{id}', [App\Http\Controllers\Admin\ImpersonateController::class, 'impersonate'])->name('impersonate');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
@@ -350,22 +377,44 @@ Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.
 
 Route::middleware(['auth', 'active_role:dosen'])->prefix('dosen')->as('dosen.')->group(function () {
     require __DIR__.'/basic-routes.php';
-    // Other Menus for Dosen can be added here
+    
+    // Perwalian Dosen
+    Route::get('/krs/perwalian', [App\Http\Controllers\Akademik\KrsController::class, 'indexBimbinganPa'])->name('krs.perwalian');
+    Route::post('/krs/approve/{id}', [App\Http\Controllers\Akademik\KrsController::class, 'approveKrs'])->name('krs.approve');
 
+    // Input Nilai Dosen
+    Route::get('/nilai/kelas', [App\Http\Controllers\Akademik\NilaiController::class, 'indexKelas'])->name('nilai.kelas-index');
+    Route::get('/nilai/kelas/{id}/form', [App\Http\Controllers\Akademik\NilaiController::class, 'showFormNilai'])->name('nilai.kelas-form');
+    Route::post('/nilai/kelas/{id}/store', [App\Http\Controllers\Akademik\NilaiController::class, 'storeNilai'])->name('nilai.kelas-store');
 });
+
 Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('mahasiswa.')->group(function () {
     require __DIR__.'/basic-routes.php';
-    // Other Menus for Mahasiswa can be added here
+    
+    // Keuangan Mahasiswa
+    Route::get('/keuangan', [App\Http\Controllers\Keuangan\KeuanganController::class, 'indexMahasiswaKeuangan'])->name('keuangan.index');
+    Route::post('/keuangan/{id}/pay', [App\Http\Controllers\Keuangan\KeuanganController::class, 'paySimulated'])->name('keuangan.pay');
+
+    // KRS Mahasiswa
+    Route::get('/krs', [App\Http\Controllers\Akademik\KrsController::class, 'indexMahasiswaKrs'])->name('krs.index');
+    Route::post('/krs/submit', [App\Http\Controllers\Akademik\KrsController::class, 'submitKrsDraft'])->name('krs.submit');
+
+    // KHS & Transkrip Mahasiswa
+    Route::get('/khs', [App\Http\Controllers\Akademik\NilaiController::class, 'indexKhs'])->name('khs.index');
+    Route::get('/transkrip', [App\Http\Controllers\Akademik\NilaiController::class, 'indexTranskrip'])->name('transkrip.index');
 });
+
 Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->as('peserta-pmb.')->group(function () {
     require __DIR__.'/basic-routes.php';
-    // Other Menus for Peserta PMB can be added here
-
 });
+
 Route::middleware(['auth', 'active_role:alumni'])->prefix('alumni')->as('alumni.')->group(function () {
     require __DIR__.'/basic-routes.php';
-    // Other Menus for Alumni can be added here
+});
 
+// Global impersonation leave session
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/impersonate/leave', [App\Http\Controllers\Admin\ImpersonateController::class, 'leave'])->name('admin.impersonate.leave');
 });
 
 // Route::group(['prefix' => 'superuser', 'middleware' => ['auth:web','role:Super Admin'], 'as' => 'super.'],function(){

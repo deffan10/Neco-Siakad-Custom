@@ -84,7 +84,13 @@ class UserDataTable extends DataTable
                         </button>
                     </form>';
                 } else {
-                    return '<a href="'.route($activeRole.'.users.user-view', $row->id).'" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Pengguna">
+                    $impersonateBtn = '';
+                    if ($row->id !== auth()->id()) {
+                        $impersonateBtn = '<a href="'.route('admin.impersonate', $row->id).'" class="btn btn-sm btn-warning me-1" data-bs-toggle="tooltip" title="Login Sebagai Pengguna">
+                            <i class="fas fa-user-secret me-1"></i> Login Sebagai
+                        </a>';
+                    }
+                    return $impersonateBtn . '<a href="'.route($activeRole.'.users.user-view', $row->id).'" class="btn btn-sm btn-primary me-1" data-bs-toggle="tooltip" title="Lihat Pengguna">
                         <i class="fas fa-eye me-1"></i> Lihat
                     </a>
                     <form action="'.route($activeRole.'.users.user-destroy', $row->id).'" method="POST" class="d-inline" id="delete-form-'.$row->id.'">

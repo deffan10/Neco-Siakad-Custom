@@ -50,6 +50,14 @@
 </head>
 
 <body class="layout-fluid">
+    @if(session()->has('admin_impersonator_id'))
+        <div style="background-color: #e53e3e; color: white; padding: 10px; text-align: center; font-weight: bold; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <i class="fas fa-user-secret me-2"></i> Anda sedang masuk sebagai <u>{{ Auth::user()->name }}</u>.
+            <a href="{{ route('admin.impersonate.leave') }}" style="color: white; text-decoration: underline; margin-left: 15px; font-weight: bold;">
+                <i class="fas fa-sign-out-alt me-1"></i> Kembali ke Panel Admin
+            </a>
+        </div>
+    @endif
     <!-- BEGIN GLOBAL THEME SCRIPT -->
     <script src="{{ asset('assets') }}/dist/js/tabler-theme.min.js"></script>
     <!-- END GLOBAL THEME SCRIPT -->
