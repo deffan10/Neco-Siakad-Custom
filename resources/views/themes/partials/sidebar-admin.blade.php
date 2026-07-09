@@ -194,6 +194,43 @@
         </div>
     </li>
 
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.keuangan*') ? 'show' : '' }}" href="#navbar-keuangan" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14c0 1.657 2.686 3 6 3s6 -1.343 6 -3s-2.686 -3 -6 -3s-6 1.343 -6 3z" /><path d="M9 14v4c0 1.656 2.686 3 6 3s6 -1.344 6 -3v-4" /><path d="M3 6c0 1.657 2.686 3 6 3s6 -1.343 6 -3s-2.686 -3 -6 -3s-6 1.343 -6 3z" /><path d="M3 6v10c0 1.657 2.686 3 6 3" /><path d="M3 11c0 1.657 2.686 3 6 3" /></svg>
+            </span>
+            <span class="nav-link-title">Keuangan</span>
+        </a>
+        <div class="dropdown-menu {{ request()->routeIs('admin.keuangan*') ? 'show' : '' }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    <a class="dropdown-item {{ request()->routeIs('admin.keuangan.tarif-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.tarif-index') }}">Pengaturan Tarif</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.keuangan.tagihan-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.tagihan-index') }}">Tagihan Mahasiswa</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.keuangan.pembayaran-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.pembayaran-index') }}">Verifikasi Pembayaran</a>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.krs*', 'admin.nilai*') ? 'show' : '' }}" href="#navbar-akademik-krs" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1z" /><path d="M3 19h16" /><path d="M9 8h6" /><path d="M9 12h6" /><path d="M9 16h6" /></svg>
+            </span>
+            <span class="nav-link-title">KRS & Nilai</span>
+        </a>
+        <div class="dropdown-menu {{ request()->routeIs('admin.krs*', 'admin.nilai*') ? 'show' : '' }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    <a class="dropdown-item {{ request()->routeIs('admin.krs.settings') ? 'active' : '' }}" href="{{ route('admin.krs.settings') }}">Jadwal & Aturan KRS</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.krs.perwalian') ? 'active' : '' }}" href="{{ route('admin.krs.perwalian') }}">Persetujuan KRS</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.nilai.kelas-index') ? 'active' : '' }}" href="{{ route('admin.nilai.kelas-index') }}">Input Nilai Kuliah</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.nilai.proses-ipk') ? 'active' : '' }}" href="{{ route('admin.nilai.proses-ipk') }}">Proses IPS/IPK</a>
+                </div>
+            </div>
+        </div>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="#">
             <span class="nav-link-title">Lainnya</span>
