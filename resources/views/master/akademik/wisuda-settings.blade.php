@@ -11,6 +11,23 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="card mt-3">
+        <div class="card-body py-2">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="{{ route('admin.wisuda.settings') }}"><i class="fas fa-calendar-alt me-1"></i> Kegiatan Wisuda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.wisuda.syarat') }}"><i class="fas fa-file-signature me-1"></i> Syarat Wisuda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.wisuda.pengaturan') }}"><i class="fas fa-cog me-1"></i> Pengaturan Toga & Kartu</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row row-cards mt-3">
         <!-- Buat Kegiatan Wisuda Baru -->
         <div class="col-md-4">
@@ -112,6 +129,9 @@
                                     <td>
                                         <a href="{{ route('admin.wisuda.applicants', $k->id) }}" class="btn btn-sm btn-info me-1">
                                             <i class="fas fa-users me-1"></i> Pendaftar
+                                        </a>
+                                        <a href="{{ route('admin.wisuda.presensi', $k->id) }}" class="btn btn-sm btn-primary me-1">
+                                            <i class="fas fa-check-double me-1"></i> Presensi
                                         </a>
                                         <form action="{{ route('admin.wisuda.toggle', $k->id) }}" method="POST" class="d-inline">
                                             @csrf

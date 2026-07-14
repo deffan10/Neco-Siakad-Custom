@@ -154,6 +154,65 @@ class WisudaController extends Controller
         return redirect()->back();
     }
 
+    public function presensi($kegiatanId)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Wisuda Attendance';
+        $data['pages'] = 'Kehadiran Upacara Wisuda';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        $data['kegiatan'] = KegiatanWisuda::findOrFail($kegiatanId);
+        $data['pendaftarans'] = PendaftaranWisuda::where('kegiatan_wisuda_id', $kegiatanId)
+            ->where('status', 'Disetujui')
+            ->with('mahasiswa.user')
+            ->get();
+
+        return view('master.akademik.wisuda-presensi', $data, compact('user'));
+    }
+
+    public function storePresensi(Request $request, $kegiatanId)
+    {
+        $attendees = $request->input('kehadiran', []); // Array of pendaftaran IDs
+
+        // Set all to false first
+        PendaftaranWisuda::where('kegiatan_wisuda_id', $kegiatanId)
+            ->where('status', 'Disetujui')
+            ->update(['kehadiran_upacara' => false]);
+
+        if (!empty($attendees)) {
+            PendaftaranWisuda::whereIn('id', $attendees)->update(['kehadiran_upacara' => true]);
+        }
+
+        Alert::success('Berhasil', 'Data kehadiran upacara wisuda berhasil disimpan.');
+        return redirect()->back();
+    }
+
+    public function syarat()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Wisuda Settings';
+        $data['pages'] = 'Syarat Pendaftaran Wisuda';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        return view('master.akademik.wisuda-syarat', $data, compact('user'));
+    }
+
+    public function pengaturan()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Wisuda Settings';
+        $data['pages'] = 'Konfigurasi Pelaksanaan Wisuda';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        return view('master.akademik.wisuda-pengaturan', $data, compact('user'));
+    }
+
     /**
      * ==========================================
      * PANEL MAHASISWA: FORM PENDAFTARAN WISUDA

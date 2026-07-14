@@ -353,6 +353,10 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/wisuda/{id}/toggle', [App\Http\Controllers\Akademik\WisudaController::class, 'toggleKegiatan'])->name('wisuda.toggle');
     Route::get('/wisuda/{id}/applicants', [App\Http\Controllers\Akademik\WisudaController::class, 'applicants'])->name('wisuda.applicants');
     Route::post('/wisuda/{id}/verify', [App\Http\Controllers\Akademik\WisudaController::class, 'verifyApplicant'])->name('wisuda.verify');
+    Route::get('/wisuda/{id}/presensi', [App\Http\Controllers\Akademik\WisudaController::class, 'presensi'])->name('wisuda.presensi');
+    Route::post('/wisuda/{id}/presensi', [App\Http\Controllers\Akademik\WisudaController::class, 'storePresensi'])->name('wisuda.presensi.store');
+    Route::get('/wisuda/syarat', [App\Http\Controllers\Akademik\WisudaController::class, 'syarat'])->name('wisuda.syarat');
+    Route::get('/wisuda/pengaturan', [App\Http\Controllers\Akademik\WisudaController::class, 'pengaturan'])->name('wisuda.pengaturan');
 
     // Modul SKL (Admin)
     Route::get('/skl', [App\Http\Controllers\Akademik\SklController::class, 'indexAdmin'])->name('skl.index');
