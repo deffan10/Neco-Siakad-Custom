@@ -488,4 +488,41 @@ class JadwalPerkuliahanController extends Controller
         // Generate ulang jadwal pertemuan
         $this->generateJadwalPertemuan($jadwalPerkuliahan, $jadwalPerkuliahan->tanggal_selesai);
     }
+
+    public function ruangKosong(Request $request)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? '';
+        $data['menus'] = 'Akademik Jadwal Perkuliahan';
+        $data['pages'] = "Cari Ruang Kelas Kosong";
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        $day = $request->input('hari');
+        $startTime = $request->input('jam_mulai');
+        $endTime = $request->input('jam_selesai');
+
+        $data['freeRooms'] = [];
+
+        if ($day && $startTime && $endTime) {
+            $occupiedRooms = JadwalPerkuliahan::where('hari', $day)
+                ->where(function($q) use ($startTime, $endTime) {
+                    $q->whereBetween('jam_mulai', [$startTime, $endTime])
+                      ->orWhereBetween('jam_selesai', [$startTime, $endTime])
+                      ->orWhere(function($sub) use ($startTime, $endTime) {
+                          $sub->where('jam_mulai', '<=', $startTime)
+                              ->where('jam_selesai', '>=', $endTime);
+                      });
+                })
+                ->pluck('ruangan_id')
+                ->toArray();
+
+            $data['freeRooms'] = Ruangan::whereNotIn('id', $occupiedRooms)
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get();
+        }
+
+        return view('master.akademik.jadwal-perkuliahan-ruang-kosong', $data, compact('user'));
+    }
 }

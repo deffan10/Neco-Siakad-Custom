@@ -312,6 +312,7 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::patch('/akademik/jadwal-perkuliahan/{id}/update', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'update'])->name('akademik.jadwal-perkuliahan-update');
     Route::delete('/akademik/jadwal-perkuliahan/{id}/delete', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'destroy'])->name('akademik.jadwal-perkuliahan-destroy');
     Route::post('/akademik/jadwal-perkuliahan/{id}/restore', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'restore'])->name('akademik.jadwal-perkuliahan-restore');
+    Route::get('/akademik/jadwal-perkuliahan/ruang-kosong', [App\Http\Controllers\Master\Akademik\JadwalPerkuliahanController::class, 'ruangKosong'])->name('akademik.jadwal-perkuliahan-ruang-kosong');
 
     Route::get('/akademik/kelas-mahasiswa', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'index'])->name('akademik.kelas-mahasiswa-index');
     Route::get('/akademik/kelas-mahasiswa/trashed', [App\Http\Controllers\Master\Akademik\KelasMahasiswaController::class, 'trash'])->name('akademik.kelas-mahasiswa-trash');
@@ -433,6 +434,19 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/export/pmb/excel', [App\Http\Controllers\Akademik\ExportController::class, 'pmbExcel'])->name('export.pmb-excel');
     Route::get('/export/sertifikasi/excel', [App\Http\Controllers\Akademik\ExportController::class, 'sertifikasiExcel'])->name('export.sertifikasi-excel');
     Route::get('/export/seminar/{eventId}/excel', [App\Http\Controllers\Akademik\ExportController::class, 'seminarPesertaExcel'])->name('export.seminar-peserta-excel');
+
+    // Presensi Kuliah Admin (tab: dosen, mahasiswa, setting)
+    Route::get('/presensi-kuliah', [App\Http\Controllers\Akademik\PresensiKuliahAdminController::class, 'indexDosen'])->name('presensi-kuliah.dosen');
+    Route::get('/presensi-kuliah/mahasiswa', [App\Http\Controllers\Akademik\PresensiKuliahAdminController::class, 'indexMahasiswa'])->name('presensi-kuliah.mahasiswa');
+    Route::get('/presensi-kuliah/setting', [App\Http\Controllers\Akademik\PresensiKuliahAdminController::class, 'settingPresensi'])->name('presensi-kuliah.setting');
+    Route::post('/presensi-kuliah/pertemuan/{id}/toggle', [App\Http\Controllers\Akademik\PresensiKuliahAdminController::class, 'toggleLockPertemuan'])->name('presensi-kuliah.toggle-lock');
+
+    // Pesan Internal (tab: masuk, buat, terkirim)
+    Route::get('/pesan/masuk', [App\Http\Controllers\Akademik\PesanController::class, 'masuk'])->name('pesan.masuk');
+    Route::get('/pesan/buat', [App\Http\Controllers\Akademik\PesanController::class, 'buat'])->name('pesan.buat');
+    Route::post('/pesan/kirim', [App\Http\Controllers\Akademik\PesanController::class, 'kirim'])->name('pesan.kirim');
+    Route::get('/pesan/terkirim', [App\Http\Controllers\Akademik\PesanController::class, 'terkirim'])->name('pesan.terkirim');
+    Route::post('/pesan/{id}/read', [App\Http\Controllers\Akademik\PesanController::class, 'markRead'])->name('pesan.read');
 
 });
 
