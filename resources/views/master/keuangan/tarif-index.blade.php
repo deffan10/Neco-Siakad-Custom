@@ -11,6 +11,23 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="card mt-3">
+        <div class="card-body py-2">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.keuangan.tagihan-index') }}"><i class="fas fa-file-invoice-dollar me-1"></i> Data Tagihan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.keuangan.pembayaran-index') }}"><i class="fas fa-receipt me-1"></i> Verifikasi Pembayaran</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="{{ route('admin.keuangan.tarif-index') }}"><i class="fas fa-cogs me-1"></i> Konfigurasi Tarif & Komponen</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row row-cards mt-3">
         <!-- Tambah Komponen Biaya -->
         <div class="col-md-4">
