@@ -1,0 +1,1234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Informasi dan Manajemen Akademik</title>
+<link rel="SHORTCUT ICON" href="../images/favicon.png" type="image/x-png">
+<link rel="stylesheet" href="../themes/sikad/css/bootstrap/dist/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="../themes/sikad/css/font-awesome/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="../themes/sikad/css/megamenu.css" type="text/css">
+<link rel="stylesheet" href="../themes/sikad/css/style.default.css" type="text/css">
+<link rel="stylesheet" href="../themes/sikad/css/uielement.css" type="text/css">
+
+<link rel="stylesheet" href="../themes/venus/css/style.pusaka.css" type="text/css">
+<link rel="stylesheet" href="../themes/smartcampus/js/notify/notify.css" type="text/css">
+<link rel="stylesheet" href="../themes/smartcampus/css/plugins/jquery.tagit.css" type="text/css">
+
+<link rel="stylesheet" href="../themes/sikad/css/bootsrapselect/css/bootstrap-select.min.css">
+
+<link rel="stylesheet" href="../themes/sikad/css/style.css" type="text/css">
+
+<script src="../themes/sikad/js/plugins/jquery-1.7.min.js"></script>
+<script src="../themes/sikad/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/css/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/custom/function.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.cookie.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.bxSlider.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.slimscroll.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.alerts.js"></script> <!-- jquery Pop Up Dialogs -->
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.validate.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/plugins/jquery.scrollto.js"></script>
+
+<script type="text/javascript" src="../themes/sikad/js/custom/elements.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/custom/general.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/custom/widgets.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/custom/controller.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/custom/forms.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/others/jquery.tipsy.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/oldfunction.js?v=1784018160"></script>
+<script type="text/javascript" src="../themes/sikad/js/notify/jquery.notify.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/others/tag-it.js"></script>
+<script type="text/javascript" src="../tampilan/lib/msdropdown/js/msdropdown/jquery.dd.min.js"></script>
+<script type="text/javascript" src="../themes/sikad/js/networkinfo.js"></script>
+<script type="text/javascript" src="../jquery.blockUI.js"></script>
+<script type="text/javascript" src="../themes/sikad/css/bootsrapselect/js/bootstrap-select.min.js"></script>
+<script src="../themes/sikad/js/additionaljs.js"></script>
+
+
+<script>
+var portalSikad = '';
+var pt = '041138';
+
+if (window.fetch) {
+    ping("../api/ping.php");
+}
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', function(e) {
+      e.button === 2 && e.stopImmediatePropagation();
+    })
+
+    function create( template, vars, opts ){
+        return $container.notify("create", template, vars, opts);
+    }
+
+    $(function(){
+        $container = $("#container").notify();
+            });
+</script>
+<script type="text/javascript" src="../themes/total/js/jquery.colorbox.js"></script>
+<script>
+    function replaceinstansi(id,v) {
+      $.blockUI();
+          
+      $.ajax({
+          type: 'POST',
+          url:  '../mahasiswa/getinstansi.php',
+          data: 'klasifikasi='+v,
+          success: function(msg){
+              if(msg == 0) {
+                  //Query returned empty.
+              } else {
+                  //Query Has values.
+                  $('#'+id).html(msg);
+              }
+          }
+      }).always(function() {
+             $.unblockUI();
+        });
+    }
+</script>
+
+
+</head>
+
+<body class="withvernav"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 20px; padding-right: 0px; display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+
+<div id="container" style="" class="ui-notify"></div>
+
+<div class="wrapper" style="padding-bottom: 80px"> <!-- bodywrapper-->
+    <div class="topheader">
+
+             <div class="boxTitle"> <!-- Program name -->
+                                <img height="45px" src="https://sgp1.vultrobjects.com/043355/sikad/gambar/Logo.iVQEhuhEPq.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=YGIP9T9E1N7J9K1U7NIC%2F20260714%2Fsgp1%2Fs3%2Faws4_request&amp;X-Amz-Date=20260714T083604Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=b2374b979ca5960f4ad1f2e051f8a2d29c71de090e996c9a4dbcdfe2879b13c5">
+            <div class="infoWrap">
+              <h3 class="logo">SIAKADMU 4.0</h3>
+              <span class="slogan">UMMADA CIREBON</span>
+              <br clear="all">
+            </div>
+        </div>
+
+    
+        <div class="left">
+            <div class="search">
+                <form action="../cari/index.php" method="post">
+                                        <input type="text" name="katakunci" id="katakunci" onfocus="if(this.value == 'Pencarian menu..') { this.value = ''; }" placeholder="Pencarian Menu.." value="">
+                    <button class="submitbutton" id="menusearch"></button>
+                </form>
+            </div><!--search-->
+
+            <br clear="all">
+
+        </div><!--left-->
+
+        <div class="right">
+        
+            
+            <!-- NOTIFICATION STYLE-->
+                
+            <link rel="stylesheet" href="../themes/icons/addsicons-1/style.css">
+            
+            <style>
+                ul.dropdown {
+                    list-style-type: none;
+                    /* background-color: white; */
+                }
+                
+                .area-dropdown {
+                    /* width: 100px; */
+                    /* height: 100px; */
+                    left: -50% !important;
+                    background-color: white;
+                    border-radius: 11px;
+                }
+                
+                .tdropdown {
+                    background: white;
+                    border-collapse: collapse;
+                    border: none;
+                }
+                
+                .tdropdown tr td {
+                    background-color: white !important;
+                }
+                
+                .li-dropdown {
+                    vertical-align: middle;
+                    width: 165px;
+                }
+                
+                .icon-sub-menu {
+                    width: 40px;
+                }
+                
+                .span-icon {
+                    color: black !important;
+                    display: inherit !important;
+                    background: none !important;
+                }
+                
+                .menu-name {
+                    color: black !important;
+                }
+                
+                .main-menu-icon {
+                    font-size: 20pt;
+                }
+                
+                .menu-name {
+                    display: inline-block;
+                    width: 85px;
+                    margin-left: 10px;
+                }
+                
+                .li-dropdown {
+                    /* background-color: white; */
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                
+                .icon-enter {
+                    font-size: 18pt;
+                    /* padding-right: 3px; */
+                }
+                
+            </style>
+
+                        
+                <div class="notification">
+                      
+            <a class="count dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="../">
+                        <img src="../themes/icons/uiux/more-ico.svg" width="27px">
+                    </a>
+                    <div class="dropdown-menu area-dropdown" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown"><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=de"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/dashboard-ico.svg"></span>&nbsp;<span class="menu-name">Dashboard</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=lms"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/lms-ico.png"></span>&nbsp;<span class="menu-name">LMS</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><ul>
+            </ul></ul></div>                     <a class="count" href="../vn-message.php">
+                        <img src="../themes/sikad/images/default/mail.png">
+                                            </a>
+                </div> 
+
+                            <div class="userinfo">
+                 <img src="../themes/images/default-avatar.png" height="20" alt="">
+                <span>Deffan Febrian</span>
+                <span class="arrow" style="padding:0px;"><img src="../themes/sikad/images/sort_desc.png"></span>
+            </div><!--userinfo-->
+                        <div class="userinfodrop">
+                <h4>Deffan Febrian</h4>
+                <div class="avatar">
+                    <a href="../pegawai/index.php?pilihan=tambah&amp;aksi=updateuser&amp;iduser=DEF"><img src="../themes/images/default-avatar.png" height="90" width="90"></a>                </div><!--avatar-->
+                <div class="userdata">
+
+                    <ul>
+                        <li><a href="../password/index.php?pilihan=semester">Sesi Semester <span class="label label-warning" style="font-size: 11px;">
+                           (2025/2026 Genap)</span></a></li>
+                        <li><a href="../password/index.php?pilihan=setting"><i class="ico-cog3"></i> Preference</a></li>
+                        <li><a href="../password/index.php?pilihan=update"><i class="ico-key4"></i> Ganti Password</a></li>                                                <li>Jumlah Login Mahasiswa = 191</li>
+                        <li>Jumlah Login Dosen = 36</li>
+                                                <li><a id="logout" href="index.php?aksi=logout"><i class="ico-signout"></i> Sign Out</a></li>
+                                            </ul>
+                </div><!--userdata-->
+            </div><!--userinfodrop-->
+        </div><!--right-->
+    </div><!--topheader-->
+
+
+
+    <!-- begin megamenu -->
+    <div id="nav-anchor"></div>
+     <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="contextMenu" class="collapse navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-library"></i> Akademik<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Master Akademik </h4></li>
+                                                        <li><a href="../fakultas/index.php"> Badan Hukum/PT </a></li>
+                                                        <li><a href="../dosen/index.php"> Dosen </a></li>
+                                                        <li><a href="../asistenlab/index.php"> Asisten Lab </a></li>
+                                                        <li><a href="../pegawai2/index.php"> Pegawai </a></li>
+                                                        <li><a href="../mahasiswa/index.php"> Mahasiswa </a></li>
+                                                        <li><a href="../alumni/index.php"> Alumni </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Aktivitas Akademik </h4></li>
+                                                        <li><a href="../makul/index.php?pilihan=kurikulumbaru">Kurikulum/KRS </a></li>
+                                                        <li><a href="../nilai/index.php"> Nilai Kuliah  </a></li>
+                                                        <li><a href="../mahasiswaaktivitas/index.php"> Aktivitas Mahasiswa  </a></li>
+                                                        <li><a href="../aktivitaskelulusanmahasiswa/index.php"> Aktivitas Lulus / Keluar  </a></li>
+                                                        <li><a href="../surattugasmengajar/index.php"> Surat Tugas Mengajar  </a></li>
+                                                        <li><a href="../presensi/index.php"> Presensi Kuliah </a></li>
+                                                        <li><a href="../jadwal/index.php"> Jadwal Kuliah </a></li>
+                                                        <li><a href="../beasiswa/index.php"> Beasiswa </a></li>
+                                                        <li><a href="../pembuatnaskah/index.php">Pembuat Naskah </a></li>
+                                                        <li><a href="../pesertarapat/index.php">Peserta Rapat Koordinator MK </a></li>
+                                                        <li><a href="../bpaonline/index.php">Bimbingan PA Online </a></li>
+                                                        <li><a href="../cutip/index.php">Pengajuan Cuti </a></li>
+                                                        <li><a href="../daftarkegiatan/index.php">Kegiatan Mahasiswa </a></li>
+                                                        <li><a href="../kartu/index.php"> Cetak Kartu </a></li>
+                                                        <li><a href="../skpi/index.php"> SKPI  </a></li>
+                                                        <li><a href="../nilaikonversi/index.php"> Konversi Nilai </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4> </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/seminar/data-seminar" target="_blank">Seminar <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi" target="_blank">Sertifikasi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal" target="_blank">Lock Jurnal <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Wisuda dan Tugas Akhir </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi" target="_blank"> Skripsi/Tugas Akhir <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda" target="_blank">Wisuda <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skl/cetak-skl" target="_blank">Surat Keterangan Lulus (SKL) <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-file8"></i> Kuesioner<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Kuesioner </h4></li>
+                                                        <li><a href="../kuesionerpp/index.php">Proses Pembelajaran </a></li>
+                                                        <li><a href="../kuesionerla/index.php">Layanan </a></li>
+                                                        <li><a href="../kuesionerks/index.php">Kritik dan Saran </a></li>
+                                                        <li><a href="../kuesionerdo/index.php">Dosen </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Tracer Studi </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner" target="_blank">Tracer Studi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-users2"></i> PMB<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>PMB </h4></li>
+                                                        <li><a href="../new_pmb.php" target="_blank">Menuju Portal PMB <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-coins"></i> Keuangan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Keuangan </h4></li>
+                                                        <li><a href="../uangmhstm/index.php">TAGIHAN PER MAHASISWA </a></li>
+                                                        <li><a href="../uangmhsbayar/index.php">TAGIHAN dan PEMBAYARAN </a></li>
+                                                        <li><a href="../uangmhsbiaya/index.php">BIAYA DAN BEASISWA </a></li>
+                                                        <li><a href="../uangmhssetting/index.php">KONFIGURASI </a></li>
+                                                        <li><a href="../uangmhslr/index.php">LAPORAN dan REKONSILIASI </a></li>
+                                                        <li><a href="../dispensasi/index.php"> DISPENSASI  </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-bubbles"></i> Komunikasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Komunikasi </h4></li>
+                                                        <li><a href="../pengumuman/index.php">Pengumuman dan Info </a></li>
+                                                        <li><a href="../panduan/index.php">Upload Panduan/Materi </a></li>
+                                                        <li><a href="../pesan/index.php">Pesan-pesan </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan" target="_blank"> Broadcast Email <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../file/index.php">Tukar File </a></li>
+                                                        <li><a href="../infosms/index.php"> Info (SMS) </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-stack"></i> Laporan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Dikti </h4></li>
+                                                        <li><a href="../lain/index.php"> Transaksi Lain </a></li>
+                                                        <li><a href="../pt/index.php"> Referensi </a></li>
+                                                        <li><a href="../feederexport/index.php"> Open Feeder </a></li>
+                                                        <li><a href="../feedervalidasi/index.php"> Validasi Data </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Laporan Akademik </h4></li>
+                                                        <li><a href="../laporannilai/index.php">Nilai </a></li>
+                                                        <li><a href="../laporanaktivitaskuliah/index.php">Aktivitas Perkuliahan </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Executive Summary </h4></li>
+                                                        <li><a href="../uangmhslaporan/index.php">Keuangan Mahasiswa </a></li>
+                                                        <li><a href="../executive/index.php">Borang Akreditasi Institusi   </a></li>
+                                                        <li><a href="../executive_ps/index.php">Borang Akreditasi Program Studi </a></li>
+                                                        <li><a href="../executive_lk/index.php">Laporan Kuesioner </a></li>
+                                                        <li><a href="../executive_lp/index.php">Laporan Perkuliahan (KRS, Presensi, BAP) </a></li>
+                                                        <li><a href="../executive_ln/index.php">Laporan Nilai </a></li>
+                                                        <li><a href="../executive_ldm/index.php">Laporan Dosen dan Mahasiswa </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-cog2"></i> Sistem<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Sistem </h4></li>
+                                                        <li><a href="../password/index.php">Password </a></li>
+                                                        <li><a href="../pegawai/index.php">Data Operator </a></li>
+                                                        <li><a href="../sistem/index.php">Data Info Sistem </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-equalizer2"></i> Konfigurasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Konfigurasi </h4></li>
+                                                        <li><a href="../kalender/index.php">Kalender Akademik </a></li>
+                                                        <li><a href="../kegiatanakademik/index.php">Kegiatan Akademik </a></li>
+                                                        <li><a href="../jadwalakademik/index.php">Jadwal Sistem Akademik </a></li>
+                                                        <li><a href="../konfignilai/index.php">Nilai </a></li>
+                                                        <li><a href="../sesikuliah/index.php">Sesi Kuliah </a></li>
+                                                        <li><a href="../syaratkrs/index.php">Hak SKS Maksimum </a></li>
+                                                        <li><a href="../skslulus/index.php">SKS Kelulusan </a></li>
+                                                        <li><a href="../konfiglain/index.php">Konfigurasi Lain </a></li>
+                                                        <li><a href="../publikasifitur/index.php">Publikasi Fitur </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                                    </ul>
+        </div><!-- /.nav-collapse -->
+      </nav>
+    <!-- end megamenu -->
+
+        <div id="aside-anchor"></div>
+    
+
+    <aside class="vernav2 iconmenu">
+        <ul>
+            
+                    <li class="current">
+                        <a href="#formsubDEFAULT" class="editor">Pesan</a>
+                        <span class="arrow"></span>
+                        <ul id="formsubDEFAULT" style="max-height:80vh; overflow-y:auto; overflow-x:hidden;"><li class=""><a ""="" href="index.php?pilihan=lihat">Pesan Masuk</a></li><li class=""><a ""="" href="index.php?pilihan=kirim">Buat Pesan</a></li><li class=""><a ""="" href="index.php?pilihan=klihat">Pesan Terkirim</a></li>
+                        </ul>
+                    </li>
+                                <a id="toggle_menu" class="togglemenu"></a>
+        </ul>
+        <br><br>
+    </aside><!--leftmenu-->
+    
+
+    <div class="centercontent tables">
+
+        <div id="contentwrapper" class="contentwrapper">
+
+            
+        <div class="title-menu">
+          <div class="note note-primary"><i class="icon ico-list-alt"></i> PESAN MASUK</div>
+        </div>
+
+    <div class="notibar msgalert">
+                <a class="close"></a>
+                <p> Daftar pesan tidak ada</p>
+            </div>    
+<style>
+    .modal-backdrop.in {
+        opacity: 0.7;
+    }
+
+    .popup-notification-modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+    
+    .popup-notification-dialog-gahtering {
+        width: 840px;
+        max-width: 90vw;
+        margin: 0 auto;
+        margin-top: 5vh;
+    }
+    
+    .popup-notification-content-gathering {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        border-radius: 14px;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    /* Fallback for browsers that don't support aspect-ratio */
+    @supports not (aspect-ratio: 16 / 9) {
+        .popup-notification-content-gathering {
+            height: 450px; /* 800px * 9/16 */
+        }
+    }
+    
+    .popup-notification-body {
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.6;
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    
+    /* Images in popup use cover to crop */
+    .popup-notification-image,
+    .popup-notification-body img,
+    .carousel-inner img,
+    .carousel-inner .item img,
+    .carousel-inner .item a img,
+    #popupCarousel img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        display: block !important;
+        border-radius: 4px;
+    }
+    
+    /* Carousel items container untuk 16:9 ratio */
+    .carousel-inner,
+    .carousel-inner .item {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .carousel-inner .item a,
+    .carousel-inner .item > *:not(a) {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .popup-notification-footer-gathering {
+        border: none;
+        text-align: end;
+        padding: 0 30px 20px;
+        border-radius: 0 0 14px 14px;
+        height: 31px;
+        margin-top: 0px; 
+        background-color: #fff
+    }
+
+    .popup-close {
+        position: absolute;
+        top: 10px;
+    	right: 10px;
+        color: white;
+        border: 0px;
+        /* border-radius: 50%; */
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+        /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
+        transition: background-color 0.3s;
+        background: none;
+        padding: 5px;
+    }
+
+    /* Carousel indicators customization */
+    .carousel-indicators {
+        bottom: 15px;
+        margin-bottom: 0;
+    }
+
+    .carousel-indicators li {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        margin: 0 5px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .carousel-indicators .active {
+        background-color: #fff;
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Clickable image cursor */
+    .popup-notification-image.clickable {
+        cursor: pointer;
+    }
+
+    .popup-notification-image:not(.clickable) {
+        cursor: default;
+    }
+
+    /* Thumbnail preview section */
+    .popup-thumbnail-section {
+        background-color: #fff;
+        border-radius: 14px 14px 14px 14px;
+        margin-top: 20px;
+        width: 840px;
+        max-width: 90vw;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .popup-thumbnail-container {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        padding: 10px 0;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Center thumbnails if total width is less than container */
+    .popup-thumbnail-container.centered {
+        justify-content: center;
+    }
+
+    .popup-thumbnail-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .popup-thumbnail-item {
+        flex: 0 0 auto;
+        width: 160px;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .modal-footer {
+        margin-top: 0px;
+        padding: 5px 5px 10px 5px ; 
+        border: none;
+    }
+
+    .popup-thumbnail-item.active {
+        border-color: #000;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+
+    .popup-thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .popup-thumbnail-item:hover:not(.active) {
+        border-color: rgba(0, 123, 255, 0.3);
+    }
+
+    /* Arrow navigation for thumbnails */
+    .thumbnail-arrows-container {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        width: 100%;
+        /* margin-top: 10px; */
+        min-height: 35px;
+    }
+    
+    /* .thumbnail-arrows-container.hidden {
+        display: none;
+    } */
+
+    .thumbnail-nav-arrow {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 18px;
+        color: #333;
+        user-select: none;
+    }
+
+    .thumbnail-nav-arrow:hover {
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail-nav-arrow.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .nav-box {
+        display: inline-flex;
+        padding: 6px;
+        border-radius: 4px;
+        gap: 6px;
+    }
+
+    .arrow {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;
+        background: #f5f5f5;
+        color: #666;
+        font-size: 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .arrow:hover {
+        background: #e5e7eb;
+    }
+
+    .arrow:active {
+        transform: scale(0.95);
+    }
+    
+    /* Tablet (768px - 1024px) */
+    @media (max-width: 1024px) {
+        .popup-notification-dialog-gahtering {
+            width: 700px;
+        }
+        
+        .popup-notification-content-gathering {
+            padding: 30px;
+        }
+        
+        /* aspect-ratio will auto-adjust, no need to set height */
+        @supports not (aspect-ratio: 16 / 9) {
+            .popup-notification-content-gathering {
+                height: calc(700px * 9 / 16);
+            }
+        }
+
+        .popup-thumbnail-section {
+            width: 700px;
+        }
+        
+        .popup-notification-footer-gathering {
+            padding: 0 20px 30px;
+        }
+
+        .popup-thumbnail-item {
+            width: 130px;
+        }
+
+        .thumbnail-nav-arrow {
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+        }
+    }
+    
+    /* Mobile Landscape (576px - 767px) */
+    @media (max-width: 767px) {
+        .popup-notification-modal {
+            margin-top: 5vh;
+            padding: 10px 0;
+        }
+        
+        .popup-notification-dialog-gahtering {
+            width: 500px;
+        }
+        
+        .popup-notification-content-gathering {
+            border-radius: 8px;
+            padding: 25px;
+        }
+        
+        /* aspect-ratio will auto-adjust */
+        @supports not (aspect-ratio: 16 / 9) {
+            .popup-notification-content-gathering {
+                height: calc(500px * 9 / 16);
+            }
+        }
+
+        .popup-thumbnail-section {
+            width: 500px;
+        }
+        
+        .popup-notification-footer-gathering {
+            padding: 0 15px 25px;
+        }
+
+        .carousel-indicators {
+            bottom: 10px;
+        }
+
+        .carousel-indicators li {
+            width: 8px;
+            height: 8px;
+        }
+
+        .popup-thumbnail-section {
+            padding: 0 35px;
+            margin-top: 15px;
+            width: 500px;
+        }
+
+        .popup-thumbnail-item {
+            width: 110px;
+        }
+
+        .popup-thumbnail-container {
+            gap: 10px;
+        }
+
+        .thumbnail-nav-arrow {
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
+        }
+    }
+    
+    /* Mobile Portrait (320px - 575px) */
+    @media (max-width: 575px) {
+        .popup-notification-modal {
+            margin-top: 10px;
+        }
+        
+        .popup-notification-dialog-gahtering {
+            width: 95vw;
+            max-width: 350px;
+        }
+        
+        .popup-notification-content-gathering {
+            border-radius: 6px;
+            padding: 20px;
+        }
+        
+        /* aspect-ratio will auto-adjust */
+        @supports not (aspect-ratio: 16 / 9) {
+            .popup-notification-content-gathering {
+                height: calc(95vw * 9 / 16);
+                max-height: 196.875px; /* 350px * 9/16 */
+            }
+        }
+        
+        .popup-notification-footer-gathering {
+            padding: 0 10px 20px;
+        }
+
+        .carousel-indicators li {
+            width: 6px;
+            height: 6px;
+            margin: 0 3px;
+        }
+
+        .popup-thumbnail-section {
+            padding: 0 30px;
+            margin-top: 12px;
+            width: 95vw;
+            max-width: 350px;
+        }
+
+        .popup-thumbnail-item {
+            width: 90px;
+        }
+
+        .popup-thumbnail-container {
+            gap: 8px;
+        }
+
+        .thumbnail-nav-arrow {
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+        }
+    }
+    
+    /* Small Mobile (max 320px) */
+    @media (max-width: 320px) {
+        .popup-notification-dialog-gahtering {
+            width: 98vw;
+            max-width: 300px;
+        }
+        
+        .popup-notification-content-gathering {
+            padding: 15px;
+        }
+        
+        /* aspect-ratio will auto-adjust */
+        @supports not (aspect-ratio: 16 / 9) {
+            .popup-notification-content-gathering {
+                height: calc(98vw * 9 / 16);
+                max-height: 168.75px; /* 300px * 9/16 */
+            }
+        }
+        
+        .popup-notification-footer-gathering {
+            padding: 0 8px 15px;
+        }
+
+        .popup-thumbnail-section {
+            padding: 0 28px;
+            margin-top: 10px;
+            width: 98vw;
+            max-width: 300px;
+        }
+
+        .popup-thumbnail-item {
+            width: 80px;
+        }
+
+        .popup-thumbnail-container {
+            gap: 6px;
+        }
+
+        .thumbnail-nav-arrow {
+            width: 22px;
+            height: 22px;
+            font-size: 11px;
+        }
+    }
+</style>
+
+<div class="modal fade" id="notif-portalopr-tutup-layanan" tabindex="-1" role="dialog" aria-labelledby="portalNotificationLabel" aria-hidden="true" style="display: none;">
+    <button class="popup-close" onclick="closePopup()">×</button>
+    <div class="modal-dialog popup-notification-dialog-gahtering" role="document">
+        <div class="modal-content popup-notification-content-gathering">
+
+                        <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrQMjvjmdQUwOajWEZnBhH5CJo_WXRaUKLugjvfMuShgsZqA/viewform?usp=publish-editor" target="_blank" style="display:block;height:100%;width:100%;">
+                                <img src="https://t25639638.p.clickup-attachments.com/t25639638/f1b0dc04-14b8-4a26-a88c-5881bedc7be4/Resmi%20launching%20OBE%207%20juli%202026.webp?view=open" alt="D-Day launching OBE 7 Juli 2026" class="popup-notification-image clickable" style="width:100%;height:100%;object-fit:cover;display:block;">
+                            </a>
+                                            </div>
+                                    <div class="item ">
+                                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrQMjvjmdQUwOajWEZnBhH5CJo_WXRaUKLugjvfMuShgsZqA/viewform?usp=publish-editor" target="_blank" style="display:block;height:100%;width:100%;">
+                                <img src="https://t25639638.p.clickup-attachments.com/t25639638/7c97f485-98a1-4066-a6e4-6d70fc083c9f/2026_07%20-%20Pop%20Up%20Apps_OBE_2_Checklist%20Persiapan.webp?view=open" alt="Info pelatihan obe" class="popup-notification-image clickable" style="width:100%;height:100%;object-fit:cover;display:block;">
+                            </a>
+                                            </div>
+                                    <div class="item ">
+                                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrQMjvjmdQUwOajWEZnBhH5CJo_WXRaUKLugjvfMuShgsZqA/viewform?usp=publish-editor" target="_blank" style="display:block;height:100%;width:100%;">
+                                <img src="https://t25639638.p.clickup-attachments.com/t25639638/600157b6-3ecf-4745-9d03-96efe5243763/Informasi%20pelatihan%20OBE%2014-15%20Juli%202026.webp?view=open" alt="hal yang harus disiapkan sebelum pelatihan obe" class="popup-notification-image clickable" style="width:100%;height:100%;object-fit:cover;display:block;">
+                            </a>
+                                            </div>
+                                    <div class="item ">
+                                                    <a href="https://www.campusupdate.co.id/indonesia-postgraduate-research-expo-2026/" target="_blank" style="display:block;height:100%;width:100%;">
+                                <img src="https://t25639638.p.clickup-attachments.com/t25639638/0955959a-f535-4e58-9c48-c45a8f3eae9d/WhatsApp%20Image%202026-06-29%20at%2015.14.21.jpeg?view=open" alt="Mataer Postgraduate and research expo 2026" class="popup-notification-image clickable" style="width:100%;height:100%;object-fit:cover;display:block;">
+                            </a>
+                                            </div>
+                                    <div class="item ">
+                                                    <a href="https://mataerinstitute.com/events/webinar-erm-2026" target="_blank" style="display:block;height:100%;width:100%;">
+                                <img src="https://t25639638.p.clickup-attachments.com/t25639638/3329fcd2-9525-4696-82fb-ed0ddaab8f6d/Poster%20Webinar%20i3L%20vol%202%20-%20website%20home%2016_9%20(1).jpg?view=open" alt="Webinar mataer enterprise risk management " class="popup-notification-image clickable" style="width:100%;height:100%;object-fit:cover;display:block;">
+                            </a>
+                                            </div>
+                            </div>
+            
+            <div class="modal-body popup-notification-body">
+                                    <!-- Carousel untuk multiple popups -->
+                    <!-- <div id="popupCarousel" class="carousel slide" data-ride="carousel" data-interval="false"> -->
+                        <!-- Indicators -->
+                        <!-- <ol class="carousel-indicators"> -->
+                                                            <!-- <li data-target="#popupCarousel" data-slide-to="0" class="active"></li> -->
+                                                            <!-- <li data-target="#popupCarousel" data-slide-to="1" class=""></li> -->
+                                                            <!-- <li data-target="#popupCarousel" data-slide-to="2" class=""></li> -->
+                                                            <!-- <li data-target="#popupCarousel" data-slide-to="3" class=""></li> -->
+                                                            <!-- <li data-target="#popupCarousel" data-slide-to="4" class=""></li> -->
+                                                    <!-- </ol> -->
+                        
+                        
+                    <!-- </div> -->
+                            </div>
+            
+            
+        </div>
+                    <!-- Thumbnail preview section -->
+            <div class="popup-thumbnail-section">
+                <div class="popup-thumbnail-container" id="thumbnailContainer">
+                                            <div class="popup-thumbnail-item active" data-slide-to="0" data-index="0">
+                            <img src="https://t25639638.p.clickup-attachments.com/t25639638/f1b0dc04-14b8-4a26-a88c-5881bedc7be4/Resmi%20launching%20OBE%207%20juli%202026.webp?view=open" alt="D-Day launching OBE 7 Juli 2026">
+                        </div>
+                                            <div class="popup-thumbnail-item " data-slide-to="1" data-index="1">
+                            <img src="https://t25639638.p.clickup-attachments.com/t25639638/7c97f485-98a1-4066-a6e4-6d70fc083c9f/2026_07%20-%20Pop%20Up%20Apps_OBE_2_Checklist%20Persiapan.webp?view=open" alt="Info pelatihan obe">
+                        </div>
+                                            <div class="popup-thumbnail-item " data-slide-to="2" data-index="2">
+                            <img src="https://t25639638.p.clickup-attachments.com/t25639638/600157b6-3ecf-4745-9d03-96efe5243763/Informasi%20pelatihan%20OBE%2014-15%20Juli%202026.webp?view=open" alt="hal yang harus disiapkan sebelum pelatihan obe">
+                        </div>
+                                            <div class="popup-thumbnail-item " data-slide-to="3" data-index="3">
+                            <img src="https://t25639638.p.clickup-attachments.com/t25639638/0955959a-f535-4e58-9c48-c45a8f3eae9d/WhatsApp%20Image%202026-06-29%20at%2015.14.21.jpeg?view=open" alt="Mataer Postgraduate and research expo 2026">
+                        </div>
+                                            <div class="popup-thumbnail-item " data-slide-to="4" data-index="4">
+                            <img src="https://t25639638.p.clickup-attachments.com/t25639638/3329fcd2-9525-4696-82fb-ed0ddaab8f6d/Poster%20Webinar%20i3L%20vol%202%20-%20website%20home%2016_9%20(1).jpg?view=open" alt="Webinar mataer enterprise risk management ">
+                        </div>
+                                    </div>
+                <!-- Arrow controls di kanan bawah -->
+                <div class="modal-footer thumbnail-arrows-container">
+                    <div class="thumbnail-nav-arrow left" id="thumbnailPrev">‹</div>
+                    <div class="thumbnail-nav-arrow right" id="thumbnailNext">›</div>
+                </div>
+
+                <!-- <div class="modal-footer popup-notification-footer-gathering">
+                    <div class="nav-box">
+                        <button class="arrow left">&#8249;</button>
+                        <button class="arrow right">&#8250;</button>
+                    </div>
+                </div> -->
+
+            </div>
+                </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Auto show modal saat halaman load
+    $('#notif-portalopr-tutup-layanan').modal('show');
+    
+        var currentSlide = 0;
+    var totalSlides = 5;
+    
+    // Function to go to specific slide
+    function goToSlide(slideIndex) {
+        // Remove active class from all items
+        $('.carousel-inner .item').removeClass('active');
+        
+        // Add active class to target slide
+        $('.carousel-inner .item').eq(slideIndex).addClass('active');
+        
+        // Update indicators
+        $('.carousel-indicators li').removeClass('active');
+        $('.carousel-indicators li').eq(slideIndex).addClass('active');
+        
+        // Update thumbnail
+        updateActiveThumbnail(slideIndex);
+        scrollThumbnailIntoView(slideIndex);
+        
+        currentSlide = slideIndex;
+    }
+    
+    // Function to go to next slide
+    function nextSlide() {
+        var nextIndex = (currentSlide + 1) % totalSlides;
+        goToSlide(nextIndex);
+    }
+    
+    // Auto-scroll carousel setiap 3000ms
+    var carouselInterval = setInterval(function() {
+        nextSlide();
+    }, 3000);
+    
+    // Clear interval saat modal ditutup
+    $('#notif-portalopr-tutup-layanan').on('hidden.bs.modal', function () {
+        clearInterval(carouselInterval);
+    });
+
+    // Indicator click handler
+    $('.carousel-indicators li').on('click', function() {
+        var slideIndex = $(this).data('slide-to');
+        goToSlide(slideIndex);
+        
+        // Reset interval
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(function() {
+            nextSlide();
+        }, 3000);
+    });
+
+    // Thumbnail click handler
+    $('.popup-thumbnail-item').on('click', function() {
+        var slideIndex = $(this).data('slide-to');
+        goToSlide(slideIndex);
+        
+        // Reset interval
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(function() {
+            nextSlide();
+        }, 3000);
+    });
+
+    // Thumbnail navigation arrows
+    $('#thumbnailPrev').on('click', function() {
+        var prevIndex = currentSlide - 1;
+        if (prevIndex < 0) prevIndex = totalSlides - 1; // Loop ke akhir
+        goToSlide(prevIndex);
+        
+        // Reset interval
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(function() {
+            nextSlide();
+        }, 3000);
+    });
+
+    $('#thumbnailNext').on('click', function() {
+        var nextIndex = currentSlide + 1;
+        if (nextIndex >= totalSlides) nextIndex = 0; // Loop ke awal
+        goToSlide(nextIndex);
+        
+        // Reset interval
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(function() {
+            nextSlide();
+        }, 3000);
+    });
+
+    // Initialize arrow states (not needed anymore for infinite loop)
+    // updateArrowStates();
+
+    // Pause auto-scroll saat hover di banner atau thumbnail
+    $('.popup-notification-content-gathering, .popup-thumbnail-item').on('mouseenter', function() {
+        clearInterval(carouselInterval);
+    });
+
+    // Resume auto-scroll saat mouse leave dari banner atau thumbnail
+    $('.popup-notification-content-gathering, .popup-thumbnail-item').on('mouseleave', function() {
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(function() {
+            nextSlide();
+        }, 3000);
+    });
+
+    // Functions
+    function updateActiveThumbnail(index) {
+        $('.popup-thumbnail-item').removeClass('active');
+        $('.popup-thumbnail-item[data-index="' + index + '"]').addClass('active');
+    }
+
+    function scrollThumbnailIntoView(index) {
+        var container = $('#thumbnailContainer');
+        var thumbnail = $('.popup-thumbnail-item[data-index="' + index + '"]');
+        
+        if (thumbnail.length) {
+            var containerWidth = container.width();
+            var thumbnailLeft = thumbnail.position().left;
+            var thumbnailWidth = thumbnail.outerWidth(true);
+            var scrollLeft = container.scrollLeft();
+            
+            // Check if thumbnail is not fully visible
+            if (thumbnailLeft < 0) {
+                // Scroll left
+                container.animate({ 
+                    scrollLeft: scrollLeft + thumbnailLeft - 20 
+                }, 300);
+            } else if (thumbnailLeft + thumbnailWidth > containerWidth) {
+                // Scroll right
+                container.animate({ 
+                    scrollLeft: scrollLeft + (thumbnailLeft + thumbnailWidth - containerWidth) + 20 
+                }, 300);
+            }
+        }
+    }
+
+    // updateArrowStates function removed - infinite loop enabled
+    });
+
+function closePopup() {
+    $('#notif-portalopr-tutup-layanan').modal('hide');
+}
+</script>
+
+
+
+        </div><!--contentwrapper-->
+
+    </div><!-- centercontent -->
+
+
+</div> <!--end bodywrapper-->
+
+
+
+<!--</body></html>-->
+      <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="../realtime-notification.js"></script>
+    
+
+</body></html>

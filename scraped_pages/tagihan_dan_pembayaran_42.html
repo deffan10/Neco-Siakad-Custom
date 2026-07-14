@@ -1,0 +1,721 @@
+<body class="withvernav"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 20px; padding-right: 0px; display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+
+<div id="container" style="" class="ui-notify"></div>
+
+<div class="wrapper" style="padding-bottom: 80px"> <!-- bodywrapper-->
+    <div class="topheader">
+
+             <div class="boxTitle"> <!-- Program name -->
+                                <img height="45px" src="https://sgp1.vultrobjects.com/043355/sikad/gambar/Logo.iVQEhuhEPq.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=YGIP9T9E1N7J9K1U7NIC%2F20260714%2Fsgp1%2Fs3%2Faws4_request&amp;X-Amz-Date=20260714T083932Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=68337a83c07dccc1c62bb6e954dadfa1f9170455ab46113610f026729b69533b">
+            <div class="infoWrap">
+              <h3 class="logo">SIAKADMU 4.0</h3>
+              <span class="slogan">UMMADA CIREBON</span>
+              <br clear="all">
+            </div>
+        </div>
+
+    
+        <div class="left">
+            <div class="search">
+                <form action="../cari/index.php" method="post">
+                                        <input type="text" name="katakunci" id="katakunci" onfocus="if(this.value == 'Pencarian menu..') { this.value = ''; }" placeholder="Pencarian Menu.." value="">
+                    <button class="submitbutton" id="menusearch"></button>
+                </form>
+            </div><!--search-->
+
+            <br clear="all">
+
+        </div><!--left-->
+
+        <div class="right">
+        
+            
+            <!-- NOTIFICATION STYLE-->
+                
+            <link rel="stylesheet" href="../themes/icons/addsicons-1/style.css">
+            
+            <style>
+                ul.dropdown {
+                    list-style-type: none;
+                    /* background-color: white; */
+                }
+                
+                .area-dropdown {
+                    /* width: 100px; */
+                    /* height: 100px; */
+                    left: -50% !important;
+                    background-color: white;
+                    border-radius: 11px;
+                }
+                
+                .tdropdown {
+                    background: white;
+                    border-collapse: collapse;
+                    border: none;
+                }
+                
+                .tdropdown tr td {
+                    background-color: white !important;
+                }
+                
+                .li-dropdown {
+                    vertical-align: middle;
+                    width: 165px;
+                }
+                
+                .icon-sub-menu {
+                    width: 40px;
+                }
+                
+                .span-icon {
+                    color: black !important;
+                    display: inherit !important;
+                    background: none !important;
+                }
+                
+                .menu-name {
+                    color: black !important;
+                }
+                
+                .main-menu-icon {
+                    font-size: 20pt;
+                }
+                
+                .menu-name {
+                    display: inline-block;
+                    width: 85px;
+                    margin-left: 10px;
+                }
+                
+                .li-dropdown {
+                    /* background-color: white; */
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                
+                .icon-enter {
+                    font-size: 18pt;
+                    /* padding-right: 3px; */
+                }
+                
+            </style>
+
+                        
+                <div class="notification">
+                      
+            <a class="count dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="../">
+                        <img src="../themes/icons/uiux/more-ico.svg" width="27px">
+                    </a>
+                    <div class="dropdown-menu area-dropdown" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown"><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=de"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/dashboard-ico.svg"></span>&nbsp;<span class="menu-name">Dashboard</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=lms"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/lms-ico.png"></span>&nbsp;<span class="menu-name">LMS</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><ul>
+            </ul></ul></div>                     <a class="count" href="../vn-message.php">
+                        <img src="../themes/sikad/images/default/mail.png">
+                                            </a>
+                </div> 
+
+                            <div class="userinfo">
+                 <img src="../themes/images/default-avatar.png" height="20" alt="">
+                <span>Deffan Febrian</span>
+                <span class="arrow" style="padding:0px;"><img src="../themes/sikad/images/sort_desc.png"></span>
+            </div><!--userinfo-->
+                        <div class="userinfodrop">
+                <h4>Deffan Febrian</h4>
+                <div class="avatar">
+                    <a href="../pegawai/index.php?pilihan=tambah&amp;aksi=updateuser&amp;iduser=DEF"><img src="../themes/images/default-avatar.png" height="90" width="90"></a>                </div><!--avatar-->
+                <div class="userdata">
+
+                    <ul>
+                        <li><a href="../password/index.php?pilihan=semester">Sesi Semester <span class="label label-warning" style="font-size: 11px;">
+                           (2025/2026 Genap)</span></a></li>
+                        <li><a href="../password/index.php?pilihan=setting"><i class="ico-cog3"></i> Preference</a></li>
+                        <li><a href="../password/index.php?pilihan=update"><i class="ico-key4"></i> Ganti Password</a></li>                                                <li>Jumlah Login Mahasiswa = 191</li>
+                        <li>Jumlah Login Dosen = 36</li>
+                                                <li><a id="logout" href="index.php?aksi=logout"><i class="ico-signout"></i> Sign Out</a></li>
+                                            </ul>
+                </div><!--userdata-->
+            </div><!--userinfodrop-->
+        </div><!--right-->
+    </div><!--topheader-->
+
+
+
+    <!-- begin megamenu -->
+    <div id="nav-anchor"></div>
+     <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="contextMenu" class="collapse navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-library"></i> Akademik<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Master Akademik </h4></li>
+                                                        <li><a href="../fakultas/index.php"> Badan Hukum/PT </a></li>
+                                                        <li><a href="../dosen/index.php"> Dosen </a></li>
+                                                        <li><a href="../asistenlab/index.php"> Asisten Lab </a></li>
+                                                        <li><a href="../pegawai2/index.php"> Pegawai </a></li>
+                                                        <li><a href="../mahasiswa/index.php"> Mahasiswa </a></li>
+                                                        <li><a href="../alumni/index.php"> Alumni </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Aktivitas Akademik </h4></li>
+                                                        <li><a href="../makul/index.php?pilihan=kurikulumbaru">Kurikulum/KRS </a></li>
+                                                        <li><a href="../nilai/index.php"> Nilai Kuliah  </a></li>
+                                                        <li><a href="../mahasiswaaktivitas/index.php"> Aktivitas Mahasiswa  </a></li>
+                                                        <li><a href="../aktivitaskelulusanmahasiswa/index.php"> Aktivitas Lulus / Keluar  </a></li>
+                                                        <li><a href="../surattugasmengajar/index.php"> Surat Tugas Mengajar  </a></li>
+                                                        <li><a href="../presensi/index.php"> Presensi Kuliah </a></li>
+                                                        <li><a href="../jadwal/index.php"> Jadwal Kuliah </a></li>
+                                                        <li><a href="../beasiswa/index.php"> Beasiswa </a></li>
+                                                        <li><a href="../pembuatnaskah/index.php">Pembuat Naskah </a></li>
+                                                        <li><a href="../pesertarapat/index.php">Peserta Rapat Koordinator MK </a></li>
+                                                        <li><a href="../bpaonline/index.php">Bimbingan PA Online </a></li>
+                                                        <li><a href="../cutip/index.php">Pengajuan Cuti </a></li>
+                                                        <li><a href="../daftarkegiatan/index.php">Kegiatan Mahasiswa </a></li>
+                                                        <li><a href="../kartu/index.php"> Cetak Kartu </a></li>
+                                                        <li><a href="../skpi/index.php"> SKPI  </a></li>
+                                                        <li><a href="../nilaikonversi/index.php"> Konversi Nilai </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4> </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/seminar/data-seminar" target="_blank">Seminar <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi" target="_blank">Sertifikasi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal" target="_blank">Lock Jurnal <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Wisuda dan Tugas Akhir </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi" target="_blank"> Skripsi/Tugas Akhir <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda" target="_blank">Wisuda <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skl/cetak-skl" target="_blank">Surat Keterangan Lulus (SKL) <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-file8"></i> Kuesioner<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Kuesioner </h4></li>
+                                                        <li><a href="../kuesionerpp/index.php">Proses Pembelajaran </a></li>
+                                                        <li><a href="../kuesionerla/index.php">Layanan </a></li>
+                                                        <li><a href="../kuesionerks/index.php">Kritik dan Saran </a></li>
+                                                        <li><a href="../kuesionerdo/index.php">Dosen </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Tracer Studi </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner" target="_blank">Tracer Studi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-users2"></i> PMB<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>PMB </h4></li>
+                                                        <li><a href="../new_pmb.php" target="_blank">Menuju Portal PMB <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-coins"></i> Keuangan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Keuangan </h4></li>
+                                                        <li><a href="../uangmhstm/index.php">TAGIHAN PER MAHASISWA </a></li>
+                                                        <li><a href="../uangmhsbayar/index.php">TAGIHAN dan PEMBAYARAN </a></li>
+                                                        <li><a href="../uangmhsbiaya/index.php">BIAYA DAN BEASISWA </a></li>
+                                                        <li><a href="../uangmhssetting/index.php">KONFIGURASI </a></li>
+                                                        <li><a href="../uangmhslr/index.php">LAPORAN dan REKONSILIASI </a></li>
+                                                        <li><a href="../dispensasi/index.php"> DISPENSASI  </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-bubbles"></i> Komunikasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Komunikasi </h4></li>
+                                                        <li><a href="../pengumuman/index.php">Pengumuman dan Info </a></li>
+                                                        <li><a href="../panduan/index.php">Upload Panduan/Materi </a></li>
+                                                        <li><a href="../pesan/index.php">Pesan-pesan </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan" target="_blank"> Broadcast Email <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../file/index.php">Tukar File </a></li>
+                                                        <li><a href="../infosms/index.php"> Info (SMS) </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-stack"></i> Laporan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Dikti </h4></li>
+                                                        <li><a href="../lain/index.php"> Transaksi Lain </a></li>
+                                                        <li><a href="../pt/index.php"> Referensi </a></li>
+                                                        <li><a href="../feederexport/index.php"> Open Feeder </a></li>
+                                                        <li><a href="../feedervalidasi/index.php"> Validasi Data </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Laporan Akademik </h4></li>
+                                                        <li><a href="../laporannilai/index.php">Nilai </a></li>
+                                                        <li><a href="../laporanaktivitaskuliah/index.php">Aktivitas Perkuliahan </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Executive Summary </h4></li>
+                                                        <li><a href="../uangmhslaporan/index.php">Keuangan Mahasiswa </a></li>
+                                                        <li><a href="../executive/index.php">Borang Akreditasi Institusi   </a></li>
+                                                        <li><a href="../executive_ps/index.php">Borang Akreditasi Program Studi </a></li>
+                                                        <li><a href="../executive_lk/index.php">Laporan Kuesioner </a></li>
+                                                        <li><a href="../executive_lp/index.php">Laporan Perkuliahan (KRS, Presensi, BAP) </a></li>
+                                                        <li><a href="../executive_ln/index.php">Laporan Nilai </a></li>
+                                                        <li><a href="../executive_ldm/index.php">Laporan Dosen dan Mahasiswa </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-cog2"></i> Sistem<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Sistem </h4></li>
+                                                        <li><a href="../password/index.php">Password </a></li>
+                                                        <li><a href="../pegawai/index.php">Data Operator </a></li>
+                                                        <li><a href="../sistem/index.php">Data Info Sistem </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-equalizer2"></i> Konfigurasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Konfigurasi </h4></li>
+                                                        <li><a href="../kalender/index.php">Kalender Akademik </a></li>
+                                                        <li><a href="../kegiatanakademik/index.php">Kegiatan Akademik </a></li>
+                                                        <li><a href="../jadwalakademik/index.php">Jadwal Sistem Akademik </a></li>
+                                                        <li><a href="../konfignilai/index.php">Nilai </a></li>
+                                                        <li><a href="../sesikuliah/index.php">Sesi Kuliah </a></li>
+                                                        <li><a href="../syaratkrs/index.php">Hak SKS Maksimum </a></li>
+                                                        <li><a href="../skslulus/index.php">SKS Kelulusan </a></li>
+                                                        <li><a href="../konfiglain/index.php">Konfigurasi Lain </a></li>
+                                                        <li><a href="../publikasifitur/index.php">Publikasi Fitur </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                                    </ul>
+        </div><!-- /.nav-collapse -->
+      </nav>
+    <!-- end megamenu -->
+
+        <div id="aside-anchor"></div>
+    
+
+    <aside class="vernav2 iconmenu">
+        <ul>
+            
+                    <li class="current">
+                        <a href="#formsubDEFAULT" class="editor">Tagihan dan Pembayaran</a>
+                        <span class="arrow"></span>
+                        <ul id="formsubDEFAULT" style="max-height:80vh; overflow-y:auto; overflow-x:hidden;"><li class=""><a ""="" href="index.php?pilihan=bayar">Pembayaran</a></li><li class=""><a ""="" href="index.php?pilihan=tagihan">Buat Tagihan</a></li><li class=""><a ""="" href="index.php?pilihan=hitungdenda">Hitung Denda</a></li><li class=""><a ""="" href="index.php?pilihan=validasitagihan">Validasi Data Tagihan</a></li>
+                        </ul>
+                    </li>
+                                <a id="toggle_menu" class="togglemenu"></a>
+        </ul>
+        <br><br>
+    </aside><!--leftmenu-->
+    
+
+    <div class="centercontent tables">
+
+        <div id="contentwrapper" class="contentwrapper">
+
+            
+			<table class="anti-table table-tab">
+				<tbody><tr>
+	
+					<td align="center" class="table-active"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=buat&amp;idupdate="><b> Buat Tagihan </b> </a></td>
+		
+					<td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=cari2&amp;idupdate="> Lihat Tagihan  </a></td>
+		
+					<td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=edit&amp;idupdate="> Edit Tagihan Manual  </a></td>
+		
+					<td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=tambah&amp;idupdate="> Tambah Tagihan Manual  </a></td>
+		
+					<td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=impor&amp;idupdate="> Impor Tagihan  </a></td>
+		
+				</tr>
+			</tbody></table>
+			<span class="line-tab"></span>
+	
+        <div class="title-menu">
+          <div class="note note-primary"><i class="icon ico-list-alt"></i> BUAT TAGIHAN</div>
+        </div>
+
+    
+		<form name="form" action="index.php" method="get">
+		<input type="hidden" name="pilihan" value="">
+	 
+      
+		<input type="hidden" name="tab" value="buat">
+	 
+      
+		<input type="hidden" name="sessid" value="7d41c674365dadae2a324cdf6d1ed941">
+	
+                  
+		<input type="hidden" name="vartoken" value="token6e230">
+	 
+        <table style="vertical-align:top" class="table table-bordered table-striped">
+        <tbody><tr style="vertical-align:top">
+        <td style="vertical-align:top" width="60%">    
+		<table class="table table-bordered table-striped">
+		<tbody><tr valign="top">
+			<td width="150">Tahun/Semester</td>
+			<td>
+            <select name="tahun" class="masukan">
+
+						 
+							<option value="2036">2035/2036 </option>
+							
+							<option value="2035">2034/2035 </option>
+							
+							<option value="2034">2033/2034 </option>
+							
+							<option value="2033">2032/2033 </option>
+							
+							<option value="2032">2031/2032 </option>
+							
+							<option value="2031">2030/2031 </option>
+							
+							<option value="2030">2029/2030 </option>
+							
+							<option value="2029">2028/2029 </option>
+							
+							<option value="2028">2027/2028 </option>
+							
+							<option value="2027">2026/2027 </option>
+							
+							<option value="2026" selected="">2025/2026 </option>
+							
+							<option value="2025">2024/2025 </option>
+							
+							<option value="2024">2023/2024 </option>
+							
+							<option value="2023">2022/2023 </option>
+							
+							<option value="2022">2021/2022 </option>
+							
+							<option value="2021">2020/2021 </option>
+							
+							<option value="2020">2019/2020 </option>
+							
+							<option value="2019">2018/2019 </option>
+							
+							<option value="2018">2017/2018 </option>
+							
+							<option value="2017">2016/2017 </option>
+							
+							<option value="2016">2015/2016 </option>
+							
+							<option value="2015">2014/2015 </option>
+							
+							<option value="2014">2013/2014 </option>
+							
+							<option value="2013">2012/2013 </option>
+							
+							<option value="2012">2011/2012 </option>
+							
+							<option value="2011">2010/2011 </option>
+							
+							<option value="2010">2009/2010 </option>
+							
+							<option value="2009">2008/2009 </option>
+							
+							<option value="2008">2007/2008 </option>
+							
+							<option value="2007">2006/2007 </option>
+							
+							<option value="2006">2005/2006 </option>
+							
+							<option value="2005">2004/2005 </option>
+							
+							<option value="2004">2003/2004 </option>
+							
+							<option value="2003">2002/2003 </option>
+							
+							<option value="2002">2001/2002 </option>
+							
+							<option value="2001">2000/2001 </option>
+							
+							<option value="2000">1999/2000 </option>
+							
+							<option value="1999">1998/1999 </option>
+							
+							<option value="1998">1997/1998 </option>
+							
+							<option value="1997">1996/1997 </option>
+							
+							<option value="1996">1995/1996 </option>
+							
+							<option value="1995">1994/1995 </option>
+							
+							<option value="1994">1993/1994 </option>
+							
+							<option value="1993">1992/1993 </option>
+							
+							<option value="1992">1991/1992 </option>
+							
+							<option value="1991">1990/1991 </option>
+							
+							<option value="1990">1989/1990 </option>
+							
+							<option value="1989">1988/1989 </option>
+							
+							<option value="1988">1987/1988 </option>
+							
+							<option value="1987">1986/1987 </option>
+							
+							<option value="1986">1985/1986 </option>
+							
+							<option value="1985">1984/1985 </option>
+							
+							<option value="1984">1983/1984 </option>
+							
+							<option value="1983">1982/1983 </option>
+							
+							<option value="1982">1981/1982 </option>
+							
+							<option value="1981">1980/1981 </option>
+							
+							<option value="1980">1979/1980 </option>
+							
+						</select>
+            <select name="semester" class="masukan">
+            
+							<option value="1">Ganjil  </option>
+							
+							<option value="3">SP Ganjil  </option>
+							
+							<option value="2" selected="">Genap  </option>
+							
+							<option value="4">SP Genap  </option>
+							
+						</select>
+
+  </td>
+			</tr>			
+ 			<tr>
+				<td width="150">
+					Jurusan/Program Studi
+				</td>
+				<td>
+					<select class="masukan" name="idprodi" id="prodi">
+						<!-- <option value=''>Semua</option> --><option value="13261">13261 - Administrasi Rumah Sakit ( S1 ) </option><option value="62201">62201 - Akuntansi ( S1 ) </option><option value="48401">48401 - Diploma Tiga Farmasi ( D3 ) </option><option value="11401">11401 - Fisioterapi ( D3 ) </option><option value="14201">14201 - Ilmu Keperawatan ( S1 ) </option><option value="15201">15201 - Kebidanan ( S1 ) </option><option value="15401">15401 - Kebidanan ( D3 ) </option><option value="14401">14401 - Keperawatan ( D3 ) </option><option value="13201">13201 - Kesehatan Masyarakat ( S1 ) </option><option value="61201">61201 - Manajemen ( S1 ) </option><option value="15903">15903 - Pendidikan Profesi Bidan ( Profesi ) </option><option value="14901">14901 - Profesi Ners ( Profesi ) </option><option value="11402">11402 - Radiodiagnostik Dan Radioterapi ( D3 ) </option><option value="48201">48201 - Sarjana Farmasi ( S1 ) </option>
+					</select>
+				</td>
+			</tr>
+
+ 			<tr>
+				<td>
+					Angkatan
+				</td>
+				<td>
+						<select name="angkatan" class="masukan">
+						  <option value="">Semua</option>  
+							<option value="2026">2026</option>
+							
+							<option value="2025">2025</option>
+							
+							<option value="2024">2024</option>
+							
+							<option value="2023">2023</option>
+							
+							<option value="2022">2022</option>
+							
+							<option value="2021">2021</option>
+							
+							<option value="2020">2020</option>
+							
+							<option value="2019">2019</option>
+							
+							<option value="2018">2018</option>
+							
+							<option value="2017">2017</option>
+							
+						</select>  				
+          </td>
+			</tr>
+      
+      <tr class="judulform">
+			<td class="judulform">NIM  </td>
+			<td>
+		<input type="text" name="idmahasiswa" value="" class="masukan" size="20" id="inputString" onkeyup="lookup(this.value,'','');">
+	
+ 			 <div class="suggestionsBox" id="suggestions" style="display: none;">
+               <div class="suggestionList" id="autoSuggestionsList">
+			</div></div></td>
+		</tr> 
+
+
+ 			<tr>
+				<td width="150">
+					Status Mahasiswa
+				</td>
+				<td>   
+					<select class="masukan" name="status">
+						  <option value="">Semua</option>  <option value="A" selected="">Aktif</option><option value="C">Cuti</option><option value="N">Non-Aktif</option><option value="U">Menunggu Uji Kompetensi</option>
+					</select>    
+          <input type="checkbox" value="1" name="iftahunakademik">Periksa Status pada Periode
+				</td>
+			</tr>
+
+   		<tr class="judulform">
+			<td width="200">Jenis Sanksi</td>
+			<td>
+      <input type="checkbox" name="ifsanksi" value="1">
+       <select name="idsanksi"> <option value="" selected="">Semua</option>  <option value="01">Skorsing</option>  </select>    
+
+			</td>
+		</tr>
+  		<tr class="judulform">
+			<td width="200">Jenis Beasiswa</td>
+			<td>
+      <input type="checkbox" name="ifjenis" value="1">
+       <select name="idjenis"> <option value="" selected="">Semua</option>  <option value="01">PMDP &amp; GELOMBANG 1 S1</option>  <option value="02">PMDP2 &amp; GELOMBANG 2 S1</option>  <option value="03">PMDP 2 (PRES KAB) S1</option>  <option value="04">PMDP &amp; GELOMBANG 1 D3</option>  <option value="05">ANAK PEGAWAI SMF</option>  <option value="06">KHUSUS</option>  <option value="07">KHUSUS 2</option>  <option value="08">ANAK PEGAWAI STF</option>  <option value="10">KASUS 1</option>  <option value="11">KELEBIHAN BAYAR</option>  <option value="12">PMDP 2 &amp; GELOMBANG 2 D3</option>  <option value="13">PMDP 2 D3 (PRES KAB)</option>  <option value="14">PMDP 3 D3 (PRES NAS)</option>  <option value="15">PMDP 3 D3(tahfiz1-4juz)</option>  <option value="16">KHUSUS 3</option>  <option value="17">PMDP 3 D3 (PRES KAB)</option>  <option value="18">KESALAHAN PEMBAYARAN SKS</option>  <option value="19">KELUARGA KARYAWAN</option>  <option value="20">2025 PMDP &amp; G1 </option>  <option value="21">2025 PMDP &amp; G2</option>  <option value="22">2025 PMDP &amp; G2 + REKOMENDASI PDM</option>  <option value="23">2025 PMDP &amp; G2 + 10 BESAR</option>  <option value="24">2025 G3 + PRESTASI NASIONAL</option>  <option value="25">2025 JUARA LOMBA</option>  <option value="26">PROGRAM BEASISWA SEMESTA</option>  <option value="9">KIP</option>  </select>    
+
+			</td>
+		</tr>
+   		<tr>	
+				<td> Status KRSS</td>
+				<td> <select name="statuskrss"> <option value="" selected="">Semua</option>  <option value="S">Sudah Isi</option>  <option value="B">Belum Isi</option>  </select>  </td>
+			</tr>
+ 
+      <tr valign="top">
+        <td width="150" id="chka">Komponen Pembayaran <input type="checkbox" class="checkall" counter="46"></td>
+        <td id="chks"> 
+			 <input type="checkbox" name="arraykomponenbayar[0]" id="checkk0" value="0">0 - Biaya Pendaftaran <br><input type="checkbox" name="arraykomponenbayar[1]" id="checkk1" value="1">1 - Biaya SPP <br><input type="checkbox" name="arraykomponenbayar[10]" id="checkk2" value="10">10 - Daring UTS/UAS <br><input type="checkbox" name="arraykomponenbayar[100]" id="checkk3" value="100">100 - Biaya Konversi <br><input type="checkbox" name="arraykomponenbayar[11]" id="checkk4" value="11">11 - Registrasi MHS Baru Sisanya <br><input type="checkbox" name="arraykomponenbayar[12]" id="checkk5" value="12">12 - Uang Kuliah Semester <br><input type="checkbox" name="arraykomponenbayar[14]" id="checkk6" value="14">14 - Uang Kuliah Tunggal <br><input type="checkbox" name="arraykomponenbayar[15]" id="checkk7" value="15">15 - Daring Ujian <br><input type="checkbox" name="arraykomponenbayar[16]" id="checkk8" value="16">16 - Adm Cuti kuliah <br><input type="checkbox" name="arraykomponenbayar[2]" id="checkk9" value="2">2 - Biaya Praktikum <br><input type="checkbox" name="arraykomponenbayar[20]" id="checkk10" value="20">20 - Biaya SKS Tidak Tetap <br><input type="checkbox" name="arraykomponenbayar[23]" id="checkk11" value="23">23 - Uang Semester Pendek Dibawah 5 Mahasiswa <br><input type="checkbox" name="arraykomponenbayar[24]" id="checkk12" value="24">24 - Uang Semester Pendek Diatas 5 Mahasiswa <br><input type="checkbox" name="arraykomponenbayar[25]" id="checkk13" value="25">25 - Uang Semester Pendek 1 Mahasiswa <br><input type="checkbox" name="arraykomponenbayar[26]" id="checkk14" value="26">26 - Biaya Qurban <br><input type="checkbox" name="arraykomponenbayar[27]" id="checkk15" value="27">27 - Biaya&nbsp;mengulang&nbsp;MK <br><input type="checkbox" name="arraykomponenbayar[28]" id="checkk16" value="28">28 - Komponen UKOM <br><input type="checkbox" name="arraykomponenbayar[29]" id="checkk17" value="29">29 - Komponen&nbsp;OSCE <br><input type="checkbox" name="arraykomponenbayar[3]" id="checkk18" value="3">3 - Biaya SKS <br><input type="checkbox" name="arraykomponenbayar[30]" id="checkk19" value="30">30 - UKOM <br><input type="checkbox" name="arraykomponenbayar[31]" id="checkk20" value="31">31 - OSCE <br><input type="checkbox" name="arraykomponenbayar[32]" id="checkk21" value="32">32 - Biaya HER <br><input type="checkbox" name="arraykomponenbayar[33]" id="checkk22" value="33">33 - Tabungan Tugas Akhir <br><input type="checkbox" name="arraykomponenbayar[34]" id="checkk23" value="34">34 - Biaya PBK <br><input type="checkbox" name="arraykomponenbayar[35]" id="checkk24" value="35">35 - Biaya Angkat Janji <br><input type="checkbox" name="arraykomponenbayar[36]" id="checkk25" value="36">36 - Dana Pangkal Asrama <br><input type="checkbox" name="arraykomponenbayar[37]" id="checkk26" value="37">37 - Pelatihan <br><input type="checkbox" name="arraykomponenbayar[38]" id="checkk27" value="38">38 - Ujian Praktik <br><input type="checkbox" name="arraykomponenbayar[39]" id="checkk28" value="39">39 - Kompelmenter Kebidanan <br><input type="checkbox" name="arraykomponenbayar[4]" id="checkk29" value="4">4 - Biaya UTS <br><input type="checkbox" name="arraykomponenbayar[40]" id="checkk30" value="40">40 - Jas Almamater <br><input type="checkbox" name="arraykomponenbayar[5]" id="checkk31" value="5">5 - Biaya UAS <br><input type="checkbox" name="arraykomponenbayar[7]" id="checkk32" value="7">7 - USPM <br><input type="checkbox" name="arraykomponenbayar[8]" id="checkk33" value="8">8 - Registrasi MHS Baru <br><input type="checkbox" name="arraykomponenbayar[998]" id="checkk34" value="998">998 - Seminar <br><input type="checkbox" name="arraykomponenbayar[999]" id="checkk35" value="999">999 - Sertifikasi <br><input type="checkbox" name="arraykomponenbayar[FORM_PMB]" id="checkk36" value="FORM_PMB">FORM_PMB - Formulir Pendaftaran Mahasiswa Baru <br><input type="checkbox" name="arraykomponenbayar[KP]" id="checkk37" value="KP">KP - Biaya pengajuan Kerja Praktik <br><input type="checkbox" name="arraykomponenbayar[PRESKP]" id="checkk38" value="PRESKP">PRESKP - Biaya pengajuan presentasi Kerja Praktik <br><input type="checkbox" name="arraykomponenbayar[SIS]" id="checkk39" value="SIS">SIS - Sidang Kerja Praktik <br>
+			 </td></tr>			
+
+      <tr>
+				<td colspan="2">
+					<input type="submit" id="aksi" name="aksi" value="Buat Tagihan">
+          <input type="checkbox" name="ifupdate" value="1">Update data tagihan yg ada
+ 				</td>
+			</tr>
+
+			</tbody></table>
+            </td>
+            <td style="vertical-align:top; position: relative;">
+            <p style="position: absolute; top: 0;">
+            Informasi: Apabila komponen keuangan memiliki batas maksimal tanggal pembayaran yang mengakibatkan adanya denda atau menjadi syarat validasi presensi mahasiswa,
+            pastikan batas tanggal pembayaran sudah diisi sebelum membuat tagihan pada menu Keuangan &gt; Konfigurasi &gt; <a href="../uangmhssetting/index.php?pilihan=bataspembayaran">Batas Pembayaran Komponen</a>
+            </p>
+            </td>
+            </tr>
+            </tbody></table>
+			</form>
+
+      <script>
+        $("#chka").on("change",".checkall", function(){
+          var cnt = $(this).attr('counter')
+          if($(this).prop('checked')==true)
+          {
+              $(this).prop('checked', true);
+              for(x=0;x<cnt;x++)
+              {
+                  $('#chks').find('#checkk'+x).prop('checked', true);
+              }
+          }else{
+              $(this).prop('checked', false);
+              for(x=0;x<cnt;x++)
+              {
+                  $('#chks').find('#checkk'+x).prop('checked', false);
+              }
+          }
+        });
+      </script>
+ 
+   		
+        </div><!--contentwrapper-->
+
+    </div><!-- centercontent -->
+
+
+</div> <!--end bodywrapper-->
+
+
+
+<!--</body></html>-->
+      <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="../realtime-notification.js"></script>
+    
+
+</body>

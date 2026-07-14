@@ -1,0 +1,842 @@
+<body class="withvernav"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 20px; padding-right: 0px; display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+
+<div id="container" style="" class="ui-notify"></div>
+
+<div class="wrapper" style="padding-bottom: 80px"> <!-- bodywrapper-->
+    <div class="topheader">
+
+             <div class="boxTitle"> <!-- Program name -->
+                                <img height="45px" src="https://sgp1.vultrobjects.com/043355/sikad/gambar/Logo.iVQEhuhEPq.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=YGIP9T9E1N7J9K1U7NIC%2F20260714%2Fsgp1%2Fs3%2Faws4_request&amp;X-Amz-Date=20260714T083945Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=1fee9cb805cb2f8ce46f453da9187d6f2ec436bfe6f3911bdf96237c7d9e7849">
+            <div class="infoWrap">
+              <h3 class="logo">SIAKADMU 4.0</h3>
+              <span class="slogan">UMMADA CIREBON</span>
+              <br clear="all">
+            </div>
+        </div>
+
+    
+        <div class="left">
+            <div class="search">
+                <form action="../cari/index.php" method="post">
+                                        <input type="text" name="katakunci" id="katakunci" onfocus="if(this.value == 'Pencarian menu..') { this.value = ''; }" placeholder="Pencarian Menu.." value="">
+                    <button class="submitbutton" id="menusearch"></button>
+                </form>
+            </div><!--search-->
+
+            <br clear="all">
+
+        </div><!--left-->
+
+        <div class="right">
+        
+            
+            <!-- NOTIFICATION STYLE-->
+                
+            <link rel="stylesheet" href="../themes/icons/addsicons-1/style.css">
+            
+            <style>
+                ul.dropdown {
+                    list-style-type: none;
+                    /* background-color: white; */
+                }
+                
+                .area-dropdown {
+                    /* width: 100px; */
+                    /* height: 100px; */
+                    left: -50% !important;
+                    background-color: white;
+                    border-radius: 11px;
+                }
+                
+                .tdropdown {
+                    background: white;
+                    border-collapse: collapse;
+                    border: none;
+                }
+                
+                .tdropdown tr td {
+                    background-color: white !important;
+                }
+                
+                .li-dropdown {
+                    vertical-align: middle;
+                    width: 165px;
+                }
+                
+                .icon-sub-menu {
+                    width: 40px;
+                }
+                
+                .span-icon {
+                    color: black !important;
+                    display: inherit !important;
+                    background: none !important;
+                }
+                
+                .menu-name {
+                    color: black !important;
+                }
+                
+                .main-menu-icon {
+                    font-size: 20pt;
+                }
+                
+                .menu-name {
+                    display: inline-block;
+                    width: 85px;
+                    margin-left: 10px;
+                }
+                
+                .li-dropdown {
+                    /* background-color: white; */
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                
+                .icon-enter {
+                    font-size: 18pt;
+                    /* padding-right: 3px; */
+                }
+                
+            </style>
+
+                        
+                <div class="notification">
+                      
+            <a class="count dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="../">
+                        <img src="../themes/icons/uiux/more-ico.svg" width="27px">
+                    </a>
+                    <div class="dropdown-menu area-dropdown" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown"><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=de"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/dashboard-ico.svg"></span>&nbsp;<span class="menu-name">Dashboard</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=lms"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/lms-ico.png"></span>&nbsp;<span class="menu-name">LMS</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><ul>
+            </ul></ul></div>                     <a class="count" href="../vn-message.php">
+                        <img src="../themes/sikad/images/default/mail.png">
+                                            </a>
+                </div> 
+
+                            <div class="userinfo">
+                 <img src="../themes/images/default-avatar.png" height="20" alt="">
+                <span>Deffan Febrian</span>
+                <span class="arrow" style="padding:0px;"><img src="../themes/sikad/images/sort_desc.png"></span>
+            </div><!--userinfo-->
+                        <div class="userinfodrop">
+                <h4>Deffan Febrian</h4>
+                <div class="avatar">
+                    <a href="../pegawai/index.php?pilihan=tambah&amp;aksi=updateuser&amp;iduser=DEF"><img src="../themes/images/default-avatar.png" height="90" width="90"></a>                </div><!--avatar-->
+                <div class="userdata">
+
+                    <ul>
+                        <li><a href="../password/index.php?pilihan=semester">Sesi Semester <span class="label label-warning" style="font-size: 11px;">
+                           (2025/2026 Genap)</span></a></li>
+                        <li><a href="../password/index.php?pilihan=setting"><i class="ico-cog3"></i> Preference</a></li>
+                        <li><a href="../password/index.php?pilihan=update"><i class="ico-key4"></i> Ganti Password</a></li>                                                <li>Jumlah Login Mahasiswa = 191</li>
+                        <li>Jumlah Login Dosen = 36</li>
+                                                <li><a id="logout" href="index.php?aksi=logout"><i class="ico-signout"></i> Sign Out</a></li>
+                                            </ul>
+                </div><!--userdata-->
+            </div><!--userinfodrop-->
+        </div><!--right-->
+    </div><!--topheader-->
+
+
+
+    <!-- begin megamenu -->
+    <div id="nav-anchor"></div>
+     <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="contextMenu" class="collapse navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-library"></i> Akademik<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Master Akademik </h4></li>
+                                                        <li><a href="../fakultas/index.php"> Badan Hukum/PT </a></li>
+                                                        <li><a href="../dosen/index.php"> Dosen </a></li>
+                                                        <li><a href="../asistenlab/index.php"> Asisten Lab </a></li>
+                                                        <li><a href="../pegawai2/index.php"> Pegawai </a></li>
+                                                        <li><a href="../mahasiswa/index.php"> Mahasiswa </a></li>
+                                                        <li><a href="../alumni/index.php"> Alumni </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Aktivitas Akademik </h4></li>
+                                                        <li><a href="../makul/index.php?pilihan=kurikulumbaru">Kurikulum/KRS </a></li>
+                                                        <li><a href="../nilai/index.php"> Nilai Kuliah  </a></li>
+                                                        <li><a href="../mahasiswaaktivitas/index.php"> Aktivitas Mahasiswa  </a></li>
+                                                        <li><a href="../aktivitaskelulusanmahasiswa/index.php"> Aktivitas Lulus / Keluar  </a></li>
+                                                        <li><a href="../surattugasmengajar/index.php"> Surat Tugas Mengajar  </a></li>
+                                                        <li><a href="../presensi/index.php"> Presensi Kuliah </a></li>
+                                                        <li><a href="../jadwal/index.php"> Jadwal Kuliah </a></li>
+                                                        <li><a href="../beasiswa/index.php"> Beasiswa </a></li>
+                                                        <li><a href="../pembuatnaskah/index.php">Pembuat Naskah </a></li>
+                                                        <li><a href="../pesertarapat/index.php">Peserta Rapat Koordinator MK </a></li>
+                                                        <li><a href="../bpaonline/index.php">Bimbingan PA Online </a></li>
+                                                        <li><a href="../cutip/index.php">Pengajuan Cuti </a></li>
+                                                        <li><a href="../daftarkegiatan/index.php">Kegiatan Mahasiswa </a></li>
+                                                        <li><a href="../kartu/index.php"> Cetak Kartu </a></li>
+                                                        <li><a href="../skpi/index.php"> SKPI  </a></li>
+                                                        <li><a href="../nilaikonversi/index.php"> Konversi Nilai </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4> </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/seminar/data-seminar" target="_blank">Seminar <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi" target="_blank">Sertifikasi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal" target="_blank">Lock Jurnal <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Wisuda dan Tugas Akhir </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi" target="_blank"> Skripsi/Tugas Akhir <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda" target="_blank">Wisuda <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skl/cetak-skl" target="_blank">Surat Keterangan Lulus (SKL) <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-file8"></i> Kuesioner<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Kuesioner </h4></li>
+                                                        <li><a href="../kuesionerpp/index.php">Proses Pembelajaran </a></li>
+                                                        <li><a href="../kuesionerla/index.php">Layanan </a></li>
+                                                        <li><a href="../kuesionerks/index.php">Kritik dan Saran </a></li>
+                                                        <li><a href="../kuesionerdo/index.php">Dosen </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Tracer Studi </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner" target="_blank">Tracer Studi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-users2"></i> PMB<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>PMB </h4></li>
+                                                        <li><a href="../new_pmb.php" target="_blank">Menuju Portal PMB <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-coins"></i> Keuangan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Keuangan </h4></li>
+                                                        <li><a href="../uangmhstm/index.php">TAGIHAN PER MAHASISWA </a></li>
+                                                        <li><a href="../uangmhsbayar/index.php">TAGIHAN dan PEMBAYARAN </a></li>
+                                                        <li><a href="../uangmhsbiaya/index.php">BIAYA DAN BEASISWA </a></li>
+                                                        <li><a href="../uangmhssetting/index.php">KONFIGURASI </a></li>
+                                                        <li><a href="../uangmhslr/index.php">LAPORAN dan REKONSILIASI </a></li>
+                                                        <li><a href="../dispensasi/index.php"> DISPENSASI  </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-bubbles"></i> Komunikasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Komunikasi </h4></li>
+                                                        <li><a href="../pengumuman/index.php">Pengumuman dan Info </a></li>
+                                                        <li><a href="../panduan/index.php">Upload Panduan/Materi </a></li>
+                                                        <li><a href="../pesan/index.php">Pesan-pesan </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan" target="_blank"> Broadcast Email <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../file/index.php">Tukar File </a></li>
+                                                        <li><a href="../infosms/index.php"> Info (SMS) </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-stack"></i> Laporan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Dikti </h4></li>
+                                                        <li><a href="../lain/index.php"> Transaksi Lain </a></li>
+                                                        <li><a href="../pt/index.php"> Referensi </a></li>
+                                                        <li><a href="../feederexport/index.php"> Open Feeder </a></li>
+                                                        <li><a href="../feedervalidasi/index.php"> Validasi Data </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Laporan Akademik </h4></li>
+                                                        <li><a href="../laporannilai/index.php">Nilai </a></li>
+                                                        <li><a href="../laporanaktivitaskuliah/index.php">Aktivitas Perkuliahan </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Executive Summary </h4></li>
+                                                        <li><a href="../uangmhslaporan/index.php">Keuangan Mahasiswa </a></li>
+                                                        <li><a href="../executive/index.php">Borang Akreditasi Institusi   </a></li>
+                                                        <li><a href="../executive_ps/index.php">Borang Akreditasi Program Studi </a></li>
+                                                        <li><a href="../executive_lk/index.php">Laporan Kuesioner </a></li>
+                                                        <li><a href="../executive_lp/index.php">Laporan Perkuliahan (KRS, Presensi, BAP) </a></li>
+                                                        <li><a href="../executive_ln/index.php">Laporan Nilai </a></li>
+                                                        <li><a href="../executive_ldm/index.php">Laporan Dosen dan Mahasiswa </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-cog2"></i> Sistem<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Sistem </h4></li>
+                                                        <li><a href="../password/index.php">Password </a></li>
+                                                        <li><a href="../pegawai/index.php">Data Operator </a></li>
+                                                        <li><a href="../sistem/index.php">Data Info Sistem </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-equalizer2"></i> Konfigurasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Konfigurasi </h4></li>
+                                                        <li><a href="../kalender/index.php">Kalender Akademik </a></li>
+                                                        <li><a href="../kegiatanakademik/index.php">Kegiatan Akademik </a></li>
+                                                        <li><a href="../jadwalakademik/index.php">Jadwal Sistem Akademik </a></li>
+                                                        <li><a href="../konfignilai/index.php">Nilai </a></li>
+                                                        <li><a href="../sesikuliah/index.php">Sesi Kuliah </a></li>
+                                                        <li><a href="../syaratkrs/index.php">Hak SKS Maksimum </a></li>
+                                                        <li><a href="../skslulus/index.php">SKS Kelulusan </a></li>
+                                                        <li><a href="../konfiglain/index.php">Konfigurasi Lain </a></li>
+                                                        <li><a href="../publikasifitur/index.php">Publikasi Fitur </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                                    </ul>
+        </div><!-- /.nav-collapse -->
+      </nav>
+    <!-- end megamenu -->
+
+        <div id="aside-anchor"></div>
+    
+
+    <aside class="vernav2 iconmenu">
+        <ul>
+            
+                    <li class="current">
+                        <a href="#formsubDEFAULT" class="editor">Pengumuman &amp; Info</a>
+                        <span class="arrow"></span>
+                        <ul id="formsubDEFAULT" style="max-height:80vh; overflow-y:auto; overflow-x:hidden;"><li class=""><a ""="" href="index.php?pilihan=tambah">Pengumuman</a></li><li class=""><a ""="" href="index.php?pilihan=itambah">Tambah Info Singkat</a></li><li class=""><a ""="" href="index.php?pilihan=ilihat&amp;aksi=tampilawal">Lihat Info Singkat</a></li><li class=""><a ""="" href="index.php?pilihan=kategori">Kategori</a></li>
+                        </ul>
+                    </li>
+                                <a id="toggle_menu" class="togglemenu"></a>
+        </ul>
+        <br><br>
+    </aside><!--leftmenu-->
+    
+
+    <div class="centercontent tables">
+
+        <div id="contentwrapper" class="contentwrapper">
+
+            								<style>
+	.btn-outline-primary {
+		color: #215F78;
+		border-color: #215F78;
+	}
+	.btn-outline-primary:hover {
+		color: #FFFFFF;
+		border-color: #215F78;
+		background: #215F78;
+	}
+	.btn-outline-success {
+		color: #5cb85c;
+		border-color: #5cb85c;
+	}
+	.btn-outline-success:hover {
+		color: #FFFFFF;
+		border-color: #5cb85c;
+		background: #5cb85c;
+	}
+	.btn-outline-danger {
+		color: #d9534f;
+		border-color: #d9534f;
+	}
+	.btn-outline-danger:hover {
+		color: #FFFFFF;
+		border-color: #d9534f;
+		background: #d9534f;
+	}
+	#ui-datepicker-div .ui-datepicker-title * {
+		color: white;
+	}
+	.bold {
+		font-weight: bold;
+	}
+</style>
+
+
+        <div class="title-menu">
+          <div class="note note-primary"><i class="icon ico-list-alt"></i> DAFTAR PENGUMUMAN</div>
+        </div>
+
+    	<style>
+		.setpadding {
+			padding: 10px 0px 10px 0px !important;
+		}
+		.setpadding select {
+			width: 90%
+		}
+	</style>
+	<div class="setpadding col-lg-5 col-md-5 col-sm-12 col-xs-12 submenuFilter"><center>
+			<span class="btn btn-rounded btn-active btn-primary" style="font-weight: bold;" id="btn0" data="2" onclick="getDaftarPengumuman(1, '0');">Semua (301)</span>
+		<span class="btn btn-rounded  btn-outline-success" style="" id="btn1" data="1" onclick="getDaftarPengumuman(1, '1');">Publish (301)</span>
+		<span class="btn btn-rounded  btn-outline-danger" style="" id="btn2" data="0" onclick="getDaftarPengumuman(1, '2');">Draft (0)</span>
+	</center></div>
+	<div class="setpadding col-lg-1 col-md-1 col-sm-12 col-xs-12">
+		&nbsp;
+	</div>
+	<div class="setpadding col-lg-3 col-md-3 col-sm-12 col-xs-12">
+		<a href="index.php?aksi=tampilawal" class="btn btn-primary" style="width: 91%">Tambah Pengumuman</a>
+	</div>
+	<div class="setpadding col-lg-3 col-md-3 col-sm-12 col-xs-12">
+		<form>
+			<input type="text" name="keyword" class="form-control" style="width: 94%" placeholder=" Cari Pengumuman" value="">
+		</form>
+	</div>
+	<div class="setpadding col-lg-4 col-md-4 col-sm-6 col-xs-6">
+		<form class="rangeStartFilter">
+		<b>Saring Berdasarkan Tanggal Pembuatan</b><br>
+		<input type="text" class="datepicker hasDatepicker" id="mulaiFilter" name="mulaiFilter_tampil" value=""><input type="hidden" name="mulaiFilter[tgl]" value="" onchange="changeMulaiFilter();"><input type="hidden" name="mulaiFilter[bln]" value="" onchange="changeMulaiFilter();"><input type="hidden" name="mulaiFilter[thn]" value="" onchange="changeMulaiFilter();"> s/d <input type="text" class="datepicker hasDatepicker" id="selesaiFilter" name="selesaiFilter_tampil" value=""><input type="hidden" name="selesaiFilter[tgl]" value=""><input type="hidden" name="selesaiFilter[bln]" value=""><input type="hidden" name="selesaiFilter[thn]" value="">		</form>
+	</div>
+	<div class="setpadding col-lg-2 col-md-2 col-sm-6 col-xs-6">
+		<form>
+		<b>Saring Berdasarkan Pembuat</b>
+		<select name="userFilter">
+			<option value="">Pembuat (All)</option>
+			<option value="AST">AST</option><option value="DEF">DEF</option><option value="NIN">NIN</option><option value="SYZ">SYZ</option>		</select>
+		</form>
+	</div>
+	<div class="setpadding col-lg-2 col-md-2 col-sm-6 col-xs-6">
+		<form>
+		<b>Saring Berdasarkan Tujuan</b>
+		<select name="portalFilter">
+			<option value="">Portal (All)</option>
+			<option value="portalmhs">Portal Mahasiswa</option>
+			<option value="portalort">Portal Orang Tua</option>
+			<option value="portaldos">Portal Dosen</option>
+			<option value="portalasdos">Portal Asisten Dosen</option>
+			<option value="lms_mahasiswa">Portal LMS Mahasiswa</option>
+			<option value="lms_dosen">Portal LMS Dosen</option>
+		</select>
+		</form>
+	</div>
+	<div class="setpadding col-lg-2 col-md-2 col-sm-12 col-xs-12">
+		<form>
+		<b>Saring Berdasarkan Kategori </b>
+		<select name="kategoriFilter">
+			<option value="">Kategori (All)</option>
+			<option value="1">Pelatihan</option><option value="2">Info KRS</option><option value="3">Info Periode SP</option><option value="4">Info Remedial</option>		</select>
+		</form>
+	</div>
+	<div class="setpadding col-lg-2 col-md-2 col-sm-12 col-xs-12">
+		&nbsp;<br>&nbsp;<br><br>
+	</div>
+
+    <div class="table-responsive setpadding col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<table class="table table-stripped table-bordered table-hovered table-striped">
+		<thead>
+			<tr>
+				<td align="center" width="5%" style="font-weight: bold">No.</td>
+				<td align="center" width="25%" style="font-weight: bold">Judul Pengumuman</td>
+				<td align="center" width="5%" style="font-weight: bold">Pembuat</td>
+				<td align="center" width="20%" style="font-weight: bold">Kategori</td>
+				<td align="center" width="15%" style="font-weight: bold">Portal</td>
+				<td align="center" width="5%" style="font-weight: bold">Prodi</td>
+				<td align="center" width="15%" style="font-weight: bold">Tanggal</td>
+				<td align="center" width="5%" style="font-weight: bold">Publish</td>
+				<td align="center" width="5%" style="font-weight: bold">Push-Notif</td>
+				<td align="center" width="15%" nowrap="" style="font-weight: bold">Aksi</td>
+			</tr>
+		</thead>
+		<tbody class="bodydata"><tr><td align="center">1.</td><td>KRS Semester Genap T.A. 2025/2026</td><td align="center">AST</td><td>Info KRS</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">lms mhs</span> <span class="label label-danger" style="width: 25%; float:left; margin: 2px">lms dos</span></div></td><td align="center">2</td><td align="center">24 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish0" onchange="clickPublish('305', '0')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush0"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=305">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('305')">Hapus</a></td></tr><tr><td align="center">2.</td><td>S-1 REMEDIAL KE-2 FARMAKOGENOMIK</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish1" onchange="clickPublish('304', '1')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush1"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=304">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('304')">Hapus</a></td></tr><tr><td align="center">3.</td><td>S-1 REMEDIAL KE-2 FARMASI INDUSTRI 2</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish2" onchange="clickPublish('303', '2')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush2"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=303">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('303')">Hapus</a></td></tr><tr><td align="center">4.</td><td>S-1 REMEDIAL KE-2 MANAJEMEN FARMASI</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish3" onchange="clickPublish('302', '3')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush3"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=302">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('302')">Hapus</a></td></tr><tr><td align="center">5.</td><td>S-1 REMEDIAL KE-2 KIE</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish4" onchange="clickPublish('301', '4')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush4"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=301">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('301')">Hapus</a></td></tr><tr><td align="center">6.</td><td>S-1 REMEDIAL KE-2 TEKNOLOGI FARMASI SEDIAAN STERIL</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish5" onchange="clickPublish('300', '5')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush5"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=300">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('300')">Hapus</a></td></tr><tr><td align="center">7.</td><td>S-1 REMEDIAL KE-2 FARMAKOTERAPI SISTEM TULANG DAN SENDI,HEMATOLOGI DAN</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish6" onchange="clickPublish('299', '6')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush6"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=299">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('299')">Hapus</a></td></tr><tr><td align="center">8.</td><td>S-1 REMEDIAL KE-2 BIOFARMASETIKA</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish7" onchange="clickPublish('298', '7')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush7"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=298">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('298')">Hapus</a></td></tr><tr><td align="center">9.</td><td>S-1 REMEDIAL KE-2 TOKSIKOLOGI</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish8" onchange="clickPublish('297', '8')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush8"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=297">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('297')">Hapus</a></td></tr><tr><td align="center">10.</td><td>S-1 REMEDIAL KE-2 EFEK SAMPING DAN INTERAKSI OBAT</td><td align="center">NIN</td><td>Info Remedial</td><td align="center"><div><span class="label label-danger" style="width: 25%; float:left; margin: 2px">dos</span> <span class="label label-primary" style="width: 25%; float:left; margin: 2px">ort</span> <span class="label label-success" style="width: 25%; float:left; margin: 2px">mhs</span></div></td><td align="center">1</td><td align="center">03 Februari 2026</td><td align="center"><input type="checkbox" style="cursor: pointer" id="checkpublish9" onchange="clickPublish('296', '9')" checked="" data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"></td><td align="center" class="checkpush9"><i class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i></td><td align="center" nowrap=""><a style="cursor: pointer" href="index.php?aksi=tampilawal&amp;mode=update&amp;idPengumuman=296">Update</a> | <a style="cursor: pointer" onclick="deletePengumuman('296')">Hapus</a></td></tr></tbody>
+		<tfoot>
+			<tr>
+				<td align="center" width="5%" style="font-weight: bold">No.</td>
+				<td align="center" width="25%" style="font-weight: bold">Judul Pengumuman</td>
+				<td align="center" width="5%" style="font-weight: bold">Pembuat</td>
+				<td align="center" width="20%" style="font-weight: bold">Kategori</td>
+				<td align="center" width="15%" style="font-weight: bold">Portal</td>
+				<td align="center" width="5%" style="font-weight: bold">Prodi</td>
+				<td align="center" width="15%" style="font-weight: bold">Tanggal</td>
+				<td align="center" width="5%" style="font-weight: bold">Publish</td>
+				<td align="center" width="5%" style="font-weight: bold">Push-Notif</td>
+				<td align="center" width="15%" nowrap="" style="font-weight: bold">Aksi</td>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+
+    <div class="pagination-news setpadding col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width: 97%"><div class="row">
+    <div class="col-lg-12">
+        <ul class="pager nm"><li class="previous disabled"><a href="#"><i class="ico-angle-left mr5"></i> Prev</a></li><li class="disabled"><a href="index.php?hal=1">1</a></li><li><a href="index.php?hal=2">2</a></li><li><a href="index.php?hal=3">3</a></li><li><a href="index.php?hal=4">4</a></li><li><a href="index.php?hal=5">5</a></li><li><a href="index.php?hal=6">6</a></li><li><a href="index.php?hal=7">7</a></li><li><a href="index.php?hal=8">8</a></li><li><a href="index.php?hal=9">9</a></li><li><a href="index.php?hal=10">10</a></li><li class="next"><a href="index.php?hal=2">Next <i class="ico-angle-right ml5"></i></a></li><ul></ul></ul></div></div></div>
+
+	<script>
+		var mulai = {
+			'tgl': '',
+			'bln': '',
+			'thn': '',
+		};
+
+		var selesai = {
+			'tgl': '',
+			'bln': '',
+			'thn': '',
+		};
+
+		$('#mulaiFilter').datepicker()
+			.on("change", function (e) {
+			var date = e.target.value.split("/");
+
+			mulai.tgl = date[1];
+			mulai.bln = date[0];
+			mulai.thn = date[2];
+			getDaftarPengumuman(1);
+		});
+
+		$('#selesaiFilter').datepicker()
+			.on("input change", function (e) {
+			var date = e.target.value.split("/");
+
+			selesai.tgl = date[1];
+			selesai.bln = date[0];
+			selesai.thn = date[2];
+			getDaftarPengumuman(1);
+		});
+
+		var hal = 1;
+		var subMenu = ['primary', 'success', 'danger'];
+		getDaftarPengumuman(hal);
+
+		$('[name=portalFilter]').on('change', function(){
+			getDaftarPengumuman(1);
+		});
+
+		$('[name=kategoriFilter]').on('change', function(){
+			getDaftarPengumuman(1);
+		});
+
+		$('[name=userFilter]').on('change', function(){
+			getDaftarPengumuman(1);
+		});
+
+		$('[name=keyword]').on('keyup', function(){
+			getDaftarPengumuman(1);
+		});
+
+		$('#mulaiFilter').on('change', function(){
+			console.log($(this).val());
+		});
+
+		function clickPublish(id, check)
+		{
+			var checkBox = document.getElementById("checkpublish"+check);
+			if (checkBox.checked == true) {
+				//publish
+				$.blockUI();
+          $.ajax({
+					type: 'POST',
+					url:  '../api/pengumuman.php?mode=manipulation&action=update&no_tracy=1',
+					data: 'idPengumuman='+id+'&isPublish=1',
+					success: function(msg) {
+						if (msg.status == 'sukses') {
+							showNotificationTopSlide('Berhasil publish pengumuman');
+							getDaftarPengumuman(1);
+						} else {
+							showNotificationTopSlide('Gagal publish pengumuman');
+						}
+					},
+					error: function (xhr, status, error) {
+						showNotificationTopSlide('Gagal publish pengumuman');
+					}
+				}).always(function() {
+             $.unblockUI();
+        });;
+			} else {
+				//draft
+				$.blockUI();
+          $.ajax({
+					type: 'POST',
+					url:  '../api/pengumuman.php?mode=manipulation&action=update&no_tracy=1',
+					data: 'idPengumuman='+id+'&isPublish=0',
+					success: function(msg) {
+						if (msg.status == 'sukses') {
+							showNotificationTopSlide('Pengumuman telah diubah menjadi draft');
+							getDaftarPengumuman(1);
+						} else {
+							showNotificationTopSlide('Gagal diubah menjadi draft');
+						}
+					},
+					error: function (xhr, status, error) {
+						showNotificationTopSlide('Gagal diubah menjadi draft');
+					}
+				}).always(function() {
+             $.unblockUI();
+        });;
+			}
+		}
+
+		function clickNotif(id, check)
+		{
+			var checkBox = document.getElementById("checknotif"+check);
+
+			var result = confirm("Pastikan data pengumuman sudah benar, karena pengguna akan mendapatkan notifikasi ketika melakukan aksi ini");
+			if (result) {
+				if (checkBox.checked == true) {
+					$.blockUI();
+          $.ajax({
+						type: 'POST',
+						url:  '../api/pengumuman.php?mode=manipulation&action=push&no_tracy=1',
+						data: 'idPengumuman='+id,
+						success: function(msg) {
+							if (msg.status == 'sukses') {
+								showNotificationTopSlide('Pemberitahuan pengumuman telah dikirim');
+								getDaftarPengumuman(1);
+							} else {
+								showNotificationTopSlide('Gagal kirim pemberitahuan');
+							}
+						},
+						error: function (xhr, status, error) {
+							showNotificationTopSlide('Gagal kirim pemberitahuan');
+						}
+					}).always(function() {
+             $.unblockUI();
+          });
+					$('.checkpush'+check).html('<i class="glyphicon glyphicon-check" style="color:#5cb85c"></i>');
+				} else {
+					checkBox.checked = false;
+				}
+			} else {
+				checkBox.checked = false;
+			}
+
+			return false;
+		}
+
+		function deletePengumuman(id)
+		{
+
+			var result = confirm("Apakah anda yakin akan menghapus pengumuman ini ?");
+
+			if (result) {
+				$.blockUI();
+          $.ajax({
+					type: 'POST',
+					url:  '../api/pengumuman.php?mode=manipulation&action=delete&no_tracy=1',
+					data: 'idPengumuman='+id,
+					success: function(msg) {
+						if (msg.status == 'sukses') {
+							showNotificationTopSlide('Berhasil menghapus pengumuman');
+							getDaftarPengumuman(1);
+						} else {
+							showNotificationTopSlide('Gagal menghapus pengumuman');
+						}
+					},
+					error: function (xhr, status, error) {
+						showNotificationTopSlide('Gagal menghapus pengumuman');
+					}
+				}).always(function() {
+             $.unblockUI();
+        });
+			} else {
+				return false;
+			}
+		}
+
+		function getDaftarPengumuman(page = 1, btnActive = "")
+		{
+			if (btnActive != "") {
+				var x, str, style, styleBtn;
+				for(x = 0; x < subMenu.length; x++) {
+					str = style = "";
+					styleBtn = 'btn-outline-'+subMenu[x]+' btn-rounded';
+					if (x == btnActive) {styleBtn = 'btn-'+subMenu[x]+' btn-rounded'; str = "btn-active"; style = "font-weight: bold;"}
+					$('.submenuFilter').find('#btn'+x).prop('class', 'btn '+styleBtn+' '+str);
+					$('.submenuFilter').find('#btn'+x).prop('style', style);
+				}
+			}
+
+			var tujuan = $('[name=portalFilter]').val();
+			var user = $('[name=userFilter]').val();
+			var kategori = $('[name=kategoriFilter]').val();
+			var keyword = $('[name=keyword]').val();
+			var getFilter = '?tujuan='+tujuan+'&perPage=10';
+			var isPublish = $('.submenuFilter').find('.btn-active').attr('data');
+
+			if (page != 1) {
+				getFilter+='&hal='+page;
+			}
+
+			if (user != '' && user != undefined) {
+				getFilter+='&filter[userCreated]='+user;
+			}
+
+			if (kategori != '' && kategori != undefined) {
+				getFilter+='&filter[kategori]='+kategori;
+			}
+
+			if (isPublish != '2') {
+				if (isPublish == '1') {
+					getFilter+='&filter[isPublish]=1';
+				} else {
+					getFilter+='&filter[isPublish]=0';
+				}
+			}
+
+			if (keyword != '' && keyword != undefined) {
+				getFilter+='&filter[judulisi]='+keyword;
+			}
+
+			if (
+				(mulai.tgl != '' && mulai.bln != '' && mulai.thn != '') &&
+				(selesai.tgl != '' && selesai.bln != '' && selesai.thn != '')
+			) {
+				getFilter+='&filter[tglMulai][tgl]='+mulai.tgl;
+				getFilter+='&filter[tglMulai][bln]='+mulai.bln;
+				getFilter+='&filter[tglMulai][thn]='+mulai.thn;
+				getFilter+='&filter[tglSelesai][tgl]='+selesai.tgl;
+				getFilter+='&filter[tglSelesai][bln]='+selesai.bln;
+				getFilter+='&filter[tglSelesai][thn]='+selesai.thn;
+			}
+
+			getFilter+='&no_tracy=1';
+
+			$.get('../api/pengumuman.php'+getFilter, function(resultdata){
+				var i, html = "", htmlList = "", pagination = "";
+				$('.bodydata').html('<tr><td colspan="9" align="center" valign="center"><b style=\"font-size: 20px\"><i class=\"fa fa-spinner fa-4x fa-spin\"></i></b></td></tr>');
+
+				var countingnotification = 0;
+				if (resultdata.data != null) {
+					for(i = 0; i < resultdata.data.length; i++) {
+						var publish = ' data-toggle="tooltip" data-placement="bottom" title="pengumuman ini belum dipublish"';
+						var notif = '<input type=checkbox style="cursor: pointer" id=\'checknotif'+i+'\' onchange="clickNotif(\''+resultdata.data[i].ID+'\', \''+i+'\')"  data-toggle="tooltip" data-placement="bottom" title="klik untuk memberikan notifikasi pengumuman kepada pengguna yang tertuju"/>';
+						if (resultdata.data[i].ISPUBLISH == '1') {
+							publish = 'checked data-toggle="tooltip" data-placement="bottom" title="pengumuman ini telah dipublish"';
+						}
+
+						if(
+                            
+							resultdata.data[i].ISPUBLISH == '0' &&
+							resultdata.data[i].ISNOTIF == '0'
+						) {
+							notif = '<i class="glyphicon glyphicon-remove"  data-toggle="tooltip" data-placement="bottom" title="dapat melakukan push-notification ketika sudah dipublish" style="color:#d9534f"></i>';
+						}
+
+						if (resultdata.data[i].ISNOTIF == '1' ) {
+							notif = '<i class="glyphicon glyphicon-check"  data-toggle="tooltip" data-placement="bottom" title="pemberian notifikasi pengumuman hanya dapat dilakukan sekali saja" style="color:#5cb85c"></i>';
+						}
+                         						html+= '<tr>'+
+							'<td align=center>'+((hal*10)-10+i+1)+'.</td>'+
+							'<td>'+resultdata.data[i].JUDUL+'</td>'+
+							'<td align=center>'+resultdata.data[i].IDUSER+'</td>'+
+							'<td>'+resultdata.data[i].LABELKATEGORI+'</td>'+
+							'<td align=center>'+resultdata.data[i].LABELTUJUAN+'</td>'+
+							'<td align=center>'+resultdata.data[i].COUNTTUJUANPRODI+'</td>'+
+							'<td align=center>'+resultdata.data[i].TGL+'</td>'+
+							'<td align=center><input type=checkbox style="cursor: pointer" id=\'checkpublish'+i+'\' onchange="clickPublish(\''+resultdata.data[i].ID+'\', \''+i+'\')" '+publish+'/></td>'+
+							'<td align=center class="checkpush'+i+'">'+notif+'</td>'+
+							'<td align=center nowrap>'+
+								'<a style="cursor: pointer" href="index.php?aksi=tampilawal&mode=update&idPengumuman='+resultdata.data[i].ID+'">Update</a> | '+
+								'<a style="cursor: pointer" onclick="deletePengumuman(\''+resultdata.data[i].ID+'\')">Hapus</a>'+
+							'</td>'+
+						'</tr>';
+					}
+
+					pagination = resultdata.pagination;
+				} else {
+					html = "<tr>"+
+						"<td colspan=\"9\" align=\"center\">--Tidak ada data pengumuman--</td>"+
+					"</tr>";
+					pagination = "";
+				}
+
+				$('.bodydata').html(html);
+				$('.pagination-news').html(pagination);
+			});
+		}
+	</script>
+<script type="text/javascript" src="../themes/plugins/ckeditor/ckeditor.js"></script>
+        </div><!--contentwrapper-->
+
+    </div><!-- centercontent -->
+
+
+</div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div> <!--end bodywrapper-->
+
+
+
+<!--</body></html>-->
+      <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="../realtime-notification.js"></script>
+    
+
+</body>

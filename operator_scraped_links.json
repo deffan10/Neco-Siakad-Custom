@@ -1,0 +1,350 @@
+[
+    {
+        "text": "Menu Item",
+        "href": "../"
+    },
+    {
+        "text": "Dashboard",
+        "href": "../sso/loginsso.php?jenis=de"
+    },
+    {
+        "text": "LMS",
+        "href": "../sso/loginsso.php?jenis=lms"
+    },
+    {
+        "text": "Menu Item",
+        "href": "../vn-message.php"
+    },
+    {
+        "text": "Menu Item",
+        "href": "../pegawai/index.php?pilihan=tambah&aksi=updateuser&iduser=DEF"
+    },
+    {
+        "text": "Sesi Semester \n                           (2025/2026 Genap)",
+        "href": "../password/index.php?pilihan=semester"
+    },
+    {
+        "text": "Preference",
+        "href": "../password/index.php?pilihan=setting"
+    },
+    {
+        "text": "Ganti Password",
+        "href": "../password/index.php?pilihan=update"
+    },
+    {
+        "text": "Sign Out",
+        "href": "index.php?aksi=logout"
+    },
+    {
+        "text": "Badan Hukum/PT",
+        "href": "../fakultas/index.php"
+    },
+    {
+        "text": "Dosen",
+        "href": "../dosen/index.php"
+    },
+    {
+        "text": "Asisten Lab",
+        "href": "../asistenlab/index.php"
+    },
+    {
+        "text": "Pegawai",
+        "href": "../pegawai2/index.php"
+    },
+    {
+        "text": "Mahasiswa",
+        "href": "../mahasiswa/index.php"
+    },
+    {
+        "text": "Alumni",
+        "href": "../alumni/index.php"
+    },
+    {
+        "text": "Kurikulum/KRS",
+        "href": "../makul/index.php?pilihan=kurikulumbaru"
+    },
+    {
+        "text": "Nilai Kuliah",
+        "href": "../nilai/index.php"
+    },
+    {
+        "text": "Aktivitas Mahasiswa",
+        "href": "../mahasiswaaktivitas/index.php"
+    },
+    {
+        "text": "Aktivitas Lulus / Keluar",
+        "href": "../aktivitaskelulusanmahasiswa/index.php"
+    },
+    {
+        "text": "Surat Tugas Mengajar",
+        "href": "../surattugasmengajar/index.php"
+    },
+    {
+        "text": "Presensi Kuliah",
+        "href": "../presensi/index.php"
+    },
+    {
+        "text": "Jadwal Kuliah",
+        "href": "../jadwal/index.php"
+    },
+    {
+        "text": "Beasiswa",
+        "href": "../beasiswa/index.php"
+    },
+    {
+        "text": "Pembuat Naskah",
+        "href": "../pembuatnaskah/index.php"
+    },
+    {
+        "text": "Peserta Rapat Koordinator MK",
+        "href": "../pesertarapat/index.php"
+    },
+    {
+        "text": "Bimbingan PA Online",
+        "href": "../bpaonline/index.php"
+    },
+    {
+        "text": "Pengajuan Cuti",
+        "href": "../cutip/index.php"
+    },
+    {
+        "text": "Kegiatan Mahasiswa",
+        "href": "../daftarkegiatan/index.php"
+    },
+    {
+        "text": "Cetak Kartu",
+        "href": "../kartu/index.php"
+    },
+    {
+        "text": "SKPI",
+        "href": "../skpi/index.php"
+    },
+    {
+        "text": "Konversi Nilai",
+        "href": "../nilaikonversi/index.php"
+    },
+    {
+        "text": "Seminar",
+        "href": "../new_sikad.php?redirect=/event/seminar/data-seminar"
+    },
+    {
+        "text": "Sertifikasi",
+        "href": "../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi"
+    },
+    {
+        "text": "Lock Jurnal",
+        "href": "../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal"
+    },
+    {
+        "text": "Skripsi/Tugas Akhir",
+        "href": "../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi"
+    },
+    {
+        "text": "Wisuda",
+        "href": "../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda"
+    },
+    {
+        "text": "Surat Keterangan Lulus (SKL)",
+        "href": "../new_sikad.php?redirect=/jurusan/skl/cetak-skl"
+    },
+    {
+        "text": "Proses Pembelajaran",
+        "href": "../kuesionerpp/index.php"
+    },
+    {
+        "text": "Layanan",
+        "href": "../kuesionerla/index.php"
+    },
+    {
+        "text": "Kritik dan Saran",
+        "href": "../kuesionerks/index.php"
+    },
+    {
+        "text": "Dosen",
+        "href": "../kuesionerdo/index.php"
+    },
+    {
+        "text": "Tracer Studi",
+        "href": "../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner"
+    },
+    {
+        "text": "Menuju Portal PMB",
+        "href": "../new_pmb.php"
+    },
+    {
+        "text": "TAGIHAN PER MAHASISWA",
+        "href": "../uangmhstm/index.php"
+    },
+    {
+        "text": "TAGIHAN dan PEMBAYARAN",
+        "href": "../uangmhsbayar/index.php"
+    },
+    {
+        "text": "BIAYA DAN BEASISWA",
+        "href": "../uangmhsbiaya/index.php"
+    },
+    {
+        "text": "KONFIGURASI",
+        "href": "../uangmhssetting/index.php"
+    },
+    {
+        "text": "LAPORAN dan REKONSILIASI",
+        "href": "../uangmhslr/index.php"
+    },
+    {
+        "text": "DISPENSASI",
+        "href": "../dispensasi/index.php"
+    },
+    {
+        "text": "Pengumuman dan Info",
+        "href": "../pengumuman/index.php"
+    },
+    {
+        "text": "Upload Panduan/Materi",
+        "href": "../panduan/index.php"
+    },
+    {
+        "text": "Pesan-pesan",
+        "href": "../pesan/index.php"
+    },
+    {
+        "text": "Broadcast Email",
+        "href": "../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan"
+    },
+    {
+        "text": "Tukar File",
+        "href": "../file/index.php"
+    },
+    {
+        "text": "Info (SMS)",
+        "href": "../infosms/index.php"
+    },
+    {
+        "text": "Transaksi Lain",
+        "href": "../lain/index.php"
+    },
+    {
+        "text": "Referensi",
+        "href": "../pt/index.php"
+    },
+    {
+        "text": "Open Feeder",
+        "href": "../feederexport/index.php"
+    },
+    {
+        "text": "Validasi Data",
+        "href": "../feedervalidasi/index.php"
+    },
+    {
+        "text": "Nilai",
+        "href": "../laporannilai/index.php"
+    },
+    {
+        "text": "Aktivitas Perkuliahan",
+        "href": "../laporanaktivitaskuliah/index.php"
+    },
+    {
+        "text": "Keuangan Mahasiswa",
+        "href": "../uangmhslaporan/index.php"
+    },
+    {
+        "text": "Borang Akreditasi Institusi",
+        "href": "../executive/index.php"
+    },
+    {
+        "text": "Borang Akreditasi Program Studi",
+        "href": "../executive_ps/index.php"
+    },
+    {
+        "text": "Laporan Kuesioner",
+        "href": "../executive_lk/index.php"
+    },
+    {
+        "text": "Laporan Perkuliahan (KRS, Presensi, BAP)",
+        "href": "../executive_lp/index.php"
+    },
+    {
+        "text": "Laporan Nilai",
+        "href": "../executive_ln/index.php"
+    },
+    {
+        "text": "Laporan Dosen dan Mahasiswa",
+        "href": "../executive_ldm/index.php"
+    },
+    {
+        "text": "Password",
+        "href": "../password/index.php"
+    },
+    {
+        "text": "Data Operator",
+        "href": "../pegawai/index.php"
+    },
+    {
+        "text": "Data Info Sistem",
+        "href": "../sistem/index.php"
+    },
+    {
+        "text": "Kalender Akademik",
+        "href": "../kalender/index.php"
+    },
+    {
+        "text": "Kegiatan Akademik",
+        "href": "../kegiatanakademik/index.php"
+    },
+    {
+        "text": "Jadwal Sistem Akademik",
+        "href": "../jadwalakademik/index.php"
+    },
+    {
+        "text": "Nilai",
+        "href": "../konfignilai/index.php"
+    },
+    {
+        "text": "Sesi Kuliah",
+        "href": "../sesikuliah/index.php"
+    },
+    {
+        "text": "Hak SKS Maksimum",
+        "href": "../syaratkrs/index.php"
+    },
+    {
+        "text": "SKS Kelulusan",
+        "href": "../skslulus/index.php"
+    },
+    {
+        "text": "Konfigurasi Lain",
+        "href": "../konfiglain/index.php"
+    },
+    {
+        "text": "Publikasi Fitur",
+        "href": "../publikasifitur/index.php"
+    },
+    {
+        "text": "Pesan",
+        "href": "#formsubDEFAULT"
+    },
+    {
+        "text": "Pesan Masuk",
+        "href": "index.php?pilihan=lihat"
+    },
+    {
+        "text": "Buat Pesan",
+        "href": "index.php?pilihan=kirim"
+    },
+    {
+        "text": "Pesan Terkirim",
+        "href": "index.php?pilihan=klihat"
+    },
+    {
+        "text": "Menu Item",
+        "href": "https://docs.google.com/forms/d/e/1FAIpQLSdrQMjvjmdQUwOajWEZnBhH5CJo_WXRaUKLugjvfMuShgsZqA/viewform?usp=publish-editor"
+    },
+    {
+        "text": "Menu Item",
+        "href": "https://www.campusupdate.co.id/indonesia-postgraduate-research-expo-2026/"
+    },
+    {
+        "text": "Menu Item",
+        "href": "https://mataerinstitute.com/events/webinar-erm-2026"
+    }
+]

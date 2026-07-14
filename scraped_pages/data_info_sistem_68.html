@@ -1,0 +1,474 @@
+<body class="withvernav"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 20px; padding-right: 0px; display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+
+<div id="container" style="" class="ui-notify"></div>
+
+<div class="wrapper" style="padding-bottom: 80px"> <!-- bodywrapper-->
+    <div class="topheader">
+
+             <div class="boxTitle"> <!-- Program name -->
+                                <img height="45px" src="https://sgp1.vultrobjects.com/043355/sikad/gambar/Logo.iVQEhuhEPq.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=YGIP9T9E1N7J9K1U7NIC%2F20260714%2Fsgp1%2Fs3%2Faws4_request&amp;X-Amz-Date=20260714T084044Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=65dffaf9a642b22defede60b0d9941eee36bb29e0f6f5c43a271126ddd548740">
+            <div class="infoWrap">
+              <h3 class="logo">SIAKADMU 4.0</h3>
+              <span class="slogan">UMMADA CIREBON</span>
+              <br clear="all">
+            </div>
+        </div>
+
+    
+        <div class="left">
+            <div class="search">
+                <form action="../cari/index.php" method="post">
+                                        <input type="text" name="katakunci" id="katakunci" onfocus="if(this.value == 'Pencarian menu..') { this.value = ''; }" placeholder="Pencarian Menu.." value="">
+                    <button class="submitbutton" id="menusearch"></button>
+                </form>
+            </div><!--search-->
+
+            <br clear="all">
+
+        </div><!--left-->
+
+        <div class="right">
+        
+            
+            <!-- NOTIFICATION STYLE-->
+                
+            <link rel="stylesheet" href="../themes/icons/addsicons-1/style.css">
+            
+            <style>
+                ul.dropdown {
+                    list-style-type: none;
+                    /* background-color: white; */
+                }
+                
+                .area-dropdown {
+                    /* width: 100px; */
+                    /* height: 100px; */
+                    left: -50% !important;
+                    background-color: white;
+                    border-radius: 11px;
+                }
+                
+                .tdropdown {
+                    background: white;
+                    border-collapse: collapse;
+                    border: none;
+                }
+                
+                .tdropdown tr td {
+                    background-color: white !important;
+                }
+                
+                .li-dropdown {
+                    vertical-align: middle;
+                    width: 165px;
+                }
+                
+                .icon-sub-menu {
+                    width: 40px;
+                }
+                
+                .span-icon {
+                    color: black !important;
+                    display: inherit !important;
+                    background: none !important;
+                }
+                
+                .menu-name {
+                    color: black !important;
+                }
+                
+                .main-menu-icon {
+                    font-size: 20pt;
+                }
+                
+                .menu-name {
+                    display: inline-block;
+                    width: 85px;
+                    margin-left: 10px;
+                }
+                
+                .li-dropdown {
+                    /* background-color: white; */
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                
+                .icon-enter {
+                    font-size: 18pt;
+                    /* padding-right: 3px; */
+                }
+                
+            </style>
+
+                        
+                <div class="notification">
+                      
+            <a class="count dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="../">
+                        <img src="../themes/icons/uiux/more-ico.svg" width="27px">
+                    </a>
+                    <div class="dropdown-menu area-dropdown" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown"><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=de"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/dashboard-ico.svg"></span>&nbsp;<span class="menu-name">Dashboard</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=lms"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/lms-ico.png"></span>&nbsp;<span class="menu-name">LMS</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><ul>
+            </ul></ul></div>                     <a class="count" href="../vn-message.php">
+                        <img src="../themes/sikad/images/default/mail.png">
+                                            </a>
+                </div> 
+
+                            <div class="userinfo">
+                 <img src="../themes/images/default-avatar.png" height="20" alt="">
+                <span>Deffan Febrian</span>
+                <span class="arrow" style="padding:0px;"><img src="../themes/sikad/images/sort_desc.png"></span>
+            </div><!--userinfo-->
+                        <div class="userinfodrop">
+                <h4>Deffan Febrian</h4>
+                <div class="avatar">
+                    <a href="../pegawai/index.php?pilihan=tambah&amp;aksi=updateuser&amp;iduser=DEF"><img src="../themes/images/default-avatar.png" height="90" width="90"></a>                </div><!--avatar-->
+                <div class="userdata">
+
+                    <ul>
+                        <li><a href="../password/index.php?pilihan=semester">Sesi Semester <span class="label label-warning" style="font-size: 11px;">
+                           (2025/2026 Genap)</span></a></li>
+                        <li><a href="../password/index.php?pilihan=setting"><i class="ico-cog3"></i> Preference</a></li>
+                        <li><a href="../password/index.php?pilihan=update"><i class="ico-key4"></i> Ganti Password</a></li>                                                <li>Jumlah Login Mahasiswa = 191</li>
+                        <li>Jumlah Login Dosen = 36</li>
+                                                <li><a id="logout" href="index.php?aksi=logout"><i class="ico-signout"></i> Sign Out</a></li>
+                                            </ul>
+                </div><!--userdata-->
+            </div><!--userinfodrop-->
+        </div><!--right-->
+    </div><!--topheader-->
+
+
+
+    <!-- begin megamenu -->
+    <div id="nav-anchor"></div>
+     <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="contextMenu" class="collapse navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-library"></i> Akademik<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Master Akademik </h4></li>
+                                                        <li><a href="../fakultas/index.php"> Badan Hukum/PT </a></li>
+                                                        <li><a href="../dosen/index.php"> Dosen </a></li>
+                                                        <li><a href="../asistenlab/index.php"> Asisten Lab </a></li>
+                                                        <li><a href="../pegawai2/index.php"> Pegawai </a></li>
+                                                        <li><a href="../mahasiswa/index.php"> Mahasiswa </a></li>
+                                                        <li><a href="../alumni/index.php"> Alumni </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Aktivitas Akademik </h4></li>
+                                                        <li><a href="../makul/index.php?pilihan=kurikulumbaru">Kurikulum/KRS </a></li>
+                                                        <li><a href="../nilai/index.php"> Nilai Kuliah  </a></li>
+                                                        <li><a href="../mahasiswaaktivitas/index.php"> Aktivitas Mahasiswa  </a></li>
+                                                        <li><a href="../aktivitaskelulusanmahasiswa/index.php"> Aktivitas Lulus / Keluar  </a></li>
+                                                        <li><a href="../surattugasmengajar/index.php"> Surat Tugas Mengajar  </a></li>
+                                                        <li><a href="../presensi/index.php"> Presensi Kuliah </a></li>
+                                                        <li><a href="../jadwal/index.php"> Jadwal Kuliah </a></li>
+                                                        <li><a href="../beasiswa/index.php"> Beasiswa </a></li>
+                                                        <li><a href="../pembuatnaskah/index.php">Pembuat Naskah </a></li>
+                                                        <li><a href="../pesertarapat/index.php">Peserta Rapat Koordinator MK </a></li>
+                                                        <li><a href="../bpaonline/index.php">Bimbingan PA Online </a></li>
+                                                        <li><a href="../cutip/index.php">Pengajuan Cuti </a></li>
+                                                        <li><a href="../daftarkegiatan/index.php">Kegiatan Mahasiswa </a></li>
+                                                        <li><a href="../kartu/index.php"> Cetak Kartu </a></li>
+                                                        <li><a href="../skpi/index.php"> SKPI  </a></li>
+                                                        <li><a href="../nilaikonversi/index.php"> Konversi Nilai </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4> </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/seminar/data-seminar" target="_blank">Seminar <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi" target="_blank">Sertifikasi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal" target="_blank">Lock Jurnal <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Wisuda dan Tugas Akhir </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi" target="_blank"> Skripsi/Tugas Akhir <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda" target="_blank">Wisuda <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skl/cetak-skl" target="_blank">Surat Keterangan Lulus (SKL) <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-file8"></i> Kuesioner<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Kuesioner </h4></li>
+                                                        <li><a href="../kuesionerpp/index.php">Proses Pembelajaran </a></li>
+                                                        <li><a href="../kuesionerla/index.php">Layanan </a></li>
+                                                        <li><a href="../kuesionerks/index.php">Kritik dan Saran </a></li>
+                                                        <li><a href="../kuesionerdo/index.php">Dosen </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Tracer Studi </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner" target="_blank">Tracer Studi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-users2"></i> PMB<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>PMB </h4></li>
+                                                        <li><a href="../new_pmb.php" target="_blank">Menuju Portal PMB <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-coins"></i> Keuangan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Keuangan </h4></li>
+                                                        <li><a href="../uangmhstm/index.php">TAGIHAN PER MAHASISWA </a></li>
+                                                        <li><a href="../uangmhsbayar/index.php">TAGIHAN dan PEMBAYARAN </a></li>
+                                                        <li><a href="../uangmhsbiaya/index.php">BIAYA DAN BEASISWA </a></li>
+                                                        <li><a href="../uangmhssetting/index.php">KONFIGURASI </a></li>
+                                                        <li><a href="../uangmhslr/index.php">LAPORAN dan REKONSILIASI </a></li>
+                                                        <li><a href="../dispensasi/index.php"> DISPENSASI  </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-bubbles"></i> Komunikasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Komunikasi </h4></li>
+                                                        <li><a href="../pengumuman/index.php">Pengumuman dan Info </a></li>
+                                                        <li><a href="../panduan/index.php">Upload Panduan/Materi </a></li>
+                                                        <li><a href="../pesan/index.php">Pesan-pesan </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan" target="_blank"> Broadcast Email <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../file/index.php">Tukar File </a></li>
+                                                        <li><a href="../infosms/index.php"> Info (SMS) </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-stack"></i> Laporan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Dikti </h4></li>
+                                                        <li><a href="../lain/index.php"> Transaksi Lain </a></li>
+                                                        <li><a href="../pt/index.php"> Referensi </a></li>
+                                                        <li><a href="../feederexport/index.php"> Open Feeder </a></li>
+                                                        <li><a href="../feedervalidasi/index.php"> Validasi Data </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Laporan Akademik </h4></li>
+                                                        <li><a href="../laporannilai/index.php">Nilai </a></li>
+                                                        <li><a href="../laporanaktivitaskuliah/index.php">Aktivitas Perkuliahan </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Executive Summary </h4></li>
+                                                        <li><a href="../uangmhslaporan/index.php">Keuangan Mahasiswa </a></li>
+                                                        <li><a href="../executive/index.php">Borang Akreditasi Institusi   </a></li>
+                                                        <li><a href="../executive_ps/index.php">Borang Akreditasi Program Studi </a></li>
+                                                        <li><a href="../executive_lk/index.php">Laporan Kuesioner </a></li>
+                                                        <li><a href="../executive_lp/index.php">Laporan Perkuliahan (KRS, Presensi, BAP) </a></li>
+                                                        <li><a href="../executive_ln/index.php">Laporan Nilai </a></li>
+                                                        <li><a href="../executive_ldm/index.php">Laporan Dosen dan Mahasiswa </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-cog2"></i> Sistem<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Sistem </h4></li>
+                                                        <li><a href="../password/index.php">Password </a></li>
+                                                        <li><a href="../pegawai/index.php">Data Operator </a></li>
+                                                        <li><a href="../sistem/index.php">Data Info Sistem </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-equalizer2"></i> Konfigurasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Konfigurasi </h4></li>
+                                                        <li><a href="../kalender/index.php">Kalender Akademik </a></li>
+                                                        <li><a href="../kegiatanakademik/index.php">Kegiatan Akademik </a></li>
+                                                        <li><a href="../jadwalakademik/index.php">Jadwal Sistem Akademik </a></li>
+                                                        <li><a href="../konfignilai/index.php">Nilai </a></li>
+                                                        <li><a href="../sesikuliah/index.php">Sesi Kuliah </a></li>
+                                                        <li><a href="../syaratkrs/index.php">Hak SKS Maksimum </a></li>
+                                                        <li><a href="../skslulus/index.php">SKS Kelulusan </a></li>
+                                                        <li><a href="../konfiglain/index.php">Konfigurasi Lain </a></li>
+                                                        <li><a href="../publikasifitur/index.php">Publikasi Fitur </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                                    </ul>
+        </div><!-- /.nav-collapse -->
+      </nav>
+    <!-- end megamenu -->
+
+        <div id="aside-anchor"></div>
+    
+
+    <aside class="vernav2 iconmenu">
+        <ul>
+            
+                    <li class="current">
+                        <a href="#formsubDEFAULT" class="editor">Sistem</a>
+                        <span class="arrow"></span>
+                        <ul id="formsubDEFAULT" style="max-height:80vh; overflow-y:auto; overflow-x:hidden;"><li class=""><a ""="" href="index.php?pilihan=update">Data Instansi</a></li><li class=""><a ""="" href="index.php?pilihan=log">Log Aktivitas</a></li><li class=""><a ""="" href="index.php?pilihan=aturan">Aturan</a></li><li class=""><a ""="" href="index.php?pilihan=aturanprodi">Aturan KRS/Kartu Ujian per Prodi</a></li><li class=""><a ""="" href="index.php?pilihan=jadwaltutup">Jadwal Penutupan Input Data</a></li><li class=""><a ""="" href="index.php?pilihan=tools">Tools</a></li><li class=""><a ""="" href="index.php?pilihan=cekconfig">Cek Konfig</a></li><li class=""><a ""="" href="index.php?pilihan=field">Kelola Field Bebas</a></li><li class=""><a ""="" href="index.php?pilihan=tesmodul">Tes Modul</a></li><li class=""><a ""="" href="index.php?pilihan=waktumemori" style="text-transform: none !important;">Rata2 Waktu dan Memori</a></li>
+                        </ul>
+                    </li>
+                                <a id="toggle_menu" class="togglemenu"></a>
+        </ul>
+        <br><br>
+    </aside><!--leftmenu-->
+    
+
+    <div class="centercontent tables">
+
+        <div id="contentwrapper" class="contentwrapper">
+
+            
+        <div class="title-menu">
+          <div class="note note-primary"><i class="icon ico-list-alt"></i> LIHAT DATA LOG</div>
+        </div>
+
+    
+    <form name="form" action="index.php" method="post">
+        <input type="hidden" name="pilihan" value="">
+        <input type="hidden" name="aksi" value="tampilkan">
+        
+        <table class="table table-bordered table-striped">
+            <!-- Dropdown Tabel/Tahun Log -->
+            <tbody><tr>
+                <td>Tabel / Tahun Log</td>
+                <td> <div class="dropdown bootstrap-select bs3"><select name="tabel" class="selectpicker" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" tabindex="-98"><option class="bs-title-option" value=""></option> <option value="log">log</option>  <option value="log2022">log2022</option>  <option value="log2023">log2023</option>  <option value="log2024">log2024</option>  <option value="log2025">log2025</option>  <option value="log2026">log2026</option>  <option value="logmigrasi">logmigrasi</option>  <option value="migration_versions">migration_versions</option>  </select><button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" tabindex="0" title="log"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">log</div></div> </div><span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open"><div class="bs-searchbox"><input type="search" id="boostrap-select-search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list"></div><div class="inner open" role="listbox" id="bs-select-1" tabindex="-1"><ul class="dropdown-menu inner " role="presentation"></ul></div></div></div> 
+                </td>
+            </tr>
+            
+            <!-- Dropdown Jenis Log -->
+            <tr>
+                <td>Jenis Log</td>
+                <td> <div class="dropdown bootstrap-select bs3"><select name="jenislog" class="selectpicker" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" tabindex="-98"><option class="bs-title-option" value=""></option> <option value="" selected="">Semua</option>  <option value="GRAD_ACTIVITY_DELETE">AKTIVITAS WISUDA - Hapus data wisuda</option>  <option value="GRAD_ACTIVITY_INSERT">AKTIVITAS WISUDA - Tambah data wisuda</option>  <option value="GRAD_ACTIVITY_UPDATE">AKTIVITAS WISUDA - Update data wisuda</option>  <option value="MU_ERROR">API MUAMALAT - ERROR LOG</option>  <option value="MU_HIT">API MUAMALAT - HIT ANYTHING</option>  <option value="MU_INQ">API MUAMALAT - INQUIRY</option>  <option value="MU_PAY">API MUAMALAT - PAYMENT</option>  <option value="MU_REV">API MUAMALAT - REVERSAL</option>  <option value="DELETE_AFF_AGREE">Afiliasi - Hapus Perjanjian Afiliasi</option>  <option value="DELETE_AFF_PROSPECT">Afiliasi - Hapus Prospek Afiliator</option>  <option value="WITHDRAW_COMMISSION">Afiliasi - Penarikan Komisi</option>  <option value="APPROVE_COMMISSION">Afiliasi - Setujui Komisi</option>  <option value="ADD_AFFILIATOR">Afiliasi - Tambah Affiliator</option>  <option value="ADD_AFF_AGREE">Afiliasi - Tambah Perjanjian Afiliasi</option>  <option value="ADD_AFF_PROSPECT">Afiliasi - Tambah Prospek Afiliator</option>  <option value="REJECT_COMMISSION">Afiliasi - Tolak Komisi</option>  <option value="UPDATE_AFFILIATOR">Afiliasi - Update Affiliator</option>  <option value="UPDATE_AFF_AGREE">Afiliasi - Update Perjanjian Afiliasi</option>  <option value="UPDATE_AFF_PROSPECT">Afiliasi - Update Prospek Afiliator</option>  <option value="44">Alumni - Hapus  Data Alumni</option>  <option value="42">Alumni - Tambah Data Alumni</option>  <option value="43">Alumni - Update Data Alumni</option>  <option value="ASLABHAPUS">Asisten Lab - Hapus Asisten Lab</option>  <option value="ASLABTAMBAH">Asisten Lab - Tambah Asisten Lab</option>  <option value="ASLABUPDATE">Asisten Lab - Update Asisten Lab</option>  <option value="BKD0038">BKD - Distribusi Pelaksanaan Pendidikan</option>  <option value="BKD0017">BKD - Generate Advising NIDN</option>  <option value="BKD0039">BKD - Generate Advising Single Decision</option>  <option value="BKD0037">BKD - Generate Dokumen</option>  <option value="BKD0018">BKD - Generate Examining NIDN</option>  <option value="BKD0019">BKD - Generate Examining Single Decision</option>  <option value="BKD0020">BKD - Generate Lecturing NIDN</option>  <option value="BKD0021">BKD - Generate Lecturing Serial No Urut Ajar</option>  <option value="BKD0022">BKD - Generate Lecturing Single Decision</option>  <option value="BKD0023">BKD - Generate Supervising NIDN</option>  <option value="BKD0024">BKD - Generate Supervising Single Decision</option>  <option value="BKD0009">BKD - Hapus Advising Manual Decision</option>  <option value="BKD0010">BKD - Hapus Examining Manual Decision</option>  <option value="BKD0011">BKD - Hapus Lecturing Manual Decision</option>  <option value="BKD0012">BKD - Hapus NIDN Pelaksanaan Pendidikan  (EXAMINER)</option>  <option value="BKD0006">BKD - Hapus NIDN Pelaksanaan Pendidikan (Adviser)</option>  <option value="BKD0013">BKD - Hapus NIDN Pelaksanaan Pendidikan (SUPERVISOR)</option>  <option value="BKD0014">BKD - Hapus Supervising Manual Decision</option>  <option value="BKD0007">BKD - Hapus Template Temporary</option>  <option value="BKD0001">BKD - Salin Advising Decision Template</option>  <option value="BKD0016">BKD - Salin Examining Decision Template</option>  <option value="BKD0025">BKD - Salin Lecturing Decision Template</option>  <option value="BKD0004">BKD - Salin Lecturing Unit</option>  <option value="BKD0003">BKD - Salin SKS BKD</option>  <option value="BKD0034">BKD - Salin Supervising Decision Template</option>  <option value="BKD0005">BKD - Simpan Credit Rules</option>  <option value="BKD0015">BKD - Simpan Doc Setting</option>  <option value="BKD0026">BKD - Simpan Lecturing Serial Nomer Urut Ajar</option>  <option value="BKD0036">BKD - Simpan Manual</option>  <option value="BKD0029">BKD - Simpan NIDN Advising (Pembimbing Akademik)</option>  <option value="BKD0008">BKD - Simpan NIDN Daftar Pengajar Kelas Kuliah</option>  <option value="BKD0028">BKD - Simpan NIDN Examiner (Penguji TA)</option>  <option value="BKD0030">BKD - Simpan NIDN Supervisor (Pembimbing TA)</option>  <option value="BKD0032">BKD - Simpan Reference</option>  <option value="BKD0027">BKD - Simpan Satuan Mengajar</option>  <option value="BKD0033">BKD - Simpan TTD Dosen</option>  <option value="BKD0002">BKD - Simpan Template Temporary</option>  <option value="BKD0031">BKD - Simpan Ubah Pengaturan</option>  <option value="BKD0035">BKD - Update Point BKD</option>  <option value="BNICB">BNI Ecoll - CallBack</option>  <option value="BNICVA">BNI Ecoll - Create VA</option>  <option value="BNIDL">BNI Ecoll - Delete VA</option>  <option value="BNIST">BNI Ecoll - Status VA</option>  <option value="BRIVA2024TOKEN">BRIVA 2024 - Token</option>  <option value="BUKAKUNCIKRS">BUKA KUNCI KRS</option>  <option value="41">Bahan Kuliah - Hapus  Data Bahan Kuliah</option>  <option value="39">Bahan Kuliah - Tambah Data Bahan Kuliah</option>  <option value="40">Bahan Kuliah - Update Data Bahan Kuliah</option>  <option value="94">Beasiswa - Hapus  Beasiswa</option>  <option value="BEAHAPUS">Beasiswa - Hapus Jenis Beasiswa</option>  <option value="BEAKOMUHAPUS">Beasiswa - Hapus Komponen Beasiswa</option>  <option value="92">Beasiswa - Tambah Beasiswa</option>  <option value="BEATAMBAH">Beasiswa - Tambah Jenis Beasiswa</option>  <option value="BEAKOMTAMBAH">Beasiswa - Tambah Komponen Beasiswa</option>  <option value="BEAUBAH">Beasiswa - Ubah Jenis Beasiswa</option>  <option value="93">Beasiswa - Update Beasiswa</option>  <option value="BRIVAJSONCVA">Briva Json - Create VA</option>  <option value="BRIVAJSONDL">Briva Json - Delete VA</option>  <option value="BRIVAJSONRT">Briva Json - Get Report Time VA</option>  <option value="BRIVAJSONST">Briva Json - Status VA</option>  <option value="CMBLIHAT">CMB UNNUR - Mahasiswa - Lihat Pengumuman</option>  <option value="CMBMULAI">CMB UNNUR - Mahasiswa - Mulai Ujian</option>  <option value="CMBSELESAI">CMB UNNUR - Mahasiswa - Selesai Ujian</option>  <option value="CMBUPDATEJAWABAN">CMB UNNUR - Update Jawaban Ujian</option>  <option value="CMBUPDATENILAI">CMB UNNUR - Update Nilai Ujian</option>  <option value="CMBUPDATESTATUS">CMB UNNUR - Update Status Ujian</option>  <option value="CPLDEL">CPL - Hapus</option>  <option value="CPLADD">CPL - Tambah</option>  <option value="CPLUPDATE">CPL - Update</option>  <option value="CPLMKUPDATE">CPL Makul - Update</option>  <option value="CPMKDEL">CPMK - Hapus</option>  <option value="CPMKADD">CPMK - Tambah</option>  <option value="CPMKUPDATE">CPMK - Update</option>  <option value="CRONBKD">CRON BKD</option>  <option value="CRONKUESPP">CRON KUESIONER PP</option>  <option value="CRONLAPEVAL">CRON LAPORAN EVALUASI SEMESTER</option>  <option value="CRONIPSIPK">CRON PROSES IPS/IPK</option>  <option value="76">Calon Mahasiswa - Cetak Formulir</option>  <option value="85">Calon Mahasiswa - Edit Saringan Masuk Prodi - Calon Mahasiswa</option>  <option value="86">Calon Mahasiswa - Entri Nilai Ujian - Manual</option>  <option value="87">Calon Mahasiswa - Entri Status Kelulusan</option>  <option value="70">Calon Mahasiswa - Ganti Password Karena LUPA - Email</option>  <option value="69">Calon Mahasiswa - Ganti Password Karena LUPA - SMS</option>  <option value="71">Calon Mahasiswa - Ganti Password via WEB</option>  <option value="82">Calon Mahasiswa - Hapus Calon Mahasiswa</option>  <option value="72">Calon Mahasiswa - Isi Biodata</option>  <option value="89">Calon Mahasiswa - Kirim Pengumuman Kelulusan ke Calon Mahasiswa</option>  <option value="79">Calon Mahasiswa - Lihat Pengumuman</option>  <option value="66">Calon Mahasiswa - Login</option>  <option value="67">Calon Mahasiswa - Logout</option>  <option value="77">Calon Mahasiswa - Mulai Ujian</option>  <option value="74">Calon Mahasiswa - Pilih Program Studi</option>  <option value="88">Calon Mahasiswa - Proses Daftar Ulang</option>  <option value="84">Calon Mahasiswa - Reset Password Calon Mahasiswa - Email</option>  <option value="83">Calon Mahasiswa - Reset Password Calon Mahasiswa - SMS</option>  <option value="73">Calon Mahasiswa - SELESAI Isi Biodata</option>  <option value="75">Calon Mahasiswa - SELESAI Pilih Program Studi</option>  <option value="78">Calon Mahasiswa - Selesai Ujian</option>  <option value="80">Calon Mahasiswa - Tambah Calon Mahasiswa</option>  <option value="99">Calon Mahasiswa - Ubah NIM/Jenis Kelas</option>  <option value="81">Calon Mahasiswa - Update Calon Mahasiswa</option>  <option value="98">Calon Mahasiswa - Update Formulir</option>  <option value="CAPAIANDEL">Capaian - Hapus</option>  <option value="CAPAIANUPDATE">Capaian - Update</option>  <option value="DEBUGPOSTPAYMENT">Debugging post payment pmb daftar ulang</option>  <option value="5">Departemen - Hapus Departemen</option>  <option value="3">Departemen - Tambah Departemen</option>  <option value="4">Departemen - Update Departemen</option>  <option value="DISEDIT">Dispensasi - Edit</option>  <option value="DISDEL">Dispensasi - Hapus</option>  <option value="KPDOCUPDATE">Dokumen - Update Dokumen KP</option>  <option value="DOSAKTHAPUS">Dosen - Hapus Aktivitas Mengajar</option>  <option value="DOSAKLHAPUS">Dosen - Hapus Aktivitas Mengajar Lain</option>  <option value="11">Dosen - Hapus Dosen</option>  <option value="DOSKELHAPUS">Dosen - Hapus Dosen Keluar</option>  <option value="DOSAKTMENFILEDEL">Dosen - Hapus File Lampiran Aktivitas Mengajar</option>  <option value="DOSKESMENDEL">Dosen - Hapus Kesediaan Mengajar</option>  <option value="DOSORGHAPUS">Dosen - Hapus Organisasi Dosen</option>  <option value="DOSABDHAPUS">Dosen - Hapus Pengabdian Dosen</option>  <option value="DOSPUBHAPUS">Dosen - Hapus Publikasi Dosen</option>  <option value="17">Dosen - Hapus Riwayat Pendidikan Dosen</option>  <option value="DOSTUGASKULIAHDEL">Dosen - Hapus Tugas Kuliah</option>  <option value="DOSPERWALIAN">Dosen - Perwalian</option>  <option value="DOSKESMENSAL">Dosen - Salin Kesediaan Mengajar</option>  <option value="DOSSALIN">Dosen - Saling Data Dosen PA/Wali</option>  <option value="DOSAKTTAMBAH">Dosen - Tambah Aktivitas Mengajar</option>  <option value="DOSAKLTAMBAH">Dosen - Tambah Aktivitas Mengajar Lain</option>  <option value="9">Dosen - Tambah Dosen</option>  <option value="DOSKELTAMBAH">Dosen - Tambah Dosen Keluar</option>  <option value="DOSKESMENADD">Dosen - Tambah Kesediaan Mengajar</option>  <option value="DOSORGTAMBAH">Dosen - Tambah Organisasi Dosen</option>  <option value="DOSABDTAMBAH">Dosen - Tambah Pengabdian Dosen</option>  <option value="DOSPUBTAMBAH">Dosen - Tambah Publikasi Dosen</option>  <option value="15">Dosen - Tambah Riwayat Pendidikan Dosen</option>  <option value="DOSTUGASKULIAHADD">Dosen - Tambah Tugas Kuliah</option>  <option value="DOSKUOUPDATE">Dosen - Ubah Kuota Mengajar</option>  <option value="DOSAKTUPDATE">Dosen - Update Aktivitas Mengajar</option>  <option value="DOSAKLUPDATE">Dosen - Update Aktivitas Mengajar Lain</option>  <option value="DOSBIOUPDATE">Dosen - Update Biodata</option>  <option value="10">Dosen - Update Dosen</option>  <option value="DOSKELUPDATE">Dosen - Update Dosen Keluar</option>  <option value="DOSAKTMENFILEUPDATE">Dosen - Update File Lampiran Aktivitas Mengajar</option>  <option value="DOSKESMENUPDATE">Dosen - Update Kesediaan Mengajar</option>  <option value="DOSORGUPDATE">Dosen - Update Organisasi Dosen</option>  <option value="DOSABDUPDATE">Dosen - Update Pengabdian Dosen</option>  <option value="DOSPUBUPDATE">Dosen - Update Publikasi Dosen</option>  <option value="16">Dosen - Update Riwayat Pendidikan Dosen</option>  <option value="DOSTUGASKULIAHUPDATE">Dosen - Update Tugas Kuliah</option>  <option value="PRUPDATE">Dosen Peserta Rapat - Diajukan</option>  <option value="PRDEL">Dosen Peserta Rapat - Hapus</option>  <option value="PRADD">Dosen Peserta Rapat - Tambah</option>  <option value="MINIOERROR">ERROR MINIO/AWS</option>  <option value="EMAILTES">Email -  Kirim Email Tes </option>  <option value="EMAILDOSEN">Email -  Kirim ke Dosen </option>  <option value="EMAILMHS">Email -  Kirim ke Mahasiswa</option>  <option value="EMAILKONFIG">Email -  Simpan Konfigurasi SMTP </option>  <option value="FLIPREQUEST">FLIP REQUEST</option>  <option value="FLIPRESPONSE">FLIP RESPONSE</option>  <option value="FAKHAPUS">Fakultas - Hapus Fakultas</option>  <option value="FAKTAMBAH">Fakultas - Tambah Fakultas</option>  <option value="FAKUPDATE">Fakultas - Update Fakultas</option>  <option value="HFIELDBEBAS">Field Bebas - Hapus</option>  <option value="TFIELDBEBAS">Field Bebas - Tambah</option>  <option value="UFIELDBEBAS">Field Bebas - Update</option>  <option value="FINNETHAPUS">Finnet - Hapus Rencana Bayar</option>  <option value="FINNETLOG">Finnet - LOG</option>  <option value="FINNETSETTLEMENT">Finnet - REQUEST Settlement</option>  <option value="FINNETPAID">Finnet - Status Pembayaran DIBAYAR</option>  <option value="FINNETAMOUNT">Finnet - Update Amount by Settlement</option>  <option value="FINNETPMBHAPUS">Finnet PMB - Hapus Rencana Bayar</option>  <option value="FINNETPMBDUHAPUS">Finnet PMB DAFTAR ULANG - Hapus Rencana Bayar</option>  <option value="2">Gagal Login</option>  <option value="PMBNIM">Gagal NIM Otomatis PMB</option>  <option value="PASSWORD">Ganti Password</option>  <option value="PASSWORD2">Ganti Password Karena LUPA - Email</option>  <option value="HSMUMUM">Hak SKS Maksimum Umum - Edit</option>  <option value="JADDETILHAPUS">Jadwal Kuliah - Hapus Detil Jadwal Kuliah</option>  <option value="JADHAPUS">Jadwal Kuliah - Hapus Jadwal Kuliah</option>  <option value="JADRUANGHAPUS">Jadwal Kuliah - Hapus Ruangan</option>  <option value="JADDETILTAMBAH">Jadwal Kuliah - Tambah Detil  Jadwal Kuliah </option>  <option value="JADTAMBAH">Jadwal Kuliah - Tambah Jadwal Kuliah</option>  <option value="JADRUANGTAMBAH">Jadwal Kuliah - Tambah Ruangan</option>  <option value="JADDETILUPDATE">Jadwal Kuliah - Update Detil Jadwal Kuliah</option>  <option value="JADUPDATE">Jadwal Kuliah - Update Jadwal Kuliah</option>  <option value="JADRUANGUPDATE">Jadwal Kuliah - Update Ruangan</option>  <option value="JOIMPOR">Jadwal Otomatis - Impor</option>  <option value="JOTAMBAH">Jadwal Otomatis - Tambah</option>  <option value="JOUPDATE">Jadwal Otomatis - Update</option>  <option value="JADWALPMBEDIT">Jadwal PMB - Edit</option>  <option value="JADWALPMBHAPUS">Jadwal PMB - Hapus</option>  <option value="WENHAPUS">Jadwal Tutup Input Data - Hapus</option>  <option value="WENTAMBAH">Jadwal Tutup Input Data - Tambah</option>  <option value="WTDUPDATE">Jadwal Tutup Input Data - Update</option>  <option value="JADDETILUJHAPUS">Jadwal Ujian -  Hapus Detil Ruangan Jadwal Ujian</option>  <option value="JADDETILUJTAMBAH">Jadwal Ujian -  Tambah Detil Ruangan Jadwal Ujian </option>  <option value="RUANGUJIANMAN">Jadwal Ujian - Edit Ruangan Manual</option>  <option value="JADUJIANHAPUS">Jadwal Ujian - Hapus Jadwal Ujian</option>  <option value="JADUJIANTAMBAH">Jadwal Ujian - Tambah Jadwal Ujian</option>  <option value="JADUJIANUPDATE">Jadwal Ujian - Update Jadwal Ujian</option>  <option value="CETAKKHS">KHS - Cetak</option>  <option value="KRSDOSENHAPUS">KRS - Dosen Hapus KRS</option>  <option value="KRSPERSETUJUANDOSEN">KRS - Dosen Persetujuan</option>  <option value="KRSPERSETUJUANKP">KRS - Ka Prodi Persetujuan</option>  <option value="KRSAMBILMHS">KRS - Mahasiswa Ambil KRS</option>  <option value="KRSBATALMHS">KRS - Mahasiswa Batal KRS</option>  <option value="KRSPESANMHS">KRS - Mahasiswa Simpan Pesan</option>  <option value="KRSAMBILOPR">KRS - Operator Ambil KRS</option>  <option value="KRSBATALOPR">KRS - Operator Batal KRS</option>  <option value="KRSPERSETUJUANOPR">KRS - Operator Persetujuan</option>  <option value="KRSPESANOPR">KRS - Operator Simpan Pesan</option>  <option value="BATASKRSHAPUS">KRS - Pembatasan KRS Online Hapus</option>  <option value="BATASKRSHAPUSM">KRS - Pembatasan KRS Online Hapus Member</option>  <option value="BATASKRSTAMBAH">KRS - Pembatasan KRS Online Tambah</option>  <option value="BATASKRSTAMBAHM">KRS - Pembatasan KRS Online Tambah Member</option>  <option value="BATASKRSUPDATE">KRS - Pembatasan KRS Online Update</option>  <option value="KRSUBAHNAMASKS">KRS - ubah nama makul/SKS makul di KRS mahasiswa</option>  <option value="KRSSDOSEN">KRSS - Dosen Ambil KRSS</option>  <option value="KRSSDOSENHAPUS">KRSS - Dosen Hapus KRSS Pengganti</option>  <option value="KRSSPERSETUJUANDOSEN">KRSS - Dosen Persetujuan</option>  <option value="KRSSPESANDOSEN">KRSS - Dosen Simpan Pesan</option>  <option value="KRSSAMBILMHS">KRSS - Mahasiswa Ambil KRSS</option>  <option value="KRSSBATALMHS">KRSS - Mahasiswa Batal KRSS</option>  <option value="KRSSPESANMHS">KRSS - Mahasiswa Simpan Pesan</option>  <option value="KRSSAMBILOPR">KRSS - Operator Ambil KRSS</option>  <option value="KRSSBATALOPR">KRSS - Operator Batal KRSS</option>  <option value="KRSSPESANOPR">KRSS - Operator Simpan Pesan</option>  <option value="KUNCIKRS">KUNCI KRS</option>  <option value="KAMHAPUS">Kampus - Hapus Kampus</option>  <option value="KAMTAMBAH">Kampus - Tambah Kampus</option>  <option value="KAMUPDATE">Kampus - Update Kampus</option>  <option value="KELASKULIAHEDIT">Kelas Kuliah - Edit</option>  <option value="KELASKULIAHHAPUS">Kelas Kuliah - Hapus</option>  <option value="KELASKULIAHHPSPRODI">Kelas Kuliah - Hapus Prodi</option>  <option value="KELASKULIAHSALIN">Kelas Kuliah - Salin</option>  <option value="KELASKULIAHTAMBAH">Kelas Kuliah - Tambah</option>  <option value="KKPHAPUS">Kelas Kuliah Pengajar - Hapus</option>  <option value="KKPTAMBAH">Kelas Kuliah Pengajar - Tambah</option>  <option value="KKPUPDATE">Kelas Kuliah Pengajar - Update</option>  <option value="DISTRIBUSI">Keuangan - Distribusi</option>  <option value="EDITDENDA">Keuangan - Edit Denda</option>  <option value="HAPUSSETTLEMENT">Keuangan - HAPUS SETTLEMENT dari program SETTLEMENT</option>  <option value="BIAYAHAPUS">Keuangan - Hapus Biaya Komponen Pembayaran</option>  <option value="50">Keuangan - Hapus Komponen Pembayaran</option>  <option value="56">Keuangan - Hapus Pembayaran</option>  <option value="HITUNGDENDA">Keuangan - Hitung Denda</option>  <option value="REVERSAL">Keuangan - REVERSAL</option>  <option value="51">Keuangan - Tambah Biaya Komponen Pembayaran</option>  <option value="48">Keuangan - Tambah Komponen Pembayaran</option>  <option value="54">Keuangan - Tambah Pembayaran</option>  <option value="BMHSBARUTAMBAH">Keuangan - Tambah Syarat Mendapatkan NIM</option>  <option value="BKRSTAMBAH">Keuangan - Tambah Syarat Minimal KRS</option>  <option value="BUASTAMBAH">Keuangan - Tambah Syarat Minimal UAS</option>  <option value="BUTSTAMBAH">Keuangan - Tambah Syarat Minimal UTS</option>  <option value="52">Keuangan - Update Biaya Komponen Pembayaran</option>  <option value="49">Keuangan - Update Komponen Pembayaran</option>  <option value="55">Keuangan - Update Pembayaran</option>  <option value="BMHSBARUUPDATE">Keuangan - Update Syarat Mendapatkan NIM</option>  <option value="BKRSUPDATE">Keuangan - Update Syarat Minimal KRS</option>  <option value="BUASUPDATE">Keuangan - Update Syarat Minimal UAS</option>  <option value="BUTSUPDATE">Keuangan - Update Syarat Minimal UTS</option>  <option value="HAKLJ">Konfigurasi Lock Jurnal - Hapus Data Konfigurasi</option>  <option value="TAKLJ">Konfigurasi Lock Jurnal - Tambah Data Konfigurasi</option>  <option value="UDKLJ">Konfigurasi Lock Jurnal - Update Data Konfigurasi</option>  <option value="KONHAPUS">Konsentrasi - Hapus Konsentrasi</option>  <option value="KONTAMBAH">Konsentrasi - Tambah Konsentrasi</option>  <option value="KONUPDATE">Konsentrasi - Update Konsentrasi</option>  <option value="KOASSALIN">Koordinator - Salin</option>  <option value="REKAPKUESIONERPP">Kuesioner PP - Rekapitulasi</option>  <option value="REKAPLAPEVALSEM">Kuesioner PP - Rekapitulasi</option>  <option value="101">Kurikulum - Copy Kurikulum</option>  <option value="102">Kurikulum - Copy Kurikulum SP</option>  <option value="91">Kurikulum - Hapus Kurikulum SP per Semester</option>  <option value="90">Kurikulum - Hapus Kurikulum per Semester</option>  <option value="LIHATSEMUA">LIHAT SEMUA DATA</option>  <option value="REKAPLAPTUNKOM">Laporan Tunggakan Per Komponen</option>  <option value="LIBURHAPUS">Libur Akademik -  Hapus Libur </option>  <option value="LIBURTAMBAH">Libur Akademik -  Tambah Libur </option>  <option value="LIBURUPDATE">Libur Akademik -  Update Libur </option>  <option value="HALJ">Lock Jurnal - Hapus Data Pengajuan Jurnal</option>  <option value="TALJ">Lock Jurnal - Tambah Data Pengajuan Jurnal</option>  <option value="UDLJ">Lock Jurnal - Update Data Pengajuan Jurnal</option>  <option value="0">Login</option>  <option value="1">Logout</option>  <option value="GANTINIM">MAHASISWA - GANTI NIM</option>  <option value="TBS">Mahasiswa - Batal Studi</option>  <option value="MAHAKTHAPUS">Mahasiswa - Hapus Aktivitas Kuliah</option>  <option value="MAHBEAHAPUS">Mahasiswa - Hapus Beasiswa</option>  <option value="MAHKELASHAPUS">Mahasiswa - Hapus Distribusi Kelas</option>  <option value="MAHKEGHAPUS">Mahasiswa - Hapus Kegiatan</option>  <option value="MAHLLSHAPUS">Mahasiswa - Hapus Kelulusan</option>  <option value="MAHKONHAPUS">Mahasiswa - Hapus Konversi Nilai</option>  <option value="14">Mahasiswa - Hapus Mahasiswa</option>  <option value="MAHRIWHAPUS">Mahasiswa - Hapus Riwayat Pendidikan</option>  <option value="MAHSKRHAPUS">Mahasiswa - Hapus Skripsi</option>  <option value="MAHASIHAPUS">Mahasiswa - Hapus Status Mahasiswa Asing</option>  <option value="MAHTEMPKARTU">Mahasiswa - Pilih Template Kartu</option>  <option value="RBS">Mahasiswa - Restore Batal Studi</option>  <option value="MAHSETTINGKARTU">Mahasiswa - Setting Kartu</option>  <option value="MAHAKTTAMBAH">Mahasiswa - Tambah Aktivitas Kuliah</option>  <option value="MAHBEATAMBAH">Mahasiswa - Tambah Beasiswa</option>  <option value="MAHKELASTAMBAH">Mahasiswa - Tambah Distribusi Kelas</option>  <option value="MAHKEGTAMBAH">Mahasiswa - Tambah Kegiatan</option>  <option value="MAHLLSTAMBAH">Mahasiswa - Tambah Kelulusan</option>  <option value="MAHKONTAMBAH">Mahasiswa - Tambah Konversi Nilai</option>  <option value="12">Mahasiswa - Tambah Mahasiswa</option>  <option value="MAHRIWTAMBAH">Mahasiswa - Tambah Riwayat Pendidikan</option>  <option value="MAHSKRTAMBAH">Mahasiswa - Tambah Skripsi</option>  <option value="MAHASITAMBAH">Mahasiswa - Tambah Status Mahasiswa Asing</option>  <option value="MAHAKTUPDATE">Mahasiswa - Update Aktivitas Kuliah</option>  <option value="MAHBEAUPDATE">Mahasiswa - Update Beasiswa</option>  <option value="MAHKELASUPDATE">Mahasiswa - Update Distribusi Kelas</option>  <option value="MHSFOTO">Mahasiswa - Update File Mahasiswa</option>  <option value="MAHLLSUPDATE">Mahasiswa - Update Kelulusan</option>  <option value="MAHKONUPDATE">Mahasiswa - Update Konversi Nilai</option>  <option value="MAHLABUPDATE">Mahasiswa - Update Label Kelas</option>  <option value="13">Mahasiswa - Update Mahasiswa</option>  <option value="UPDATEMASSALMHS">Mahasiswa - Update Massal</option>  <option value="MAHRIWUPDATE">Mahasiswa - Update Riwayat Pendidikan</option>  <option value="MAHSKRUPDATE">Mahasiswa - Update Skripsi</option>  <option value="MAHASIUPDATE">Mahasiswa - Update Status Mahasiswa Asing</option>  <option value="MAHCUTTIDAKSETUJU">Mahasiswa - Update Usulan Cuti Tidak Disetujui</option>  <option value="MAHCUTSETUJU">Mahasiswa - Usulan Cuti Disetujui</option>  <option value="DMBLAB">Mahasiswa bermasalah laboratorium - Delete</option>  <option value="TMBLAB">Mahasiswa bermasalah laboratorium - Tambah</option>  <option value="UMBLAB">Mahasiswa bermasalah laboratorium - Update</option>  <option value="DMBPERPUS">Mahasiswa bermasalah perpustakaan - Delete</option>  <option value="TMBPERPUS">Mahasiswa bermasalah perpustakaan - Tambah</option>  <option value="UMBPERPUS">Mahasiswa bermasalah perpustakaan - Update</option>  <option value="23">Mata Kuliah - Hapus Dosen Pengajar Mata Kuliah</option>  <option value="MKKURHAPUS">Mata Kuliah - Hapus Kurikulum</option>  <option value="20">Mata Kuliah - Hapus Mata Kuliah</option>  <option value="MKMATERIDOKHAPUS">Mata Kuliah - Hapus Materi Kedokteran</option>  <option value="26">Mata Kuliah - Hapus Pengambilan Mata Kuliah</option>  <option value="MKSYARATKRSHAPUS">Mata Kuliah - Hapus Syarat KRS</option>  <option value="MKSYARATMKHAPUS">Mata Kuliah - Hapus Syarat Pengambilan MK </option>  <option value="MKWCKUHAPUS">Mata Kuliah - Hapus Waktu Cetak Kartu Ujian </option>  <option value="MKWKHAPUS">Mata Kuliah - Hapus Waktu KRS  </option>  <option value="MKWKPHAPUS">Mata Kuliah - Hapus Waktu KRS Prodi </option>  <option value="MKWKPAHAPUS">Mata Kuliah - Hapus Waktu KRS Prodi Angkatan</option>  <option value="21">Mata Kuliah - Tambah Dosen Pengajar Mata Kuliah</option>  <option value="MKKURTAMBAH">Mata Kuliah - Tambah Kurikulum</option>  <option value="18">Mata Kuliah - Tambah Mata Kuliah</option>  <option value="MKMATERIDOKTAMBAH">Mata Kuliah - Tambah Materi Kedokteran</option>  <option value="24">Mata Kuliah - Tambah Pengambilan Mata Kuliah</option>  <option value="MKSYARATKRSTAMBAH">Mata Kuliah - Tambah Syarat KRS</option>  <option value="MKSYARATMKTAMBAH">Mata Kuliah - Tambah Syarat Pengambilan MK</option>  <option value="MKWCKUTAMBAH">Mata Kuliah - Tambah Waktu Cetak Kartu Ujian  </option>  <option value="MKWKTAMBAH">Mata Kuliah - Tambah Waktu KRS  </option>  <option value="MKWKPTAMBAH">Mata Kuliah - Tambah Waktu KRS Prodi </option>  <option value="MKWKPATAMBAH">Mata Kuliah - Tambah Waktu KRS Prodi Angkatan</option>  <option value="MKSYARATKRSMAXUPDATE">Mata Kuliah - UPDATE Syarat KRS SKS Maksimum</option>  <option value="MKSYARATKRSMAXSISIPA">Mata Kuliah - UPDATE Syarat KRS SKS Maksimum Sisipan</option>  <option value="BAPUPDATE">Mata Kuliah - Update BAP</option>  <option value="22">Mata Kuliah - Update Dosen Pengajar Mata Kuliah</option>  <option value="MKKURUPDATE">Mata Kuliah - Update Kurikulum</option>  <option value="19">Mata Kuliah - Update Mata Kuliah</option>  <option value="MKMATERIDOKUPDATE">Mata Kuliah - Update Materi Kedokteran</option>  <option value="25">Mata Kuliah - Update Pengambilan Mata Kuliah</option>  <option value="MKTAMPILANKRS">Mata Kuliah - Update Setting Tampilan KRS </option>  <option value="MKSILUPDATE">Mata Kuliah - Update Silabus Dosen</option>  <option value="MKSILDEFAULT">Mata Kuliah - Update Silabus Dosen Default</option>  <option value="MKSYARATKRSUPDATE">Mata Kuliah - Update Syarat KRS</option>  <option value="MKSYARATMKUPDATE">Mata Kuliah - Update Syarat Pengambilan MK</option>  <option value="MKWCKUUPDATE">Mata Kuliah - Update Waktu Cetak Kartu Ujian </option>  <option value="MKWKUPDATE">Mata Kuliah - Update Waktu KRS  </option>  <option value="MKWKPUPDATE">Mata Kuliah - Update Waktu KRS Prodi </option>  <option value="MKWKPAUPDATE">Mata Kuliah - Update Waktu KRS Prodi Angkatan</option>  <option value="KUNCINILAIBUKA">Nilai - Buka Kunci Nilai</option>  <option value="57">Nilai - Cetak Transkrip</option>  <option value="59">Nilai - Edit IPS/IPK</option>  <option value="58">Nilai - Edit Nilai KRS </option>  <option value="35">Nilai - Hapus  Data Nilai Komponen</option>  <option value="38">Nilai - Hapus  Data Nilai via DMR</option>  <option value="29">Nilai - Hapus  Komponen Nilai</option>  <option value="32">Nilai - Hapus  Konversi Nilai</option>  <option value="NILWNPRODIHAPUS">Nilai - Hapus Batas Waktu Entri Nilai untuk Dosen Prodi </option>  <option value="NILWNHAPUS">Nilai - Hapus Batas Waktu Entri Nilai untuk Dosen Prodi </option>  <option value="NILBOBOTHAPUS">Nilai - Hapus Bobot  Nilai</option>  <option value="NILKONDEFHAPUS">Nilai - Hapus Konversi Nilai</option>  <option value="NILPREDHAPUS">Nilai - Hapus Predikat </option>  <option value="KUNCINILAI">Nilai - Kunci Nilai</option>  <option value="PUBLISHNILAI">Nilai - Publish Nilai</option>  <option value="NILWNTAMBAH">Nilai - Tambah Batas Waktu Entri Nilai untuk Dosen  </option>  <option value="NILWNPRODITAMBAH">Nilai - Tambah Batas Waktu Entri Nilai untuk Dosen Prodi </option>  <option value="NILBOBOTTAMBAH">Nilai - Tambah Bobot Nilai</option>  <option value="33">Nilai - Tambah Data Nilai Komponen</option>  <option value="36">Nilai - Tambah Data Nilai via DMR</option>  <option value="27">Nilai - Tambah Komponen Nilai</option>  <option value="30">Nilai - Tambah Konversi Nilai</option>  <option value="NILKONDEFTAMBAH">Nilai - Tambah Konversi Nilai</option>  <option value="NILPREDTAMBAH">Nilai - Tambah Predikat </option>  <option value="60">Nilai - Transfer Nilai SP ke Reguler</option>  <option value="UNPUBLISHNILAI">Nilai - UNPublish Nilai</option>  <option value="NILWNUPDATE">Nilai - Update Batas Waktu Entri Nilai untuk Dosen  </option>  <option value="NILWNPRODIUPDATE">Nilai - Update Batas Waktu Entri Nilai untuk Dosen Prodi </option>  <option value="NILBOBOTUPDATE">Nilai - Update Bobot Nilai</option>  <option value="34">Nilai - Update Data Nilai Komponen</option>  <option value="37">Nilai - Update Data Nilai via DMR</option>  <option value="28">Nilai - Update Komponen Nilai</option>  <option value="31">Nilai - Update Konversi Nilai</option>  <option value="NILKONDEFUPDATE">Nilai - Update Konversi Nilai</option>  <option value="NILKOPFAK">Nilai - Update Kop Surat Fakultas</option>  <option value="NILKOPTRA">Nilai - Update Kop Surat Transkrip</option>  <option value="NILKOPTRAFAK">Nilai - Update Kop Surat Transkrip Fakultas</option>  <option value="NILKOP">Nilai - Update Kop Surat Umum</option>  <option value="NILUAKHIR">Nilai - Update Nilai Ujian Akhir</option>  <option value="NILNOMERIJAZAH">Nilai - Update Nomer Ijazah</option>  <option value="NILTTDPRODI">Nilai - Update Penandatangan Prodi</option>  <option value="NILTTD">Nilai - Update Penandatangan Umum</option>  <option value="NILPREDUPDATE">Nilai - Update Predikat </option>  <option value="NILSETIJAZAH">Nilai - Update Setting Ijazah</option>  <option value="97">Operator - Hapus Operator</option>  <option value="95">Operator - Tambah Operator</option>  <option value="96">Operator - Update Operator</option>  <option value="65">Operator Bank - Cetak Form Pendaftaran Calon Mahasiswa</option>  <option value="61">Operator Bank - Login</option>  <option value="62">Operator Bank - Logout</option>  <option value="63">Operator Bank - Tambah Data Calon Mahasiswa</option>  <option value="64">Operator Bank - Update Data Calon Mahasiswa</option>  <option value="ATURAN">Operator Ubah Aturan</option>  <option value="ATURANPRODI">Operator Ubah Aturan Prodi</option>  <option value="CONFIGURATION">Operator Ubah Config</option>  <option value="GRAD_REG_REGISTER">PENDAFTAR WISUDA - Daftar wisuda</option>  <option value="GRAD_REG_DELETE">PENDAFTAR WISUDA - Hapus pendaftar wisuda</option>  <option value="GRAD_REG_IMPORT">PENDAFTAR WISUDA - Import pendaftar wisuda</option>  <option value="GRAD_REG_TOGA">PENDAFTAR WISUDA - Pengambilan toga wisuda</option>  <option value="GRAD_REG_ATTEND">PENDAFTAR WISUDA - Presensi wisuda</option>  <option value="GRAD_REG_INSERT">PENDAFTAR WISUDA - Tambah pendaftar wisuda</option>  <option value="GRAD_REG_UPDATE">PENDAFTAR WISUDA - Update pendaftar wisuda</option>  <option value="JADWALOFFLINEHAPUS">PMB Jadwal Ujian Offline - Hapus</option>  <option value="JADWALOFFLINEHAPUSM">PMB Jadwal Ujian Offline - Hapus Member</option>  <option value="JADWALOFFLINETAMBAH">PMB Jadwal Ujian Offline - Tambah</option>  <option value="JADWALOFFLINETAMBAHM">PMB Jadwal Ujian Offline - Tambah Member</option>  <option value="JADWALOFFLINEUPDATE">PMB Jadwal Ujian Offline - Update</option>  <option value="47">PT - Hapus  Data PT</option>  <option value="45">PT - Tambah Data PT</option>  <option value="46">PT - Update Data PT</option>  <option value="PTUPDATE">PT - Update PT</option>  <option value="PDTLOLOSBERKAS">PUSDIKTAN LOLOS BERKAS</option>  <option value="PDTREGISTER">PUSDIKTAN REGISTER</option>  <option value="PGUPDATE">Pegawai - Edit Pegawai</option>  <option value="PGDEL">Pegawai - Hapus Pegawai</option>  <option value="PGADD">Pegawai - Tambah Pegawai</option>  <option value="SKSTAMBAH">Penambahan SKS</option>  <option value="PENGUPDATE">Pengumuman - Edit</option>  <option value="PENGDEL">Pengumuman - Hapus</option>  <option value="PENGADD">Pengumuman - Tambah</option>  <option value="SKSKURANG">Pengurangan SKS</option>  <option value="KPDELETEPENILAIAN">Penilaian - Hapus Penilaian KP</option>  <option value="KPADDPENILAIAN">Penilaian - Tambah Penilaian KP</option>  <option value="KPUPDATEPENILAIAN">Penilaian - Update Penilaian KP</option>  <option value="KPDELJADWAL">Penjadwalan - Hapus Penjadwalan KP</option>  <option value="KPADDJADWAL">Penjadwalan - Tambah Penjadwalan KP</option>  <option value="KPUPDATEJADWAL">Penjadwalan - Update Penjadwalan KP</option>  <option value="CHSOFF365">Perubahan Publikasi dan Unpublikasi Fitur Office 365</option>  <option value="CHSOFIEMAIL">Perubahan Publikasi dan Unpublikasi Fitur Official Email</option>  <option value="CHSOFIWIFI">Perubahan Publikasi dan Unpublikasi Fitur Official Wifi</option>  <option value="CHSONLBOOKS">Perubahan Publikasi dan Unpublikasi Fitur Online Books</option>  <option value="PRE008">Presensi - Generate Pertemuan Massal</option>  <option value="PRE003">Presensi - Hapus Jadwal Harian</option>  <option value="PRE005">Presensi - Mulai Kuliah</option>  <option value="PRE007">Presensi - Selesai Kuliah</option>  <option value="PRE004">Presensi - Simpan BAP/Realisasi</option>  <option value="PRE001">Presensi - Tambah Jadwal Harian</option>  <option value="PRE002">Presensi - Update Jadwal Harian</option>  <option value="PRE006">Presensi - Update Presensi Mahasiswa</option>  <option value="PREHAPUS">Presensi Dosen - Hapus </option>  <option value="PREUPDATE">Presensi Dosen - Update   </option>  <option value="PREVALIDASI">Presensi Dosen - Validasi </option>  <option value="PRETAMBAH">Presensi Dosen- Tambah  </option>  <option value="PREMHAPUS">Presensi Mahasiswa - Hapus </option>  <option value="PREMKELUARKAN">Presensi Mahasiswa - Jadikan Keluar Kuliah</option>  <option value="PREMKELUAR">Presensi Mahasiswa - Keluar</option>  <option value="PREMMASUK">Presensi Mahasiswa - Masuk</option>  <option value="PREMTAMBAH">Presensi Mahasiswa - Tambah  </option>  <option value="PREMUPDATE">Presensi Mahasiswa - Update   </option>  <option value="8">Prodi - Hapus Prodi</option>  <option value="6">Prodi - Tambah Prodi</option>  <option value="7">Prodi - Update Prodi</option>  <option value="PUBJADWALKSNDSN">Publikasi Jadwal Kuesioner Dosen - Publish</option>  <option value="UNPUBJADWALKSNDSN">Publikasi Jadwal Kuesioner Dosen - UNPublish</option>  <option value="PUBJADWALKLHDSN">Publikasi Jadwal Kuliah Dosen - Publish</option>  <option value="UNPUBJADWALKLHDSN">Publikasi Jadwal Kuliah Dosen - UNPublish</option>  <option value="PUBJADWALKLHMHS">Publikasi Jadwal Kuliah Mahasiswa - Publish</option>  <option value="UNPUBJADWALKLHMHS">Publikasi Jadwal Kuliah Mahasiswa - UNPublish</option>  <option value="PUBJADWALUJNDSN">Publikasi Jadwal Ujian Dosen - Publish</option>  <option value="UNPUBJADWALUJNDSN">Publikasi Jadwal Ujian Dosen - UNPublish</option>  <option value="PUBJADWALUJNMHS">Publikasi Jadwal Ujian Mahasiswa - Publish</option>  <option value="UNPUBJADWALUJNMHS">Publikasi Jadwal Ujian Mahasiswa - UNPublish</option>  <option value="RENCANAUPDATE">Rencana Evaluasi - Update</option>  <option value="RESETPASSWORDA">Reset Password - Asisten</option>  <option value="RESETPASSWORDC">Reset Password - Calon Mahasiswa</option>  <option value="RESETPASSWORDD">Reset Password - Dosen</option>  <option value="RESETPASSWORDM">Reset Password - Mahasiswa</option>  <option value="RESETPASSWORDO">Reset Password - Ortu</option>  <option value="PUSHNOTIF">Respon Push Notifikasi</option>  <option value="RPGUPDATE">Riwayat Pendidikan Pegawai - Edit</option>  <option value="RPGDEL">Riwayat Pendidikan Pegawai - Hapus</option>  <option value="RPGADD">Riwayat Pendidikan Pegawai - Tambah</option>  <option value="SKL_VARIABLE_GET">SKL - Baca variabel pada service SKL</option>  <option value="SKL_TEMPLATE_DELETE">SKL - Hapus template Surat Keterangan Lulus</option>  <option value="SKL_VARIABLE_DELETE">SKL - Hapus variabel pada service SKL</option>  <option value="SKL_IMPORT">SKL - Impor nomor Surat Keterangan Lulus</option>  <option value="SKL_TEMPLATE_UPSERT">SKL - Insert (jika belum ada) dan update (jika sudah ada) template SKL</option>  <option value="SKL_PRINT">SKL - Print Surat Keterangan Lulus</option>  <option value="SKL_VARIABLE_INSERT">SKL - Tambah variabel pada service SKL</option>  <option value="SYARAT_SKL_UPDATE">SKL - Update data syarat cetak Surat Keterangan Lulus</option>  <option value="SKL_NOMOR_UPDATE">SKL - Update nomor Surat Keterangan Lulus</option>  <option value="SKPIICPHAPUS">SKPI - Hapus Indikator Capaian Pembelajaran</option>  <option value="SKPIVHAPUS">SKPI - Hapus Informasi Tambahan Mahasiswa</option>  <option value="KSKPIICPHAPUS">SKPI - Hapus Kategori Indikator Capaian Pembelajaran</option>  <option value="SKPIICPTAMBAH">SKPI - Tambah Indikator Capaian Pembelajaran </option>  <option value="SKPIVTAMBAH">SKPI - Tambah Informasi Tambahan Mahasiswa</option>  <option value="KSKPIICPTAMBAH">SKPI - Tambah Kategori Indikator Capaian Pembelajaran </option>  <option value="SKPICMUPDATE">SKPI - Update Capaian Pembelajaran Mahasiswa</option>  <option value="SKPIICPUPDATE">SKPI - Update Indikator Capaian Pembelajaran</option>  <option value="SKPIVUPDATE">SKPI - Update Informasi Tambahan Mahasiswa</option>  <option value="KSKPIICPUPDATE">SKPI - Update Kategori Indikator Capaian Pembelajaran</option>  <option value="SKPINUPDATE">SKPI - Update Nomer SKPI Mahasiswa</option>  <option value="SKPIPRODIUPDATE">SKPI - Update SKPI Prodi </option>  <option value="SKPIVOPRUPDATE">SKPI - Validasi Informasi Tambahan Mahasiswa</option>  <option value="SMSINFOHAPUS">SMS -  Hapus Info </option>  <option value="SMSTES">SMS -  Kirim SMS Tes </option>  <option value="SMSDOSEN">SMS -  Kirim ke Dosen </option>  <option value="SMSMHS">SMS -  Kirim ke Mahasiswa</option>  <option value="SMSKONFIG">SMS -  Simpan Konfigurasi SMS Gateway </option>  <option value="SMSINFOTAMBAH">SMS -  Tambah Info </option>  <option value="SMSINFOUPDATE">SMS -  Update Info </option>  <option value="SUBCPMKDEL">SUBCPMK - Hapus</option>  <option value="SUBCPMKADD">SUBCPMK - Tambah</option>  <option value="SUBCPMKUPDATE">SUBCPMK - Update</option>  <option value="GRAD_REQ_DELETE">SYARAT WISUDA - Hapus syarat pendaftaran wisuda</option>  <option value="GRAD_REQ_INSERT">SYARAT WISUDA - Tambah syarat pendaftaran wisuda</option>  <option value="GRAD_REQ_UPDATE">SYARAT WISUDA - Update syarat pendaftaran wisuda</option>  <option value="HAEVENT">Seminar/Sertifikasi - Hapus Data Kegiatan</option>  <option value="HAEVENTPESERTA">Seminar/Sertifikasi - Hapus Data Peserta</option>  <option value="TAEVENT">Seminar/Sertifikasi - Tambah Data Kegiatan</option>  <option value="TAEVENTPESERTA">Seminar/Sertifikasi - Tambah Data Peserta</option>  <option value="UDEVENT">Seminar/Sertifikasi - Ubah Data Kegiatan</option>  <option value="UDEVENTPESERTA">Seminar/Sertifikasi - Ubah Data Peserta</option>  <option value="DSTATUSYDS">Status Yudisium Semester - Hapus</option>  <option value="TSTATUSYDS">Status Yudisium Semester - Tambah</option>  <option value="USTATUSYDS">Status Yudisium Semester - Ubah</option>  <option value="KPDELETESYARAT">Syarat KP - Hapus Syarat KP</option>  <option value="KPADDSYARAT">Syarat KP - Tambah Syarat KP</option>  <option value="KPUPDATESYARAT">Syarat KP - Update Syarat KP</option>  <option value="TM_DELETE">TAGIHAN MAHASISWA - Hapus data</option>  <option value="TM_INSERT">TAGIHAN MAHASISWA - Tambah data</option>  <option value="TM_UPDATE">TAGIHAN MAHASISWA - Update data</option>  <option value="TRACER_RESPONSE_DL">TRACER STUDY - Download response</option>  <option value="TRACER_BIO_DELETE">TRACER STUDY - Hapus komponen biodata</option>  <option value="TRACER_FORM_DELETE">TRACER STUDY - Hapus kuesioner</option>  <option value="TRACER_QST_DELETE">TRACER STUDY - Hapus pertanyaan</option>  <option value="TRACER_BIO_UPSERT">TRACER STUDY - Tambah atau update komponen biodata</option>  <option value="TRACER_FORM_UPSERT">TRACER STUDY - Tambah atau update kuesioner</option>  <option value="TRACER_QST_UPSERT">TRACER STUDY - Tambah atau update pertanyaan</option>  <option value="TRACER_RESPONSE">TRACER STUDY - Tambah response</option>  <option value="TRACER_BIO_UPDATE">TRACER STUDY - Update komponen biodata</option>  <option value="TEMPLATEQR_REMOVE">Template QR Code - Hapus Template</option>  <option value="TEMPLATEQR_ADD">Template QR Code - Tambah Template</option>  <option value="TEMPLATEQR_EDIT">Template QR Code - Ubah Template</option>  <option value="TRASPEKHAPUS">Tracer Studi -  Hapus Aspek </option>  <option value="TRWAKTUHAPUS">Tracer Studi -  Hapus Periode </option>  <option value="TRSOALHAPUS">Tracer Studi -  Hapus Soal </option>  <option value="TRASPEKTAMBAH">Tracer Studi -  Tambah Aspek </option>  <option value="TRWAKTUTAMBAH">Tracer Studi -  Tambah Periode </option>  <option value="TRSOALTAMBAH">Tracer Studi -  Tambah Soal </option>  <option value="TRASPEKUPDATE">Tracer Studi -  Update Aspek </option>  <option value="TRBIODATA">Tracer Studi -  Update Biodata </option>  <option value="TRJAWAB">Tracer Studi -  Update Jawaban </option>  <option value="TRWAKTUUPDATE">Tracer Studi -  Update Periode </option>  <option value="TRSOALUPDATE">Tracer Studi -  Update Soal </option>  <option value="TAWAKTUTAHAPUS">Tugas Akhir - Hapus Waktu Pengajuan TA</option>  <option value="TAWAKTUSEMHAPUS">Tugas Akhir - Hapus Waktu Seminar TA</option>  <option value="TAWAKTUSIDHAPUS">Tugas Akhir - Hapus Waktu Sidang TA</option>  <option value="TAWISMHAPUS">Tugas Akhir - Mahasiswa Hapus  Wisuda</option>  <option value="TABIMPROMHAPUS">Tugas Akhir - Mahasiswa Hapus Bimbingan Proposal TA</option>  <option value="TABIMMHAPUS">Tugas Akhir - Mahasiswa Hapus Bimbingan TA</option>  <option value="TAPROMHAPUS">Tugas Akhir - Mahasiswa Hapus Proposal TA</option>  <option value="TASEMMHAPUS">Tugas Akhir - Mahasiswa Hapus Seminar TA</option>  <option value="TASIDMHAPUS">Tugas Akhir - Mahasiswa Hapus Sidang TA</option>  <option value="TAUSULANMHAPUS">Tugas Akhir - Mahasiswa Hapus Usulan TA</option>  <option value="TAWISMTAMBAH">Tugas Akhir - Mahasiswa Tambah  Wisuda</option>  <option value="TABIMMTAMBAH">Tugas Akhir - Mahasiswa Tambah Bimbingan TA</option>  <option value="TASEMMTAMBAH">Tugas Akhir - Mahasiswa Tambah Seminar TA</option>  <option value="TASIDMTAMBAH">Tugas Akhir - Mahasiswa Tambah Sidang TA</option>  <option value="TAUSULANMTAMBAH">Tugas Akhir - Mahasiswa Tambah Usulan TA</option>  <option value="TABIMMUPDATE">Tugas Akhir - Mahasiswa Update Bimbingan TA</option>  <option value="TAPROMUPDATE">Tugas Akhir - Mahasiswa Update Proposal TA</option>  <option value="TASEMMUPDATE">Tugas Akhir - Mahasiswa Update Seminar TA</option>  <option value="TASIDMUPDATE">Tugas Akhir - Mahasiswa Update Sidang TA</option>  <option value="TAUSULANMUPDATE">Tugas Akhir - Mahasiswa Update Usulan TA</option>  <option value="TAWISMUPDATE">Tugas Akhir - Mahasiswa Update Wisuda</option>  <option value="TASEMOHAPUS">Tugas Akhir - Operator Hapus Seminar TA</option>  <option value="TASIDOHAPUS">Tugas Akhir - Operator Hapus Sidang TA</option>  <option value="TAUSULANOHAPUS">Tugas Akhir - Operator Hapus Usulan TA</option>  <option value="TAWISOHAPUS">Tugas Akhir - Operator Hapus Wisuda</option>  <option value="TAWISOUPDATE">Tugas Akhir - Operator Update  Wisuda</option>  <option value="TABIMOUPDATE">Tugas Akhir - Operator Update Bimbingan TA</option>  <option value="TAPROOUPDATE">Tugas Akhir - Operator Update Proposal TA</option>  <option value="TASEMOUPDATE">Tugas Akhir - Operator Update Seminar TA</option>  <option value="TASIDOUPDATE">Tugas Akhir - Operator Update Sidang TA</option>  <option value="TAUSULANOUPDATE">Tugas Akhir - Operator Update Usulan TA</option>  <option value="TASYARATSIDANG">Tugas Akhir - UPDATE Syarat Sidang</option>  <option value="TASYARATTA">Tugas Akhir - UPDATE Syarat TA</option>  <option value="TAWAKTUTAUPDATE">Tugas Akhir - Update Waktu Pengajuan TA</option>  <option value="TAWAKTUSEMUPDATE">Tugas Akhir - Update Waktu Seminar TA</option>  <option value="TAWAKTUSIDUPDATE">Tugas Akhir - Update Waktu Sidang TA</option>  <option value="UPDATEINSTANSI">Update Instansi</option>  <option value="UPDATEOBE">Update Status OBE Makul</option>  <option value="YYUPDATE">Yayasan - Update Yayasan</option>  <option value="UPSTYUD">Yudisium Semester Mahasiswa- Update</option>  </select><button type="button" class="btn dropdown-toggle btn-default bs-placeholder" data-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" tabindex="0" title="Semua"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Semua</div></div> </div><span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open"><div class="bs-searchbox"><input type="search" id="boostrap-select-search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div><div class="inner open" role="listbox" id="bs-select-2" tabindex="-1"><ul class="dropdown-menu inner " role="presentation"></ul></div></div></div> 
+                </td>
+            </tr>
+            
+            <!-- Input Periode Tanggal -->
+            <tr>
+                <td>Periode</td>
+                <td>
+                    <input readonly="" type="text" class="datepicker hasDatepicker" id="tglbayar" name="tglbayar_tampil" value="14-07-2026"><input type="hidden" name="tglbayar[tgl]" value="14" class="masukan"><input type="hidden" name="tglbayar[bln]" value="7" class="masukan"><input type="hidden" name="tglbayar[thn]" value="2026" class="masukan">
+                    s.d 
+                    <input readonly="" type="text" class="datepicker hasDatepicker" id="tglbayar2" name="tglbayar2_tampil" value="14-07-2026"><input type="hidden" name="tglbayar2[tgl]" value="14" class="masukan"><input type="hidden" name="tglbayar2[bln]" value="7" class="masukan"><input type="hidden" name="tglbayar2[thn]" value="2026" class="masukan">
+                </td>
+            </tr>
+            
+            <!-- Input User (Optional) -->
+            <tr class="judulform">
+                <td>User</td>
+                <td>
+                    
+		<input type="text" name="userlog" value="" class="masukan" size="20" )="" .="" "="">
+	
+                </td>
+            </tr>
+            
+            <!-- Tombol Submit -->
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Tampilkan" class="masukan">
+                </td>
+            </tr>
+        </tbody></table>
+    </form>
+    
+    <script>
+        // Set focus ke field id saat halaman dimuat
+        form.id.focus();
+    </script>
+    
+        </div><!--contentwrapper-->
+
+    </div><!-- centercontent -->
+
+
+</div> <!--end bodywrapper-->
+
+
+
+<!--</body></html>-->
+      <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="../realtime-notification.js"></script>
+    
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body>

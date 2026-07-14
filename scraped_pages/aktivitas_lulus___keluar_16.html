@@ -1,0 +1,1616 @@
+<body class="withvernav" style=""><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 20px; padding-right: 0px; display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+
+<div id="container" style="" class="ui-notify"></div>
+
+<div class="wrapper" style="padding-bottom: 80px"> <!-- bodywrapper-->
+    <div class="topheader">
+
+             <div class="boxTitle"> <!-- Program name -->
+                                <img height="45px" src="https://sgp1.vultrobjects.com/043355/sikad/gambar/Logo.iVQEhuhEPq.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=YGIP9T9E1N7J9K1U7NIC%2F20260714%2Fsgp1%2Fs3%2Faws4_request&amp;X-Amz-Date=20260714T083820Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=ceef01c6e7fdb73974bae939c9bbcfc80d769073608010162ad36edb816db0eb">
+            <div class="infoWrap">
+              <h3 class="logo">SIAKADMU 4.0</h3>
+              <span class="slogan">UMMADA CIREBON</span>
+              <br clear="all">
+            </div>
+        </div>
+
+    
+        <div class="left">
+            <div class="search">
+                <form action="../cari/index.php" method="post">
+                                        <input type="text" name="katakunci" id="katakunci" onfocus="if(this.value == 'Pencarian menu..') { this.value = ''; }" placeholder="Pencarian Menu.." value="">
+                    <button class="submitbutton" id="menusearch"></button>
+                </form>
+            </div><!--search-->
+
+            <br clear="all">
+
+        </div><!--left-->
+
+        <div class="right">
+        
+            
+            <!-- NOTIFICATION STYLE-->
+                
+            <link rel="stylesheet" href="../themes/icons/addsicons-1/style.css">
+            
+            <style>
+                ul.dropdown {
+                    list-style-type: none;
+                    /* background-color: white; */
+                }
+                
+                .area-dropdown {
+                    /* width: 100px; */
+                    /* height: 100px; */
+                    left: -50% !important;
+                    background-color: white;
+                    border-radius: 11px;
+                }
+                
+                .tdropdown {
+                    background: white;
+                    border-collapse: collapse;
+                    border: none;
+                }
+                
+                .tdropdown tr td {
+                    background-color: white !important;
+                }
+                
+                .li-dropdown {
+                    vertical-align: middle;
+                    width: 165px;
+                }
+                
+                .icon-sub-menu {
+                    width: 40px;
+                }
+                
+                .span-icon {
+                    color: black !important;
+                    display: inherit !important;
+                    background: none !important;
+                }
+                
+                .menu-name {
+                    color: black !important;
+                }
+                
+                .main-menu-icon {
+                    font-size: 20pt;
+                }
+                
+                .menu-name {
+                    display: inline-block;
+                    width: 85px;
+                    margin-left: 10px;
+                }
+                
+                .li-dropdown {
+                    /* background-color: white; */
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-left: 10px;
+                    padding-right: 3px;
+                }
+                
+                .icon-enter {
+                    font-size: 18pt;
+                    /* padding-right: 3px; */
+                }
+                
+            </style>
+
+                        
+                <div class="notification">
+                      
+            <a class="count dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="../">
+                        <img src="../themes/icons/uiux/more-ico.svg" width="27px">
+                    </a>
+                    <div class="dropdown-menu area-dropdown" aria-labelledby="dropdownMenuButton">
+                        <ul class="dropdown"><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=de"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/dashboard-ico.svg"></span>&nbsp;<span class="menu-name">Dashboard</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><li class="li-dropdown"><a style="display: flex;" target="_blank" class="dropdown-item" href="../sso/loginsso.php?jenis=lms"><span class="main-menu-icon span-icon"><img src="../themes/icons/uiux/lms-ico.png"></span>&nbsp;<span class="menu-name">LMS</span>&nbsp;<span class="span-icon"><img src="../themes/icons/uiux/login-ico.svg"></span></a></li><ul>
+            </ul></ul></div>                     <a class="count" href="../vn-message.php">
+                        <img src="../themes/sikad/images/default/mail.png">
+                                            </a>
+                </div> 
+
+                            <div class="userinfo">
+                 <img src="../themes/images/default-avatar.png" height="20" alt="">
+                <span>Deffan Febrian</span>
+                <span class="arrow" style="padding:0px;"><img src="../themes/sikad/images/sort_desc.png"></span>
+            </div><!--userinfo-->
+                        <div class="userinfodrop">
+                <h4>Deffan Febrian</h4>
+                <div class="avatar">
+                    <a href="../pegawai/index.php?pilihan=tambah&amp;aksi=updateuser&amp;iduser=DEF"><img src="../themes/images/default-avatar.png" height="90" width="90"></a>                </div><!--avatar-->
+                <div class="userdata">
+
+                    <ul>
+                        <li><a href="../password/index.php?pilihan=semester">Sesi Semester <span class="label label-warning" style="font-size: 11px;">
+                           (2025/2026 Genap)</span></a></li>
+                        <li><a href="../password/index.php?pilihan=setting"><i class="ico-cog3"></i> Preference</a></li>
+                        <li><a href="../password/index.php?pilihan=update"><i class="ico-key4"></i> Ganti Password</a></li>                                                <li>Jumlah Login Mahasiswa = 191</li>
+                        <li>Jumlah Login Dosen = 36</li>
+                                                <li><a id="logout" href="index.php?aksi=logout"><i class="ico-signout"></i> Sign Out</a></li>
+                                            </ul>
+                </div><!--userdata-->
+            </div><!--userinfodrop-->
+        </div><!--right-->
+    </div><!--topheader-->
+
+
+
+    <!-- begin megamenu -->
+    <div id="nav-anchor"></div>
+     <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="contextMenu" class="collapse navbar-collapse js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-library"></i> Akademik<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Master Akademik </h4></li>
+                                                        <li><a href="../fakultas/index.php"> Badan Hukum/PT </a></li>
+                                                        <li><a href="../dosen/index.php"> Dosen </a></li>
+                                                        <li><a href="../asistenlab/index.php"> Asisten Lab </a></li>
+                                                        <li><a href="../pegawai2/index.php"> Pegawai </a></li>
+                                                        <li><a href="../mahasiswa/index.php"> Mahasiswa </a></li>
+                                                        <li><a href="../alumni/index.php"> Alumni </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Aktivitas Akademik </h4></li>
+                                                        <li><a href="../makul/index.php?pilihan=kurikulumbaru">Kurikulum/KRS </a></li>
+                                                        <li><a href="../nilai/index.php"> Nilai Kuliah  </a></li>
+                                                        <li><a href="../mahasiswaaktivitas/index.php"> Aktivitas Mahasiswa  </a></li>
+                                                        <li><a href="../aktivitaskelulusanmahasiswa/index.php"> Aktivitas Lulus / Keluar  </a></li>
+                                                        <li><a href="../surattugasmengajar/index.php"> Surat Tugas Mengajar  </a></li>
+                                                        <li><a href="../presensi/index.php"> Presensi Kuliah </a></li>
+                                                        <li><a href="../jadwal/index.php"> Jadwal Kuliah </a></li>
+                                                        <li><a href="../beasiswa/index.php"> Beasiswa </a></li>
+                                                        <li><a href="../pembuatnaskah/index.php">Pembuat Naskah </a></li>
+                                                        <li><a href="../pesertarapat/index.php">Peserta Rapat Koordinator MK </a></li>
+                                                        <li><a href="../bpaonline/index.php">Bimbingan PA Online </a></li>
+                                                        <li><a href="../cutip/index.php">Pengajuan Cuti </a></li>
+                                                        <li><a href="../daftarkegiatan/index.php">Kegiatan Mahasiswa </a></li>
+                                                        <li><a href="../kartu/index.php"> Cetak Kartu </a></li>
+                                                        <li><a href="../skpi/index.php"> SKPI  </a></li>
+                                                        <li><a href="../nilaikonversi/index.php"> Konversi Nilai </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4> </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/seminar/data-seminar" target="_blank">Seminar <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/event/sertifikasi/data-sertifikasi" target="_blank">Sertifikasi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/lock-jurnal/data-jurnal" target="_blank">Lock Jurnal <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Wisuda dan Tugas Akhir </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skripsi/data-skripsi" target="_blank"> Skripsi/Tugas Akhir <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/wisuda/kegiatan-wisuda" target="_blank">Wisuda <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/jurusan/skl/cetak-skl" target="_blank">Surat Keterangan Lulus (SKL) <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-file8"></i> Kuesioner<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Kuesioner </h4></li>
+                                                        <li><a href="../kuesionerpp/index.php">Proses Pembelajaran </a></li>
+                                                        <li><a href="../kuesionerla/index.php">Layanan </a></li>
+                                                        <li><a href="../kuesionerks/index.php">Kritik dan Saran </a></li>
+                                                        <li><a href="../kuesionerdo/index.php">Dosen </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Tracer Studi </h4></li>
+                                                        <li><a href="../new_sikad.php?redirect=/kuesioner/tracer-study/form-kuesioner" target="_blank">Tracer Studi <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-users2"></i> PMB<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>PMB </h4></li>
+                                                        <li><a href="../new_pmb.php" target="_blank">Menuju Portal PMB <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-coins"></i> Keuangan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Keuangan </h4></li>
+                                                        <li><a href="../uangmhstm/index.php">TAGIHAN PER MAHASISWA </a></li>
+                                                        <li><a href="../uangmhsbayar/index.php">TAGIHAN dan PEMBAYARAN </a></li>
+                                                        <li><a href="../uangmhsbiaya/index.php">BIAYA DAN BEASISWA </a></li>
+                                                        <li><a href="../uangmhssetting/index.php">KONFIGURASI </a></li>
+                                                        <li><a href="../uangmhslr/index.php">LAPORAN dan REKONSILIASI </a></li>
+                                                        <li><a href="../dispensasi/index.php"> DISPENSASI  </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-bubbles"></i> Komunikasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Komunikasi </h4></li>
+                                                        <li><a href="../pengumuman/index.php">Pengumuman dan Info </a></li>
+                                                        <li><a href="../panduan/index.php">Upload Panduan/Materi </a></li>
+                                                        <li><a href="../pesan/index.php">Pesan-pesan </a></li>
+                                                        <li><a href="../new_sikad.php?redirect=/komunikasi/broadcast-email/data-pesan" target="_blank"> Broadcast Email <i class="fa fa-external-link" aria-hidden="true"></i> </a></li>
+                                                        <li><a href="../file/index.php">Tukar File </a></li>
+                                                        <li><a href="../infosms/index.php"> Info (SMS) </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-stack"></i> Laporan<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Dikti </h4></li>
+                                                        <li><a href="../lain/index.php"> Transaksi Lain </a></li>
+                                                        <li><a href="../pt/index.php"> Referensi </a></li>
+                                                        <li><a href="../feederexport/index.php"> Open Feeder </a></li>
+                                                        <li><a href="../feedervalidasi/index.php"> Validasi Data </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Laporan Akademik </h4></li>
+                                                        <li><a href="../laporannilai/index.php">Nilai </a></li>
+                                                        <li><a href="../laporanaktivitaskuliah/index.php">Aktivitas Perkuliahan </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Executive Summary </h4></li>
+                                                        <li><a href="../uangmhslaporan/index.php">Keuangan Mahasiswa </a></li>
+                                                        <li><a href="../executive/index.php">Borang Akreditasi Institusi   </a></li>
+                                                        <li><a href="../executive_ps/index.php">Borang Akreditasi Program Studi </a></li>
+                                                        <li><a href="../executive_lk/index.php">Laporan Kuesioner </a></li>
+                                                        <li><a href="../executive_lp/index.php">Laporan Perkuliahan (KRS, Presensi, BAP) </a></li>
+                                                        <li><a href="../executive_ln/index.php">Laporan Nilai </a></li>
+                                                        <li><a href="../executive_ldm/index.php">Laporan Dosen dan Mahasiswa </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-cog2"></i> Sistem<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Sistem </h4></li>
+                                                        <li><a href="../password/index.php">Password </a></li>
+                                                        <li><a href="../pegawai/index.php">Data Operator </a></li>
+                                                        <li><a href="../sistem/index.php">Data Info Sistem </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown mega-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon ico-equalizer2"></i> Konfigurasi<span class="caret"></span></a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                        
+                                        <li class="col-sm-3">
+                                            <ul>
+                                                <li class="dropdown-header"><h4>Konfigurasi </h4></li>
+                                                        <li><a href="../kalender/index.php">Kalender Akademik </a></li>
+                                                        <li><a href="../kegiatanakademik/index.php">Kegiatan Akademik </a></li>
+                                                        <li><a href="../jadwalakademik/index.php">Jadwal Sistem Akademik </a></li>
+                                                        <li><a href="../konfignilai/index.php">Nilai </a></li>
+                                                        <li><a href="../sesikuliah/index.php">Sesi Kuliah </a></li>
+                                                        <li><a href="../syaratkrs/index.php">Hak SKS Maksimum </a></li>
+                                                        <li><a href="../skslulus/index.php">SKS Kelulusan </a></li>
+                                                        <li><a href="../konfiglain/index.php">Konfigurasi Lain </a></li>
+                                                        <li><a href="../publikasifitur/index.php">Publikasi Fitur </a></li>
+                                                <li class="divider"></li>
+                                            </ul>
+                                        </li>
+                            </ul>
+                        </li>
+                                    </ul>
+        </div><!-- /.nav-collapse -->
+      </nav>
+    <!-- end megamenu -->
+
+        <div id="aside-anchor"></div>
+    
+
+    <div class=" tables">
+
+        <div id="contentwrapper" class="contentwrapper">
+
+            <table class="anti-table table-tab"> <tbody><tr><td align="center" class="table-active"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=dataaktivitas"><b> Data Aktivitas </b> </a></td><td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=impordata"> Impor Data  </a></td><td align="center"> <a href="index.php?pilihan=&amp;aksi=&amp;tab=updatemassal"> Update Massal  </a></td></tr></tbody></table><span class="line-tab"></span>
+        <div class="title-menu">
+          <div class="note note-primary"><i class="icon ico-list-alt"></i> DATA AKTIVITAS</div>
+        </div>
+
+    
+<style>
+    .ui-datepicker {
+        z-index: 1600 !important; /* has to be larger than 1050 */
+    }
+</style>
+<form name="form" action="index.php" method="post" enctype="MULTIPART/FORM-DATA">
+<input type="hidden" name="pilihan" value="">
+<input type="hidden" name="aksi" value="">
+<input type="hidden" name="tab" value="dataaktivitas">
+<input type="hidden" name="aksi2" value="">
+		<input type="hidden" name="sessid" value="2ca5d2725c84958588c3a13bbb7fb1e1">
+	 
+		<input type="hidden" name="vartoken" value="token20efb">
+	<table class="table-borderless table table-bordered table-striped">
+    <tbody>
+    <tr>
+        <td width="20%" nowrap=""> Periode
+            <select name="tahun" class="masukan">
+
+						 
+							<option value="2036">2035/2036 </option>
+							
+							<option value="2035">2034/2035 </option>
+							
+							<option value="2034">2033/2034 </option>
+							
+							<option value="2033">2032/2033 </option>
+							
+							<option value="2032">2031/2032 </option>
+							
+							<option value="2031">2030/2031 </option>
+							
+							<option value="2030">2029/2030 </option>
+							
+							<option value="2029">2028/2029 </option>
+							
+							<option value="2028">2027/2028 </option>
+							
+							<option value="2027">2026/2027 </option>
+							
+							<option value="2026" selected="">2025/2026 </option>
+							
+							<option value="2025">2024/2025 </option>
+							
+							<option value="2024">2023/2024 </option>
+							
+							<option value="2023">2022/2023 </option>
+							
+							<option value="2022">2021/2022 </option>
+							
+							<option value="2021">2020/2021 </option>
+							
+							<option value="2020">2019/2020 </option>
+							
+							<option value="2019">2018/2019 </option>
+							
+							<option value="2018">2017/2018 </option>
+							
+							<option value="2017">2016/2017 </option>
+							
+							<option value="2016">2015/2016 </option>
+							
+							<option value="2015">2014/2015 </option>
+							
+							<option value="2014">2013/2014 </option>
+							
+							<option value="2013">2012/2013 </option>
+							
+							<option value="2012">2011/2012 </option>
+							
+							<option value="2011">2010/2011 </option>
+							
+							<option value="2010">2009/2010 </option>
+							
+							<option value="2009">2008/2009 </option>
+							
+							<option value="2008">2007/2008 </option>
+							
+							<option value="2007">2006/2007 </option>
+							
+							<option value="2006">2005/2006 </option>
+							
+							<option value="2005">2004/2005 </option>
+							
+							<option value="2004">2003/2004 </option>
+							
+							<option value="2003">2002/2003 </option>
+							
+							<option value="2002">2001/2002 </option>
+							
+							<option value="2001">2000/2001 </option>
+							
+							<option value="2000">1999/2000 </option>
+							
+							<option value="1999">1998/1999 </option>
+							
+							<option value="1998">1997/1998 </option>
+							
+							<option value="1997">1996/1997 </option>
+							
+							<option value="1996">1995/1996 </option>
+							
+							<option value="1995">1994/1995 </option>
+							
+							<option value="1994">1993/1994 </option>
+							
+							<option value="1993">1992/1993 </option>
+							
+							<option value="1992">1991/1992 </option>
+							
+							<option value="1991">1990/1991 </option>
+							
+							<option value="1990">1989/1990 </option>
+							
+							<option value="1989">1988/1989 </option>
+							
+							<option value="1988">1987/1988 </option>
+							
+							<option value="1987">1986/1987 </option>
+							
+							<option value="1986">1985/1986 </option>
+							
+							<option value="1985">1984/1985 </option>
+							
+							<option value="1984">1983/1984 </option>
+							
+							<option value="1983">1982/1983 </option>
+							
+							<option value="1982">1981/1982 </option>
+							
+							<option value="1981">1980/1981 </option>
+							
+							<option value="1980">1979/1980 </option>
+							
+						</select>
+            <select name="semester" class="masukan">
+            
+							<option value="1">Ganjil  </option>
+							
+							<option value="3">SP Ganjil  </option>
+							
+							<option value="2" selected="">Genap  </option>
+							
+							<option value="4">SP Genap  </option>
+							
+						</select>
+
+  </td>
+        <td width="20%" nowrap=""> Angkatan <select name="angkatan"> <option value="" selected="">Semua</option>  <option value="2026">2026</option>  <option value="2025">2025</option>  <option value="2024">2024</option>  <option value="2023">2023</option>  <option value="2022">2022</option>  <option value="2021">2021</option>  <option value="2020">2020</option>  <option value="2019">2019</option>  <option value="2018">2018</option>  <option value="2017">2017</option>  </select> </td>
+        <td width="20%" nowrap=""> Prodi <select name="idprodi"> <option value="" selected="">Semua</option>  <option value="13261">13261 - Administrasi Rumah Sakit ( S1 ) </option>  <option value="62201">62201 - Akuntansi ( S1 ) </option>  <option value="48401">48401 - Diploma Tiga Farmasi ( D3 ) </option>  <option value="11401">11401 - Fisioterapi ( D3 ) </option>  <option value="14201">14201 - Ilmu Keperawatan ( S1 ) </option>  <option value="15201">15201 - Kebidanan ( S1 ) </option>  <option value="15401">15401 - Kebidanan ( D3 ) </option>  <option value="14401">14401 - Keperawatan ( D3 ) </option>  <option value="13201">13201 - Kesehatan Masyarakat ( S1 ) </option>  <option value="61201">61201 - Manajemen ( S1 ) </option>  <option value="15903">15903 - Pendidikan Profesi Bidan ( Profesi ) </option>  <option value="14901">14901 - Profesi Ners ( Profesi ) </option>  <option value="11402">11402 - Radiodiagnostik Dan Radioterapi ( D3 ) </option>  <option value="48201">48201 - Sarjana Farmasi ( S1 ) </option>  </select> </td>
+        <td width="20%" nowrap=""> Status Keluar <select name="status"> <option value="" selected="">Semua</option>  <option value="L">Lulus</option>  <option value="M">Mutasi</option>  <option value="D">Dikeluarkan</option>  <option value="E">Mengundurkan Diri</option>  <option value="P">Putus Sekolah</option>  <option value="W">Wafat</option>  <option value="0">Selesai Pendidikan Non Gelar</option>  </select> </td>
+        <td width="20%" nowrap=""> NIM
+		<input type="text" name="id" value="" class="masukan" size="20" id="inputString" onkeyup="lookup(this.value,form.angkatan.value,form.idprodi.value);">
+	
+        <div class="suggestionsBox" id="suggestions" style="display: none;">
+            <div class="suggestionList" id="autoSuggestionsList">
+            </div>
+        </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">Data Perhalaman <select name="perhalaman"> <option value="20">20</option>  <option value="50">50</option>  <option value="100">100</option>  <option value="200">200</option>  <option value="500">500</option>  </select> </td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-bordered table-striped">
+<tbody><tr>
+    <td align="right">
+        <a id="button_download_excel" href="exportexcel.php" type="button" class="btn btn-success">Download Excel</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_add">Tambah Data</button>
+        <button type="submit" class="btn btn-danger" name="aksi" value="Hapus">Hapus</button>
+    </td>
+</tr>
+</tbody></table>
+
+    <table class="tabledata1 table table-bordered table-striped" !important;margin:auto="">
+        <thead>
+            <tr>
+                <td align="center">No</td>
+                <td>NIM</td>
+                <td>Nama</td>
+                <td>Prodi</td>
+                <td align="center">Angkatan</td>
+                <td>Status Keluar</td>
+                <td align="center">Tanggal Keluar</td>
+                <td>No. Ijazah</td>
+                <td>No. Transkrip</td>
+                <td align="center">PIN</td>
+                <td align="center">Aksi</td>
+                <td align="center"><b>Semua<br><input type="checkbox" name="pilihsemua" value="Pilih Semua" class="masukan" id="checkall">
+                    <script>
+                        $('#checkall:checkbox').change(function () {
+                            if($(this).attr("checked")) $('.checkbox').attr('checked','checked');
+                            else $('.checkbox').removeAttr('checked');
+                        });
+                    </script>
+                </b></td>
+            </tr>
+        </thead>
+        <tbody class="body1"><tr><td align="center" colspan="12">--- Data tidak ditemukan ---</td></tr></tbody>
+    </table>
+</form>
+
+<div class="modal fade" id="modal_add" role="dialog">
+    <div class="modal-dialog modal-lg" style="margin-top: 10%;">
+        <div class="modal-content">
+            <form method="post" action="" id="formmodal" role="form" data-toggle="validator">
+                <input type="hidden" name="pilihan" value="">
+                <input type="hidden" name="tab" value="dataaktivitas">
+                <input type="hidden" name="idupdate" value="">
+                <input type="hidden" name="aksi" value="">
+                <input type="hidden" name="aksi2" value="simpan">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Tambah Data Aktivitas</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody><tr>
+                            <td>NIM <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td colspan="3">
+		<input type="text" name="idm" value="" class="masukan " size="25" id="inputStringNim" onkeyup="lookup3(this.value,'','');" required="">
+	
+                                <div class="suggestionsBox" id="suggestions3" style="display: none;">
+                                    <div class="suggestionList" id="autoSuggestionsList3"></div>
+                                </div>
+                                <label for="inputStringNim" generated="true" class="error" style="display: block;"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%">Periode <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td width="30%">
+            <select name="tahun2" class="masukan">
+
+						 
+							<option value="2036">2035/2036 </option>
+							
+							<option value="2035">2034/2035 </option>
+							
+							<option value="2034">2033/2034 </option>
+							
+							<option value="2033">2032/2033 </option>
+							
+							<option value="2032">2031/2032 </option>
+							
+							<option value="2031">2030/2031 </option>
+							
+							<option value="2030">2029/2030 </option>
+							
+							<option value="2029">2028/2029 </option>
+							
+							<option value="2028">2027/2028 </option>
+							
+							<option value="2027">2026/2027 </option>
+							
+							<option value="2026" selected="">2025/2026 </option>
+							
+							<option value="2025">2024/2025 </option>
+							
+							<option value="2024">2023/2024 </option>
+							
+							<option value="2023">2022/2023 </option>
+							
+							<option value="2022">2021/2022 </option>
+							
+							<option value="2021">2020/2021 </option>
+							
+							<option value="2020">2019/2020 </option>
+							
+							<option value="2019">2018/2019 </option>
+							
+							<option value="2018">2017/2018 </option>
+							
+							<option value="2017">2016/2017 </option>
+							
+							<option value="2016">2015/2016 </option>
+							
+							<option value="2015">2014/2015 </option>
+							
+							<option value="2014">2013/2014 </option>
+							
+							<option value="2013">2012/2013 </option>
+							
+							<option value="2012">2011/2012 </option>
+							
+							<option value="2011">2010/2011 </option>
+							
+							<option value="2010">2009/2010 </option>
+							
+							<option value="2009">2008/2009 </option>
+							
+							<option value="2008">2007/2008 </option>
+							
+							<option value="2007">2006/2007 </option>
+							
+							<option value="2006">2005/2006 </option>
+							
+							<option value="2005">2004/2005 </option>
+							
+							<option value="2004">2003/2004 </option>
+							
+							<option value="2003">2002/2003 </option>
+							
+							<option value="2002">2001/2002 </option>
+							
+							<option value="2001">2000/2001 </option>
+							
+							<option value="2000">1999/2000 </option>
+							
+							<option value="1999">1998/1999 </option>
+							
+							<option value="1998">1997/1998 </option>
+							
+							<option value="1997">1996/1997 </option>
+							
+							<option value="1996">1995/1996 </option>
+							
+							<option value="1995">1994/1995 </option>
+							
+							<option value="1994">1993/1994 </option>
+							
+							<option value="1993">1992/1993 </option>
+							
+							<option value="1992">1991/1992 </option>
+							
+							<option value="1991">1990/1991 </option>
+							
+							<option value="1990">1989/1990 </option>
+							
+							<option value="1989">1988/1989 </option>
+							
+							<option value="1988">1987/1988 </option>
+							
+							<option value="1987">1986/1987 </option>
+							
+							<option value="1986">1985/1986 </option>
+							
+							<option value="1985">1984/1985 </option>
+							
+							<option value="1984">1983/1984 </option>
+							
+							<option value="1983">1982/1983 </option>
+							
+							<option value="1982">1981/1982 </option>
+							
+							<option value="1981">1980/1981 </option>
+							
+							<option value="1980">1979/1980 </option>
+							
+						</select>
+            <select name="semester2" class="masukan">
+            
+							<option value="1">Ganjil  </option>
+							
+							<option value="2" selected="">Genap  </option>
+							
+						</select>
+
+  </td>
+                            <td width="20%">Nilai Ujian Komprehensif</td>
+                            <td width="30%">
+		<input type="text" name="ujiankompre" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Keluar <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td> <select name="jeniskeluar"> <option value="L">Lulus</option>  <option value="M">Mutasi</option>  <option value="D">Dikeluarkan</option>  <option value="E">Mengundurkan Diri</option>  <option value="P">Putus Sekolah</option>  <option value="W">Wafat</option>  <option value="0">Selesai Pendidikan Non Gelar</option>  </select> </td>
+                            <td>Nilai Ujian Tertulis</td>
+                            <td>
+		<input type="text" name="ujiantertulisangka" value="" class="masukan" size="5" placeholder="Angka">
+	
+		<input type="text" name="ujiantertulissimbol" value="" class="masukan" size="12" placeholder="Simbol / Teks">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Keluar <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalkeluar" name="tanggalkeluar_tampil" value=""><input type="hidden" name="tanggalkeluar[tgl]" value="" id="tanggalkeluar"><input type="hidden" name="tanggalkeluar[bln]" value="" id="tanggalkeluar"><input type="hidden" name="tanggalkeluar[thn]" value="" id="tanggalkeluar"></td>
+                            <td>Nilai Ujian Praktek</td>
+                            <td>
+		<input type="text" name="ujianpraktekangka" value="" class="masukan" size="5" placeholder="Angka">
+	
+		<input type="text" name="ujianprakteksimbol" value="" class="masukan" size="12" placeholder="Simbol / Teks">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>SKS Lulus</td>
+                            <td>
+		<input type="text" name="skslulus" value="" id="inputStringSks" class="masukan" size="25" disabled="">
+	</td>
+                            <td>No. SK Yudisium</td>
+                            <td>
+		<input type="text" name="skyudisium" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>IPK</td>
+                            <td>
+		<input type="text" name="ipk" value="" id="inputStringIpk" class="masukan" size="25" disabled="">
+	</td>
+                            <td>Tanggal SK Yudisium</td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalskyudisium" name="tanggalskyudisium_tampil" value=""><input type="hidden" name="tanggalskyudisium[tgl]" value="" id="tanggalskyudisium"><input type="hidden" name="tanggalskyudisium[bln]" value="" id="tanggalskyudisium"><input type="hidden" name="tanggalskyudisium[thn]" value="" id="tanggalskyudisium"></td>
+                        </tr>
+                        <tr>
+                            <td>No. Ijazah</td>
+                            <td>
+		<input type="text" name="noijazahehehe" value="" id="noijazah" class="masukan" size="25">
+	</td>
+                            <td>No. SK Ijazah</td>
+                            <td>
+		<input type="text" name="noskijazah" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>No. Transkrip</td>
+                            <td>
+		<input type="text" name="notranskrip" value="" class="masukan" size="25">
+	</td>
+                            <td>Tanggal SK Ijazah</td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalskijazah" name="tanggalskijazah_tampil" value=""><input type="hidden" name="tanggalskijazah[tgl]" value=""><input type="hidden" name="tanggalskijazah[bln]" value=""><input type="hidden" name="tanggalskijazah[thn]" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>PIN</td>
+                            <td>
+		<input type="text" name="pin" value="" class="masukan" size="25">
+	</td>
+                            <td>Peminatan</td>
+                            <td> <select name="peminatan"> <option value="" selected="">-</option>  </select> </td>
+                        </tr>
+                        <tr>
+                            <td>URL PDDIKTI</td>
+                            <td>
+		<input type="text" name="urlpddikti" value="" class="masukan" size="40">
+	</td>
+                            <td>No. Blanko</td>
+                            <td>
+		<input type="text" name="noblanko" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>No. Induk Registrasi Lulus</td>
+                            <td>
+		<input type="text" name="noirl" value="" class="masukan" size="25">
+	</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                            <input type="hidden" name="jobexperience" value=""><input type="hidden" name="competentionscore" value="">
+                    </tbody></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" name="cancel">Batal</button>
+                    <button type="button" class="btn btn-primary" id="save-add">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="links"><p>
+                <a id="nopaged" href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;lihatsemua=1">Semua</a>
+               | <a id="paged" href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;hal=1">Per halaman</a> |  Halaman ke 1 dari 0,  total 0 data</p><ul class="pagination"><li class="first"><a href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;hal=1">«</a></li><li class="previous"><a href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;hal=0">‹</a></li><li class="next"><a href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;hal=2">›</a></li><li class="last"><a href="?pilihan=&amp;aksi=&amp;tab=dataaktivitas&amp;tahun=2026&amp;semester=2&amp;sort=&amp;hal=0">»</a></li></ul></div>
+<div class="modaledit">
+</div>
+<div class="modal fade" id="modal_edit" role="dialog">
+    <div class="modal-dialog modal-lg" style="margin-top: 10%;">
+        <div class="modal-content">
+            <form method="post" action="" id="formmodal_edit">
+                <input type="hidden" name="pilihan" value="">
+                <input type="hidden" name="tab" value="dataaktivitas">
+                <input type="hidden" name="idupdate" value="">
+                <input type="hidden" name="aksi" value="">
+                <input type="hidden" name="aksi2" value="simpan">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Update Data Aktivitas</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody><tr>
+                            <td>NIM <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td colspan="3">
+		<input type="text" name="idmedit" value="" class="masukan" size="25" id="idmedit" disabled="">
+	</td>
+                        </tr>
+                        <tr>
+                            <td width="20%">Periode <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td width="30%">
+            <select name="tahunedit" class="masukan">
+
+						 
+							<option value="2036">2035/2036 </option>
+							
+							<option value="2035">2034/2035 </option>
+							
+							<option value="2034">2033/2034 </option>
+							
+							<option value="2033">2032/2033 </option>
+							
+							<option value="2032">2031/2032 </option>
+							
+							<option value="2031">2030/2031 </option>
+							
+							<option value="2030">2029/2030 </option>
+							
+							<option value="2029">2028/2029 </option>
+							
+							<option value="2028">2027/2028 </option>
+							
+							<option value="2027">2026/2027 </option>
+							
+							<option value="2026" selected="">2025/2026 </option>
+							
+							<option value="2025">2024/2025 </option>
+							
+							<option value="2024">2023/2024 </option>
+							
+							<option value="2023">2022/2023 </option>
+							
+							<option value="2022">2021/2022 </option>
+							
+							<option value="2021">2020/2021 </option>
+							
+							<option value="2020">2019/2020 </option>
+							
+							<option value="2019">2018/2019 </option>
+							
+							<option value="2018">2017/2018 </option>
+							
+							<option value="2017">2016/2017 </option>
+							
+							<option value="2016">2015/2016 </option>
+							
+							<option value="2015">2014/2015 </option>
+							
+							<option value="2014">2013/2014 </option>
+							
+							<option value="2013">2012/2013 </option>
+							
+							<option value="2012">2011/2012 </option>
+							
+							<option value="2011">2010/2011 </option>
+							
+							<option value="2010">2009/2010 </option>
+							
+							<option value="2009">2008/2009 </option>
+							
+							<option value="2008">2007/2008 </option>
+							
+							<option value="2007">2006/2007 </option>
+							
+							<option value="2006">2005/2006 </option>
+							
+							<option value="2005">2004/2005 </option>
+							
+							<option value="2004">2003/2004 </option>
+							
+							<option value="2003">2002/2003 </option>
+							
+							<option value="2002">2001/2002 </option>
+							
+							<option value="2001">2000/2001 </option>
+							
+							<option value="2000">1999/2000 </option>
+							
+							<option value="1999">1998/1999 </option>
+							
+							<option value="1998">1997/1998 </option>
+							
+							<option value="1997">1996/1997 </option>
+							
+							<option value="1996">1995/1996 </option>
+							
+							<option value="1995">1994/1995 </option>
+							
+							<option value="1994">1993/1994 </option>
+							
+							<option value="1993">1992/1993 </option>
+							
+							<option value="1992">1991/1992 </option>
+							
+							<option value="1991">1990/1991 </option>
+							
+							<option value="1990">1989/1990 </option>
+							
+							<option value="1989">1988/1989 </option>
+							
+							<option value="1988">1987/1988 </option>
+							
+							<option value="1987">1986/1987 </option>
+							
+							<option value="1986">1985/1986 </option>
+							
+							<option value="1985">1984/1985 </option>
+							
+							<option value="1984">1983/1984 </option>
+							
+							<option value="1983">1982/1983 </option>
+							
+							<option value="1982">1981/1982 </option>
+							
+							<option value="1981">1980/1981 </option>
+							
+							<option value="1980">1979/1980 </option>
+							
+						</select>
+            <select name="semesteredit" class="masukan">
+            
+							<option value="1">Ganjil  </option>
+							
+							<option value="2" selected="">Genap  </option>
+							
+						</select>
+
+  </td>
+                            <td width="20%">Nilai Ujian Komprehensif</td>
+                            <td width="30%">
+		<input type="text" name="ujiankompreedit" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>Jenis Keluar <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td> <select name="jeniskeluaredit"> <option value="L">Lulus</option>  <option value="M">Mutasi</option>  <option value="D">Dikeluarkan</option>  <option value="E">Mengundurkan Diri</option>  <option value="P">Putus Sekolah</option>  <option value="W">Wafat</option>  <option value="0">Selesai Pendidikan Non Gelar</option>  </select> </td>
+                            <td>Nilai Ujian Tertulis</td>
+                            <td>
+		<input type="text" name="ujiantertulisangkaedit" value="" class="masukan" size="5" placeholder="Angka">
+	
+		<input type="text" name="ujiantertulissimboledit" value="" class="masukan" size="12" placeholder="Simbol / Teks">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Keluar <span style="color:#ec1e1e; font-size:14px; font-weight:bold;">*</span></td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalkeluaredit" name="tanggalkeluaredit_tampil" value=""><input type="hidden" name="tanggalkeluaredit[tgl]" value=""><input type="hidden" name="tanggalkeluaredit[bln]" value=""><input type="hidden" name="tanggalkeluaredit[thn]" value=""></td>
+                            <td>Nilai Ujian Praktek</td>
+                            <td>
+		<input type="text" name="ujianpraktekangkaedit" value="" class="masukan" size="5" placeholder="Angka">
+	
+		<input type="text" name="ujianprakteksimboledit" value="" class="masukan" size="12" placeholder="Simbol / Teks">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>SKS Lulus</td>
+                            <td>
+		<input type="text" name="skslulusedit" value="" id="inputStringSks" class="masukan" size="25" disabled="">
+	</td>
+                            <td>No. SK Yudisium</td>
+                            <td>
+		<input type="text" name="skyudisiumedit" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>IPK</td>
+                            <td>
+		<input type="text" name="ipkedit" value="" id="inputStringIpk" class="masukan" size="25" disabled="">
+	</td>
+                            <td>Tanggal SK Yudisium</td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalskyudisiumedit" name="tanggalskyudisiumedit_tampil" value=""><input type="hidden" name="tanggalskyudisiumedit[tgl]" value=""><input type="hidden" name="tanggalskyudisiumedit[bln]" value=""><input type="hidden" name="tanggalskyudisiumedit[thn]" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>No. Ijazah</td>
+                            <td>
+		<input type="text" name="noijazahedit" value="" id="noijazahedit" class="masukan" size="25">
+	</td>
+                            <td>No. SK Ijazah</td>
+                            <td>
+		<input type="text" name="noskijazahedit" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>No. Transkrip</td>
+                            <td>
+		<input type="text" name="notranskripedit" value="" class="masukan" size="25">
+	</td>
+                            <td>Tanggal SK Ijazah</td>
+                            <td><input readonly="" type="text" class="datepicker hasDatepicker" id="tanggalskijazahedit" name="tanggalskijazahedit_tampil" value=""><input type="hidden" name="tanggalskijazahedit[tgl]" value=""><input type="hidden" name="tanggalskijazahedit[bln]" value=""><input type="hidden" name="tanggalskijazahedit[thn]" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>PIN</td>
+                            <td>
+		<input type="text" name="pinedit" value="" class="masukan" size="25">
+	</td>
+                            <td>Peminatan</td>
+                            <td> <select name="peminatanedit"> <option value="" selected="">-</option>  </select> </td>
+                        </tr>
+                                <tr>
+                            <td>URL PDDIKTI</td>
+                            <td>
+		<input type="text" name="urlpddiktiedit" value="" class="masukan" size="40">
+	</td>
+                            <td>No. Blanko</td>
+                            <td>
+		<input type="text" name="noblankoedit" value="" class="masukan" size="25">
+	</td>
+                        </tr>
+                        <tr>
+                            <td>No. Induk Registrasi Lulus</td>
+                            <td>
+		<input type="text" name="noirledit" value="" class="masukan" size="25">
+	</td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                            <input type="hidden" name="jobexperienceedit" value=""><input type="hidden" name="competentionscoreedit" value="">
+                    </tbody></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" name="cancel">Batal</button>
+                    <button type="button" class="btn btn-primary" id="save-edit">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="loading" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    font-size:22px;
+    text-align:center;
+    padding-top:20%;
+    z-index:9999;
+">
+    Memproses, mohon tunggu...
+</div>
+<script>
+    $(document).ready(function () {
+    loadData();
+    // $('#formmodal').validator();
+    // $('#formmodal').validator();
+    $(document).on('click', '#save-add', function() {
+         $("#loading").show();
+        var tahun = $('[name=tahun2]').children("option:selected").val();
+        var semester = $('[name=semester2]').children("option:selected").val();
+        var idmahasiswa = $('[name=idm]').val();
+        var status = $('[name=jeniskeluar]').children("option:selected").val();
+        var tanggal = $('#tanggalkeluar').val();
+        if (tanggal) {
+            tanggal = tanggal.split('-');
+            tanggal = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[0];
+        }
+        var sks = $('[name=skslulus]').val();
+        var ipk = $('[name=ipk]').val();
+        var nomersk = $('[name=skyudisium]').val();
+        var tanggalsk = $('#tanggalskyudisium').val();
+        if (tanggalsk) {
+            tanggalsk = tanggalsk.split('-');
+            tanggalsk = tanggalsk[2] + '-' + tanggalsk[1] + '-' + tanggalsk[0];
+        }
+        var nomerijazah = $('[name=noijazahehehe]').val();
+        var simbol = $('[name=ujiankompre]').val();
+        var noblanko = $('[name=noblanko]').val();
+        var notranskrip = $('[name=notranskrip]').val();
+        var nilaiuaptulis = $('[name=ujiantertulisangka]').val();
+        var nilaiuappraktek = $('[name=ujianpraktekangka]').val();
+        var simboluaptulis = $('[name=ujiantertulissimbol]').val();
+        var simboluappraktek = $('[name=ujianprakteksimbol]').val();
+        var peminatan = $('[name=peminatan]').children("option:selected").val();
+        var updater = 'DEF';
+        var creator = 'DEF';
+        var nonirl = $('[name=noirl]').val();
+        var nopin = $('[name=pin]').val();
+        var urlpddikti = $('[name=urlpddikti]').val();
+        var noskrektor = $('[name=noskijazah]').val();
+        var jobexperience = $('[name=jobexperience]').val();
+        var competentionscore = $('[name=competentionscore]').val();
+        var tanggalskrektor = $('[name=tanggalskijazah_tampil]').val();
+        if (tanggalskrektor) {
+            tanggalskrektor = tanggalskrektor.split('-');
+            tanggalskrektor = tanggalskrektor[2] + '-' + tanggalskrektor[1] + '-' + tanggalskrektor[0];
+        }
+        if (idmahasiswa == "") {
+            $("#loading").hide();
+            $("label.error").append("<span class=\"error-id-mahasiswa\">Field ID Mahasiswa wajib diisi</span>");
+        } else if (tanggal == "") {
+            $("#loading").hide();
+            alert("Field Tanggal Keluar wajib diisi.");
+        } else if (status === "L" && (sks === 0 || ipk === 0 || sks === "" || ipk === "")) {
+            $("#loading").hide();
+            alert("Data gagal disimpan, mahasiswa tidak memiliki aktivitas kuliah.");
+        } else {
+            $.ajax({
+                url: "SaveAktivitasKelulusan.php",
+                method: "POST",
+                timeout: 10000, // 5 detik
+                data: {
+                    aksi: 'simpan',
+                    tahun: tahun,
+                    semester: semester,
+                    idmahasiswa: idmahasiswa,
+                    status: status,
+                    tanggal: tanggal,
+                    sks: sks,
+                    ipk: ipk,
+                    nomersk: nomersk,
+                    tanggalsk: tanggalsk,
+                    nomerijazah: nomerijazah,
+                    simbol: simbol,
+                    noblanko: noblanko,
+                    notranskrip: notranskrip,
+                    nilaiuaptulis: nilaiuaptulis,
+                    nilaiuappraktek: nilaiuappraktek,
+                    simboluaptulis: simboluaptulis,
+                    simboluappraktek: simboluappraktek,
+                    peminatan: peminatan,
+                    updater: updater,
+                    creator: creator,
+                    nonirl: nonirl,
+                    nopin: nopin,
+                    urlpddikti: urlpddikti,
+                    noskrektor: noskrektor,
+                    tanggalskrektor: tanggalskrektor,
+                    jobexperience: jobexperience,
+                    competentionscore: competentionscore
+                },
+                beforeSend: function () {
+                    $("#loading").show();
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert('Data kelulusan mahasiswa ' + idmahasiswa + ' berhasil disimpan');
+                        clearForm();
+                        loadData();
+                        $("#modal_add").modal('toggle');
+                    } else if (data == 2) {
+                        alert('Data kelulusan mahasiswa ' + idmahasiswa + ' sudah ada');
+                    } else if (data == 5) {
+                        alert('Data gagal disimpan, mahasiswa ' + idmahasiswa + ' masih memiliki pinjaman buku perpustakaan.');
+                    } else if (data == 3) {
+                        alert('Data gagal disimpan, mahasiswa ' + idmahasiswa + ' tidak memiliki aktivitas kuliah.');
+                    } else if (data == 8) {
+                        alert("Periode Tahun Ajaran Semester yang dipilih Sudah Ditutup. Silahkan hubungi administrator.");
+                    } else {
+                        alert('Data gagal disimpan');
+                    }
+                },
+                error: function (xhr, status) {
+                    if (status === "timeout") {
+                        alert("Koneksi timeout! Server terlalu lama merespons.");
+                    } else {
+                        alert("Terjadi kesalahan koneksi!");
+                    }
+                },
+                complete: function () {
+                    $("#loading").hide();
+                }
+            });
+        }
+
+        return false;
+    });
+
+    $(document).on('click', '#save-edit', function() {
+        var tahun = $('[name=tahunedit]').children("option:selected").val();
+        var semester = $('[name=semesteredit]').children("option:selected").val();
+        var idmahasiswa = $('[name=idmedit]').val();
+        var status = $('[name=jeniskeluaredit]').children("option:selected").val();
+        var tanggal = $('[name=tanggalkeluaredit_tampil]').val();
+        tanggal = tanggal.split("-");
+        tanggal = tanggal[2] + '-' + tanggal[1] + '-' + tanggal[0];
+        var sks = $('[name=skslulusedit]').val();
+        var ipk = $('[name=ipkedit]').val();
+        var nomersk = $('[name=skyudisiumedit]').val();
+        var tanggalsk = $('[name=tanggalskyudisiumedit_tampil]').val();
+        tanggalsk = tanggalsk.split("-");
+        tanggalsk = tanggalsk[2] + '-' + tanggalsk[1] + '-' + tanggalsk[0];
+        var nomerijazah = $('#noijazahedit').val();
+        var simbol = $('[name=ujiankompreedit]').val();
+        var noblanko = $('[name=noblankoedit]').val();
+        var notranskrip = $('[name=notranskripedit]').val();
+        var nilaiuaptulis = $('[name=ujiantertulisangkaedit]').val();
+        var nilaiuappraktek = $('[name=ujianpraktekangkaedit]').val();
+        var simboluaptulis = $('[name=ujiantertulissimboledit]').val();
+        var simboluappraktek = $('[name=ujianprakteksimboledit]').val();
+        var peminatan = $('[name=peminatanedit]').children("option:selected").val();
+        var updater = 'DEF';
+        var nonirl = $('[name=noirledit]').val();
+        var nopin = $('[name=pinedit]').val();
+        var urlpddikti = $('[name=urlpddiktiedit]').val();
+        var noskrektor = $('[name=noskijazahedit]').val();
+        var jobexperience = $('[name=jobexperienceedit]').val();
+        var competentionscore = $('[name=competentionscoreedit]').val();
+        var tanggalskrektor = $('[name=tanggalskijazahedit_tampil]').val();
+        tanggalskrektor = tanggalskrektor.split('-');
+        tanggalskrektor = tanggalskrektor[2] + '-' + tanggalskrektor[1] + '-' + tanggalskrektor[0];
+
+        if (nilaiuaptulis == "") {
+            nilaiuaptulis = 0;
+        }
+
+        if (nilaiuappraktek == "") {
+            nilaiuappraktek = 0;
+        }
+
+        if (noblanko == "") {
+            noblanko = 0;
+        }
+        //alert('VAR='+urlpddikti);
+        
+          $.ajax({
+              url: "SaveAktivitasKelulusan.php",
+              method: "POST",
+              timeout: 10000, // 5 detik
+              data: {
+                  aksi: 'edit',
+                  tahun: tahun,
+                  semester: semester,
+                  idmahasiswa: idmahasiswa,
+                  status: status,
+                  tanggal: tanggal,
+                  sks: sks,
+                  ipk: ipk,
+                  nomersk: nomersk,
+                  tanggalsk: tanggalsk,
+                  nomerijazah: nomerijazah,
+                  simbol: simbol,
+                  noblanko: noblanko,
+                  notranskrip: notranskrip,
+                  nilaiuaptulis: nilaiuaptulis,
+                  nilaiuappraktek: nilaiuappraktek,
+                  simboluaptulis: simboluaptulis,
+                  simboluappraktek: simboluappraktek,
+                  peminatan: peminatan,
+                  updater: updater,
+                  nonirl: nonirl,
+                  nopin: nopin,
+                  urlpddikti: urlpddikti,     // ? diperbaiki
+                  noskrektor: noskrektor,
+                  tanggalskrektor: tanggalskrektor,
+                  jobexperience: jobexperience,
+                  competentionscore: competentionscore
+              },
+              beforeSend: function () {
+                  $("#loading").show();
+              },
+              success: function (data) {
+                  if (data == 1) {
+                      alert('Data berhasil disimpan');
+                      loadData();
+                      $("#modal_edit").modal('toggle');
+                  } else if (data == 8) {
+                      alert("Periode Tahun Ajaran Semester yang dipilih sudah ditutup. Silahkan hubungi administrator.");
+                  } else if (data == 3) {
+                      alert("Data gagal disimpan, mahasiswa tidak memiliki aktivitas kuliah.");
+                  } else {
+                      alert('Data gagal disimpan');
+                  }
+              },
+              error: function (xhr, status) {
+                  if (status === "timeout") {
+                      alert("Koneksi timeout! Server terlalu lama merespons.");
+                  } else {
+                      alert("Terjadi kesalahan koneksi!");
+                  }
+              },
+              complete: function () {
+                  $("#loading").hide();
+              }
+          });
+
+        return false;
+    });
+
+    $("[name=idm]").on("input", function() {
+        if ($("[name=idm]").val() != "") {
+            if ($(".error-id-mahasiswa").length > 0) {
+                $(".error-id-mahasiswa").remove();
+            }
+
+            document.getElementById("inputStringSks").value = "";
+            document.getElementById("inputStringIpk").value = "";
+        } else {
+            if (!$(".error-id-mahasiswa").length) {
+                $("label.error").append("<span class=\"error-id-mahasiswa\">Field ID Mahasiswa wajib diisi</span>");
+            }
+        }
+    });
+
+    $('[name=tahun]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=semester]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=angkatan]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=idprodi]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=status]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=perhalaman]').on('change', function() {
+        loadData();
+    });
+
+    $('[name=id]').on('input', function() {
+        loadData();
+    });
+
+    $('[name=cancel]').click(function() {
+        clearForm();
+    });
+
+    function clearForm() {
+        $('[name=idm]').val('');
+        $('[name=ujiankompre]').val('');
+        $('[name=ujiantertulisangka]').val('');
+        $('[name=ujianpraktekangka]').val('');
+        $('[name=ujiantertulissimbol]').val('');
+        $('[name=ujianprakteksimbol]').val('');
+        $('[name=skslulus]').val('');
+        $('[name=skyudisium]').val('');
+        $('[name=ipk]').val('');
+        $('[name=noijazahehehe]').val('');
+        $('[name=noskijazah]').val('');
+        $('[name=notranskrip]').val('');
+        $('[name=pin]').val('');
+        $('[name=noirl]').val('');
+        $('[name=noblanko]').val('');
+        $('[name=jobexperience]').val('');
+        $('[name=competentionscore]').val('');
+    }
+
+    function loadData() {
+        var tahun = $('[name=tahun]').val();
+        var semester = $('[name=semester]').val();
+        var angkatan = $('[name=angkatan]').val();
+        var idprodi = $('[name=idprodi]').val();
+        var status = $('[name=status]').val();
+        var id = $('[name=id]').val();
+        var perhalaman = $('[name=perhalaman]').val();
+        var hal = '1';
+        var lihatsemua = '0';
+
+        if (hal == undefined) {
+            hal = '1';
+        }
+
+        $.blockUI();
+        $.get('../api/KelulusanMahasiswa.php?aksi=showall&tahun=' + tahun + '&semester=' + semester + '&idprodi=' + idprodi + '&status=' + status + '&idmahasiswa=' + id + '&angkatan=' + angkatan + '&perhalaman=' + perhalaman + '&hal=' + hal + '&lihatsemua=' + lihatsemua, function(results) {
+            var row = '<tr><td align=center colspan=12>--- Data tidak ditemukan ---</td></tr>';
+            var arraytahunsemester = null;
+            var arraystatusmahasiswa = {"L":"Lulus","M":"Mutasi","D":"Dikeluarkan","E":"Mengundurkan Diri","P":"Putus Sekolah","W":"Wafat","0":"Selesai Pendidikan Non Gelar"};
+            var arrayprodidep = {"":"Semua","13261":"13261 - Administrasi Rumah Sakit ( S1 ) ","62201":"62201 - Akuntansi ( S1 ) ","48401":"48401 - Diploma Tiga Farmasi ( D3 ) ","11401":"11401 - Fisioterapi ( D3 ) ","14201":"14201 - Ilmu Keperawatan ( S1 ) ","15201":"15201 - Kebidanan ( S1 ) ","15401":"15401 - Kebidanan ( D3 ) ","14401":"14401 - Keperawatan ( D3 ) ","13201":"13201 - Kesehatan Masyarakat ( S1 ) ","61201":"61201 - Manajemen ( S1 ) ","15903":"15903 - Pendidikan Profesi Bidan ( Profesi ) ","14901":"14901 - Profesi Ners ( Profesi ) ","11402":"11402 - Radiodiagnostik Dan Radioterapi ( D3 ) ","48201":"48201 - Sarjana Farmasi ( S1 ) "};
+
+            if (results.data.length > 0) {
+                row = '';
+            }
+
+            for (i = 0; i < results.data.length; i++) {
+                var tanggal = results.data[i].TANGGALKELUAR;
+
+                if (tanggal != null) {
+                    var thn = tanggal.substring(0, 4);
+                    var bln = tanggal.substring(5, 7);
+                    var tgl = tanggal.substring(8, 10);
+                    tanggagl = tgl + '-' + bln + '-' + thn;
+                } else {
+                    tanggal = '';
+                }
+                
+                var checkhapus = '<input type=checkbox name=\'hapus[' + results.data[i].IDMAHASISWA + ']\' class=checkbox>';
+                var checkupdate='<button type=\'button\' class=\'btn btn-xs btn-warning button-edit edit_data\' data-toggle=\'modal\' data-target=\'#modal_edit\' id=\'' + results.data[i].IDMAHASISWA + '\'>Update</button>';
+                if (results.data[i].ISTUTUP==1) {
+                   checkupdate = '';
+                   checkhapus = '';
+                }
+
+                var label = labelStatusMahasiswa(results.data[i]['STATUSKELUAR']);
+                row +=
+                    '<tr>' +
+                    '<td align=center>' + results.data[i].NO  +'</td>' +
+                    '<td>' + results.data[i].IDMAHASISWA + '</td>' +
+                    '<td>' + results.data[i].NAMA + '</td>' +
+                    '<td>' + arrayprodidep[results.data[i].IDPRODI] + '</td>' +
+                    '<td align=center>' + results.data[i].ANGKATAN + '</td>' +
+                    '<td>' + label + '</td>' +
+                    '<td align=center>' + tanggal + '</td>' +
+                    '<td>' + results.data[i].NOIJAZAH + '</td>' +
+                    '<td>' + results.data[i].NOTRANSKRIP + '</td>' +
+                    '<td>' + results.data[i].NOPIN + '</td>' +
+                    '<td align=center>'+checkupdate+'</td>' +
+                    '<td align=center>'+checkhapus+'</td>' +
+                    '</tr>';
+            }
+
+            $('.tabledata1').find('.body1').html(row);
+            $('.links').html(results.link);
+        }).always(function() {
+             $.unblockUI();
+          //alert( "finished" );
+        });
+    }
+
+    $(document).on('click', '.edit_data', function() {
+        var idmedit = $(this).attr("id");
+
+        $.blockUI();
+        $.get('../api/KelulusanMahasiswa.php?aksi=showone&idmahasiswa=' + idmedit, function(result) {
+            var tahunsemester = result.data.TAHUNSEMESTER;
+            var tahun = tahunsemester.substring(0, 4);
+            var semester = tahunsemester.substring(4, 5);
+
+            var tanggal = result.data.TANGGALKELUAR;
+            if (tanggal != null) {
+                var thn = tanggal.substring(0, 4);
+                var bln = tanggal.substring(5, 7);
+                var tgl = tanggal.substring(8, 10);
+                tanggal = tgl + '-' + bln + '-' + thn;
+            }
+            
+            var tanggaly = result.data.TANGGALSKYUDISIUM;
+            if (tanggaly != null) {
+                var thny = tanggaly.substring(0, 4);
+                var blny = tanggaly.substring(5, 7);
+                var tgly = tanggaly.substring(8, 10);
+                tanggaly = tgly + '-' + blny + '-' + thny;
+            }
+            
+            var tanggalr = result.data.TANGGALSKREKTOR;
+            if (tanggal != null) {
+                var thnr = tanggalr.substring(0, 4);
+                var blnr = tanggalr.substring(5, 7);
+                var tglr = tanggalr.substring(8, 10);
+                tanggalr = tglr + '-' + blnr + '-' + thnr;
+            }
+            
+            $('#idmedit').val(result.data.IDMAHASISWA);
+            $('[name=tahunedit]').val(parseInt(tahun) + 1);
+            $('[name=semesteredit]').val(semester);
+            $('[name=ujiankompreedit]').val(result.data.NILAIKOMPRE);
+            $('[name=jeniskeluaredit]').val(result.data.STATUSKELUAR);
+            $('[name=ujiantertulisangkaedit]').val(result.data.NILAIUAPTULIS);
+            $('[name=ujiantertulissimboledit]').val(result.data.SIMBOLUAPTULIS);
+
+            $('[name=tanggalkeluaredit_tampil]').val(tanggal);
+            $('[name=\"tanggalkeluaredit[tgl]\"]').val(tgl);
+            $('[name=\"tanggalkeluaredit[bln]\"]').val(bln);
+            $('[name=\"tanggalkeluaredit[thn]\"]').val(thn);
+
+            $('[name=ujiantertulisangkaedit]').val(result.data.NILAIUAPTULIS);
+            $('[name=ujianpraktekangkaedit]').val(result.data.NILAIUAPPRAKTEK);
+            $('[name=ujianprakteksimboledit]').val(result.data.SIMBOLUAPPRAKTEK);
+            $('[name=skslulusedit]').val(result.data.SKSTOTAL);
+            $('[name=skyudisiumedit]').val(result.data.NOSKYUDISIUM);
+            $('[name=ipkedit]').val(result.data.IPK);
+
+            $('[name=tanggalskyudisiumedit_tampil]').val(tanggaly);
+            $('[name=\"tanggalskyudisiumedit[tgl]\"]').val(tgly);
+            $('[name=\"tanggalskyudisiumedit[bln]\"]').val(blny);
+            $('[name=\"tanggalskyudisiumedit[thn]\"]').val(thny);
+
+            $('#noijazahedit').val(result.data.NOIJAZAH);
+            $('[name=notranskripedit]').val(result.data.NOTRANSKRIP);
+
+            $('[name=pinedit]').val(result.data.NOPIN);
+            $('[name=urlpddiktiedit]').val(result.data.URLPDDIKTI);
+            $('[name=noirledit]').val(result.data.NONIRL);
+
+            $('[name=peminatanedit]').val(result.data.PEMINATAN);
+            $('[name=noblankoedit]').val(result.data.NOBLANKO);
+            $('[name=noskijazahedit]').val(result.data.NOSKREKTOR);
+
+            $('[name=jobexperienceedit]').val(result.data.JOBEXPERIENCE);
+            $('[name=competentionscoreedit]').val(result.data.COMPETENTIONSCORE);
+
+            $('[name=tanggalskijazahedit_tampil]').val(tanggalr);
+            $('[name=\"tanggalskijazahedit[tgl]\"]').val(tglr);
+            $('[name=\"tanggalskijazahedit[bln]\"]').val(blnr);
+            $('[name=\"tanggalskijazahedit[thn]\"]').val(thnr);
+        }).always(function() {
+             $.unblockUI();
+          //alert( "finished" );
+        });
+    });
+
+    $('#button_download_excel').click(function(e) {
+        e.preventDefault()
+
+        var params = {
+            tahun: $('[name=tahun]').val(),
+            semester: $('[name=semester]').val(),
+            angkatan: $('[name=angkatan]').val(),
+            idprodi: $('[name=idprodi]').val(),
+            status: $('[name=status]').val(),
+            id: $('[name=id]').val()
+        }
+
+        var qs = new URLSearchParams(params)
+
+        var queryString = qs.toString()
+
+        $(this).attr('href', `exportexcel.php?${queryString}`)
+
+        window.location = $(this).attr('href')
+    })
+
+    loadData();
+    });
+</script>
+
+        </div><!--contentwrapper-->
+
+    </div><!-- centercontent -->
+
+
+</div> <!--end bodywrapper-->
+
+
+
+<!--</body></html>-->
+      <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="../realtime-notification.js"></script>
+    
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body>
