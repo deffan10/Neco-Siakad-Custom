@@ -11,6 +11,20 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="card mt-3">
+        <div class="card-body py-2">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="{{ route('admin.kuesioner.index') }}"><i class="fas fa-poll-h me-1"></i> Daftar Kuesioner</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.kuesioner.index') }}?target=Alumni"><i class="fas fa-graduation-cap me-1"></i> Tracer Study</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row row-cards mt-3">
         <!-- Buat Kuesioner Baru -->
         <div class="col-md-4">

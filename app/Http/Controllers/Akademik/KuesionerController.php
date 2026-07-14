@@ -31,9 +31,11 @@ class KuesionerController extends Controller
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
 
-        $data['kuesioners'] = Kuesioner::withCount('responses')
-            ->latest()
-            ->get();
+        $query = Kuesioner::withCount('responses');
+        if ($request->input('target') === 'Alumni') {
+            $query->where('target_responden', 'Alumni');
+        }
+        $data['kuesioners'] = $query->latest()->get();
 
         return view('master.akademik.kuesioner-index', $data, compact('user'));
     }
