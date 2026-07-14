@@ -72,6 +72,9 @@
                                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal-{{ $p->id }}">
                                         <i class="fas fa-edit me-1"></i> Isi Jurnal
                                     </button>
+                                    <a href="{{ route('dosen.jurnal.presensi', $p->id) }}" class="btn btn-sm btn-outline-success ms-1">
+                                        <i class="fas fa-users me-1"></i> Isi Presensi
+                                    </a>
 
                                     <!-- Modal Form Isi Jurnal -->
                                     <div class="modal modal-blur fade" id="editModal-{{ $p->id }}" tabindex="-1" role="dialog" aria-hidden="true">

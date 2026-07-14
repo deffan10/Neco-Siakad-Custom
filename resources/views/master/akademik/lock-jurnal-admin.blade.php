@@ -85,6 +85,7 @@
                                 <th>Pertemuan & Tanggal</th>
                                 <th>Jurnal / Materi</th>
                                 <th>Status Kunci</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,6 +120,11 @@
                                                 @endif
                                             </button>
                                         </form>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.lock-jurnal.presensi', $p->id) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-users me-1"></i> Presensi
+                                        </a>
                                     </td>
                                 </tr>
                             @empty

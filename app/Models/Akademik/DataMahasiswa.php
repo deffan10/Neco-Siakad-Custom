@@ -20,6 +20,11 @@ class DataMahasiswa extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function dosenPa()
+    {
+        return $this->belongsTo(User::class, 'dosen_pa_id');
+    }
+
     public function programStudi()
     {
         return $this->belongsTo(ProgramStudi::class, 'program_studi_id');

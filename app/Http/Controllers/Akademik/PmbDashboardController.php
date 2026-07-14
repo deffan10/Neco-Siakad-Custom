@@ -132,4 +132,70 @@ class PmbDashboardController extends Controller
 
         return view('master.akademik.pmb-dashboard', $data, compact('user'));
     }
+
+    public function landing()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Manajemen Halaman Utama PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-landing', $data, compact('user'));
+    }
+
+    public function settings()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Aturan & Pengaturan PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-settings', $data, compact('user'));
+    }
+
+    public function tuition()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Biaya & Pembayaran PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-tuition', $data, compact('user'));
+    }
+
+    public function admission()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Penerimaan & Ujian Seleksi PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-admission', $data, compact('user'));
+    }
+
+    public function promo()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Promosi & Blast PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-promo', $data, compact('user'));
+    }
+
+    public function affiliate()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'PMB';
+        $data['pages']   = 'Program Afiliasi PMB';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+        return view('master.akademik.pmb-affiliate', $data, compact('user'));
+    }
 }

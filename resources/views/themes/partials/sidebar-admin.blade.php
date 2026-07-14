@@ -263,6 +263,24 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.cuti*') ? 'active' : '' }}" href="{{ route('admin.cuti.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /><path d="M6 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M3 21v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" /></svg>
+            </span>
+            <span class="nav-link-title">Persetujuan Cuti</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.tugas-akhir*') ? 'active' : '' }}" href="{{ route('admin.tugas-akhir.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16H5V4h14m0-2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" /><path d="M12 11h5v2h-5z" /><path d="M12 7h5v2h-5z" /><path d="M7 7h3v3H7z" /><path d="M7 12h3v3H7z" /></svg>
+            </span>
+            <span class="nav-link-title">Persetujuan Tugas Akhir</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('admin.broadcast*') ? 'active' : '' }}" href="{{ route('admin.broadcast.index') }}">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail-forward" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" /><path d="M3 6l9 6l9 -6" /><path d="M15 18h6" /><path d="M18 15l3 3l-3 3" /></svg>
@@ -289,13 +307,26 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('admin.pmb*') ? 'active' : '' }}" href="{{ route('admin.pmb.dashboard') }}">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.pmb*') ? 'show' : '' }}" href="#navbar-pmb" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-pie" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8" /><path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a1 1 0 0 1 -1 -1v-4.5" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-school" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></svg>
             </span>
-            <span class="nav-link-title">Dashboard PMB</span>
+            <span class="nav-link-title">Penerimaan PMB</span>
         </a>
+        <div class="dropdown-menu {{ request()->routeIs('admin.pmb*') ? 'show' : '' }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.dashboard') ? 'active' : '' }}" href="{{ route('admin.pmb.dashboard') }}">Dashboard PMB</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.landing') ? 'active' : '' }}" href="{{ route('admin.pmb.landing') }}">Halaman Utama</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.settings') ? 'active' : '' }}" href="{{ route('admin.pmb.settings') }}">Aturan & Pengaturan</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.tuition') ? 'active' : '' }}" href="{{ route('admin.pmb.tuition') }}">Biaya & Pembayaran</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.admission') ? 'active' : '' }}" href="{{ route('admin.pmb.admission') }}">Ujian & Seleksi</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.promo') ? 'active' : '' }}" href="{{ route('admin.pmb.promo') }}">Promosi Blast</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pmb.affiliate') ? 'active' : '' }}" href="{{ route('admin.pmb.affiliate') }}">Program Afiliasi</a>
+                </div>
+            </div>
+        </div>
     </li>
 
     <li class="nav-item">

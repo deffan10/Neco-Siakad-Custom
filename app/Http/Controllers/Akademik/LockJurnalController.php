@@ -10,6 +10,10 @@ use App\Models\User;
 use App\Models\Pengaturan\System;
 use App\Models\Pengaturan\Kampus;
 use App\Models\Akademik\JadwalPertemuan;
+use App\Models\Akademik\PresensiMahasiswa;
+use App\Models\Akademik\KelasMahasiswa;
+use App\Models\Akademik\JadwalKelas;
+use App\Models\Mahasiswa;
 
 class LockJurnalController extends Controller
 {
@@ -168,5 +172,134 @@ class LockJurnalController extends Controller
 
         Alert::success('Berhasil', 'Jurnal mengajar perkuliahan berhasil diperbarui');
         return redirect()->back();
+    }
+
+    public function presensiAdmin($id)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Lock Jurnal';
+        $data['pages'] = 'Detail Presensi Pertemuan Kuliah';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        $pertemuan = JadwalPertemuan::with(['jadwal.mataKuliah', 'dosen', 'ruangan'])->findOrFail($id);
+        $data['pertemuan'] = $pertemuan;
+
+        // Get class IDs mapped to this schedule
+        $kelasIds = JadwalKelas::where('jadwal_id', $pertemuan->jadwal_id)->pluck('kelas_id');
+
+        // Enrolled students
+        $data['students'] = KelasMahasiswa::whereIn('kelas_id', $kelasIds)
+            ->with('mahasiswa')
+            ->get()
+            ->pluck('mahasiswa')
+            ->unique('id');
+
+        // Existing attendance records
+        $data['attendance'] = PresensiMahasiswa::where('jadwal_pertemuan_id', $id)
+            ->pluck('status', 'mahasiswa_id')
+            ->toArray();
+
+        $data['catatan'] = PresensiMahasiswa::where('jadwal_pertemuan_id', $id)
+            ->pluck('catatan', 'mahasiswa_id')
+            ->toArray();
+
+        return view('master.akademik.presensi-form', $data, compact('user'));
+    }
+
+    public function storePresensiAdmin(Request $request, $id)
+    {
+        $pertemuan = JadwalPertemuan::findOrFail($id);
+
+        $statuses = $request->input('status', []);
+        $catatans = $request->input('catatan', []);
+
+        foreach ($statuses as $mahasiswaId => $status) {
+            PresensiMahasiswa::updateOrCreate(
+                [
+                    'jadwal_pertemuan_id' => $id,
+                    'mahasiswa_id' => $mahasiswaId
+                ],
+                [
+                    'status' => $status,
+                    'catatan' => $catatans[$mahasiswaId] ?? null,
+                    'updated_by' => Auth::id()
+                ]
+            );
+        }
+
+        Alert::success('Berhasil', 'Data presensi mahasiswa berhasil diperbarui');
+        return redirect()->route('admin.lock-jurnal.index');
+    }
+
+    public function presensiDosen($id)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = 'dosen';
+        $data['menus'] = 'Jurnal Mengajar';
+        $data['pages'] = 'Isi Presensi Pertemuan Kuliah';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        $pertemuan = JadwalPertemuan::with(['jadwal.mataKuliah', 'ruangan'])->findOrFail($id);
+        $data['pertemuan'] = $pertemuan;
+
+        // Check if journal is locked
+        if ($pertemuan->is_locked) {
+            Alert::error('Gagal', 'Pertemuan ini telah dikunci. Anda tidak dapat mengisi presensi.');
+            return redirect()->back();
+        }
+
+        // Get class IDs mapped to this schedule
+        $kelasIds = JadwalKelas::where('jadwal_id', $pertemuan->jadwal_id)->pluck('kelas_id');
+
+        // Enrolled students
+        $data['students'] = KelasMahasiswa::whereIn('kelas_id', $kelasIds)
+            ->with('mahasiswa')
+            ->get()
+            ->pluck('mahasiswa')
+            ->unique('id');
+
+        // Existing attendance records
+        $data['attendance'] = PresensiMahasiswa::where('jadwal_pertemuan_id', $id)
+            ->pluck('status', 'mahasiswa_id')
+            ->toArray();
+
+        $data['catatan'] = PresensiMahasiswa::where('jadwal_pertemuan_id', $id)
+            ->pluck('catatan', 'mahasiswa_id')
+            ->toArray();
+
+        return view('master.akademik.presensi-form', $data, compact('user'));
+    }
+
+    public function storePresensiDosen(Request $request, $id)
+    {
+        $pertemuan = JadwalPertemuan::findOrFail($id);
+
+        if ($pertemuan->is_locked) {
+            Alert::error('Gagal', 'Pertemuan ini telah dikunci. Anda tidak dapat mengisi presensi.');
+            return redirect()->back();
+        }
+
+        $statuses = $request->input('status', []);
+        $catatans = $request->input('catatan', []);
+
+        foreach ($statuses as $mahasiswaId => $status) {
+            PresensiMahasiswa::updateOrCreate(
+                [
+                    'jadwal_pertemuan_id' => $id,
+                    'mahasiswa_id' => $mahasiswaId
+                ],
+                [
+                    'status' => $status,
+                    'catatan' => $catatans[$mahasiswaId] ?? null,
+                    'updated_by' => Auth::id()
+                ]
+            );
+        }
+
+        Alert::success('Berhasil', 'Data presensi mahasiswa berhasil disimpan');
+        return redirect()->route('dosen.jurnal.index');
     }
 }

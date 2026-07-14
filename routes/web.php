@@ -376,6 +376,18 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/lock-jurnal', [App\Http\Controllers\Akademik\LockJurnalController::class, 'indexAdmin'])->name('lock-jurnal.index');
     Route::post('/lock-jurnal/{id}/toggle', [App\Http\Controllers\Akademik\LockJurnalController::class, 'toggleLock'])->name('lock-jurnal.toggle');
     Route::post('/lock-jurnal/bulk', [App\Http\Controllers\Akademik\LockJurnalController::class, 'bulkLock'])->name('lock-jurnal.bulk');
+    Route::get('/lock-jurnal/{id}/presensi', [App\Http\Controllers\Akademik\LockJurnalController::class, 'presensiAdmin'])->name('lock-jurnal.presensi');
+    Route::post('/lock-jurnal/{id}/presensi', [App\Http\Controllers\Akademik\LockJurnalController::class, 'storePresensiAdmin'])->name('lock-jurnal.presensi-store');
+
+    // Cuti Akademik (Admin)
+    Route::get('/cuti', [App\Http\Controllers\Akademik\CutiController::class, 'indexAdmin'])->name('cuti.index');
+    Route::post('/cuti/{id}/approve', [App\Http\Controllers\Akademik\CutiController::class, 'approveAdmin'])->name('cuti.approve');
+    Route::post('/cuti/{id}/reject', [App\Http\Controllers\Akademik\CutiController::class, 'rejectAdmin'])->name('cuti.reject');
+
+    // Tugas Akhir (Admin)
+    Route::get('/tugas-akhir', [App\Http\Controllers\Akademik\TugasAkhirController::class, 'indexAdmin'])->name('tugas-akhir.index');
+    Route::post('/tugas-akhir/{id}/approve', [App\Http\Controllers\Akademik\TugasAkhirController::class, 'approveAdmin'])->name('tugas-akhir.approve');
+    Route::post('/tugas-akhir/{id}/reject', [App\Http\Controllers\Akademik\TugasAkhirController::class, 'rejectAdmin'])->name('tugas-akhir.reject');
 
     // Broadcast Email (Admin)
     Route::get('/broadcast', [App\Http\Controllers\Akademik\BroadcastController::class, 'index'])->name('broadcast.index');
@@ -396,6 +408,12 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
 
     // PMB Dashboard (Admin)
     Route::get('/pmb/dashboard', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'index'])->name('pmb.dashboard');
+    Route::get('/pmb/landing', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'landing'])->name('pmb.landing');
+    Route::get('/pmb/settings', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'settings'])->name('pmb.settings');
+    Route::get('/pmb/tuition', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'tuition'])->name('pmb.tuition');
+    Route::get('/pmb/admission', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'admission'])->name('pmb.admission');
+    Route::get('/pmb/promo', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'promo'])->name('pmb.promo');
+    Route::get('/pmb/affiliate', [App\Http\Controllers\Akademik\PmbDashboardController::class, 'affiliate'])->name('pmb.affiliate');
 
     // Export & Laporan (Admin)
     Route::get('/export', [App\Http\Controllers\Akademik\ExportController::class, 'index'])->name('export.index');
@@ -451,6 +469,17 @@ Route::middleware(['auth', 'active_role:dosen'])->prefix('dosen')->as('dosen.')-
     // Jurnal Mengajar Dosen
     Route::get('/jurnal', [App\Http\Controllers\Akademik\LockJurnalController::class, 'indexDosen'])->name('jurnal.index');
     Route::post('/jurnal/{id}/update', [App\Http\Controllers\Akademik\LockJurnalController::class, 'updateJurnal'])->name('jurnal.update');
+    Route::get('/jurnal/{id}/presensi', [App\Http\Controllers\Akademik\LockJurnalController::class, 'presensiDosen'])->name('jurnal.presensi');
+    Route::post('/jurnal/{id}/presensi', [App\Http\Controllers\Akademik\LockJurnalController::class, 'storePresensiDosen'])->name('jurnal.presensi-store');
+    Route::get('/jurnal/{id}/bahan-tugas', [App\Http\Controllers\Akademik\BahanTugasController::class, 'indexDosen'])->name('jurnal.bahan-tugas');
+    Route::post('/jurnal/{id}/bahan-tugas', [App\Http\Controllers\Akademik\BahanTugasController::class, 'storeDosen'])->name('jurnal.bahan-tugas-store');
+    Route::get('/tugas/{id}/submisi', [App\Http\Controllers\Akademik\BahanTugasController::class, 'indexSubmissions'])->name('tugas.submisi');
+    Route::post('/tugas/{submission_id}/nilai', [App\Http\Controllers\Akademik\BahanTugasController::class, 'gradeSubmission'])->name('tugas.nilai');
+
+    // Perwalian Dosen (Advisees)
+    Route::get('/perwalian', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'indexDosen'])->name('perwalian.index');
+    Route::get('/perwalian/{mahasiswa_id}', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'showAdvising'])->name('perwalian.show');
+    Route::post('/perwalian/{mahasiswa_id}', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'storeDosen'])->name('perwalian.store');
 });
 
 Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('mahasiswa.')->group(function () {
@@ -490,6 +519,26 @@ Route::middleware(['auth', 'active_role:mahasiswa'])->prefix('mahasiswa')->as('m
     Route::get('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'indexPortal'])->name('sertifikasi.index');
     Route::post('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'store'])->name('sertifikasi.store');
     Route::delete('/sertifikasi/{id}', [App\Http\Controllers\Akademik\SertifikasiController::class, 'destroy'])->name('sertifikasi.destroy');
+
+    // Jadwal & Presensi Mahasiswa
+    Route::get('/jadwal-presensi', [App\Http\Controllers\Akademik\JadwalPresensiController::class, 'index'])->name('jadwal-presensi.index');
+
+    // Cuti Mahasiswa
+    Route::get('/cuti', [App\Http\Controllers\Akademik\CutiController::class, 'indexStudent'])->name('cuti.index');
+    Route::post('/cuti', [App\Http\Controllers\Akademik\CutiController::class, 'storeStudent'])->name('cuti.store');
+
+    // Bahan & Tugas Mahasiswa
+    Route::get('/bahan-tugas', [App\Http\Controllers\Akademik\BahanTugasController::class, 'indexStudent'])->name('bahan-tugas.index');
+    Route::get('/bahan-tugas/{kelas_id}', [App\Http\Controllers\Akademik\BahanTugasController::class, 'showClassMaterials'])->name('bahan-tugas.show');
+    Route::post('/bahan-tugas/{task_id}/submit', [App\Http\Controllers\Akademik\BahanTugasController::class, 'submitAssignment'])->name('bahan-tugas.submit');
+
+    // PA Online Mahasiswa
+    Route::get('/pa-online', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'indexStudent'])->name('pa-online.index');
+    Route::post('/pa-online', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'storeStudent'])->name('pa-online.store');
+
+    // Tugas Akhir Mahasiswa
+    Route::get('/tugas-akhir', [App\Http\Controllers\Akademik\TugasAkhirController::class, 'indexStudent'])->name('tugas-akhir.index');
+    Route::post('/tugas-akhir', [App\Http\Controllers\Akademik\TugasAkhirController::class, 'storeStudent'])->name('tugas-akhir.store');
 });
 
 Route::middleware(['auth', 'active_role:peserta-pmb'])->prefix('peserta-pmb')->as('peserta-pmb.')->group(function () {

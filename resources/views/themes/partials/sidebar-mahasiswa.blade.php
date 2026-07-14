@@ -101,3 +101,43 @@
         <span class="nav-link-title">Sertifikasi (SKPI)</span>
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('mahasiswa.jadwal-presensi*') ? 'active' : '' }}" href="{{ route('mahasiswa.jadwal-presensi') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="5" /><line x1="8" y1="3" x2="8" y2="5" /><line x1="4" y1="9" x2="20" y2="9" /><line x1="10" y1="14" x2="10" y2="18" /><line x1="14" y1="14" x2="14" y2="18" /></svg>
+        </span>
+        <span class="nav-link-title">Jadwal & Presensi</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('mahasiswa.cuti*') ? 'active' : '' }}" href="{{ route('mahasiswa.cuti.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5" /><path d="M6 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M3 21v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" /></svg>
+        </span>
+        <span class="nav-link-title">Cuti Akademik</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('mahasiswa.bahan-tugas*') ? 'active' : '' }}" href="{{ route('mahasiswa.bahan-tugas.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2z" /><path d="M9 16h6" /><path d="M9 12h6" /><path d="M9 8h6" /></svg>
+        </span>
+        <span class="nav-link-title">Bahan & Tugas</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('mahasiswa.pa-online*') ? 'active' : '' }}" href="{{ route('mahasiswa.pa-online.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" /></svg>
+        </span>
+        <span class="nav-link-title">PA Online</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('mahasiswa.tugas-akhir*') ? 'active' : '' }}" href="{{ route('mahasiswa.tugas-akhir.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16H5V4h14m0-2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" /><path d="M12 11h5v2h-5z" /><path d="M12 7h5v2h-5z" /><path d="M7 7h3v3H7z" /><path d="M7 12h3v3H7z" /></svg>
+        </span>
+        <span class="nav-link-title">Tugas Akhir</span>
+    </a>
+</li>

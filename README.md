@@ -34,16 +34,21 @@ Neco Siakad (**New Ecosystem - Sistem Informasi Akademik**) adalah sistem inform
 - Setiap user dapat memiliki banyak data pendidikan dan keluarga
 - Manajemen kontak dan media sosial
 
-### 📚 Manajemen Akademik 🚧 *(Coming Soon)*
+### 📚 Manajemen Akademik ✅
 - Kurikulum dan mata kuliah
-- Jadwal perkuliahan
+- Jadwal perkuliahan dan Presensi Mahasiswa/Dosen
 - Sistem registrasi dan KRS online
 - Manajemen kelas dan ruangan
+- Bahan Ajar & Tugas Kuliah (Materi download & Tugas upload)
+- Pengajuan Cuti Akademik & PA Online (Bimbingan Akademik Chat)
+- Proposal / Tugas Akhir / Skripsi (Registrasi Judul & Draft File)
 
-### 📊 Sistem Penilaian 🚧 *(Coming Soon)*
+### 📊 Sistem Penilaian & Kelulusan ✅
 - Input dan monitoring nilai akademik
-- Sistem KHS (Kartu Hasil Studi)
+- Sistem KHS (Kartu Hasil Studi) & Transkrip Nilai
 - Laporan akademik dan dashboard analytics
+- Pendaftaran Wisuda & Cetak SKL
+- Pengisian kuesioner pembelajaran (EDOM) & Tracer Study
 
 ### 🏢 Manajemen Infrastruktur ✅
 - Gedung dan ruangan kampus

@@ -33,6 +33,11 @@ class JadwalPertemuan extends Model
         return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 
+    public function presensi()
+    {
+        return $this->hasMany(PresensiMahasiswa::class, 'jadwal_pertemuan_id');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
