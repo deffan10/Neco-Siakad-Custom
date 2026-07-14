@@ -11,6 +11,23 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="card mt-3">
+        <div class="card-body py-2">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="{{ route('admin.seminar.index') }}"><i class="fas fa-calendar-check me-1"></i> Daftar Event</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.seminar.kuota') }}"><i class="fas fa-sliders-h me-1"></i> Waktu & Kuota</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.seminar.cari') }}"><i class="fas fa-search me-1"></i> Cari Peserta</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row mt-3">
         <!-- Form Tambah Event -->
         <div class="col-lg-4">

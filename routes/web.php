@@ -405,6 +405,8 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::delete('/seminar/{id}', [App\Http\Controllers\Akademik\EventSeminarController::class, 'destroy'])->name('seminar.destroy');
     Route::get('/seminar/{id}/peserta', [App\Http\Controllers\Akademik\EventSeminarController::class, 'peserta'])->name('seminar.peserta');
     Route::post('/seminar/peserta/{id}/status', [App\Http\Controllers\Akademik\EventSeminarController::class, 'updateStatusPeserta'])->name('seminar.update-peserta');
+    Route::get('/seminar/kuota', [App\Http\Controllers\Akademik\EventSeminarController::class, 'kuota'])->name('seminar.kuota');
+    Route::get('/seminar/cari', [App\Http\Controllers\Akademik\EventSeminarController::class, 'cari'])->name('seminar.cari');
 
     // Sertifikasi (Admin)
     Route::get('/sertifikasi', [App\Http\Controllers\Akademik\SertifikasiController::class, 'indexAdmin'])->name('sertifikasi.index');

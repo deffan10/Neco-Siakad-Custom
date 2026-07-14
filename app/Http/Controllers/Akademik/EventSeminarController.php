@@ -108,6 +108,44 @@ class EventSeminarController extends Controller
         return redirect()->back();
     }
 
+    public function kuota(Request $request)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'Event Seminar';
+        $data['pages']   = 'Atur Kuota & Waktu Kegiatan';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+
+        $data['events'] = EventSeminar::latest('tanggal')->get();
+
+        return view('master.akademik.event-seminar-kuota', $data, compact('user'));
+    }
+
+    public function cari(Request $request)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus']   = 'Event Seminar';
+        $data['pages']   = 'Cari Peserta & Absensi Event';
+        $data['system']  = System::first();
+        $data['academy'] = Kampus::first();
+
+        $search = $request->input('search');
+        $data['pesertaList'] = [];
+
+        if ($search) {
+            $data['pesertaList'] = EventSeminarPeserta::whereHas('mahasiswa.user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('nim', 'like', "%{$search}%");
+            })
+            ->with(['mahasiswa.user', 'event'])
+            ->get();
+        }
+
+        return view('master.akademik.event-seminar-cari', $data, compact('user'));
+    }
+
     /* =========================================================
      *  PORTAL MAHASISWA
      * ========================================================= */
