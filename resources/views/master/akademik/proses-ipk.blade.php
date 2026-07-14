@@ -11,6 +11,23 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="card mt-3">
+        <div class="card-body py-2">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="{{ route('admin.nilai.proses-ipk') }}"><i class="fas fa-calculator me-1"></i> Proses IPS/IPK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.nilai.komponen') }}"><i class="fas fa-percentage me-1"></i> Komponen Nilai</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ route('admin.nilai.entri') }}"><i class="fas fa-lock me-1"></i> Aturan Entri Nilai</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row row-cards mt-3">
         <div class="col-md-6">
             <div class="card">

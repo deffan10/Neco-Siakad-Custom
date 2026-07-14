@@ -343,6 +343,8 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/nilai/kelas/{id}/store', [App\Http\Controllers\Akademik\NilaiController::class, 'storeNilai'])->name('nilai.kelas-store');
     Route::get('/nilai/proses-ipk', [App\Http\Controllers\Akademik\NilaiController::class, 'showProsesIpk'])->name('nilai.proses-ipk');
     Route::post('/nilai/hitung-ipk', [App\Http\Controllers\Akademik\NilaiController::class, 'hitungIpsIpkMassal'])->name('nilai.hitung-ipk');
+    Route::get('/nilai/komponen', [App\Http\Controllers\Akademik\NilaiController::class, 'komponen'])->name('nilai.komponen');
+    Route::get('/nilai/entri-aturan', [App\Http\Controllers\Akademik\NilaiController::class, 'entri'])->name('nilai.entri');
 
     // Impersonate (Admin trigger)
     Route::get('/impersonate/{id}', [App\Http\Controllers\Admin\ImpersonateController::class, 'impersonate'])->name('impersonate');

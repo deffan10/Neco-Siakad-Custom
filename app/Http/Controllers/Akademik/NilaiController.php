@@ -235,6 +235,30 @@ class NilaiController extends Controller
         return redirect()->back();
     }
 
+    public function komponen()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Proses IPS/IPK';
+        $data['pages'] = 'Komponen & Bobot Penilaian';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        return view('master.akademik.nilai-komponen', $data, compact('user'));
+    }
+
+    public function entri()
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Proses IPS/IPK';
+        $data['pages'] = 'Aturan Entri Nilai Kuliah';
+        $data['system'] = System::first();
+        $data['academy'] = Kampus::first();
+
+        return view('master.akademik.nilai-entri-aturan', $data, compact('user'));
+    }
+
 
     /**
      * ==========================================
