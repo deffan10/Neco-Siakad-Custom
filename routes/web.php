@@ -335,6 +335,7 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/krs/settings', [App\Http\Controllers\Akademik\KrsController::class, 'indexAdminKrs'])->name('krs.settings');
     Route::post('/krs/waktu', [App\Http\Controllers\Akademik\KrsController::class, 'storeWaktuKrs'])->name('krs.waktu-store');
     Route::post('/krs/syarat', [App\Http\Controllers\Akademik\KrsController::class, 'storeSyaratSks'])->name('krs.syarat-store');
+    Route::delete('/krs/syarat/{id}', [App\Http\Controllers\Akademik\KrsController::class, 'destroySyaratSks'])->name('krs.syarat-destroy');
     Route::get('/krs/perwalian', [App\Http\Controllers\Akademik\KrsController::class, 'indexBimbinganPa'])->name('krs.perwalian');
     Route::post('/krs/approve/{id}', [App\Http\Controllers\Akademik\KrsController::class, 'approveKrs'])->name('krs.approve');
 

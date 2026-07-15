@@ -84,6 +84,7 @@
                             <tr>
                                 <th>Rentang IP Semester</th>
                                 <th>Max SKS</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,10 +92,17 @@
                                 <tr>
                                     <td><strong>{{ $s->ip_min }} - {{ $s->ip_max }}</strong></td>
                                     <td><span class="badge bg-green">{{ $s->max_sks }} SKS</span></td>
+                                    <td>
+                                        <form action="{{ route('admin.krs.syarat-destroy', $s->id) }}" method="POST" onsubmit="return confirm('Hapus syarat batas SKS ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="2" class="text-center text-muted">Belum ada aturan batas SKS.</td>
+                                    <td colspan="3" class="text-center text-muted">Belum ada aturan batas SKS.</td>
                                 </tr>
                             @endforelse
                         </tbody>

@@ -73,6 +73,14 @@ class KrsController extends Controller
         return redirect()->back();
     }
 
+    public function destroySyaratSks($id)
+    {
+        SyaratSks::findOrFail($id)->delete();
+        Alert::success('Berhasil', 'Syarat batas SKS berhasil dihapus.');
+        return redirect()->back();
+    }
+
+
 
     /**
      * ==========================================
