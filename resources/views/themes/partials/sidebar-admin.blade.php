@@ -59,6 +59,7 @@
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.alamat*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.alamat-index') }}">Alamat</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.keluarga*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.keluarga-index') }}">Keluarga</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.pendidikan*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.pendidikan-index') }}">Pendidikan</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.pegawai.index') ? 'active' : '' }}" href="{{ route('admin.pegawai.index') }}">Data Pegawai</a>
                 </div>
             </div>
         </div>
@@ -189,6 +190,7 @@
                     <a class="dropdown-item {{ request()->routeIs($activeRole. '.akademik.kelas-perkuliahan*') ? 'active' : '' }}" href="{{ route($activeRole. '.akademik.kelas-perkuliahan-index') }}">Kelas Perkuliahan</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole. '.akademik.jadwal-perkuliahan*') ? 'active' : '' }}" href="{{ route($activeRole. '.akademik.jadwal-perkuliahan-index') }}">Jadwal Perkuliahan</a>
                     <a class="dropdown-item {{ request()->routeIs($activeRole. '.akademik.kelas-mahasiswa*') ? 'active' : '' }}" href="{{ route($activeRole. '.akademik.kelas-mahasiswa-index') }}">Kelas Mahasiswa</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.asisten-lab.index') ? 'active' : '' }}" href="{{ route('admin.asisten-lab.index') }}">Asisten Lab</a>
                 </div>
             </div>
         </div>
@@ -241,6 +243,8 @@
                 <div class="dropdown-menu-column">
                     <a class="dropdown-item {{ request()->routeIs('admin.wisuda.settings') ? 'active' : '' }}" href="{{ route('admin.wisuda.settings') }}">Kegiatan Wisuda</a>
                     <a class="dropdown-item {{ request()->routeIs('admin.skl.*') ? 'active' : '' }}" href="{{ route('admin.skl.index') }}">Cetak SKL</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.alumni.*') ? 'active' : '' }}" href="{{ route('admin.alumni.index') }}">Data Alumni</a>
+                    <a class="dropdown-item {{ request()->routeIs('admin.aktivitas-mahasiswa.index') ? 'active' : '' }}" href="{{ route('admin.aktivitas-mahasiswa.index') }}">Aktivitas Lulus/Keluar</a>
                 </div>
             </div>
         </div>
@@ -341,6 +345,14 @@
     <li class="nav-item">
         <a class="nav-link" href="#">
             <span class="nav-link-title">Lainnya</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.kampus-setting.index') ? 'active' : '' }}" href="{{ route('admin.kampus-setting.index') }}">
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M18 4a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /></svg>
+            </span>
+            <span class="nav-link-title">Badan Hukum PT</span>
         </a>
     </li>
     <li class="nav-item">
