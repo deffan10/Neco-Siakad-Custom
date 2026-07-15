@@ -461,6 +461,23 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     // Bimbingan PA Admin
     Route::get('/bimbingan-pa', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'indexAdmin'])->name('bimbingan-pa.index');
 
+    // Pengumuman & Info (Admin)
+    Route::get('/pengumuman', [App\Http\Controllers\Akademik\PengumumanController::class, 'index'])->name('pengumuman.index');
+    Route::get('/pengumuman/buat', [App\Http\Controllers\Akademik\PengumumanController::class, 'create'])->name('pengumuman.create');
+    Route::post('/pengumuman', [App\Http\Controllers\Akademik\PengumumanController::class, 'store'])->name('pengumuman.store');
+    Route::delete('/pengumuman/{id}', [App\Http\Controllers\Akademik\PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
+    Route::post('/pengumuman/{id}/toggle', [App\Http\Controllers\Akademik\PengumumanController::class, 'togglePublish'])->name('pengumuman.toggle');
+    Route::get('/pengumuman/kategori', [App\Http\Controllers\Akademik\PengumumanController::class, 'kategori'])->name('pengumuman.kategori');
+    Route::post('/pengumuman/kategori', [App\Http\Controllers\Akademik\PengumumanController::class, 'storeKategori'])->name('pengumuman.kategori-store');
+    Route::delete('/pengumuman/kategori/{id}', [App\Http\Controllers\Akademik\PengumumanController::class, 'destroyKategori'])->name('pengumuman.kategori-destroy');
+
+    // Dispensasi Mahasiswa (Admin)
+    Route::get('/dispensasi', [App\Http\Controllers\Akademik\DispensasiController::class, 'index'])->name('dispensasi.index');
+    Route::post('/dispensasi', [App\Http\Controllers\Akademik\DispensasiController::class, 'store'])->name('dispensasi.store');
+    Route::post('/dispensasi/{id}/approve', [App\Http\Controllers\Akademik\DispensasiController::class, 'approve'])->name('dispensasi.approve');
+    Route::post('/dispensasi/{id}/reject', [App\Http\Controllers\Akademik\DispensasiController::class, 'reject'])->name('dispensasi.reject');
+    Route::delete('/dispensasi/{id}', [App\Http\Controllers\Akademik\DispensasiController::class, 'destroy'])->name('dispensasi.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
