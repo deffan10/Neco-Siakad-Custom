@@ -156,4 +156,35 @@ class BimbinganPaController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * ==========================================
+     * PANEL ADMIN: BIMBINGAN PA OVERVIEW
+     * ==========================================
+     */
+    public function indexAdmin(Request $request)
+    {
+        $user = Auth::user();
+        $data['activeRole'] = session('active_role') ?? 'admin';
+        $data['menus'] = 'Bimbingan PA Online';
+        $data['pages'] = 'Laporan Bimbingan PA Online';
+        $data['system'] = \App\Models\Pengaturan\System::first();
+        $data['academy'] = \App\Models\Pengaturan\Kampus::first();
+
+        // Group by dosen, count bimbingans
+        $data['rekapDosen'] = BimbinganPa::selectRaw('dosen_id, COUNT(*) as total')
+            ->with('dosen')
+            ->groupBy('dosen_id')
+            ->latest()
+            ->get();
+
+        $data['rekapMahasiswa'] = BimbinganPa::selectRaw('mahasiswa_id, COUNT(*) as total')
+            ->with('mahasiswa')
+            ->groupBy('mahasiswa_id')
+            ->latest()
+            ->take(20)
+            ->get();
+
+        return view('master.akademik.bimbingan-pa-admin', $data, compact('user'));
+    }
 }

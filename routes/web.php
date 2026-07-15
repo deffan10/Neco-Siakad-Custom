@@ -448,6 +448,19 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/pesan/terkirim', [App\Http\Controllers\Akademik\PesanController::class, 'terkirim'])->name('pesan.terkirim');
     Route::post('/pesan/{id}/read', [App\Http\Controllers\Akademik\PesanController::class, 'markRead'])->name('pesan.read');
 
+    // Beasiswa (Admin) - Jenis, Data Penerima, Salin
+    Route::get('/beasiswa', [App\Http\Controllers\Akademik\BeasiswaController::class, 'indexData'])->name('beasiswa.data');
+    Route::post('/beasiswa/data', [App\Http\Controllers\Akademik\BeasiswaController::class, 'storeData'])->name('beasiswa.data-store');
+    Route::delete('/beasiswa/data/{id}', [App\Http\Controllers\Akademik\BeasiswaController::class, 'destroyData'])->name('beasiswa.data-destroy');
+    Route::get('/beasiswa/jenis', [App\Http\Controllers\Akademik\BeasiswaController::class, 'indexJenis'])->name('beasiswa.jenis');
+    Route::post('/beasiswa/jenis', [App\Http\Controllers\Akademik\BeasiswaController::class, 'storeJenis'])->name('beasiswa.jenis-store');
+    Route::delete('/beasiswa/jenis/{id}', [App\Http\Controllers\Akademik\BeasiswaController::class, 'destroyJenis'])->name('beasiswa.jenis-destroy');
+    Route::get('/beasiswa/salin', [App\Http\Controllers\Akademik\BeasiswaController::class, 'salin'])->name('beasiswa.salin');
+    Route::post('/beasiswa/salin', [App\Http\Controllers\Akademik\BeasiswaController::class, 'processSalin'])->name('beasiswa.salin-process');
+
+    // Bimbingan PA Admin
+    Route::get('/bimbingan-pa', [App\Http\Controllers\Akademik\BimbinganPaController::class, 'indexAdmin'])->name('bimbingan-pa.index');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
