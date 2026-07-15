@@ -231,6 +231,7 @@
                 <a class="dropdown-item {{ request()->routeIs('admin.nilai.kelas-index') ? 'active' : '' }}" href="{{ route('admin.nilai.kelas-index') }}">Input Nilai Kuliah</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.nilai.proses-ipk') ? 'active' : '' }}" href="{{ route('admin.nilai.proses-ipk') }}">Proses IPS/IPK</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.bimbingan-pa.index') ? 'active' : '' }}" href="{{ route('admin.bimbingan-pa.index') }}">Laporan Bimbingan PA</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.sesi-kuliah*') ? 'active' : '' }}" href="{{ route('admin.sesi-kuliah.kuliah') }}">Sesi Perkuliahan</a>
             </div>
         </div>
     </div>
