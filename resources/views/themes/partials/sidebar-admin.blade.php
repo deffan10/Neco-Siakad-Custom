@@ -338,6 +338,7 @@
                 <a class="dropdown-item {{ request()->routeIs('admin.keuangan.tarif-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.tarif-index') }}">Pengaturan Tarif</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.keuangan.tagihan-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.tagihan-index') }}">Tagihan Mahasiswa</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.keuangan.pembayaran-index') ? 'active' : '' }}" href="{{ route('admin.keuangan.pembayaran-index') }}">Verifikasi Pembayaran</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.dispensasi.index') ? 'active' : '' }}" href="{{ route('admin.dispensasi.index') }}">Dispensasi Keuangan</a>
             </div>
         </div>
     </div>
