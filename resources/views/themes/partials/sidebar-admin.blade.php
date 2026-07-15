@@ -299,6 +299,24 @@
         <span class="nav-link-title">Sertifikasi (SKPI)</span>
     </a>
 </li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.beasiswa*') ? 'show' : '' }}" href="#navbar-beasiswa" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 3v3" /><path d="M12 12v9" /><path d="M7 14h10" /></svg>
+        </span>
+        <span class="nav-link-title">Beasiswa</span>
+    </a>
+    <div class="dropdown-menu {{ request()->routeIs('admin.beasiswa*') ? 'show' : '' }}">
+        <div class="dropdown-menu-columns">
+            <div class="dropdown-menu-column">
+                <a class="dropdown-item {{ request()->routeIs('admin.beasiswa.jenis') ? 'active' : '' }}" href="{{ route('admin.beasiswa.jenis') }}">Jenis Beasiswa</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.beasiswa.data') ? 'active' : '' }}" href="{{ route('admin.beasiswa.data') }}">Penerima Beasiswa</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.beasiswa.salin') ? 'active' : '' }}" href="{{ route('admin.beasiswa.salin') }}">Salin Beasiswa</a>
+            </div>
+        </div>
+    </div>
+</li>
+
 
 <!-- KEUANGAN & PMB -->
 <li class="nav-item mt-2">
