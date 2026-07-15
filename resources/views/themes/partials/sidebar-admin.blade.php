@@ -76,6 +76,7 @@
                 <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.keluarga*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.keluarga-index') }}">Keluarga</a>
                 <a class="dropdown-item {{ request()->routeIs($activeRole . '.users.pendidikan*') ? 'active' : '' }}" href="{{ route($activeRole . '.users.pendidikan-index') }}">Pendidikan</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.pegawai.index') ? 'active' : '' }}" href="{{ route('admin.pegawai.index') }}">Data Pegawai</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.dosen.index') ? 'active' : '' }}" href="{{ route('admin.dosen.index') }}">Data Dosen</a>
             </div>
         </div>
     </div>

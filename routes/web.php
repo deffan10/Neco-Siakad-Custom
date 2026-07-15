@@ -548,6 +548,12 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     // Borang Akreditasi Institusi & Program Studi
     Route::get('/borang-akreditasi', [App\Http\Controllers\Akademik\BorangController::class, 'index'])->name('borang.index');
 
+    // Dosen Management (Admin)
+    Route::get('/dosen', [App\Http\Controllers\Akademik\DosenController::class, 'index'])->name('dosen.index');
+    Route::post('/dosen', [App\Http\Controllers\Akademik\DosenController::class, 'store'])->name('dosen.store');
+    Route::put('/dosen/{id}', [App\Http\Controllers\Akademik\DosenController::class, 'update'])->name('dosen.update');
+    Route::delete('/dosen/{id}', [App\Http\Controllers\Akademik\DosenController::class, 'destroy'])->name('dosen.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
