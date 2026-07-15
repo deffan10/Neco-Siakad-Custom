@@ -495,6 +495,23 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/konversi-nilai', [App\Http\Controllers\Akademik\KonversiNilaiController::class, 'store'])->name('konversi-nilai.store');
     Route::delete('/konversi-nilai/{id}', [App\Http\Controllers\Akademik\KonversiNilaiController::class, 'destroy'])->name('konversi-nilai.destroy');
 
+    // Cetak Kartu & Absensi (Admin)
+    Route::get('/cetak-kartu', [App\Http\Controllers\Akademik\CetakKartuController::class, 'index'])->name('cetak-kartu.index');
+    Route::get('/cetak-kartu/krs', [App\Http\Controllers\Akademik\CetakKartuController::class, 'printKrs'])->name('cetak-kartu.krs');
+    Route::get('/cetak-kartu/ujian', [App\Http\Controllers\Akademik\CetakKartuController::class, 'printKartuUjian'])->name('cetak-kartu.ujian');
+    Route::get('/cetak-kartu/absensi-kuliah', [App\Http\Controllers\Akademik\CetakKartuController::class, 'printAbsensiKuliah'])->name('cetak-kartu.absensi-kuliah');
+    Route::get('/cetak-kartu/absensi-ujian', [App\Http\Controllers\Akademik\CetakKartuController::class, 'printAbsensiUjian'])->name('cetak-kartu.absensi-ujian');
+
+    // Event Seminar (Admin)
+    Route::get('/event-seminar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'indexAdmin'])->name('event-seminar.index');
+    Route::post('/event-seminar', [App\Http\Controllers\Akademik\EventSeminarController::class, 'store'])->name('event-seminar.store');
+    Route::post('/event-seminar/{id}/toggle-open', [App\Http\Controllers\Akademik\EventSeminarController::class, 'toggleOpen'])->name('event-seminar.toggle-open');
+    Route::delete('/event-seminar/{id}', [App\Http\Controllers\Akademik\EventSeminarController::class, 'destroy'])->name('event-seminar.destroy');
+    Route::get('/event-seminar/{id}/peserta', [App\Http\Controllers\Akademik\EventSeminarController::class, 'peserta'])->name('event-seminar.peserta');
+    Route::post('/event-seminar/peserta/{pesertaId}/status', [App\Http\Controllers\Akademik\EventSeminarController::class, 'updateStatusPeserta'])->name('event-seminar.peserta.status');
+    Route::get('/event-seminar/kuota', [App\Http\Controllers\Akademik\EventSeminarController::class, 'kuota'])->name('event-seminar.kuota');
+    Route::get('/event-seminar/cari', [App\Http\Controllers\Akademik\EventSeminarController::class, 'cari'])->name('event-seminar.cari');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
