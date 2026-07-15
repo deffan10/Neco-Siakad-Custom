@@ -535,6 +535,10 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::put('/pegawai/{id}', [App\Http\Controllers\Akademik\PegawaiController::class, 'update'])->name('pegawai.update');
     Route::delete('/pegawai/{id}', [App\Http\Controllers\Akademik\PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
+    // Aktivitas Lulus / Keluar / Status Mahasiswa (Admin)
+    Route::get('/aktivitas-mahasiswa', [App\Http\Controllers\Akademik\AktivitasMahasiswaController::class, 'index'])->name('aktivitas-mahasiswa.index');
+    Route::put('/aktivitas-mahasiswa/{id}', [App\Http\Controllers\Akademik\AktivitasMahasiswaController::class, 'updateStatus'])->name('aktivitas-mahasiswa.update');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
