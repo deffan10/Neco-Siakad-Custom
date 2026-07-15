@@ -203,6 +203,7 @@
                 <a class="dropdown-item {{ request()->routeIs($activeRole. '.akademik.jadwal-perkuliahan*') ? 'active' : '' }}" href="{{ route($activeRole. '.akademik.jadwal-perkuliahan-index') }}">Jadwal Perkuliahan</a>
                 <a class="dropdown-item {{ request()->routeIs($activeRole. '.akademik.kelas-mahasiswa*') ? 'active' : '' }}" href="{{ route($activeRole. '.akademik.kelas-mahasiswa-index') }}">Kelas Mahasiswa</a>
                 <a class="dropdown-item {{ request()->routeIs('admin.asisten-lab.index') ? 'active' : '' }}" href="{{ route('admin.asisten-lab.index') }}">Asisten Lab</a>
+                <a class="dropdown-item {{ request()->routeIs('admin.surat-tugas.index') ? 'active' : '' }}" href="{{ route('admin.surat-tugas.index') }}">Surat Tugas Mengajar</a>
             </div>
         </div>
     </div>
