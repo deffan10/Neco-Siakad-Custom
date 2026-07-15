@@ -483,6 +483,13 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-3">
+                                            <label for="sks_lulus" class="form-label">SKS Kelulusan (Target)</label>
+                                            <input type="number" class="form-control" name="sks_lulus" id="sks_lulus" placeholder="144" value="144" min="1">
+                                            @error('sks_lulus')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
                                             <label for="kaprodi_id" class="form-label">Kaprodi</label>
                                             <select class="form-select" name="kaprodi_id" id="kaprodi_id">
                                                 <option value="">Pilih Kaprodi</option>
@@ -735,6 +742,13 @@
                                         <label for="edit_tanggal_sk_pendirian{{ $item->id }}" class="form-label">Tanggal SK Pendirian</label>
                                         <input type="date" class="form-control" name="tanggal_sk_pendirian" id="edit_tanggal_sk_pendirian{{ $item->id }}" value="{{ $item->tanggal_sk_pendirian }}">
                                         @error('tanggal_sk_pendirian')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="edit_sks_lulus{{ $item->id }}" class="form-label">SKS Kelulusan (Target)</label>
+                                        <input type="number" class="form-control" name="sks_lulus" id="edit_sks_lulus{{ $item->id }}" value="{{ $item->sks_lulus ?? 144 }}" placeholder="144" min="1">
+                                        @error('sks_lulus')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

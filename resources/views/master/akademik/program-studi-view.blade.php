@@ -189,6 +189,10 @@
                                         <label class="form-label">Tanggal SK Pendirian</label>
                                         <input type="date" class="form-control" name="tanggal_sk_pendirian" value="{{ $programStudi->tanggal_sk_pendirian }}">
                                     </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">SKS Kelulusan (Target)</label>
+                                        <input type="number" class="form-control" name="sks_lulus" value="{{ $programStudi->sks_lulus ?? 144 }}" min="1">
+                                    </div>
                                 </div>
                             </div>
                         </div>

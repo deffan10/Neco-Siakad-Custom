@@ -319,8 +319,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Collapsible Form -->
-                    @if(!$is_trash)
+                    <!-- Tab Navigation for Kalender Akademik -->
+                    <ul class="nav nav-tabs mb-4" id="calendarTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="periode-tab" data-bs-toggle="tab" data-bs-target="#periode" type="button" role="tab" aria-controls="periode" aria-selected="true">
+                                <i class="fas fa-list me-2"></i>Periode Tahun Akademik
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="calendar-display-tab" data-bs-toggle="tab" data-bs-target="#calendar-display" type="button" role="tab" aria-controls="calendar-display" aria-selected="false">
+                                <i class="fas fa-calendar-alt me-2"></i>Display Kalender Akademik
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="calendarTabsContent">
+                        <!-- Tab 1: Periode Tahun Akademik -->
+                        <div class="tab-pane fade show active" id="periode" role="tabpanel" aria-labelledby="periode-tab">
+                            <!-- Collapsible Form -->
+                            @if(!$is_trash)
                         <div class="collapse" id="collapseForm">
                             <div class="card card-body border">
                                 <h5 class="card-title mb-3">Tambah Tahun Akademik Baru</h5>
@@ -491,6 +508,91 @@
                             </tbody>
                         </table>
                     </div>
+                        </div> <!-- End of Tab 1 -->
+
+                        <!-- Tab 2: Display Kalender Akademik -->
+                        <div class="tab-pane fade" id="calendar-display" role="tabpanel" aria-labelledby="calendar-display-tab">
+                            <div class="row">
+                                @forelse($tahunAkademiks->where('is_active', true) as $ta)
+                                    <div class="col-md-12 mb-4">
+                                        <div class="card border shadow-sm">
+                                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                                <h5 class="mb-0"><i class="fas fa-calendar-day me-2"></i>Kalender Akademik: {{ $ta->name }} (Semester {{ $ta->semester }})</h5>
+                                                <span class="badge bg-success">Aktif</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="timeline timeline-simple mt-3">
+                                                    <!-- Lecture Mulai -->
+                                                    <div class="d-flex mb-3 align-items-center">
+                                                        <div class="timeline-icon bg-info text-white p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                            <i class="fas fa-graduation-cap"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">Mulai Perkuliahan</h6>
+                                                            <p class="text-muted mb-0 small">{{ $ta->tanggal_mulai ? \Carbon\Carbon::parse($ta->tanggal_mulai)->format('d F Y') : '-' }}</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- KRS Online -->
+                                                    @php
+                                                        $krsSemester = $waktuKrs->where('tahun_akademik_id', $ta->id)->first();
+                                                    @endphp
+                                                    @if($krsSemester)
+                                                        <div class="d-flex mb-3 align-items-center">
+                                                            <div class="timeline-icon bg-warning text-white p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                                <i class="fas fa-file-signature"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="mb-0">Pengisian KRS Online</h6>
+                                                                <p class="text-muted mb-0 small">
+                                                                    {{ \Carbon\Carbon::parse($krsSemester->tanggal_mulai)->format('d F Y H:i') }} s/d 
+                                                                    {{ \Carbon\Carbon::parse($krsSemester->tanggal_selesai)->format('d F Y H:i') }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                    <!-- Lecture Selesai -->
+                                                    <div class="d-flex mb-3 align-items-center">
+                                                        <div class="timeline-icon bg-danger text-white p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                            <i class="fas fa-times-circle"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">Selesai Perkuliahan</h6>
+                                                            <p class="text-muted mb-0 small">{{ $ta->tanggal_selesai ? \Carbon\Carbon::parse($ta->tanggal_selesai)->format('d F Y') : '-' }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12 text-center py-4 text-muted">
+                                        <i class="fas fa-calendar-times fa-3x mb-3 text-secondary"></i>
+                                        <p>Tidak ada tahun akademik aktif untuk ditampilkan.</p>
+                                    </div>
+                                @endforelse
+                                
+                                <div class="col-12 mt-3">
+                                    <h5 class="mb-3"><i class="fas fa-history me-2"></i>Timeline Riwayat Semester Sebelumnya</h5>
+                                    <div class="row">
+                                        @foreach($tahunAkademiks->where('is_active', false)->take(3) as $ta)
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card border p-3">
+                                                    <h6 class="mb-1 text-muted">{{ $ta->name }}</h6>
+                                                    <small class="d-block mb-2 text-info">Semester: {{ $ta->semester }}</small>
+                                                    <div class="small">
+                                                        <span class="d-block"><i class="fas fa-play me-1 text-success"></i>Mulai: {{ $ta->tanggal_mulai ? \Carbon\Carbon::parse($ta->tanggal_mulai)->format('d/m/Y') : '-' }}</span>
+                                                        <span class="d-block"><i class="fas fa-stop me-1 text-danger"></i>Selesai: {{ $ta->tanggal_selesai ? \Carbon\Carbon::parse($ta->tanggal_selesai)->format('d/m/Y') : '-' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- End of tab-content -->
                 </div>
             </div>
         </div>

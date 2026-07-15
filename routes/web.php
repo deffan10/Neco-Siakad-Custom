@@ -490,6 +490,11 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/surat-tugas', [App\Http\Controllers\Akademik\SuratTugasController::class, 'store'])->name('surat-tugas.store');
     Route::delete('/surat-tugas/{id}', [App\Http\Controllers\Akademik\SuratTugasController::class, 'destroy'])->name('surat-tugas.destroy');
 
+    // Konversi Nilai (Admin)
+    Route::get('/konversi-nilai', [App\Http\Controllers\Akademik\KonversiNilaiController::class, 'index'])->name('konversi-nilai.index');
+    Route::post('/konversi-nilai', [App\Http\Controllers\Akademik\KonversiNilaiController::class, 'store'])->name('konversi-nilai.store');
+    Route::delete('/konversi-nilai/{id}', [App\Http\Controllers\Akademik\KonversiNilaiController::class, 'destroy'])->name('konversi-nilai.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {

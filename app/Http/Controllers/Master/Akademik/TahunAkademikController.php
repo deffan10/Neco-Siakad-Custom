@@ -22,6 +22,7 @@ class TahunAkademikController extends Controller
         $data['system'] = System::first();
         $data['academy'] = Kampus::first();
         $data['tahunAkademiks'] = TahunAkademik::orderBy('created_at', 'desc')->get();
+        $data['waktuKrs'] = \App\Models\Akademik\WaktuKrs::with('tahunAkademik')->latest()->get();
         $data['is_trash'] = false;
 
         return view('master.akademik.tahun-akademik-index', $data, compact('user'));
