@@ -478,6 +478,18 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/dispensasi/{id}/reject', [App\Http\Controllers\Akademik\DispensasiController::class, 'reject'])->name('dispensasi.reject');
     Route::delete('/dispensasi/{id}', [App\Http\Controllers\Akademik\DispensasiController::class, 'destroy'])->name('dispensasi.destroy');
 
+    // Sesi Kuliah (Admin) - Kuliah, Ujian, Kelompok tabs
+    Route::get('/sesi-kuliah', [App\Http\Controllers\Akademik\SesiKuliahController::class, 'indexKuliah'])->name('sesi-kuliah.kuliah');
+    Route::get('/sesi-kuliah/ujian', [App\Http\Controllers\Akademik\SesiKuliahController::class, 'indexUjian'])->name('sesi-kuliah.ujian');
+    Route::get('/sesi-kuliah/kelompok', [App\Http\Controllers\Akademik\SesiKuliahController::class, 'indexKelompok'])->name('sesi-kuliah.kelompok');
+    Route::post('/sesi-kuliah', [App\Http\Controllers\Akademik\SesiKuliahController::class, 'store'])->name('sesi-kuliah.store');
+    Route::delete('/sesi-kuliah/{id}', [App\Http\Controllers\Akademik\SesiKuliahController::class, 'destroy'])->name('sesi-kuliah.destroy');
+
+    // Surat Tugas Mengajar (Admin)
+    Route::get('/surat-tugas', [App\Http\Controllers\Akademik\SuratTugasController::class, 'index'])->name('surat-tugas.index');
+    Route::post('/surat-tugas', [App\Http\Controllers\Akademik\SuratTugasController::class, 'store'])->name('surat-tugas.store');
+    Route::delete('/surat-tugas/{id}', [App\Http\Controllers\Akademik\SuratTugasController::class, 'destroy'])->name('surat-tugas.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
