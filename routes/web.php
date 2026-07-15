@@ -540,6 +540,11 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/aktivitas-mahasiswa', [App\Http\Controllers\Akademik\AktivitasMahasiswaController::class, 'index'])->name('aktivitas-mahasiswa.index');
     Route::put('/aktivitas-mahasiswa/{id}', [App\Http\Controllers\Akademik\AktivitasMahasiswaController::class, 'updateStatus'])->name('aktivitas-mahasiswa.update');
 
+    // Tukar File / Shared Files Exchange Hub (Admin & General Access)
+    Route::get('/shared-files', [App\Http\Controllers\Akademik\SharedFileController::class, 'index'])->name('shared-files.index');
+    Route::post('/shared-files', [App\Http\Controllers\Akademik\SharedFileController::class, 'store'])->name('shared-files.store');
+    Route::delete('/shared-files/{id}', [App\Http\Controllers\Akademik\SharedFileController::class, 'destroy'])->name('shared-files.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
