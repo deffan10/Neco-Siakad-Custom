@@ -529,6 +529,12 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/badan-hukum-pt', [App\Http\Controllers\Akademik\KampusSettingController::class, 'index'])->name('kampus-setting.index');
     Route::post('/badan-hukum-pt', [App\Http\Controllers\Akademik\KampusSettingController::class, 'update'])->name('kampus-setting.update');
 
+    // Pegawai / Staff Management (Admin)
+    Route::get('/pegawai', [App\Http\Controllers\Akademik\PegawaiController::class, 'index'])->name('pegawai.index');
+    Route::post('/pegawai', [App\Http\Controllers\Akademik\PegawaiController::class, 'store'])->name('pegawai.store');
+    Route::put('/pegawai/{id}', [App\Http\Controllers\Akademik\PegawaiController::class, 'update'])->name('pegawai.update');
+    Route::delete('/pegawai/{id}', [App\Http\Controllers\Akademik\PegawaiController::class, 'destroy'])->name('pegawai.destroy');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
