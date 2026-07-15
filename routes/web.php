@@ -512,6 +512,23 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::get('/event-seminar/kuota', [App\Http\Controllers\Akademik\EventSeminarController::class, 'kuota'])->name('event-seminar.kuota');
     Route::get('/event-seminar/cari', [App\Http\Controllers\Akademik\EventSeminarController::class, 'cari'])->name('event-seminar.cari');
 
+    // Alumni (Admin)
+    Route::get('/alumni', [App\Http\Controllers\Akademik\AlumniController::class, 'index'])->name('alumni.index');
+    Route::post('/alumni', [App\Http\Controllers\Akademik\AlumniController::class, 'store'])->name('alumni.store');
+    Route::get('/alumni/album', [App\Http\Controllers\Akademik\AlumniController::class, 'album'])->name('alumni.album');
+    Route::delete('/alumni/{id}', [App\Http\Controllers\Akademik\AlumniController::class, 'destroy'])->name('alumni.destroy');
+
+    // Asisten Lab (Admin)
+    Route::get('/asisten-lab', [App\Http\Controllers\Akademik\AsistenLabController::class, 'index'])->name('asisten-lab.index');
+    Route::post('/asisten-lab', [App\Http\Controllers\Akademik\AsistenLabController::class, 'store'])->name('asisten-lab.store');
+    Route::delete('/asisten-lab/{id}', [App\Http\Controllers\Akademik\AsistenLabController::class, 'destroy'])->name('asisten-lab.destroy');
+    Route::post('/asisten-lab/assign', [App\Http\Controllers\Akademik\AsistenLabController::class, 'assignMk'])->name('asisten-lab.assign');
+    Route::delete('/asisten-lab/assign/{id}', [App\Http\Controllers\Akademik\AsistenLabController::class, 'destroyAssignment'])->name('asisten-lab.assign-destroy');
+
+    // Badan Hukum & Perguruan Tinggi Setting (Admin)
+    Route::get('/badan-hukum-pt', [App\Http\Controllers\Akademik\KampusSettingController::class, 'index'])->name('kampus-setting.index');
+    Route::post('/badan-hukum-pt', [App\Http\Controllers\Akademik\KampusSettingController::class, 'update'])->name('kampus-setting.update');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
