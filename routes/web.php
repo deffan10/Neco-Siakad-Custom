@@ -545,6 +545,9 @@ Route::middleware(['auth', 'active_role:admin'])->prefix('admin')->as('admin.')-
     Route::post('/shared-files', [App\Http\Controllers\Akademik\SharedFileController::class, 'store'])->name('shared-files.store');
     Route::delete('/shared-files/{id}', [App\Http\Controllers\Akademik\SharedFileController::class, 'destroy'])->name('shared-files.destroy');
 
+    // Borang Akreditasi Institusi & Program Studi
+    Route::get('/borang-akreditasi', [App\Http\Controllers\Akademik\BorangController::class, 'index'])->name('borang.index');
+
 });
 
 Route::middleware(['auth', 'active_role:tendik'])->prefix('tendik')->as('tendik.')->group(function () {
